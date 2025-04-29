@@ -61,6 +61,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>bootstrap-icons</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <version>${servletapi.version}</version>
@@ -172,6 +178,9 @@
                     <webApp>
                         <contextPath>/spring</contextPath>
                     </webApp>
+                    <!-- Puerto para enviar el comando stop y liberar el puerto 8080 cuando finaliza-->
+                    <stopPort>9999</stopPort>
+                    <stopKey>stop</stopKey>
                 </configuration>
             </plugin>
 
