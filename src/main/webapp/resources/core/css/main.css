@@ -4,7 +4,9 @@ body {
 .hero {
     background: url('https://images.unsplash.com/photo-1502920514313-52581002a659?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
     color: white;
-    height: 100vh;
+    min-height: 100vh;
+    padding: 1rem 1rem;
+    flex-direction: column;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,8 +14,10 @@ body {
 }
 .overlay {
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 3rem;
+    padding: 1.5rem;
     border-radius: 15px;
+    width: 100%;
+    max-width: 800px;
 }
 .icon-box {
     text-align: center;
@@ -27,4 +31,24 @@ body {
 #paquete {
     background: linear-gradient(rgba(255,255,255,0.95), rgba(255, 255, 255, 0.575)),
     url('https://images.unsplash.com/photo-1521295121783-8a321d551ad2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+}
+
+[data-bs-theme="dark"] #paquete {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5)),
+    url('https://images.unsplash.com/photo-1521295121783-8a321d551ad2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+}
+
+[data-bs-theme="dark"] .hero {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5)),
+    url('https://images.unsplash.com/photo-1502920514313-52581002a659?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
+}
+
+@media (prefers-color-scheme: dark) {
+    .icon-box i {
+        color: #66b2ff;
+    }
+
+    .hero {
+        color: #fff;
+    }
 }
