@@ -199,6 +199,17 @@
   </div>
 </section>
 
+<form th:action="@{/busqueda-vuelo}" method="post">
+  <label for="origen">Origen:</label>
+  <input type="text" id="origen" name="origen" required>
+  <label for="destino">Destino:</label>
+  <input type="text" id="destino" name="destino" required>
+  <label for="fechaIda">Fecha de ida:</label>
+  <input type="date" id="fechaIda" name="fechaIda" required>
+  <label for="fechaVuelta">Fecha de vuelta:</label>
+  <input type="date" id="fechaVuelta" name="fechaVuelta" required>
+  <button type="submit">Buscar vuelo</button>
+</form>
 <!-- Boostrap core js -->
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
