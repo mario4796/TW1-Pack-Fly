@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-@Service("servicioLogin")
+@Service
 @Transactional
 public class ServicioLoginImpl implements ServicioLogin {
 
