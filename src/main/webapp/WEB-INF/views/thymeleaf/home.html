@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="Utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pack&Fly - Tu viaje a tu manera</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
+  <link rel="stylesheet" th:href="@{/core/css/main.css}">
+</head>
+
+<style>
+  body {
       font-family: 'Segoe UI', sans-serif;
     }
     .hero {
@@ -36,8 +39,7 @@
       background: linear-gradient(rgba(255,255,255,0.95), rgba(255, 255, 255, 0.575)),
                   url('https://images.unsplash.com/photo-1521295121783-8a321d551ad2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
     }
-  </style>
-</head>
+</style>
 <body>
 
 <!-- Header -->
@@ -167,55 +169,6 @@
   </div>
 </section>
 
-<!-- Arma tu Paquete -->
-<section id="paquete" class="bg-light py-5">
-  <div class="container">
-    <h2 class="text-center mb-4">Arma tu paquete</h2>
-    <form class="row g-3">
-      <div class="col-md-6">
-        <label class="form-label">Origen</label>
-        <input type="text" class="form-control" placeholder="Ej: Buenos Aires">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Destino</label>
-        <input type="text" class="form-control" placeholder="Ej: Mendoza">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Fecha de salida</label>
-        <input type="date" class="form-control">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Fecha de regreso</label>
-        <input type="date" class="form-control">
-      </div>
-      <div class="col-md-4">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="hotel">
-          <label class="form-check-label" for="hotel">Incluir hotel</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="auto">
-          <label class="form-check-label" for="auto">Incluir auto</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="actividades">
-          <label class="form-check-label" for="actividades">Incluir actividades</label>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Presupuesto maximo (ARS)</label>
-        <input type="number" class="form-control" placeholder="$300000">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Comentarios adicionales</label>
-        <textarea class="form-control" rows="3" placeholder="Contanos tus preferencias..."></textarea>
-      </div>
-      <div class="col-12 text-center">
-        <button class="btn btn-primary px-5">Buscar paquete</button>
-      </div>
-    </form>
-  </div>
-</section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
