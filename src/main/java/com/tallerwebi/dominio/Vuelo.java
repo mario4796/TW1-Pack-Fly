@@ -3,19 +3,20 @@ package com.tallerwebi.dominio;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Date;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Vuelo {
 
     @JsonProperty("departure_date")
-    private String fechaIda;
+    private Date fechaIda;
 
     @JsonProperty("return_date")
-    private String fechaVuelta;
+    private Date fechaVuelta;
 
     @JsonProperty("price")
-    private Precio precio;
+    private int precio;
 
     @JsonProperty("total_duration")
     private String duracionTotal;
@@ -26,29 +27,30 @@ public class Vuelo {
     private String origen;
     private String destino;
 
+
     // Getters y Setters
 
-    public String getFechaIda() {
+    public Date getFechaIda() {
         return fechaIda;
     }
 
-    public void setFechaIda(String fechaIda) {
+    public void setFechaIda(Date fechaIda) {
         this.fechaIda = fechaIda;
     }
 
-    public String getFechaVuelta() {
+    public Date getFechaVuelta() {
         return fechaVuelta;
     }
 
-    public void setFechaVuelta(String fechaVuelta) {
+    public void setFechaVuelta(Date fechaVuelta) {
         this.fechaVuelta = fechaVuelta;
     }
 
-    public Precio getPrecio() {
+    public int getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Precio precio) {
+    public void setPrecio(int precio) {
         this.precio = precio;
     }
 
