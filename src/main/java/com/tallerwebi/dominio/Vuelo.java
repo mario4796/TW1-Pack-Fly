@@ -1,49 +1,94 @@
 package com.tallerwebi.dominio;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Vuelo {
-    private LocalDate fechaIda;
-    private LocalDate fechaVuelta;
-    private String aeropuerto;
 
-    private Integer cantidadValijas;
-    private boolean seguroViajero;
-    private String asiento;
+    @JsonProperty("departure_date")
+    private String fechaIda;
 
-    private double precioBase = 100000;
-    private double precioTotal;
+    @JsonProperty("return_date")
+    private String fechaVuelta;
 
+    @JsonProperty("price")
+    private Precio precio;
 
-    public Vuelo(LocalDate fechaIda, LocalDate fechaVuelta, String aeropuerto) {
-        this.fechaIda = fechaIda;
-        this.fechaVuelta = fechaVuelta;
-        this.aeropuerto = aeropuerto;
-        recalcularPrecio();
-    }
+    @JsonProperty("total_duration")
+    private String duracionTotal;
 
-    public LocalDate getFechaIda() {
+    @JsonProperty("flights")
+    private List<SegmentoVuelo> segmentos;
+
+    private String origen;
+    private String destino;
+
+    // Personalizaciones del usuario
+    private Integer cantidadValijas;   // opcional
+    private Boolean seguroViajero;     // opcional
+    private String asiento;            // opcional
+
+    // =============================
+    //         Getters/Setters
+    // =============================
+
+    public String getFechaIda() {
         return fechaIda;
     }
 
-    public void setFechaIda(LocalDate fechaIda) {
+    public void setFechaIda(String fechaIda) {
         this.fechaIda = fechaIda;
     }
 
-    public LocalDate getFechaVuelta() {
+    public String getFechaVuelta() {
         return fechaVuelta;
     }
 
-    public void setFechaVuelta(LocalDate fechaVuelta) {
+    public void setFechaVuelta(String fechaVuelta) {
         this.fechaVuelta = fechaVuelta;
     }
 
-    public String getAeropuerto() {
-        return aeropuerto;
+    public Precio getPrecio() {
+        return precio;
     }
 
-    public void setAeropuerto(String aeropuerto) {
-        this.aeropuerto = aeropuerto;
+    public void setPrecio(Precio precio) {
+        this.precio = precio;
+    }
+
+    public String getDuracionTotal() {
+        return duracionTotal;
+    }
+
+    public void setDuracionTotal(String duracionTotal) {
+        this.duracionTotal = duracionTotal;
+    }
+
+    public List<SegmentoVuelo> getSegmentos() {
+        return segmentos;
+    }
+
+    public void setSegmentos(List<SegmentoVuelo> segmentos) {
+        this.segmentos = segmentos;
+        derivarOrigenYDestino();
+    }
+
+    public String getOrigen() {
+        return origen;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    private void derivarOrigenYDestino() {
+        if (segmentos != null && !segmentos.isEmpty()) {
+            this.origen = segmentos.get(0).getAeropuertoSalida().getNombre();
+            this.destino = segmentos.get(0).getAeropuertoLlegada().getNombre();
+        }
     }
 
     public Integer getCantidadValijas() {
@@ -52,16 +97,14 @@ public class Vuelo {
 
     public void setCantidadValijas(Integer cantidadValijas) {
         this.cantidadValijas = cantidadValijas;
-        recalcularPrecio();
     }
 
-    public boolean isSeguroViajero() {
+    public Boolean getSeguroViajero() {
         return seguroViajero;
     }
 
-    public void setSeguroViajero(boolean seguroViajero) {
+    public void setSeguroViajero(Boolean seguroViajero) {
         this.seguroViajero = seguroViajero;
-        recalcularPrecio();
     }
 
     public String getAsiento() {
@@ -70,27 +113,73 @@ public class Vuelo {
 
     public void setAsiento(String asiento) {
         this.asiento = asiento;
-        recalcularPrecio();
     }
 
-    public double getPrecioTotal() {
-        return precioTotal;
+    // =============================
+    //         Clases anidadas
+    // =============================
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Precio {
+        @JsonProperty("amount")
+        private String valor;
+
+        public String getValor() {
+            return valor;
+        }
+
+        public void setValor(String valor) {
+            this.valor = valor;
+        }
     }
 
-    // Metodo para recalcular precio total
-    private void recalcularPrecio() {
-        precioTotal = precioBase;
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class SegmentoVuelo {
+        @JsonProperty("departure_airport")
+        private Aeropuerto aeropuertoSalida;
 
-        if (cantidadValijas != null && cantidadValijas > 0) {
-            precioTotal += cantidadValijas * 5000;
+        @JsonProperty("arrival_airport")
+        private Aeropuerto aeropuertoLlegada;
+
+        public Aeropuerto getAeropuertoSalida() {
+            return aeropuertoSalida;
         }
 
-        if (seguroViajero) {
-            precioTotal += 10000;
+        public void setAeropuertoSalida(Aeropuerto aeropuertoSalida) {
+            this.aeropuertoSalida = aeropuertoSalida;
         }
 
-        if (asiento != null && !asiento.isEmpty()) {
-            precioTotal += 3000;
+        public Aeropuerto getAeropuertoLlegada() {
+            return aeropuertoLlegada;
+        }
+
+        public void setAeropuertoLlegada(Aeropuerto aeropuertoLlegada) {
+            this.aeropuertoLlegada = aeropuertoLlegada;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Aeropuerto {
+        @JsonProperty("name")
+        private String nombre;
+
+        @JsonProperty("id")
+        private String codigoIATA;
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getCodigoIATA() {
+            return codigoIATA;
+        }
+
+        public void setCodigoIATA(String codigoIATA) {
+            this.codigoIATA = codigoIATA;
         }
     }
 }
