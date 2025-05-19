@@ -1,51 +1,19 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:lang="es" th:encoding="UTF-8">
 <head>
-  <meta charset="Utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pack&Fly - Tu viaje a tu manera</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" th:href="@{/core/css/main.css}">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-
-<style>
-  body {
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .hero {
-      background: url('https://images.unsplash.com/photo-1502920514313-52581002a659?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
-      color: white;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .overlay {
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 3rem;
-      border-radius: 15px;
-    }
-    .icon-box {
-      text-align: center;
-      padding: 1rem;
-    }
-    .icon-box i {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      color: #0d6efd;
-    }
-    #paquete {
-      background: linear-gradient(rgba(255,255,255,0.95), rgba(255, 255, 255, 0.575)),
-                  url('https://images.unsplash.com/photo-1521295121783-8a321d551ad2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;
-    }
-</style>
 <body>
 
 <!-- Header -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="/spring/home">
       <i class="bi bi-suitcase2 me-1"></i><i class="bi bi-airplane me-2"></i> Pack&Fly
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -54,7 +22,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#">Vuelos</a></li>
-        <li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Armá tu Paquete</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>
         <li class="nav-item"><a class="btn btn-primary ms-2" href="#">Mi Viaje</a></li>
@@ -63,83 +31,53 @@
   </div>
 </nav>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="hero">
   <div class="overlay">
     <h1 class="display-4 fw-bold">Tu viaje, a tu manera</h1>
-    <p class="lead">Armá tu paquete ideal: vuelo, hotel, actividades y mas.</p>
-    <form class="row g-2 mt-4 bg-light p-3 rounded">
+    <p class="lead">Armá tu paquete ideal: vuelo, hotel, actividades y más.</p>
+    <form class="row g-2 mt-4 bg-light p-3 rounded" method="get" th:action="@{/buscar}">
       <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Origen">
+        <input type="text" name="origen" class="form-control" placeholder="Origen">
       </div>
       <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Destino">
+        <input type="text" name="destino" class="form-control" placeholder="Destino">
       </div>
       <div class="col-md-2">
-        <input type="date" class="form-control">
+        <input type="date" name="fecha" class="form-control">
       </div>
       <div class="col-md-2">
-        <select class="form-select">
+        <select name="servicio" class="form-select">
           <option selected>Servicios</option>
-          <option>Hotel</option>
-          <option>Auto</option>
-          <option>Actividades</option>
+          <option value="hotel">Hotel</option>
+          <option value="auto">Auto</option>
+          <option value="actividad">Actividades</option>
         </select>
       </div>
       <div class="col-md-2">
-        <button class="btn btn-primary w-100">Buscar</button>
+        <button class="btn btn-primary w-100" type="submit">Buscar</button>
       </div>
     </form>
   </div>
 </section>
 
-<!-- Resultados -->
+<!-- Resultados Dinámicos -->
 <section id="resultados" class="py-5 bg-white">
   <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h3>Recomendados para vos</h3>
-      <div class="btn-group" role="group">
-        <button type="button" class="btn btn-outline-secondary"><i class="bi bi-map"></i> Destinos</button>
-        <button type="button" class="btn btn-outline-secondary"><i class="bi bi-house"></i> Hoteles</button>
-        <button type="button" class="btn btn-outline-secondary"><i class="bi bi-car-front"></i> Autos</button>
-        <button type="button" class="btn btn-outline-secondary"><i class="bi bi-star"></i> Actividades</button>
-      </div>
-    </div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-      <div class="col">
-        <div class="card h-100 shadow-sm">
-          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Paquete 1">
-          <div class="card-body">
-            <h5 class="card-title">Escapada a la Costa</h5>
-            <p class="card-text">Incluye vuelo, 3 noches de hotel y traslados. Desde $250.000</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100 shadow-sm">
-          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Paquete 2">
-          <div class="card-body">
-            <h5 class="card-title">Aventura en Bariloche</h5>
-            <p class="card-text">Vuelo + hotel + excursiones. Todo por $295.000</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100 shadow-sm">
-          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Paquete 3">
 
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <div class="col" th:each="paquete : ${paquetes}">
+        <div class="card h-100 shadow-sm" style="cursor:pointer" th:onclick="'location.href=\'/paquetes/'+${paquete.id}+'\' '">
+          <img class="card-img-top" th:src="${paquete.imagenUrl}" th:alt="${paquete.nombre}">
           <div class="card-body">
-            <h5 class="card-title">Fin de semana en Buenos Aires</h5>
-            <p class="card-text">Vuelos y estadia centrica. Ideal para escapada urbana. $180.000</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card h-100 shadow-sm">
-          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Paquete 4">
-          <div class="card-body">
-            <h5 class="card-title">Relax en Cataratas</h5>
-            <p class="card-text">Descubri Iguazu con este paquete completo por $310.000</p>
+            <h5 class="card-title" th:text="${paquete.nombre}">Nombre del paquete</h5>
+            <p class="card-text" th:text="${paquete.descripcion}">Descripción del paquete</p>
+            <p class="fw-bold text-primary" th:text="'Desde $'+${paquete.precio}">Precio</p>
+            <a class="boton-detalle-paquete" th:href="@{'/paquetes/' + ${paquete.id}}">Ver detalle</a>
           </div>
         </div>
       </div>
@@ -169,8 +107,6 @@
   </div>
 </section>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 </html>

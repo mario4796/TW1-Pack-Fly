@@ -1,0 +1,136 @@
+/* General */
+body {
+  padding-top: 80px; /* Espacio para navbar fija */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+/* Navbar */
+.navbar {
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #0d6efd !important;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  color: #495057;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #0d6efd;
+}
+
+.navbar .btn {
+  font-weight: bold;
+}
+
+/* Hero Section */
+.hero {
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero .overlay {
+  background-color: rgba(0, 0, 0, 0.55);
+  padding: 60px 20px;
+  border-radius: 10px;
+  color: #fff;
+  max-width: 900px;
+  width: 100%;
+}
+
+.hero .overlay h1 {
+  font-size: 3rem;
+}
+
+.hero .overlay p {
+  font-size: 1.3rem;
+}
+
+.hero form input,
+.hero form select,
+.hero form button {
+  height: 48px;
+}
+
+/* Resultados */
+#resultados {
+  background-color: #fff;
+}
+
+#resultados h3 {
+  font-weight: bold;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  height: 180px;
+  object-fit: cover;
+}
+
+.boton-detalle-paquete {
+  display: inline-block;
+  margin-top: 10px;
+  color: #0d6efd;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.boton-detalle-paquete:hover {
+  color: #0a58ca;
+  text-decoration: underline;
+}
+
+/* Beneficios */
+.icon-box {
+  padding: 20px;
+  transition: background 0.3s;
+  border-radius: 12px;
+}
+
+.icon-box i {
+  font-size: 2.2rem;
+  color: #0d6efd;
+  margin-bottom: 10px;
+}
+
+.icon-box:hover {
+  background-color: #e9f1ff;
+}
+
+/* Botones de filtro */
+.btn-group .btn {
+  font-weight: 500;
+  border-radius: 20px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .hero .overlay h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero .overlay p {
+    font-size: 1.1rem;
+  }
+}
