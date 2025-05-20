@@ -13,7 +13,7 @@
         <spring.version>5.2.22.RELEASE</spring.version>
         <servletapi.version>4.0.4</servletapi.version>
         <thymeleaf.spring.version>3.0.15.RELEASE</thymeleaf.spring.version>
-        <webjars.version>5.2.0</webjars.version>
+        <webjars.version>5.3.5</webjars.version>
         <hamcrest.version>2.2</hamcrest.version>
         <junit.version>5.9.0</junit.version>
         <mockito.version>5.3.1</mockito.version>
@@ -23,6 +23,13 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -58,6 +65,12 @@
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>${webjars.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>bootstrap-icons</artifactId>
+            <version>1.11.3</version>
         </dependency>
 
         <dependency>
@@ -112,6 +125,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.13.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.11.0</version>
+            <scope>test</scope>
         </dependency>
         <!-- compile only, deployed container will provide this -->
         <!--
@@ -172,6 +191,9 @@
                     <webApp>
                         <contextPath>/spring</contextPath>
                     </webApp>
+                    <!-- Puerto para enviar el comando stop y liberar el puerto 8080 cuando finaliza-->
+                    <stopPort>9999</stopPort>
+                    <stopKey>stop</stopKey>
                 </configuration>
             </plugin>
 
