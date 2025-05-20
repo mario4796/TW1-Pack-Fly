@@ -36,8 +36,8 @@ public class ControladorVuelos {
             model.addAttribute("vueloUrl", true); // esto activa el th:if
             model.addAttribute("valorIda", vuelo.getPrecio() );
             model.addAttribute("valorVuelta", vuelo.getPrecio());
-            model.addAttribute("fechaIda", fechaIda);
-            model.addAttribute("fechaVuelta", fechaVuelta);
+          //  model.addAttribute("fechaIda", fechaIda);
+           // model.addAttribute("fechaVuelta", fechaVuelta);
         } else {
             model.addAttribute("error", "Vuelo no encontrado");
         }

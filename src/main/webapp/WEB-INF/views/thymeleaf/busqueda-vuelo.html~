@@ -69,7 +69,7 @@
     <ul class="list-group">
       <li class="list-group-item"><strong>Origen:</strong> <span th:text="${vuelo.origen}"></span></li>
       <li class="list-group-item"><strong>Destino:</strong> <span th:text="${vuelo.destino}"></span></li>
-      <li class="list-group-item"><strong>Fecha ida:</strong> <span th:text="${vuelo.fechaIda}"></span></li>
+      <li class="list-group-item"><strong>Fecha ida:</strong> <span th:text="${vuelo.fechaVuelta}"></span></li>
       <li class="list-group-item"><strong>Fecha vuelta:</strong> <span th:text="${vuelo.fechaVuelta}"></span></li>
       <li class="list-group-item"><strong>Valor ida: $</strong> <span th:text="${valorIda}"></span></li>
       <li class="list-group-item"><strong>Valor vuelta: $</strong> <span th:text="${valorVuelta}"></span></li>

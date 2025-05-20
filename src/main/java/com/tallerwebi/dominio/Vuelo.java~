@@ -51,7 +51,11 @@ public class Vuelo {
     public void setSegmentos(List<SegmentoVuelo> segmentos) {
         this.segmentos = segmentos;
         derivarOrigenYDestino(); // actualizar origen y destino cuando se setea
-        devolverFechas();
+    }
+
+    public void setFechas(List<SegmentoVuelo> segmentos) {
+        this.segmentos = segmentos;
+        derivarOrigenYDestino(); // actualizar origen y destino cuando se setea
     }
 
     public String getOrigen() {
