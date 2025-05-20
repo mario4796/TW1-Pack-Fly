@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import org.junit.Before;
-import org.testng.annotations.Test;
+import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.junit.Assert.*;
@@ -17,7 +17,8 @@ public class ControladorExcursionTest {
 
     @Test
     public void queAlEntrarALaPaginaDeExcursionesSeMuestreLaVista() {
-        ModelAndView modelAndView = controladorExcursion.irAExcursiones();
+        ModelAndView modelAndView = controladorExcursion.verExcursiones(); // nombre correcto
         assertEquals("excursiones", modelAndView.getViewName());
+        assertTrue(modelAndView.getModel().get("excursiones") instanceof java.util.List);
     }
 }

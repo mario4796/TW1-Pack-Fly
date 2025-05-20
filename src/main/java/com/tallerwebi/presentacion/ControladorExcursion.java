@@ -8,7 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class ControladorExcursion {
 
     @RequestMapping("/excursiones")
-    public ModelAndView irAExcursiones() {
-        return new ModelAndView("excursiones");
+    public ModelAndView verExcursiones() {
+        ModelAndView modelAndView = new ModelAndView("excursiones");
+        modelAndView.addObject("excursiones", java.util.Arrays.asList("Excursión A", "Excursión B"));
+        return modelAndView;
     }
 }
