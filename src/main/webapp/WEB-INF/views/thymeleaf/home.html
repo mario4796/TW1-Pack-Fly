@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" th:lang="es" th:encoding="UTF-8">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#">Vuelos</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Armá tu Paquete</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Arma tu Paquete</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>
         <li class="nav-item"><a class="btn btn-primary ms-2" href="#">Mi Viaje</a></li>
@@ -35,11 +35,8 @@
 <section class="hero">
   <div class="overlay">
     <h1 class="display-4 fw-bold">Tu viaje, a tu manera</h1>
-    <p class="lead">Armá tu paquete ideal: vuelo, hotel, actividades y más.</p>
+    <p class="lead">Arma tu paquete ideal: vuelo, hotel, actividades y mas.</p>
     <form class="row g-2 mt-4 bg-light p-3 rounded" method="get" th:action="@{/buscar}">
-      <div class="col-md-3">
-        <input type="text" name="origen" class="form-control" placeholder="Origen">
-      </div>
       <div class="col-md-3">
         <input type="text" name="destino" class="form-control" placeholder="Destino">
       </div>
@@ -61,12 +58,11 @@
   </div>
 </section>
 
-<!-- Resultados Dinámicos -->
+<!-- Resultados Dinamicos -->
 <section id="resultados" class="py-5 bg-white">
   <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h3>Recomendados para vos</h3>
-
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
@@ -75,7 +71,7 @@
           <img class="card-img-top" th:src="${paquete.imagenUrl}" th:alt="${paquete.nombre}">
           <div class="card-body">
             <h5 class="card-title" th:text="${paquete.nombre}">Nombre del paquete</h5>
-            <p class="card-text" th:text="${paquete.descripcion}">Descripción del paquete</p>
+            <p class="card-text" th:text="${paquete.descripcion}">Descripcion del paquete</p>
             <p class="fw-bold text-primary" th:text="'Desde $'+${paquete.precio}">Precio</p>
             <a class="boton-detalle-paquete" th:href="@{'/paquetes/' + ${paquete.id}}">Ver detalle</a>
           </div>

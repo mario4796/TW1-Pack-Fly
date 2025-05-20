@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Vuelos</title>
+</head>
+<body>
+<h1>Vuelos disponibles</h1>
+<table>
+    <tr>
+        <th>Origen</th>
+        <th>Destino</th>
+        <th>Ida</th>
+        <th>Vuelta</th>
+        <th>Precio</th>
+    </tr>
+    <tr th:each="vuelo : ${vuelos}">
+        <td th:text="${vuelo.origen}"></td>
+        <td th:text="${vuelo.destino}"></td>
+        <td th:text="${vuelo.fechaIda}"></td>
+        <td th:text="${vuelo.fechaVuelta}"></td>
+        <td th:text="${vuelo.calcularPrecioFinal()}"></td>
+    </tr>
+</table>
+</body>
+</html>
