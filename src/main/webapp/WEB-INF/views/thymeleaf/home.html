@@ -47,26 +47,32 @@
   <div class="overlay mt-5">
     <h1 class="display-4 fw-bold">Tu viaje, a tu manera</h1>
     <p class="lead">Armá tu paquete ideal: vuelo, hotel, actividades y más.</p>
-    <form class="row g-2 mt-4 bg-body p-3 rounded">
+    <form class="row g-2 mt-4 bg-body p-3 rounded text-center" th:action="@{/busqueda-vuelo}" method="post">
       <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Origen">
+        <input type="text" id="origen" class="form-control" name="origen" placeholder="Origen" required>
       </div>
       <div class="col-md-3">
-        <input type="text" class="form-control" placeholder="Destino">
+        <input type="text" id="destino" class="form-control" name="destino" placeholder="Destino" required>
       </div>
-      <div class="col-md-2">
-        <input type="date" class="form-control">
+      <div class="col-md-3">
+        <!--<input type="date" id="fechaIda" class="form-control" name="fechaIda" placeholder="F. de ida" required>-->
+        <input type="text" class="form-control" id="fechaIda" placeholder="F. de ida" name="fechaIda" required
+               onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" />
       </div>
-      <div class="col-md-2">
-        <select class="form-select">
-          <option selected>Servicios</option>
+      <div class="col-md-3">
+        <!--<input type="date" id="fechaVuelta" class="form-control" name="fechaVuelta" placeholder="F. de vuelta" required>-->
+        <input type="text" class="form-control" id="fechaVuelta" placeholder="F. de vuelta" name="fechaVuelta" required
+               onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" />
+        <!--<select class="form-select">
+          <option selected>Vuelos</option>
+          <option>Servicios</option>
           <option>Hotel</option>
           <option>Auto</option>
           <option>Actividades</option>
-        </select>
+        </select>-->
       </div>
-      <div class="col-md-2">
-        <button class="btn btn-primary w-100">Buscar</button>
+      <div class="col-md-12">
+        <button class="btn btn-primary w-100">Buscar Vuelo</button>
       </div>
     </form>
   </div>
@@ -199,7 +205,7 @@
   </div>
 </section>
 
-<form th:action="@{/busqueda-vuelo}" method="post">
+<!--<form th:action="@{/busqueda-vuelo}" method="post">
   <label for="origen">Origen:</label>
   <input type="text" id="origen" name="origen" required>
   <label for="destino">Destino:</label>
@@ -209,7 +215,7 @@
   <label for="fechaVuelta">Fecha de vuelta:</label>
   <input type="date" id="fechaVuelta" name="fechaVuelta" required>
   <button type="submit">Buscar vuelo</button>
-</form>
+</form>-->
 <!-- Boostrap core js -->
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
