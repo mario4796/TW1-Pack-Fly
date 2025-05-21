@@ -70,7 +70,7 @@ public class Vuelo {
         return fechaVuelta;
     }
 
-    // MÃ©todo para derivar origen y destino desde los segmentos
+    // Método para derivar origen y destino desde los segmentos
     public void derivarOrigenYDestino() {
         if (segmentos != null && !segmentos.isEmpty()) {
             this.origen = segmentos.get(0).getAeropuertoSalida().getNombre();

@@ -32,7 +32,7 @@ public class ServicioVuelosImpl implements ServicioVuelos {
         String fechaVueltaStr = dateFormat.format(fechaVuelta);
         String baseUrl =String.format("https://serpapi.com/search.json?engine=google_flights&departure_id=" + origen.toUpperCase() + "&arrival_id=" +
                 destino.toUpperCase() + "&outbound_date=" + fechaIdaStr + "&return_date=" + fechaVueltaStr +
-                "&api_key=6517d90738cfae130702ee57ecf7d765a99a1d3a0335ee16852c89eec0c6990e") ;
+                "&api_key=902e4c6190ee25df47f8fd037098a1f16ac78e390eaa53a91c5daf2c930743a6") ;
         System.out.println("URL de consulta: " + baseUrl);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseUrl))
