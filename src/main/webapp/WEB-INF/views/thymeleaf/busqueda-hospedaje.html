@@ -4,11 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Búsqueda de Vuelo</title>
+    <title>Búsqueda de Hotel</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
     <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
@@ -46,9 +45,22 @@
         <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-house"></i> Hospedaje</button>
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-star"></i> Excursiones</button>
     </div>
+
+    <div th:if="${hoteles != null and !hoteles.isEmpty()}">
+        <div th:each="hotel : ${hoteles}" class="hotel-card">
+            <h2 th:text="${hotel.nombre}">Nombre del hotel</h2>
+            <p th:text="${hotel.descripcion}">Descripción del hotel</p>
+            <p><strong>Precio:</strong> <span th:text="${hotel.precio}">$123</span></p>
+        </div>
+    </div>
+
+    <div th:if="${hoteles == null or hoteles.isEmpty()}">
+        <p>No se encontraron hoteles disponibles para las fechas seleccionadas.</p>
+    </div>
 </main>
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
 </body>
 </html>

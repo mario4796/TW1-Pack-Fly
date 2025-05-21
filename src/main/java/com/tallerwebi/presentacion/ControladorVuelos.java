@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @Controller
@@ -27,11 +28,13 @@ public class ControladorVuelos {
             @RequestParam String destino,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaIda,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaVuelta,
-            Model model) {
+            Model model,
+            HttpSession session) {
 
         Vuelo vuelo = servicioVuelos.getVuelo(origen, destino, fechaIda, fechaVuelta);
 
         if (vuelo != null) {
+            session.setAttribute("vuelo", vuelo);
             model.addAttribute("vuelo", vuelo);
             model.addAttribute("vueloUrl", true); // esto activa el th:if
             model.addAttribute("valorIda", vuelo.getPrecio() );
