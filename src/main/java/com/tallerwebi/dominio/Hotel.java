@@ -1,52 +1,52 @@
 package com.tallerwebi.dominio;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.time.LocalDate;
 import java.util.List;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Hotel {
-    @JsonProperty("nombre")
     private String name;
-
-    @JsonProperty("descripcion")
-    private String description;
-
-    @JsonProperty("precio")
-    private String price;
-
-
-    public Hotel(String name, String description, String price) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-    }
+    private String link;
+    private Double overall_rating;
+    private Integer reviews;
+    private List<Image> images;
+    private RatePerNight rate_per_night;
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLink() {
+        return link;
     }
 
-    public String getDescription() {
-        return description;
+    public Double getOverall_rating() {
+        return overall_rating;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public Integer getReviews() {
+        return reviews;
     }
 
-    public String getPrice() {
-        return price;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public RatePerNight getRate_per_night() {
+        return rate_per_night;
     }
 
+    public static class Image {
+        private String thumbnail;
 
+        public String getThumbnail() {
+            return thumbnail;
+        }
+    }
+
+    public static class RatePerNight {
+        private String lowest;
+
+        public String getLowest() {
+            return lowest;
+        }
+    }
 }

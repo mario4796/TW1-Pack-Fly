@@ -2,18 +2,18 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Excursiones</title>
+    <title>Resultados de Hoteles</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
 
-    <!-- custom style -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
-<body>
 
+<body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center" href="/spring/home">
@@ -40,53 +40,43 @@
     </div>
 </nav>
 
-<main role="main" class="container" style="margin-top: 80px;">
+<main class="container d-flex flex-column align-items-center" style="margin-top: 80px;">
     <div class="btn-group col-md-12" role="group">
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-map"></i> Vuelo</button>
-        <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-house"></i> Hospedaje</button>
-        <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-star"></i> Excursiones</button>
+        <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-house"></i> Hospedaje</button>
+        <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-star"></i> Excursiones</button>
     </div>
-    <div class="container">
-        <h1 class="mb-4">Lista de Excursiones</h1>
+    <div class="overlay mt-3">
+        <h1>Hoteles encontrados</h1>
+        <p th:if="${#lists.isEmpty(hoteles)}">No se han encontrado hoteles.</p>
 
-        <div class="row">
-            <!-- Excursión 1 -->
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Excursión a la montaña</h5>
-                        <p class="card-text">Una emocionante caminata con vistas increíbles.</p>
-                        <a href="#" class="btn btn-primary">Ver más</a>
-                    </div>
+        <ul th:if="${hoteles != null and !#lists.isEmpty(hoteles)}">
+            <li th:each="hotel : ${hoteles}">
+                <!-- Mostrar imagen solo si existe al menos una -->
+                <div th:if="${hotel.images != null and !#lists.isEmpty(hotel.images)}">
+                    <img th:src="${hotel.images[0].thumbnail}" alt="Imagen del hotel" width="100"/>
                 </div>
-            </div>
 
-            <!-- Excursión 2 -->
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Excursión al río</h5>
-                        <p class="card-text">Relajate en la naturaleza junto al agua cristalina.</p>
-                        <a href="#" class="btn btn-primary">Ver más</a>
-                    </div>
+                <strong th:text="${hotel.name}">Hotel</strong><br/>
+                Precio: <span th:text="${hotel.rate_per_night != null ? hotel.rate_per_night.lowest : 'Precio no disponible'}"></span>
+                Rating: <span th:text="${hotel.overall_rating}">Rating</span><br/>
+                Reviews: <span th:text="${hotel.reviews}">Reseñas</span><br/>
+                <a th:href="${hotel.link}">Ver más</a>
+                <div class="col-12 d-flex justify-content-center">
+                    <a class="btn btn-success col-md-5 mt-2" href="/spring/excursiones">Seleccionar Hotel</a>
                 </div>
-            </div>
+                <hr/>
+            </li>
+        </ul>
+    </div>
 
-            <!-- Excursión 3 -->
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Safari en la reserva</h5>
-                        <p class="card-text">Descubrí la fauna autóctona en una excursión guiada.</p>
-                        <a href="#" class="btn btn-primary">Ver más</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+    <div th:if="${error}" class="alert alert-warning" role="alert">
+        <span th:text="${error}"></span>
     </div>
 </main>
 
-<!-- Bootstrap core JS -->
+<!-- Bootstrap JS -->
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
