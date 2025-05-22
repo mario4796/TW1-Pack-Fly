@@ -1,32 +1,38 @@
+<!-- src/main/webapp/WEB-INF/views/thymeleaf/excursiones.html -->
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Excursiones</title>
+    <title>Pack&Fly · Excursiones</title>
 
-    <!-- Bootstrap core CSS -->
+    <!-- Boostrap core css -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 
     <!-- custom style -->
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
-<body>
 
+<body data-bs-theme="dark">
+
+<!-- Header -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold d-flex align-items-center" href="/spring/home">
+        <a class="navbar-brand fw-bold d-flex align-items-center" th:href="@{/}">
             <i class="bi bi-suitcase2 me-1"></i><i class="bi bi-airplane me-2"></i> Pack&Fly
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/spring/home">Vuelos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" th:href="@{/vuelos}">Vuelos</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Excursiones</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{|/pais-info?country=Argentina|}">Destinos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>
                 <li class="nav-item"><a class="btn btn-primary ms-2" href="#">Mi Viaje</a></li>
                 <li class="nav-item d-flex align-items-center">
@@ -34,61 +40,70 @@
                         <i class="bi bi-moon"></i>
                     </button>
                 </li>
-
             </ul>
         </div>
     </div>
 </nav>
 
-<main role="main" class="container" style="margin-top: 80px;">
-    <div class="btn-group col-md-12" role="group">
-        <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-map"></i> Vuelo</button>
-        <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-house"></i> Hospedaje</button>
-        <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-star"></i> Excursiones</button>
-    </div>
+<!-- Contenido principal -->
+<main class="pt-5 mt-4">
     <div class="container">
-        <h1 class="mb-4">Lista de Excursiones</h1>
 
-        <div class="row">
-            <!-- Excursión 1 -->
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Excursión a la montaña</h5>
-                        <p class="card-text">Una emocionante caminata con vistas increíbles.</p>
-                        <a href="#" class="btn btn-primary">Ver más</a>
+        <!-- Sección de búsqueda -->
+        <section class="py-5 text-center">
+            <h1 class="display-5 fw-bold">Explorá Excursiones</h1>
+            <p class="lead">Buscá actividades y eventos en la ciudad que quieras.</p>
+            <form th:action="@{/excursiones}" method="get" class="row g-2 justify-content-center mt-4">
+                <div class="col-md-4">
+                    <input name="loc" th:value="${param.loc}" type="text"
+                           class="form-control form-control-lg" placeholder="Ciudad">
+                </div>
+                <div class="col-md-4">
+                    <input name="query" th:value="${param.query}" type="text"
+                           class="form-control form-control-lg" placeholder="Qué buscar">
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button class="btn btn-primary btn-lg">Buscar</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Resultados -->
+        <section class="py-5">
+            <div class="row g-4">
+                <div th:if="${#lists.isEmpty(excursiones)}"
+                     class="col-12 text-center text-muted">
+                    No se encontraron excursiones para esos criterios.
+                </div>
+
+                <div th:each="e : ${excursiones}" class="col-sm-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
+                        <!-- Podrías agregar <img> con th:src si la API devuelve imágenes -->
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title" th:text="${e.title}">Título de la excursión</h5>
+                            <h6 class="card-subtitle mb-2 text-muted"
+                                th:text="${e.location} + ' • ' + ${e.startDate}">
+                                Lugar • Fecha
+                            </h6>
+                            <p class="card-text flex-grow-1" th:text="${e.description}">
+                                Descripción breve de la excursión…
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 text-end">
+                            <a th:href="${e.url}" target="_blank" class="btn btn-outline-primary">
+                                Ver más
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Excursión 2 -->
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Excursión al río</h5>
-                        <p class="card-text">Relajate en la naturaleza junto al agua cristalina.</p>
-                        <a href="#" class="btn btn-primary">Ver más</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Excursión 3 -->
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Safari en la reserva</h5>
-                        <p class="card-text">Descubrí la fauna autóctona en una excursión guiada.</p>
-                        <a href="#" class="btn btn-primary">Ver más</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </main>
 
-<!-- Bootstrap core JS -->
-<script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
-<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
-<script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
+<!-- Bootstrap JS y Dark Mode -->
+<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/dark-mode.js}"></script>
 </body>
 </html>
