@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>Pack&Fly</title>
@@ -81,54 +81,17 @@
   <div class="overlay mt-3">
     <section id="resultados" class="py-5 bg-body rounded">
       <div class="container">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center align-items-md-center gap-3 mb-4">
-        <h3 class="text-body">Recomendados para vos</h3>
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-outline-secondary"><i class="bi bi-map"></i> Destinos</button>
-            <button type="button" class="btn btn-outline-secondary"><i class="bi bi-house"></i> Hoteles</button>
-            <button type="button" class="btn btn-outline-secondary"><i class="bi bi-car-front"></i> Autos</button>
-            <button type="button" class="btn btn-outline-secondary"><i class="bi bi-star"></i> Actividades</button>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mb-4">
+          <h3 class="text-body">Recomendados para vos</h3>
+          <div class="btn-group" role="group" id="category-buttons">
+            <button type="button" class="btn btn-outline-secondary active" data-category="destinos"><i class="bi bi-map"></i> Destinos</button>
+            <button type="button" class="btn btn-outline-secondary" data-category="hoteles"><i class="bi bi-house"></i> Hoteles</button>
+            <button type="button" class="btn btn-outline-secondary" data-category="autos"><i class="bi bi-car-front"></i> Autos</button>
+            <button type="button" class="btn btn-outline-secondary" data-category="actividades"><i class="bi bi-star"></i> Actividades</button>
           </div>
         </div>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-          <div class="col">
-            <div class="card h-100 shadow-sm">
-              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Paquete 1">
-              <div class="card-body">
-                <h5 class="card-title">Escapada a la Costa</h5>
-                <p class="card-text">Incluye vuelo, 3 noches de hotel y traslados. Desde $250.000</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100 shadow-sm">
-              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Paquete 2">
-              <div class="card-body">
-                <h5 class="card-title">Aventura en Bariloche</h5>
-                <p class="card-text">Vuelo + hotel + excursiones. Todo por $295.000</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100 shadow-sm">
-              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Paquete 3">
 
-              <div class="card-body">
-                <h5 class="card-title">Fin de semana en Buenos Aires</h5>
-                <p class="card-text">Vuelos y estadía céntrica. Ideal para escapada urbana. $180.000</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-100 shadow-sm">
-              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Paquete 4">
-              <div class="card-body">
-                <h5 class="card-title">Relax en Cataratas</h5>
-                <p class="card-text">Descubrí Iguazú con este paquete completo por $310.000</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container"></div>
       </div>
     </section>
   </div>
@@ -136,7 +99,7 @@
 
 <!-- Beneficios -->
 <section class="container py-5">
-  <div class="row text-center">
+  <div class="row justify-content-center text-center">
     <div class="col-md-3 icon-box">
       <i class="bi bi-sliders"></i>
       <h5>Viajes a medida</h5>
@@ -149,15 +112,17 @@
       <i class="bi bi-arrow-repeat"></i>
       <h5>Flexibilidad</h5>
     </div>
+    <!--
     <div class="col-md-3 icon-box">
       <i class="bi bi-shield-lock"></i>
       <h5>Pagos seguros</h5>
     </div>
+    -->
   </div>
 </section>
 
-<!-- Arma tu Paquete -->
-<section id="paquete" class="bg-body py-5">
+<!-- Arma tu Paquete (habilitar caundo se vaya a utilizar!!!)-->
+<!--<section id="paquete" class="bg-body py-5">
   <div class="container">
     <h2 class="text-center mb-4">Armá tu paquete</h2>
     <form class="row g-3">
@@ -204,7 +169,7 @@
       </div>
     </form>
   </div>
-</section>
+</section>-->
 
 <!--<form th:action="@{/busqueda-vuelo}" method="post">
   <label for="origen">Origen:</label>
@@ -221,5 +186,6 @@
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
+<script type="text/javascript" th:src="@{js/recomendaciones.js}"></script>
 </body>
 </html>
