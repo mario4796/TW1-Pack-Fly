@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.junit.Assert.*;
@@ -10,7 +10,7 @@ public class ControladorExcursionTest {
 
     private ControladorExcursion controladorExcursion;
 
-    @Before
+    @BeforeEach
     public void init() {
         controladorExcursion = new ControladorExcursion();
     }

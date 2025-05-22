@@ -2,8 +2,8 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioVuelos;
 import com.tallerwebi.dominio.Vuelo;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.ui.Model;
 
 import java.util.Date;
@@ -17,7 +17,7 @@ public class ControladorVuelosTest {
     private ControladorVuelos controlador;
     private Model model;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         servicioVuelos = mock(ServicioVuelos.class);
         controlador = new ControladorVuelos(servicioVuelos);
