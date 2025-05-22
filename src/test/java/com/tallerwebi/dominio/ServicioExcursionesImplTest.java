@@ -15,14 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-class ServicioExcursionesImplTest {
+public class ServicioExcursionesImplTest {
 
     private HttpClient httpClient;
     private ObjectMapper objectMapper;
     private ServicioExcursionesImpl servicio;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         servicio = new ServicioExcursionesImpl();
 
         httpClient   = mock(HttpClient.class);
@@ -35,7 +35,7 @@ class ServicioExcursionesImplTest {
     }
 
     @Test
-    void getExcursiones_respuestaValida_retornaListaDeExcursiones() throws Exception {
+    public void getExcursiones_respuestaValida_retornaListaDeExcursiones() throws Exception {
         String fakeJson = "{\n" +
                 "  \"events_results\": [\n" +
                 "    { \"title\": \"Cataratas del Iguazú\", \"link\": \"http://ejemplo.com/iguazu\" },\n" +
@@ -69,7 +69,7 @@ class ServicioExcursionesImplTest {
     }
 
     @Test
-    void getExcursiones_errorHttp_retornaListaVacia() throws Exception {
+    public void getExcursiones_errorHttp_retornaListaVacia() throws Exception {
         HttpResponse<String> httpResponse = mock(HttpResponse.class);
         when(httpResponse.statusCode()).thenReturn(500);
         // No body() because status != 200

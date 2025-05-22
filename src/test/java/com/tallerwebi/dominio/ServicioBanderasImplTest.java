@@ -12,21 +12,21 @@ import java.net.http.HttpResponse;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ServicioBanderasImplTest {
+public class ServicioBanderasImplTest {
 
     private HttpClient mockHttpClient;
     private ObjectMapper mockObjectMapper;
     private ServicioBanderasImpl servicio;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         mockHttpClient = mock(HttpClient.class);
         mockObjectMapper = mock(ObjectMapper.class);
         servicio = new ServicioBanderasImpl(mockHttpClient, mockObjectMapper);
     }
 
     @Test
-    void deberiaDevolverLaInfoDeArgentina_CuandoLaConsultaPorArgentinaEsExitosa() throws Exception {
+    public void deberiaDevolverLaInfoDeArgentina_CuandoLaConsultaPorArgentinaEsExitosa() throws Exception {
         HttpClient mockHttpClient = mock(HttpClient.class);
         ObjectMapper objectMapper = new ObjectMapper();
         ServicioBanderasImpl servicio = new ServicioBanderasImpl(mockHttpClient, objectMapper);
