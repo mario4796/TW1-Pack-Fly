@@ -11,10 +11,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class ControladorExcursionTest {
+public class ControladorExcursionTest {
 
     @Test
-    void verExcursiones_conValoresPorDefecto_debeInvocarServicioConDefaults() {
+    public void verExcursiones_conValoresPorDefecto_debeInvocarServicioConDefaults() {
         // Arrange
         ServicioExcursiones servicioMock = mock(ServicioExcursiones.class);
         ControladorExcursion controlador = new ControladorExcursion(servicioMock);
@@ -42,7 +42,7 @@ class ControladorExcursionTest {
     }
 
     @Test
-    void verExcursiones_conParametrosPersonalizados_debePasarlosAlServicio() {
+    public void verExcursiones_conParametrosPersonalizados_debePasarlosAlServicio() {
         // Arrange
         ServicioExcursiones servicioMock = mock(ServicioExcursiones.class);
         ControladorExcursion controlador = new ControladorExcursion(servicioMock);

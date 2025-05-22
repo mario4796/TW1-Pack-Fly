@@ -22,31 +22,39 @@
 <!-- Header -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold d-flex align-items-center" th:href="@{/}">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="./home">
             <i class="bi bi-suitcase2 me-1"></i><i class="bi bi-airplane me-2"></i> Pack&Fly
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item"><a class="nav-link" th:href="@{/vuelos}">Vuelos</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Excursiones</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{|/pais-info?country=Argentina|}">Destinos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>
-                <li class="nav-item"><a class="btn btn-primary ms-2" href="#">Mi Viaje</a></li>
-                <li class="nav-item d-flex align-items-center">
-                    <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button">
-                        <i class="bi bi-moon"></i>
-                    </button>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
+                <li class="nav-item"><a class="nav-link" href="./formulario-hoteles">Ver hoteles</a></li>
+                <!--<li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>-->
+                <!--<li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>-->
+                <!--<li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>-->
+                <a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a>
+                <!--<li class="nav-item"><a class="btn btn-primary ms-2" href="#">Mi Viaje</a></li><li class="nav-item d-flex align-items-center">-->
+                <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button">
+                    <i class="bi bi-moon"></i>
+                </button>
                 </li>
+
             </ul>
         </div>
     </div>
 </nav>
 
 <!-- Contenido principal -->
-<main class="pt-5 mt-4">
+<main class="container d-flex flex-column align-items-center" style="margin-top: 80px;">
+    <div class="btn-group col-md-12" role="group">
+        <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-map"></i> Vuelo</button>
+        <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-house"></i> Hospedaje</button>
+        <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-star"></i> Excursiones</button>
+    </div>
+    <section class="pt-5 mt-4">
     <div class="container">
 
         <!-- Sección de búsqueda -->
@@ -100,6 +108,7 @@
         </section>
 
     </div>
+    </section>
 </main>
 
 <!-- Bootstrap JS y Dark Mode -->
