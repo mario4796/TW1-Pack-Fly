@@ -33,7 +33,7 @@ public class ServicioVuelosImpl implements ServicioVuelos {
         String baseUrl =String.format("https://serpapi.com/search.json?engine=google_flights&departure_id=" + origen.toUpperCase() + "&arrival_id=" +
                 destino.toUpperCase() + "&outbound_date=" + fechaIdaStr + "&return_date=" + fechaVueltaStr +
                 "&api_key=6517d90738cfae130702ee57ecf7d765a99a1d3a0335ee16852c89eec0c6990e") ;
-        System.out.println("URL de consulta: " + baseUrl);
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseUrl))
                 .GET()
