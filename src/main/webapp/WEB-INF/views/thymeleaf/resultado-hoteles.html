@@ -42,8 +42,8 @@
 
 <main class="container d-flex flex-column align-items-center" style="margin-top: 80px;">
     <div class="btn-group col-md-12" role="group">
-        <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-map"></i> Vuelo</button>
-        <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-house"></i> Hospedaje</button>
+        <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-map"></i> Vuelo</button>
+        <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-house"></i> Hospedaje</button>
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-star"></i> Excursiones</button>
     </div>
     <div class="overlay mt-3">
@@ -62,6 +62,9 @@
                 Rating: <span th:text="${hotel.overall_rating}">Rating</span><br/>
                 Reviews: <span th:text="${hotel.reviews}">Reseñas</span><br/>
                 <a th:href="${hotel.link}">Ver más</a>
+                <div class="col-12 d-flex justify-content-center">
+                    <a class="btn btn-success col-md-5 mt-2" href="/spring/excursiones">Seleccionar Hotel</a>
+                </div>
                 <hr/>
             </li>
         </ul>

@@ -1,5 +1,7 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.Hotel;
+import com.tallerwebi.dominio.ServicioHotel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class HotelController {
+public class ControladorHotel {
     @Autowired
-    private HotelService hotelService;
+    private ServicioHotel hotelService;
 
     @GetMapping("/buscar-hoteles")
     public String buscar(

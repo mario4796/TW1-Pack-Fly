@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-public class HotelService {
+public class ServicioHotel {
     private final String API_KEY = "a59fc601949d79d62505d4a3c668dedf8e6e4c2756bd401124e13f7c1a4b6ad6";
 
     public List<Hotel> buscarHoteles(String ciudad, String checkIn, String checkOut) {
