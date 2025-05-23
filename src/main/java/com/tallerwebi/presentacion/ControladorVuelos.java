@@ -28,13 +28,11 @@ public class ControladorVuelos {
             @RequestParam String destino,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaIda,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaVuelta,
-            Model model,
-            HttpSession session) {
+            Model model) {
 
         Vuelo vuelo = servicioVuelos.getVuelo(origen, destino, fechaIda, fechaVuelta);
 
         if (vuelo != null) {
-            session.setAttribute("vuelo", vuelo);
             model.addAttribute("vuelo", vuelo);
             model.addAttribute("vueloUrl", true); // esto activa el th:if
             model.addAttribute("valorIda", vuelo.getPrecio() );

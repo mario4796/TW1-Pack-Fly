@@ -14,6 +14,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConfig {
 
+
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -24,6 +25,8 @@ public class HibernateConfig {
         return dataSource;
     }
 
+
+
     @Bean
     public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -32,6 +35,8 @@ public class HibernateConfig {
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
+
+
 
     @Bean
     public HibernateTransactionManager transactionManager() {
