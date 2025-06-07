@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Hotel;
 import com.tallerwebi.dominio.ServicioHotel;
+import com.tallerwebi.presentacion.utils.IconHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import java.util.List;
 public class ControladorHotel {
     @Autowired
     private ServicioHotel hotelService;
+    @Autowired private IconHelper iconHelper;
 
     @GetMapping("/buscar-hoteles")
     public String buscar(
@@ -24,6 +26,7 @@ public class ControladorHotel {
     ) {
         List<Hotel> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut);
         model.addAttribute("hoteles", hoteles);
+        model.addAttribute("iconHelper", iconHelper);
         return "resultado-hoteles"; // Nombre de tu vista Thymeleaf
     }
     @GetMapping("/formulario-hoteles")
