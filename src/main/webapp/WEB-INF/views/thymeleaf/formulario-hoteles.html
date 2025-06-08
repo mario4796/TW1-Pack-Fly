@@ -68,7 +68,7 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="adults" class="form-label">Cant. adultos:</label>
-                            <input type="number" id="adults" name="adults" class="form-control" value="0" min="0" required>
+                            <input type="number" id="adults" name="adults" class="form-control" value="1" min="1" required>
                         </div>
                         <div class="col-md-4">
                             <label for="children" class="form-label">Cant. niños:</label>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="children_ages" class="form-label">Edades niños (comas):</label>
-                            <input type="text" id="children_ages" name="children_ages" class="form-control" placeholder="5,8,10..." required>
+                            <input type="text" id="children_ages" name="children_ages" class="form-control" placeholder="5,8,10..." min="0">
                         </div>
                     </div>
 
@@ -99,5 +99,6 @@
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
+<script type="text/javascript" th:src="@{js/children_age_toggle.js}"></script>
 </body>
 </html>
