@@ -6,11 +6,10 @@
         const childrenCount = parseInt(childrenInput.value, 10);
 
         if (childrenCount === 0) {
-            childrenAgesInput.disabled = false;
+            childrenAgesInput.readOnly = true;
             childrenAgesInput.placeholder = "Sin niños";
-            childrenAgesInput.value = "";
         } else {
-            childrenAgesInput.disabled = false;
+            childrenAgesInput.readOnly = false;
             childrenAgesInput.placeholder = "5,8,10...";
         }
     }

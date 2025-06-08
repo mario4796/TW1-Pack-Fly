@@ -30,10 +30,10 @@ public class ControladorHotel {
         List<Hotel> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut, adults, children, children_ages);
         model.addAttribute("hoteles", hoteles);
         model.addAttribute("iconHelper", iconHelper);
-        return "resultado-hoteles"; // Nombre de tu vista Thymeleaf
+        return "busqueda-hoteles"; // Nombre de tu vista Thymeleaf
     }
-    @GetMapping("/formulario-hoteles")
+    @GetMapping("/busqueda-hoteles")
     public String mostrarFormulario() {
-        return "formulario-hoteles";
+        return "busqueda-hoteles";
     }
 }
