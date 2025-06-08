@@ -22,9 +22,12 @@ public class ControladorHotel {
             @RequestParam String ciudad,
             @RequestParam String checkIn,
             @RequestParam String checkOut,
+            @RequestParam Integer adults,
+            @RequestParam Integer children,
+            @RequestParam String children_ages,
             Model model
     ) {
-        List<Hotel> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut);
+        List<Hotel> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut, adults, children, children_ages);
         model.addAttribute("hoteles", hoteles);
         model.addAttribute("iconHelper", iconHelper);
         return "resultado-hoteles"; // Nombre de tu vista Thymeleaf
