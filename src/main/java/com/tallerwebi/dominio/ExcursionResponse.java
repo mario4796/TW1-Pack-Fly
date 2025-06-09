@@ -3,6 +3,8 @@ package com.tallerwebi.dominio;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tallerwebi.dominio.Implementaciones.ExcursionImpl;
+
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

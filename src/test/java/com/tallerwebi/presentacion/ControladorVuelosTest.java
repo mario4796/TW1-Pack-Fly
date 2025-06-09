@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioVuelos;
-import com.tallerwebi.dominio.Vuelo;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.Model;

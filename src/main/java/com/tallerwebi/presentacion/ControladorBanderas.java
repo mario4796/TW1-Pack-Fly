@@ -1,6 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Pais;
+import com.tallerwebi.dominio.entidades.Pais;
 import com.tallerwebi.dominio.ServicioBanderas;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

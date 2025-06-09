@@ -1,8 +1,9 @@
 // src/main/java/com/tallerwebi/dominio/ExcursionImpl.java
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.Implementaciones;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tallerwebi.dominio.Excursion;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExcursionImpl implements Excursion {

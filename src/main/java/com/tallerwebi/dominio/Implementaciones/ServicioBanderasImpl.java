@@ -1,4 +1,4 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.Implementaciones;
 
 import java.io.IOException;
 import java.net.URI;
@@ -7,6 +7,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tallerwebi.dominio.ServicioBanderas;
+import com.tallerwebi.dominio.entidades.Pais;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 

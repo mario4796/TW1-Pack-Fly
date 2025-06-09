@@ -1,14 +1,18 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
+import javax.annotation.processing.Generated;
+import javax.persistence.*;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Vuelo {
 
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @JsonProperty("price")
     private int precio;

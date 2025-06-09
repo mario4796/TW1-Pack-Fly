@@ -2,6 +2,7 @@ package com.tallerwebi.dominio;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tallerwebi.dominio.entidades.Vuelo;
 
 import java.util.List;
 
