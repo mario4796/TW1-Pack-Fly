@@ -8,6 +8,7 @@
         if (childrenCount === 0) {
             childrenAgesInput.readOnly = true;
             childrenAgesInput.placeholder = "Sin niños";
+            childrenAgesInput.value = "";
         } else {
             childrenAgesInput.readOnly = false;
             childrenAgesInput.placeholder = "5,8,10...";
