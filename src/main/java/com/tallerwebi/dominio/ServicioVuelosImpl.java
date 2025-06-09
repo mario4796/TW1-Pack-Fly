@@ -1,4 +1,4 @@
-package com.tallerwebi.dominio.Implementaciones;
+package com.tallerwebi.dominio;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -8,9 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tallerwebi.dominio.ServicioVuelos;
-import com.tallerwebi.dominio.VueloResponse;
-import com.tallerwebi.dominio.entidades.Vuelo;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

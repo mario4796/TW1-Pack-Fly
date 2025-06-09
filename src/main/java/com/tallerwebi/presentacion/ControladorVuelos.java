@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioVuelos;
-import com.tallerwebi.dominio.entidades.Vuelo;
+import com.tallerwebi.dominio.Vuelo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

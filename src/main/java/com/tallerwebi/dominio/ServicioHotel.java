@@ -1,6 +1,5 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.dominio.entidades.Hotel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

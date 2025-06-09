@@ -1,11 +1,9 @@
 // src/main/java/com/tallerwebi/dominio/ServicioExcursionesImpl.java
-package com.tallerwebi.dominio.Implementaciones;
+package com.tallerwebi.dominio;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tallerwebi.dominio.Excursion;
-import com.tallerwebi.dominio.ServicioExcursiones;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;

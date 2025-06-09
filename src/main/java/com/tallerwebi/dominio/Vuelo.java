@@ -1,9 +1,8 @@
-package com.tallerwebi.dominio.entidades;
+package com.tallerwebi.dominio;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import java.util.List;
 
