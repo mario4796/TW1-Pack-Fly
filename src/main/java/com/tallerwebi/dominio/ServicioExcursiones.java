@@ -4,5 +4,5 @@ package com.tallerwebi.dominio;
 import java.util.List;
 
 public interface ServicioExcursiones {
-    List<Excursion> getExcursiones(String location, String query);
+    List<ExcursionDTO> getExcursiones(String location, String query);
 }

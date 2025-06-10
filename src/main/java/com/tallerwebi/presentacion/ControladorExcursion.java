@@ -2,10 +2,14 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Excursion;
+import com.tallerwebi.dominio.ExcursionDTO;
+import com.tallerwebi.dominio.RepositorioExcursion;
 import com.tallerwebi.dominio.ServicioExcursiones;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -14,6 +18,9 @@ import java.util.List;
 public class ControladorExcursion {
 
     private final ServicioExcursiones servicio;
+
+    @Autowired
+    private  RepositorioExcursion repositorioExcursion;
 
     public ControladorExcursion(ServicioExcursiones servicio) {
         this.servicio = servicio;
@@ -25,10 +32,17 @@ public class ControladorExcursion {
             @RequestParam(name = "query", defaultValue = "excursiones")   String query,
             Model model) {
 
-        List<Excursion> lista = servicio.getExcursiones(loc, query);
+        List<ExcursionDTO> lista = servicio.getExcursiones(loc, query);
         model.addAttribute("excursiones", lista);
 
         // Solo el nombre de la plantilla, sin el prefijo Thymeleaf
         return "excursiones";
+    }
+
+    @PostMapping("/excursiones/guardar")
+    public String guardarExcursion(ExcursionDTO dto) {
+        Excursion excursion = dto.toEntity();
+        repositorioExcursion.guardar(excursion);
+        return "redirect:/excursiones " ;
     }
 }

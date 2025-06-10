@@ -26,7 +26,7 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
     private final ObjectMapper mapper   = new ObjectMapper();
 
     @Override
-    public List<Excursion> getExcursiones(String location, String query) {
+    public List<ExcursionDTO> getExcursiones(String location, String query) {
         if (apiKey == null || apiKey.isBlank()) {
             throw new IllegalStateException("SERPAPI_API_KEY no definida");
         }
@@ -57,9 +57,9 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
             if (response.statusCode() == 200) {
                 // ahora el JSON viene en la propiedad "events_results"
                 JsonNode root = mapper.readTree(response.body());
-                List<ExcursionImpl> lista =
+                List<ExcursionDTO> lista =
                         mapper.convertValue(root.get("events_results"),
-                                new TypeReference<List<ExcursionImpl>>(){});
+                                new TypeReference<List<ExcursionDTO>>(){});
                 return Collections.unmodifiableList(lista);
             } else {
                 System.err.println("Error HTTP " + response.statusCode());

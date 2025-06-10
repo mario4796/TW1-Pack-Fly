@@ -1,6 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Excursion;
+import com.tallerwebi.dominio.ExcursionDTO;
 import com.tallerwebi.dominio.ServicioExcursiones;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
@@ -19,9 +19,9 @@ public class ControladorExcursionTest {
         ServicioExcursiones servicioMock = mock(ServicioExcursiones.class);
         ControladorExcursion controlador = new ControladorExcursion(servicioMock);
 
-        Excursion e1 = mock(Excursion.class);
-        Excursion e2 = mock(Excursion.class);
-        List<Excursion> excursionesPorDefecto = List.of(e1, e2);
+        ExcursionDTO e1 = mock(ExcursionDTO.class);
+        ExcursionDTO e2 = mock(ExcursionDTO.class);
+        List<ExcursionDTO> excursionesPorDefecto = List.of(e1, e2);
 
         // Configuro el mock para los valores por defecto
         when(servicioMock.getExcursiones("Buenos Aires", "excursiones"))
@@ -36,7 +36,7 @@ public class ControladorExcursionTest {
         assertEquals("excursiones", vista, "Debe devolver la vista 'excursiones'");
         assertTrue(model.containsAttribute("excursiones"), "Debe agregar atributo 'excursiones'");
         @SuppressWarnings("unchecked")
-        List<Excursion> resultado = (List<Excursion>) model.getAttribute("excursiones");
+        List<ExcursionDTO> resultado = (List<ExcursionDTO>) model.getAttribute("excursiones");
         assertSame(excursionesPorDefecto, resultado, "El modelo debe contener la lista retornada por el servicio");
         verify(servicioMock).getExcursiones("Buenos Aires", "excursiones");
     }
@@ -47,7 +47,7 @@ public class ControladorExcursionTest {
         ServicioExcursiones servicioMock = mock(ServicioExcursiones.class);
         ControladorExcursion controlador = new ControladorExcursion(servicioMock);
 
-        List<Excursion> listaVacia = List.of();
+        List<ExcursionDTO> listaVacia = List.of();
         when(servicioMock.getExcursiones("Rosario", "turismo"))
                 .thenReturn(listaVacia);
 

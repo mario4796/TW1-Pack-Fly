@@ -101,6 +101,18 @@
                             <a th:href="${e.url}" target="_blank" class="btn btn-outline-primary">
                                 Ver más
                             </a>
+
+                            <!-- Formulario para guardar en la base de datos -->
+                            <form th:action="@{/excursiones/guardar}" method="post">
+                                <input type="hidden" name="title" th:value="${e.title}" />
+                                <input type="hidden" name="startDate" th:value="${e.startDate}" />
+                                <input type="hidden" name="location" th:value="${e.location}" />
+                                <input type="hidden" name="description" th:value="${e.description}" />
+                                <input type="hidden" name="url" th:value="${e.url}" />
+
+                                <button type="submit" class="btn btn-success">Agregar al paquete</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
