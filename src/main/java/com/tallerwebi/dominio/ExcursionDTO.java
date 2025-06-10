@@ -26,6 +26,9 @@ public class ExcursionDTO {
     @JsonProperty("price")
     private Double precio;
 
+
+    private Usuario usuario;
+
     public ExcursionDTO(Excursion excursion) {
         this.title = excursion.getTitle();
         this.startDate = excursion.getStartDate();
@@ -45,6 +48,9 @@ public class ExcursionDTO {
         entidad.setDescription(this.description);
         entidad.setUrl(this.url);
         entidad.setPrecio(this.precio);
+        entidad.setUsuario(usuario);
+
+
         return entidad;
     }
 

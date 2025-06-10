@@ -30,18 +30,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
-                <li class="nav-item"><a class="nav-link" href="./formulario-hoteles">Ver hoteles</a></li>
-                <!--<li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>-->
-                <!--<li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>-->
-                <!--<li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>-->
-                <a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a>
-                <!--<li class="nav-item"><a class="btn btn-primary ms-2" href="#">Mi Viaje</a></li><li class="nav-item d-flex align-items-center">-->
+                <!-- ... (otros elementos de menú existentes) ... -->
+                <li class="nav-item" th:if="${usuarioLogueado}">
+                    <a class="nav-link" href="#">Mi Cuenta</a>
+                </li>
+                <li class="nav-item" th:unless="${usuarioLogueado}">
+                    <a class="nav-link" href="/login">Iniciar Sesión</a>
+                </li>
                 <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button">
                     <i class="bi bi-moon"></i>
                 </button>
-                </li>
-
             </ul>
         </div>
     </div>
@@ -101,19 +99,30 @@
                             <a th:href="${e.url}" target="_blank" class="btn btn-outline-primary">
                                 Ver más
                             </a>
+                            <div th:if="${usuarioLogueado}">
+                                <!-- Formulario para guardar en la base de datos -->
+                                <form th:action="@{/excursiones/guardar}" method="post">
+                                    <input type="hidden" name="title" th:value="${e.title}" />
+                                    <input type="hidden" name="startDate" th:value="${e.startDate}" />
+                                    <input type="hidden" name="location" th:value="${e.location}" />
+                                    <input type="hidden" name="description" th:value="${e.description}" />
+                                    <input type="hidden" name="url" th:value="${e.url}" />
 
-                            <!-- Formulario para guardar en la base de datos -->
-                            <form th:action="@{/excursiones/guardar}" method="post">
-                                <input type="hidden" name="title" th:value="${e.title}" />
-                                <input type="hidden" name="startDate" th:value="${e.startDate}" />
-                                <input type="hidden" name="location" th:value="${e.location}" />
-                                <input type="hidden" name="description" th:value="${e.description}" />
-                                <input type="hidden" name="url" th:value="${e.url}" />
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-plus-circle"></i> Agregar
+                                    </button>
+                                </form>
+                            </div>
 
-                                <button type="submit" class="btn btn-success">Agregar al paquete</button>
-                            </form>
+                            <div th:unless="${usuarioLogueado}">
+                                <a href="/login" class="btn btn-outline-secondary"
+                                   title="Debes iniciar sesión para guardar excursiones">
+                                    <i class="bi bi-lock"></i> Guardar
+                                </a>
+                            </div>
 
                         </div>
+
                     </div>
                 </div>
             </div>
