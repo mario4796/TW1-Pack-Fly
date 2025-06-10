@@ -29,6 +29,10 @@ public class ExcursionDTO {
 
     private Usuario usuario;
 
+    public ExcursionDTO() {
+        // Constructor vacío requerido por Jackson
+    }
+
     public ExcursionDTO(Excursion excursion) {
         this.title = excursion.getTitle();
         this.startDate = excursion.getStartDate();

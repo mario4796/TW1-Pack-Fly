@@ -30,12 +30,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
+                <li class="nav-item"><a class="nav-link" href="./formulario-hoteles">Ver hoteles</a></li>
+                <a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a>
+
                 <!-- ... (otros elementos de menú existentes) ... -->
                 <li class="nav-item" th:if="${usuarioLogueado}">
                     <a class="nav-link" href="#">Mi Cuenta</a>
                 </li>
                 <li class="nav-item" th:unless="${usuarioLogueado}">
-                    <a class="nav-link" href="/login">Iniciar Sesión</a>
+                    <a class="nav-link" th:href="@{/login}">Iniciar Sesión</a>
                 </li>
                 <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button">
                     <i class="bi bi-moon"></i>
@@ -115,7 +120,7 @@
                             </div>
 
                             <div th:unless="${usuarioLogueado}">
-                                <a href="/login" class="btn btn-outline-secondary"
+                                <a th:href="@{/login}" class="btn btn-outline-secondary"
                                    title="Debes iniciar sesión para guardar excursiones">
                                     <i class="bi bi-lock"></i> Guardar
                                 </a>

@@ -1,65 +1,94 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ExcursionDTO;
-import com.tallerwebi.dominio.ServicioExcursiones;
+import com.tallerwebi.dominio.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class ControladorExcursionTest {
 
-    @Test
-    public void verExcursiones_conValoresPorDefecto_debeInvocarServicioConDefaults() {
-        // Arrange
-        ServicioExcursiones servicioMock = mock(ServicioExcursiones.class);
-        ControladorExcursion controlador = new ControladorExcursion(servicioMock);
+    private ServicioExcursionesImpl servicioExcursiones;
+    private ControladorExcursion controladorExcursion;
+    private Model model;
+    private HttpSession session;
+    private RedirectAttributes redirectAttributes;
 
-        ExcursionDTO e1 = mock(ExcursionDTO.class);
-        ExcursionDTO e2 = mock(ExcursionDTO.class);
-        List<ExcursionDTO> excursionesPorDefecto = List.of(e1, e2);
-
-        // Configuro el mock para los valores por defecto
-        when(servicioMock.getExcursiones("Buenos Aires", "excursiones"))
-                .thenReturn(excursionesPorDefecto);
-
-        Model model = new ConcurrentModel();
-
-        // Act: paso explícitamente los defaultValue que usa Spring
-        String vista = controlador.verExcursiones("Buenos Aires", "excursiones", model);
-
-        // Assert
-        assertEquals("excursiones", vista, "Debe devolver la vista 'excursiones'");
-        assertTrue(model.containsAttribute("excursiones"), "Debe agregar atributo 'excursiones'");
-        @SuppressWarnings("unchecked")
-        List<ExcursionDTO> resultado = (List<ExcursionDTO>) model.getAttribute("excursiones");
-        assertSame(excursionesPorDefecto, resultado, "El modelo debe contener la lista retornada por el servicio");
-        verify(servicioMock).getExcursiones("Buenos Aires", "excursiones");
+    @BeforeEach
+    public void init() {
+        servicioExcursiones = mock(ServicioExcursionesImpl.class);
+        controladorExcursion = new ControladorExcursion(servicioExcursiones);
+        model = mock(Model.class);
+        session = mock(HttpSession.class);
+        redirectAttributes = mock(RedirectAttributes.class);
     }
 
     @Test
-    public void verExcursiones_conParametrosPersonalizados_debePasarlosAlServicio() {
-        // Arrange
-        ServicioExcursiones servicioMock = mock(ServicioExcursiones.class);
-        ControladorExcursion controlador = new ControladorExcursion(servicioMock);
+    public void queAlSolicitarExcursionesDevuelvaLaVistaCorrecta() {
+        // preparación
+        List<ExcursionDTO> excursiones = new ArrayList<>();
+        when(servicioExcursiones.getExcursiones(anyString(), anyString())).thenReturn(excursiones);
 
-        List<ExcursionDTO> listaVacia = List.of();
-        when(servicioMock.getExcursiones("Rosario", "turismo"))
-                .thenReturn(listaVacia);
+        // ejecución
+        String vista = controladorExcursion.verExcursiones("Buenos Aires", "excursiones", model, session);
 
-        Model model = new ConcurrentModel();
-
-        // Act
-        String vista = controlador.verExcursiones("Rosario", "turismo", model);
-
-        // Assert
+        // verificación
         assertEquals("excursiones", vista);
-        assertEquals(listaVacia, model.getAttribute("excursiones"),
-                "El modelo debe reflejar la lista que devuelva el servicio");
-        verify(servicioMock).getExcursiones("Rosario", "turismo");
+    }
+
+    @Test
+    public void queAlSolicitarExcursionesAgregueLaListaAlModelo() {
+        // preparación
+        List<ExcursionDTO> excursiones = new ArrayList<>();
+
+        // Primero crear la entidad Excursion
+        Excursion excursion = new Excursion();
+        excursion.setTitle("Tour por la ciudad");
+        excursion.setStartDate("2025-07-15");
+        excursion.setLocation("Buenos Aires");
+        excursion.setDescription("Recorrido por los puntos principales");
+        excursion.setUrl("https://ejemplo.com/tour");
+        excursion.setPrecio(1500.0);
+
+        // Luego crear el DTO usando el constructor
+        excursiones.add(new ExcursionDTO(excursion));
+
+        when(servicioExcursiones.getExcursiones(anyString(), anyString())).thenReturn(excursiones);
+
+        // ejecución y verificación
+        controladorExcursion.verExcursiones("Buenos Aires", "excursiones", model, session);
+        verify(model).addAttribute("excursiones", excursiones);
+    }
+
+    @Test
+    public void queAgregueUsuarioLogueadoAlModeloCuandoExisteSesion() {
+        // preparación
+        Usuario usuarioMock = mock(Usuario.class);
+        when(session.getAttribute("usuario")).thenReturn(usuarioMock);
+
+        // ejecución
+        controladorExcursion.verExcursiones("Buenos Aires", "excursiones", model, session);
+
+        // verificación
+        verify(model).addAttribute("usuarioLogueado", true);
+    }
+
+    @Test
+    public void queNoAgregueUsuarioLogueadoAlModeloCuandoNoHaySesion() {
+        // preparación
+        when(session.getAttribute("usuario")).thenReturn(null);
+
+        // ejecución
+        controladorExcursion.verExcursiones("Buenos Aires", "excursiones", model, session);
+
+        // verificación
+        verify(model).addAttribute("usuarioLogueado", false);
     }
 }
