@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Resultados de Hoteles</title>
+
+    <title>Buscar Hoteles</title>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
@@ -25,8 +26,9 @@
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
                 <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
+                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
                 <li class="nav-item">
-                    <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button">
+                    <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
                         <i class="bi bi-moon"></i>
                     </button>
                 </li>
@@ -36,7 +38,7 @@
 </nav>
 
 <main class="container d-flex flex-column align-items-center" style="margin-top: 80px;">
-    <div class="btn-group col-md-12 mb-4" role="group">
+    <div class="btn-group col-md-12" role="group">
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-map"></i> Vuelo</button>
         <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-house"></i> Hospedaje</button>
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-star"></i> Excursiones</button>
@@ -92,7 +94,7 @@
         </div>
     </div>
 
-    <div class="overlay w-100">
+    <div th:if="${hoteles}" class="overlay w-100 mt-2">
         <h1 class="mb-4 text-center">Hoteles encontrados</h1>
         <p th:if="${#lists.isEmpty(hoteles)}">No se han encontrado hoteles.</p>
 
@@ -137,10 +139,10 @@
                                     <span th:text="${hotel.reviews}">0</span>
                                 </p>
 
-                                <a th:href="${hotel.link}" class="text-decoration-none d-inline-block mt-2"
+                                <!--<a th:href="${hotel.link}" class="text-decoration-none d-inline-block mt-2"
                                    target="_blank">
                                     Ver más <i class="bi bi-box-arrow-up-right"></i>
-                                </a>
+                                </a>-->
 
                                 <div th:if="${hotel.amenities != null and !#lists.isEmpty(hotel.amenities)}"
                                      class="mt-3">
@@ -194,6 +196,8 @@
 </main>
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
+<script type="text/javascript" th:src="@{js/children_age_toggle.js}"></script>
 </body>
 </html>
