@@ -23,7 +23,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
-                <li class="nav-item"><a class="nav-link" href="./formulario-hoteles">Ver hoteles</a></li>
+                <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
                 <li class="nav-item">
                     <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button">
@@ -50,29 +50,34 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="ciudad" class="form-label">Ciudad:</label>
-                            <input type="text" id="ciudad" name="ciudad" class="form-control" th:value="${datobusqueda.ciudad}" required>
+                            <input type="text" id="ciudad" name="ciudad" class="form-control"
+                                   th:value="${datobusqueda != null and datobusqueda.ciudad != null ? datobusqueda.ciudad : ''}" required>
                         </div>
                         <div class="col-md-3">
                             <label for="checkIn" class="form-label" >Fecha check-in:</label>
-                            <input type="date" id="checkIn" name="checkIn" class="form-control"  th:value="${datobusqueda.checkIn}" required>
+                            <input type="date" id="checkIn" name="checkIn" class="form-control"
+                                   th:value="${datobusqueda != null and datobusqueda.checkIn != null ? datobusqueda.checkIn : ''}" required>
                         </div>
                         <div class="col-md-3">
                             <label for="checkOut" class="form-label" >Fecha check-out:</label>
-                            <input type="date" id="checkOut" name="checkOut" class="form-control" th:value="${datobusqueda.checkout}" required>
+                            <input type="date" id="checkOut" name="checkOut" class="form-control"
+                                   th:value="${datobusqueda != null and datobusqueda.checkout != null ? datobusqueda.checkout : ''}" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="adults" class="form-label">Cant. adultos:</label>
-                            <input type="number" id="adults" name="adults" class="form-control" value="1" min="1"  th:value="${datobusqueda.adults}"required>
+                            <input type="number" id="adults" name="adults" class="form-control" value="1" min="1"
+                                   th:value="${datobusqueda != null and datobusqueda.adults != null ? datobusqueda.adults : ''}" required>
                         </div>
                         <div class="col-md-4">
                             <label for="children" class="form-label" >Cant. niños:</label>
-                            <input type="number" id="children" name="children" class="form-control" value="0" min="0" th:value="${datobusqueda.children}"required>
+                            <input type="number" id="children" name="children" class="form-control" value="0" min="0"
+                                   th:value="${datobusqueda != null and datobusqueda.children != null ? datobusqueda.children : ''}" required>
                         </div>
                         <div class="col-md-4">
-                            <label for="children_ages" class="form-label">Edades niños (comas):</label>
+                            <label for="children_ages" class="form-label">Edades niños (comas sin espacios):</label>
                             <input type="text" id="children_ages" name="children_ages" class="form-control" placeholder="5,8,10...">
                         </div>
                     </div>

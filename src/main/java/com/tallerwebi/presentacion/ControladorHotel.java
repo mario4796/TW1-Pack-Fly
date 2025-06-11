@@ -1,10 +1,8 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.RepositorioHotel;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.infraestructura.RepositorioHotelImp;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.utils.IconHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +41,12 @@ public class ControladorHotel {
         model.addAttribute("datobusqueda", datobusqueda);
         model.addAttribute("hoteles", hoteles);
         model.addAttribute("iconHelper", iconHelper);
-        return "resultado-hoteles"; // Nombre de tu vista Thymeleaf
+        return "busqueda-hoteles"; // Nombre de tu vista Thymeleaf
     }
 
-    @GetMapping("/formulario-hoteles")
+    @GetMapping("/busqueda-hoteles")
     public String mostrarFormulario() {
-        return "formulario-hoteles";
+        return "busqueda-hoteles";
     }
 
     @PostMapping("/reservar")
