@@ -15,33 +15,33 @@ public class Reserva {
     // Datos del vuelo
     private String origen;
     private String destino;
-    private String fechaSalida;
-    private String horaSalida;
-    private String aerolinea;
+    private String fechaIda;
+    private String fechaVuelta;
 
     public Reserva() {
     }
 
-    public Reserva(String nombre, String email, String origen, String destino, String fechaSalida, String horaSalida, String aerolinea) {
+    public Reserva(String nombre, String email, String origen, String destino, String fechaIda, String fechaVuelta) {
         this.nombre = nombre;
         this.email = email;
         this.origen = origen;
         this.destino = destino;
-        this.fechaSalida = fechaSalida;
-        this.horaSalida = horaSalida;
-        this.aerolinea = aerolinea;
+        this.fechaIda = fechaIda;
+        this.fechaVuelta = fechaVuelta;
     }
+
+    // Getters y Setters
 
     public Long getId() {
         return id;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public String getNombre() {
         return nombre;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getOrigen() {
@@ -52,16 +52,12 @@ public class Reserva {
         return destino;
     }
 
-    public String getFechaSalida() {
-        return fechaSalida;
+    public String getFechaIda() {
+        return fechaIda;
     }
 
-    public String getHoraSalida() {
-        return horaSalida;
-    }
-
-    public String getAerolinea() {
-        return aerolinea;
+    public String getFechaVuelta() {
+        return fechaVuelta;
     }
 
     public void setId(Long id) {
@@ -80,21 +76,15 @@ public class Reserva {
         this.origen = origen;
     }
 
-    public void setFechaSalida(String fechaSalida) {
-        this.fechaSalida = fechaSalida;
-    }
-
     public void setDestino(String destino) {
         this.destino = destino;
     }
 
-    public void setHoraSalida(String horaSalida) {
-        this.horaSalida = horaSalida;
+    public void setFechaIda(String fechaIda) {
+        this.fechaIda = fechaIda;
     }
 
-    public void setAerolinea(String aerolinea) {
-        this.aerolinea = aerolinea;
+    public void setFechaVuelta(String fechaVuelta) {
+        this.fechaVuelta = fechaVuelta;
     }
-
-    // Getters y setters omitidos por brevedad, pero deben agregarse todos.
 }

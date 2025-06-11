@@ -27,6 +27,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+
+        <form th:action="@{/ver-reservas}" method="get" class="d-flex ms-3" role="search">
+          <input class="form-control me-2" type="email" name="email" placeholder="Tu email" required>
+          <button class="btn btn-outline-light" type="submit">Ver reservas</button>
+        </form>
+
         <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
         <li class="nav-item"><a class="nav-link" href="./formulario-hoteles">Ver hoteles</a></li>
         <!--<li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>-->
