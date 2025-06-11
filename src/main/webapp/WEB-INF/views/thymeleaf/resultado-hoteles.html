@@ -42,6 +42,51 @@
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-star"></i> Excursiones</button>
     </div>
 
+    <div class="overlay mt-3">
+        <h1 class="text-white text-center mb-4">Buscar Hoteles</h1>
+        <div class="card shadow">
+            <div class="card-body">
+                <form th:action="@{/buscar-hoteles}" method="get">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="ciudad" class="form-label">Ciudad:</label>
+                            <input type="text" id="ciudad" name="ciudad" class="form-control" th:value="${datobusqueda.ciudad}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="checkIn" class="form-label" >Fecha check-in:</label>
+                            <input type="date" id="checkIn" name="checkIn" class="form-control"  th:value="${datobusqueda.checkIn}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="checkOut" class="form-label" >Fecha check-out:</label>
+                            <input type="date" id="checkOut" name="checkOut" class="form-control" th:value="${datobusqueda.checkout}" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="adults" class="form-label">Cant. adultos:</label>
+                            <input type="number" id="adults" name="adults" class="form-control" value="1" min="1"  th:value="${datobusqueda.adults}"required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="children" class="form-label" >Cant. niños:</label>
+                            <input type="number" id="children" name="children" class="form-control" value="0" min="0" th:value="${datobusqueda.children}"required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="children_ages" class="form-label">Edades niños (comas):</label>
+                            <input type="text" id="children_ages" name="children_ages" class="form-control" placeholder="5,8,10...">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search me-1"></i> Buscar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="overlay w-100">
         <h1 class="mb-4 text-center">Hoteles encontrados</h1>
         <p th:if="${#lists.isEmpty(hoteles)}">No se han encontrado hoteles.</p>
@@ -119,7 +164,16 @@
                                 </div>
 
                                 <div class="d-grid mt-3">
-                                    <a class="btn btn-success" href="./excursiones">Seleccionar Hotel</a>
+                                    <form th:action="@{/reservar}" method="post">
+                                        <input type="hidden" name="name" th:value="${hotel.name}" />
+                                        <input type="hidden" name="ciudad" th:value="${datobusqueda.ciudad}" />
+                                        <input type="hidden" name="checkIn" th:value="${datobusqueda.checkIn}" />
+                                        <input type="hidden" name="checkOut" th:value="${datobusqueda.checkout}" />
+                                        <input type="hidden" name="adults" th:value="${datobusqueda.adults}" />
+                                        <input type="hidden" name="children" th:value="${datobusqueda.children}" />
+                                        <!-- agregá más campos que necesites -->
+                                        <button type="submit" class="btn btn-success">Seleccionar Hotel</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

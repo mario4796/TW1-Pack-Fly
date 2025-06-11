@@ -17,10 +17,14 @@ public class HibernateConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
+        // dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:hsqldb:mem:db_");
-        dataSource.setUsername("sa");
-        dataSource.setPassword("");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/tallerwebi");
+        dataSource.setUsername("user");
+        dataSource.setPassword("user");
+        // dataSource.setUsername("sa");
+        // dataSource.setPassword("");
         return dataSource;
     }
 
@@ -40,7 +44,8 @@ public class HibernateConfig {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+        // properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL57Dialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
         properties.setProperty("hibernate.hbm2ddl.auto", "create");
