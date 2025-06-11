@@ -74,7 +74,7 @@ public class ControladorHotel {
         hotel.setUsuario(usuario);
         hotelService.reserva(hotel);
 
-        return "redirect:/reservas"; // o donde quieras
+        return "redirect:/excursiones?reservaExitosa=true"; // o donde quieras
     }
 
     @GetMapping("/reservas")
