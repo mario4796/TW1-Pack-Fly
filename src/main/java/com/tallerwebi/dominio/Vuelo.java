@@ -2,37 +2,48 @@ package com.tallerwebi.dominio;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
-import java.util.Date;
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Vuelo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @JsonProperty("price")
-    private int precio;
+    private Integer precio;
+
     @JsonProperty("total_duration")
     private String duracionTotal;
 
-    @JsonProperty("flights")
+    @Transient // No lo persistimos en la base por ahora
     private List<SegmentoVuelo> segmentos;
 
     private String origen;
     private String destino;
-
     private String fechaIda;
     private String fechaVuelta;
 
+    // Getters y setters básicos
 
-    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public int getPrecio() {
+    public Integer getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(Integer precio) {
         this.precio = precio;
     }
 
@@ -48,10 +59,11 @@ public class Vuelo {
         return segmentos;
     }
 
+    @JsonSetter("flights")
     public void setSegmentos(List<SegmentoVuelo> segmentos) {
         this.segmentos = segmentos;
-        derivarOrigenYDestino(); // actualizar origen y destino cuando se setea
-        devolverFechas();
+        derivarOrigenYDestino();
+        derivarFechas();
     }
 
     public String getOrigen() {
@@ -70,37 +82,25 @@ public class Vuelo {
         return fechaVuelta;
     }
 
-    // MÃ©todo para derivar origen y destino desde los segmentos
-    public void derivarOrigenYDestino() {
+    // Derivar datos desde segmentos
+    private void derivarOrigenYDestino() {
         if (segmentos != null && !segmentos.isEmpty()) {
             this.origen = segmentos.get(0).getAeropuertoSalida().getNombre();
             this.destino = segmentos.get(0).getAeropuertoLlegada().getNombre();
         }
     }
 
-    public void devolverFechas() {
+    private void derivarFechas() {
         if (segmentos != null && !segmentos.isEmpty()) {
             this.fechaIda = segmentos.get(0).getAeropuertoSalida().getFecha();
             this.fechaVuelta = segmentos.get(0).getAeropuertoLlegada().getFecha();
         }
     }
 
-    // Clase anidada para el precio
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Precio {
-        @JsonProperty("amount")
-        private String valor;
+    // =============================
+    // Clases internas para el JSON
+    // =============================
 
-        public String getValor() {
-            return valor;
-        }
-
-        public void setValor(String valor) {
-            this.valor = valor;
-        }
-    }
-
-    // Clase anidada para cada segmento de vuelo
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SegmentoVuelo {
         @JsonProperty("departure_airport")
@@ -126,7 +126,6 @@ public class Vuelo {
         }
     }
 
-    // Clase anidada para aeropuerto
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Aeropuerto {
         @JsonProperty("name")
@@ -158,5 +157,8 @@ public class Vuelo {
             return fecha;
         }
 
+        public void setFecha(String fecha) {
+            this.fecha = fecha;
+        }
     }
 }
