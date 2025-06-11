@@ -51,7 +51,7 @@ public class IconHelper {
         amenityIcons.put("Accessible", "savings");
         amenityIcons.put("Smoke-free property", "smoke_free");
         amenityIcons.put("Parking ($)", "local_parking");
-        amenityIcons.put("Business centre", "business-center");
+        amenityIcons.put("Business centre", "business");
         amenityIcons.put("Full-service laundry", "local_laundry_service");
         amenityIcons.put("Kitchen in some rooms", "kitchen");
     }

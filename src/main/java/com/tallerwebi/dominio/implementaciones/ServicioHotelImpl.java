@@ -1,4 +1,4 @@
-package com.tallerwebi.implementaciones;
+package com.tallerwebi.dominio.implementaciones;
 
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.entidades.Hotel;

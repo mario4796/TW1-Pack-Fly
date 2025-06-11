@@ -1,5 +1,9 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.entidades.Hotel;
+import com.tallerwebi.dominio.implementaciones.ServicioHotelImpl;
+import com.tallerwebi.infraestructura.RepositorioHotelImp;
+import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -8,10 +12,38 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServicioHotelImplTest {
 
-    private final ServicioHotelImpl servicioHotel = new ServicioHotelImpl();
+    private RepositorioHotelImp mockRepositorio;
+    private ServicioHotelImpl servicioHotel;
 
-    // Descomentar los test para probarlos (CONSUMEN CONSULTAS DE LA API!!!)
-    /*
+    // Descomentar los test para probarlos
+    @BeforeEach
+    void setUp() {
+        mockRepositorio = mock(RepositorioHotelImp.class);
+        servicioHotel = new ServicioHotelImpl(mockRepositorio);
+    }
+
+    @Test
+    void queAlBuscarReservasDevuelvaLasDelRepositorio() {
+        Long usuarioId = 1L;
+        List<HotelDto> reservasEsperadas = List.of(new HotelDto(), new HotelDto());
+        when(mockRepositorio.buscarReserva(usuarioId)).thenReturn(reservasEsperadas);
+
+        List<HotelDto> resultado = servicioHotel.buscarReservas(usuarioId);
+
+        assertNotNull(resultado);
+        assertEquals(2, resultado.size());
+        assertEquals(reservasEsperadas, resultado);
+    }
+
+    @Test
+    void queAlReservarUnHotelNoDevuelvaNada() {
+        Hotel hotel = new Hotel();
+
+        assertDoesNotThrow(() -> servicioHotel.reserva(hotel));
+    }
+
+
+    /* Estos tests consumen consultas de la API!!! Descomentar para usarlos
     @Test
     void queAlBuscarUnHotelMeDeberiaDevolverElResultadoDeLaBusquedaCorrectamente() {
         String ciudad = "Buenos Aires";
@@ -21,13 +53,12 @@ class ServicioHotelImplTest {
         int children = 0;
         String children_ages = "";
 
-        List<Hotel> resultado = servicioHotel.buscarHoteles(ciudad, checkIn, checkOut, adults, children, children_ages);
+        List<HotelDto> resultado = servicioHotel.buscarHoteles(ciudad, checkIn, checkOut, adults, children, children_ages);
 
         assertNotNull(resultado);
         assertFalse(resultado.isEmpty());
     }
-*/
-/*
+
     @Test
     void queAlBuscarUnHotelConFechasIncorrectosArrojaUnError() {
         String ciudad = "Buenos Aires";
@@ -37,7 +68,7 @@ class ServicioHotelImplTest {
         int children = 0;
         String children_ages = "";
 
-        List<Hotel> resultado;
+        List<HotelDto> resultado;
 
         try {
             resultado = servicioHotel.buscarHoteles(ciudad, checkIn, checkOut, adults, children, children_ages);
