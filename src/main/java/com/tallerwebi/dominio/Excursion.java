@@ -14,7 +14,9 @@ public class Excursion {
 
     private String title;
     private String startDate;
+    @Transient
     private String location;
+    @Transient
     private String description;
     private String url;
     private Double precio; // Nuevo campo

@@ -24,7 +24,7 @@ import java.util.List;
 @Transactional // Puedes poner @Transactional a nivel de clase o en métodos individuales
 public class ServicioExcursionesImpl implements ServicioExcursiones {
     //a59fc601949d79d62505d4a3c668dedf8e6e4c2756bd401124e13f7c1a4b6ad6
-    private final String apiKey  = "a59fc601949d79d62505d4a3c668dedf8e6e4c2756bd401124e13f7c1a4b6ad6";
+    private final String apiKey  = "902e4c6190ee25df47f8fd037098a1f16ac78e390eaa53a91c5daf2c930743a6";
     //private final String apiKey  = "1d9b2f7b6812e654ec3ab0f399081e03a4402ff91bf6f50ef00bb403d2014118";
     private static final String BASE_URL = "https://serpapi.com/search";
     private static final String ENGINE   = "google_events";
@@ -84,7 +84,7 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
         return Collections.emptyList();
     }
 
-    // 3. IMPLEMENTACIÓN DEL NUEVO MÉTODO TRANSACCIONAL
+    // 3. IMPLEMENTACIÓN DEL NUEVO MÉT ODO TRANSACCIONAL
     @Override
     // Si @Transactional está a nivel de clase, no es estrictamente necesario aquí, pero es buena práctica para claridad.
     // Si la anotación de clase es de javax.transaction, entonces sí es necesario aquí.
