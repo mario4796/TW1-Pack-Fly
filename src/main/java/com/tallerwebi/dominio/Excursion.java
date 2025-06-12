@@ -9,12 +9,14 @@ import javax.persistence.*;
 public class Excursion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String title;
     private String startDate;
+    @Transient
     private String location;
+    @Transient
     private String description;
     private String url;
     private Double precio; // Nuevo campo

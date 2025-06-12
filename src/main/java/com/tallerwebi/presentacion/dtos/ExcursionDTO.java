@@ -1,8 +1,9 @@
 // src/main/java/com/tallerwebi/dominio/ExcursionImpl.java
-package com.tallerwebi.dominio;
+package com.tallerwebi.presentacion.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tallerwebi.dominio.Excursion;
 import com.tallerwebi.dominio.entidades.Usuario;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -42,6 +43,10 @@ public class ExcursionDTO {
         this.url = excursion.getUrl();
 
         this.precio = ThreadLocalRandom.current().nextDouble(1000.0, 5000.0);
+    }
+    public ExcursionDTO(String title, String url) {
+        this.title = title;
+        this.url = url;
     }
 
 

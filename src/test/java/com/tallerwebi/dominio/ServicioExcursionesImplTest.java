@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -19,11 +20,12 @@ public class ServicioExcursionesImplTest {
 
     private HttpClient httpClient;
     private ObjectMapper objectMapper;
+    private RepositorioExcursion repositorioExcursion;
     private ServicioExcursionesImpl servicio;
 
     @BeforeEach
     public void setUp() {
-        servicio = new ServicioExcursionesImpl();
+        servicio = new ServicioExcursionesImpl(repositorioExcursion);
 
         httpClient   = mock(HttpClient.class);
         objectMapper = new ObjectMapper();

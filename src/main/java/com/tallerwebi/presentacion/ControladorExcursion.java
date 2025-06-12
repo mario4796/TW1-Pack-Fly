@@ -1,8 +1,11 @@
 // src/main/java/com/tallerwebi/presentacion/ControladorExcursion.java
+// src/main/java/com/tallerwebi/presentacion/ControladorExcursion.java
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.Excursion; // Asegúrate de importar Excursion
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +21,12 @@ import java.util.List;
 @Controller
 public class ControladorExcursion {
 
-    private final ServicioExcursiones servicio;
+    private final ServicioExcursiones servicio; // Ya tienes esto inyectado
 
-    @Autowired
-    private  RepositorioExcursion repositorioExcursion;
+    // @Autowired
+    // private  RepositorioExcursion repositorioExcursion; // <-- ELIMINA esta inyección directa del repositorio
 
+    @Autowired // Puedes mantener este constructor si ya lo tienes
     public ControladorExcursion(ServicioExcursiones servicio) {
         this.servicio = servicio;
     }
@@ -50,7 +54,7 @@ public class ControladorExcursion {
     @PostMapping("/excursiones/guardar")
     public String guardarExcursion(ExcursionDTO dto, HttpSession session, RedirectAttributes redirectAttributes) {
 
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
 
         if (usuario == null || !usuario.activo()) {
             redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para guardar excursiones");
@@ -59,9 +63,25 @@ public class ControladorExcursion {
 
         Excursion excursion = dto.toEntity();
         excursion.setUsuario(usuario);
-        repositorioExcursion.guardar(excursion);
 
+        servicio.guardarExcursion(excursion); // <-- LLAMA AL SERVICIO EN LUGAR DEL REPOSITORIO
 
         return "redirect:/excursiones" ;
     }
+
+    @GetMapping("/reservas-excursiones")
+    public String verReservasUsuario(HttpSession session, Model model) {
+        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        Long idUsuario = usuario.getId(); // ✅ Obtener el ID del usuario logueado
+        List<Excursion> excursiones = servicio.obtenerExcursionesDeUsuario(idUsuario); // ✅ Usar el nuevo método
+
+        model.addAttribute("excursiones", excursiones);
+        return "reservas"; // Asegurate de que esta vista exista y renderice las excursiones
+    }
+
 }

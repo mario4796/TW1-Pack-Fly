@@ -1,4 +1,4 @@
-<!-- src/main/webapp/WEB-INF/views/thymeleaf/excursiones.html -->
+﻿<!-- src/main/webapp/WEB-INF/views/thymeleaf/excursiones.html -->
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -30,21 +30,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
-                <li class="nav-item"><a class="nav-link" href="./formulario-hoteles">Ver hoteles</a></li>
-                <a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a>
-
-                <!-- ... (otros elementos de menú existentes) ... -->
-                <li class="nav-item" th:if="${usuarioLogueado}">
-                    <a class="nav-link" href="#">Mi Cuenta</a>
+                <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
+                <li class="nav-item"><a class="nav-link" href="./excursiones">Ver Excursiones</a></li>
+                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
+                <li class="nav-item">
+                    <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
+                        <i class="bi bi-moon"></i>
+                    </button>
                 </li>
-                <li class="nav-item" th:unless="${usuarioLogueado}">
-                    <a class="nav-link" th:href="@{/login}">Iniciar Sesión</a>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-outline-danger ms-lg-2 mt-1 mt-lg-0">Cerrar sesión</button>
+                    </form>
                 </li>
-                <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button">
-                    <i class="bi bi-moon"></i>
-                </button>
             </ul>
         </div>
     </div>
@@ -106,12 +105,13 @@
                             </a>
                             <div th:if="${usuarioLogueado}">
                                 <!-- Formulario para guardar en la base de datos -->
-                                <form th:action="@{/excursiones/guardar}" method="post">
+                                <form th:action="@{/excursiones/guardar}" method="post" accept-charset="UTF-8">
                                     <input type="hidden" name="title" th:value="${e.title}" />
                                     <input type="hidden" name="startDate" th:value="${e.startDate}" />
                                     <input type="hidden" name="location" th:value="${e.location}" />
                                     <input type="hidden" name="description" th:value="${e.description}" />
                                     <input type="hidden" name="url" th:value="${e.url}" />
+                                    <input type="hidden" name="precio" th:value="${e.precio}" />
 
                                     <button type="submit" class="btn btn-success">
                                         <i class="bi bi-plus-circle"></i> Agregar
