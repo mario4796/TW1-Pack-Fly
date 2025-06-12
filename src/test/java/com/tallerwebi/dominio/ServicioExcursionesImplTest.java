@@ -19,11 +19,12 @@ public class ServicioExcursionesImplTest {
 
     private HttpClient httpClient;
     private ObjectMapper objectMapper;
+    private RepositorioExcursion repositorioExcursion;
     private ServicioExcursionesImpl servicio;
 
     @BeforeEach
     public void setUp() {
-        servicio = new ServicioExcursionesImpl();
+        servicio = new ServicioExcursionesImpl(repositorioExcursion);
 
         httpClient   = mock(HttpClient.class);
         objectMapper = new ObjectMapper();

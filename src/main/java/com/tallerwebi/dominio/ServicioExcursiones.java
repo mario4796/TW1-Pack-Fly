@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface ServicioExcursiones {
     List<ExcursionDTO> getExcursiones(String location, String query);
+    void guardarExcursion(Excursion excursion);
 }

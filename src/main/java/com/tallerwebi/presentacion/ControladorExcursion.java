@@ -1,7 +1,10 @@
 // src/main/java/com/tallerwebi/presentacion/ControladorExcursion.java
+// src/main/java/com/tallerwebi/presentacion/ControladorExcursion.java
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.Excursion; // Asegúrate de importar Excursion
+import com.tallerwebi.dominio.entidades.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +20,12 @@ import java.util.List;
 @Controller
 public class ControladorExcursion {
 
-    private final ServicioExcursiones servicio;
+    private final ServicioExcursiones servicio; // Ya tienes esto inyectado
 
-    @Autowired
-    private  RepositorioExcursion repositorioExcursion;
+    // @Autowired
+    // private  RepositorioExcursion repositorioExcursion; // <-- ELIMINA esta inyección directa del repositorio
 
+    @Autowired // Puedes mantener este constructor si ya lo tienes
     public ControladorExcursion(ServicioExcursiones servicio) {
         this.servicio = servicio;
     }
@@ -33,7 +37,7 @@ public class ControladorExcursion {
             Model model,
             HttpSession session) {
 
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
         model.addAttribute("usuarioLogueado", usuario != null);
 
         List<ExcursionDTO> lista = new ArrayList<>();
@@ -41,17 +45,15 @@ public class ControladorExcursion {
         if (!loc.isBlank()) {
             lista = servicio.getExcursiones(loc, query);
         }
-      //  List<ExcursionDTO> lista = servicio.getExcursiones(loc, query);
         model.addAttribute("excursiones", lista);
 
-        // Solo el nombre de la plantilla, sin el prefijo Thymeleaf
         return "excursiones";
     }
 
     @PostMapping("/excursiones/guardar")
     public String guardarExcursion(ExcursionDTO dto, HttpSession session, RedirectAttributes redirectAttributes) {
 
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
 
         if (usuario == null || !usuario.activo()) {
             redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para guardar excursiones");
@@ -60,8 +62,8 @@ public class ControladorExcursion {
 
         Excursion excursion = dto.toEntity();
         excursion.setUsuario(usuario);
-        repositorioExcursion.guardar(excursion);
 
+        servicio.guardarExcursion(excursion); // <-- LLAMA AL SERVICIO EN LUGAR DEL REPOSITORIO
 
         return "redirect:/excursiones" ;
     }
