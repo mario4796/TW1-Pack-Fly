@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class ServicioExcursionesImpl implements ServicioExcursiones {
 
-    private final String apiKey  = "1d9b2f7b6812e654ec3ab0f399081e03a4402ff91bf6f50ef00bb403d2014118";
+    private final String apiKey  = "902e4c6190ee25df47f8fd037098a1f16ac78e390eaa53a91c5daf2c930743a6";
     private static final String BASE_URL = "https://serpapi.com/search";
     private static final String ENGINE   = "google_events";
 
