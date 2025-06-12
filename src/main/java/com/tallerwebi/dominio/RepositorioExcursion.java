@@ -36,5 +36,12 @@ public class RepositorioExcursion {
 //                .setParameter("idUsuario", idUsuario)
 //                .getResultList();
 //    }
+public List<Excursion> obtenerPorUsuario(Long idUsuario) {
+    return entityManager.createQuery(
+                    "FROM Excursion e WHERE e.usuario.id = :idUsuario", Excursion.class)
+            .setParameter("idUsuario", idUsuario)
+            .getResultList();
+}
+
 
 }

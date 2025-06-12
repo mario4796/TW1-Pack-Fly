@@ -69,7 +69,7 @@ public class ControladorExcursion {
         return "redirect:/excursiones" ;
     }
 
-    @GetMapping("/reservas")
+    @GetMapping("/reservas-excursiones")
     public String verReservasUsuario(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("USUARIO");
 
@@ -77,10 +77,11 @@ public class ControladorExcursion {
             return "redirect:/login";
         }
 
-        List<Excursion> excursiones = servicio.getExcursiones(usuario.getId());
+        Long idUsuario = usuario.getId(); // ✅ Obtener el ID del usuario logueado
+        List<Excursion> excursiones = servicio.obtenerExcursionesDeUsuario(idUsuario); // ✅ Usar el nuevo método
 
         model.addAttribute("excursiones", excursiones);
-        return "reservas"; // Asegurate de que esta vista lo reciba y lo renderice
+        return "reservas"; // Asegurate de que esta vista exista y renderice las excursiones
     }
 
 }

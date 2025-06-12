@@ -92,9 +92,9 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
     public void guardarExcursion(Excursion excursion) {
         repositorioExcursion.guardar(excursion); // Aquí se usa la variable repositorioExcursion
     }
-
     @Override
     public List<Excursion> obtenerExcursionesDeUsuario(Long idUsuario) {
-        return repositorioExcursion.buscarPorUsuario(idUsuario);
+        return repositorioExcursion.obtenerPorUsuario(idUsuario);
     }
+
 }
