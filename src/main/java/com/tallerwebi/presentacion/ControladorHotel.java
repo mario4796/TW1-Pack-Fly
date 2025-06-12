@@ -19,6 +19,7 @@ import java.util.List;
 public class ControladorHotel {
     @Autowired
     private ServicioHotel hotelService;
+
     @Autowired private IconHelper iconHelper;
 
     @GetMapping("/buscar-hoteles")
@@ -41,7 +42,7 @@ public class ControladorHotel {
         model.addAttribute("datobusqueda", datobusqueda);
         model.addAttribute("hoteles", hoteles);
         model.addAttribute("iconHelper", iconHelper);
-        return "busqueda-hoteles"; // Nombre de tu vista Thymeleaf
+        return "busqueda-hoteles";
     }
 
     @GetMapping("/busqueda-hoteles")
@@ -74,17 +75,9 @@ public class ControladorHotel {
         hotel.setUsuario(usuario);
         hotelService.reserva(hotel);
 
-        return "redirect:/excursiones?reservaExitosa=true"; // o donde quieras
+        return "redirect:/excursiones?reservaExitosa=true";
     }
 
-    @GetMapping("/reservas")
-    public String vistaReservas(HttpServletRequest request,
-                                Model model) {
 
-        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-        List<HotelDto> hoteles = hotelService.buscarReservas(usuario.getId());
-        model.addAttribute("hoteles", hoteles);
-        return "reservas"; // muestra la vista con el formulario vacío
-    }
 
 }

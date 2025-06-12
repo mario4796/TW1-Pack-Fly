@@ -6,10 +6,7 @@
 
     <title>Reservas</title>
 
-    <!-- Bootstrap core css -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
-
-    <!-- Custom style -->
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 
@@ -46,7 +43,7 @@
         </div>
     </div>
 </nav>
-<main class="container d-flex flex-column align-items-center py-5 mt-5"> <!--Revisar margin top porque se desplaza para abajo la pagina-->
+<main class="container d-flex flex-column align-items-center py-5 mt-5">
     <div class="overlay mt-3">
     <div class="row justify-content-center">
         <div class="col-lg-10">
@@ -66,11 +63,10 @@
                                 <div class="col-md-6" th:each="vuelo : ${vuelos}">
                                     <div class="card shadow h-100">
                                         <div class="card-body">
-                                            <p class="card-text mb-1"><strong>Origen:</strong> <span th:text="${vuelo.origen}">Buenos Aires</span></p>
-                                            <p class="card-text mb-1"><strong>Destino:</strong> <span th:text="${vuelo.destino}">Madrid</span></p>
-                                            <p class="card-text mb-1"><strong>Fecha:</strong> <span th:text="${vuelo.fecha}">15/07/2025</span></p>
-                                            <p class="card-text mb-1"><strong>Pasajero:</strong> <span th:text="${vuelo.pasajero}">Juan Pérez</span></p>
-                                            <p class="card-text"><strong>Asiento:</strong> <span th:text="${vuelo.asiento}">12A</span></p>
+                                            <p class="card-text mb-1"><strong>Origen:</strong> <span th:text="${vuelo.origen}">test</span></p>
+                                            <p class="card-text mb-1"><strong>Destino:</strong> <span th:text="${vuelo.destino}">test</span></p>
+                                            <p class="card-text mb-1"><strong>Fecha:</strong> <span th:text="${vuelo.fechaIda}">test</span></p>
+                                            <p class="card-text mb-1"><strong>Pasajero:</strong> <span th:text="${vuelo.fechaVuelta}">test</span></p>
                                         </div>
                                     </div>
                                 </div>
