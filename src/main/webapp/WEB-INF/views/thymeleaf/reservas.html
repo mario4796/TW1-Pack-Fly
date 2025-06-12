@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Reservas</title>
+
+    <!-- Bootstrap core css -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
+
+    <!-- Custom style -->
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+
+<body class="reserva">
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="./home">
+            <i class="bi bi-suitcase2 me-1"></i><i class="bi bi-airplane me-2"></i> Pack&Fly
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
+                <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
+                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
+                <li class="nav-item">
+                    <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
+                        <i class="bi bi-moon"></i>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-outline-danger ms-lg-2 mt-1 mt-lg-0">Cerrar sesión</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<main class="container d-flex flex-column align-items-center py-5 mt-5"> <!--Revisar margin top porque se desplaza para abajo la pagina-->
+    <div class="overlay mt-3">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h3 class="text-white text-center mb-4">Tus Reservas</h3>
+            <div class="accordion" id="accordionReservas">
+
+                <!-- Vuelos -->
+                <div class="accordion-item" th:if="${vuelos != null and !vuelos.isEmpty()}">
+                    <h2 class="accordion-header" id="headingVuelos">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVuelos" aria-expanded="true" aria-controls="collapseVuelos">
+                            <i class="bi bi-airplane me-2"></i>Vuelos
+                        </button>
+                    </h2>
+                    <div id="collapseVuelos" class="accordion-collapse collapse show" aria-labelledby="headingVuelos" data-bs-parent="#accordionReservas">
+                        <div class="accordion-body">
+                            <div class="row g-3">
+                                <div class="col-md-6" th:each="vuelo : ${vuelos}">
+                                    <div class="card shadow h-100">
+                                        <div class="card-body">
+                                            <p class="card-text mb-1"><strong>Origen:</strong> <span th:text="${vuelo.origen}">Buenos Aires</span></p>
+                                            <p class="card-text mb-1"><strong>Destino:</strong> <span th:text="${vuelo.destino}">Madrid</span></p>
+                                            <p class="card-text mb-1"><strong>Fecha:</strong> <span th:text="${vuelo.fecha}">15/07/2025</span></p>
+                                            <p class="card-text mb-1"><strong>Pasajero:</strong> <span th:text="${vuelo.pasajero}">Juan Pérez</span></p>
+                                            <p class="card-text"><strong>Asiento:</strong> <span th:text="${vuelo.asiento}">12A</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hoteles -->
+                <div class="accordion-item" th:if="${hoteles != null and !hoteles.isEmpty()}">
+                    <h2 class="accordion-header" id="headingHoteles">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHoteles" aria-expanded="false" aria-controls="collapseHoteles">
+                            <i class="bi bi-building me-2"></i>Hoteles
+                        </button>
+                    </h2>
+                    <div id="collapseHoteles" class="accordion-collapse collapse" aria-labelledby="headingHoteles" data-bs-parent="#accordionReservas">
+                        <div class="accordion-body">
+                            <div class="row g-3">
+                                <div class="col-md-6" th:each="hotel : ${hoteles}">
+                                    <div class="card shadow h-100">
+                                        <div class="card-body">
+                                            <p class="card-text mb-1"><strong>Nombre:</strong> <span th:text="${hotel.name}">tesxt</span></p>
+                                            <p class="card-text mb-1"><strong>Ciudad:</strong> <span th:text="${hotel.ciudad}">tesxt</span></p>
+                                            <p class="card-text mb-1"><strong>Check-in:</strong> <span th:text="${hotel.checkIn}">tesxt</span></p>
+                                            <p class="card-text mb-1"><strong>Check-out:</strong> <span th:text="${hotel.checkout}">tesxt</span></p>
+                                            <p class="card-text mb-1"><strong>Adultos:</strong> <span th:text="${hotel.adults}">tesxt</span></p>
+                                            <p class="card-text mb-1"><strong>Chicos:</strong> <span th:text="${hotel.children}">tesxt</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Excursiones -->
+                <div class="accordion-item" th:if="${excursiones != null and !excursiones.isEmpty()}">
+                    <h2 class="accordion-header" id="headingExcursiones">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExcursiones" aria-expanded="false" aria-controls="collapseExcursiones">
+                            <i class="bi bi-tree me-2"></i>Excursiones
+                        </button>
+                    </h2>
+                    <div id="collapseExcursiones" class="accordion-collapse collapse" aria-labelledby="headingExcursiones" data-bs-parent="#accordionReservas">
+                        <div class="accordion-body">
+                            <div class="row g-3">
+                                <div class="col-md-6" th:each="excursion : ${excursiones}">
+                                    <div class="card shadow h-100">
+                                        <div class="card-body">
+                                            <p class="card-text mb-1"><strong>Excursión:</strong> <span th:text="${excursion.nombre}">Tour por Toledo</span></p>
+                                            <p class="card-text mb-1"><strong>Fecha:</strong> <span th:text="${excursion.fecha}">17/07/2025</span></p>
+                                            <p class="card-text mb-1"><strong>Participantes:</strong> <span th:text="${excursion.participantes}">2</span></p>
+                                            <p class="card-text mb-1"><strong>Guía:</strong> <span th:text="${excursion.guia}">María López</span></p>
+                                            <p class="card-text"><strong>Horario:</strong> <span th:text="${excursion.horario}">09:00 - 18:00</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${(vuelos == null or vuelos.isEmpty()) and (hoteles == null or hoteles.isEmpty()) and (excursiones == null or excursiones.isEmpty())}">
+                    <div class="alert alert-info text-center mt-4">
+                        No tienes reservas registradas.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+
+<script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
+<script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
+
+</body>
+</html>

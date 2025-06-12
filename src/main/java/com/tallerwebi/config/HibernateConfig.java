@@ -44,11 +44,11 @@ public class HibernateConfig {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        //properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+        // properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL57Dialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
-        properties.setProperty("hibernate.hbm2ddl.auto", "update"); // update
+        properties.setProperty("hibernate.hbm2ddl.auto", "create");
         return properties;
     }
 }
