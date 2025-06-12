@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -19,11 +20,12 @@ public class ServicioExcursionesImplTest {
 
     private HttpClient httpClient;
     private ObjectMapper objectMapper;
+    private RepositorioExcursion repositorioExcursion;
     private ServicioExcursionesImpl servicio;
 
     @BeforeEach
     public void setUp() {
-        servicio = new ServicioExcursionesImpl();
+        servicio = new ServicioExcursionesImpl(repositorioExcursion);
 
         httpClient   = mock(HttpClient.class);
         objectMapper = new ObjectMapper();
@@ -52,7 +54,7 @@ public class ServicioExcursionesImplTest {
                 ArgumentMatchers.<HttpResponse.BodyHandler<String>>any()
         )).thenReturn(httpResponse);
 
-        List<Excursion> lista = servicio.getExcursiones("Buenos Aires", "naturaleza");
+        List<ExcursionDTO> lista = servicio.getExcursiones("Buenos Aires", "naturaleza");
 
         assertNotNull(lista, "La lista no debe ser null");
         assertEquals(2, lista.size(), "Debe haber 2 excursiones");
@@ -79,7 +81,7 @@ public class ServicioExcursionesImplTest {
                 ArgumentMatchers.<HttpResponse.BodyHandler<String>>any()
         )).thenReturn(httpResponse);
 
-        List<Excursion> lista = servicio.getExcursiones("X", "Y");
+        List<ExcursionDTO> lista = servicio.getExcursiones("X", "Y");
 
         assertNotNull(lista, "La lista no debe ser null incluso en error");
         assertTrue(lista.isEmpty(), "En HTTP 500 se debe devolver lista vacía");

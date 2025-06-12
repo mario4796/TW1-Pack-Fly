@@ -32,5 +32,10 @@ public class ServicioLoginImpl implements ServicioLogin {
         repositorioUsuario.guardar(usuario);
     }
 
+    @Override
+    public void modificarUsuario(Usuario usuario) {
+        repositorioUsuario.modificar(usuario);
+    }
+
 }
 

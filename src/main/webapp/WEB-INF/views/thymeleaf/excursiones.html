@@ -1,4 +1,4 @@
-<!-- src/main/webapp/WEB-INF/views/thymeleaf/excursiones.html -->
+﻿<!-- src/main/webapp/WEB-INF/views/thymeleaf/excursiones.html -->
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -32,10 +32,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
                 <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
-                <!--<li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>-->
-                <!--<li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>-->
-                <!--<li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>-->
-                <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
+                <li class="nav-item"><a class="nav-link" href="./excursiones">Ver Excursiones</a></li>
                 <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
                 <li class="nav-item">
                     <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
@@ -54,11 +51,6 @@
 
 <!-- Contenido principal -->
 <main class="container d-flex flex-column align-items-center" style="margin-top: 80px;">
-    <div th:if="${param.reservaExitosa}" class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle-fill me-2"></i>
-        Reserva de hotel realizada con éxito.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
     <div class="btn-group col-md-12" role="group">
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-map"></i> Vuelo</button>
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-house"></i> Hospedaje</button>
@@ -111,7 +103,31 @@
                             <a th:href="${e.url}" target="_blank" class="btn btn-outline-primary">
                                 Ver más
                             </a>
+                            <div th:if="${usuarioLogueado}">
+                                <!-- Formulario para guardar en la base de datos -->
+                                <form th:action="@{/excursiones/guardar}" method="post" accept-charset="UTF-8">
+                                    <input type="hidden" name="title" th:value="${e.title}" />
+                                    <input type="hidden" name="startDate" th:value="${e.startDate}" />
+                                    <input type="hidden" name="location" th:value="${e.location}" />
+                                    <input type="hidden" name="description" th:value="${e.description}" />
+                                    <input type="hidden" name="url" th:value="${e.url}" />
+                                    <input type="hidden" name="precio" th:value="${e.precio}" />
+
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-plus-circle"></i> Agregar
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div th:unless="${usuarioLogueado}">
+                                <a th:href="@{/login}" class="btn btn-outline-secondary"
+                                   title="Debes iniciar sesión para guardar excursiones">
+                                    <i class="bi bi-lock"></i> Guardar
+                                </a>
+                            </div>
+
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -29,12 +29,19 @@ public class ControladorLogin {
         return new ModelAndView("login", modelo);
     }
 
+    // ... inside ControladorLogin.java
+
     @RequestMapping(path = "/validar-login", method = RequestMethod.POST)
     public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request) {
         ModelMap model = new ModelMap();
 
         Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
         if (usuarioBuscado != null) {
+            // Check if the user is already active
+            if (!usuarioBuscado.getActivo()) { // Use getActivo() for the Boolean field
+                usuarioBuscado.activar(); // Call the activate method
+                servicioLogin.modificarUsuario(usuarioBuscado); // You'll need to add this method to ServicioLogin and RepositorioUsuario
+            }
             request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
             request.getSession().setAttribute("USUARIO", usuarioBuscado);
             return new ModelAndView("redirect:/home");
