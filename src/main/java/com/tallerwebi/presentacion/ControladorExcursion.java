@@ -21,10 +21,10 @@ import java.util.List;
 @Controller
 public class ControladorExcursion {
 
-    private final ServicioExcursiones servicio; // Ya tienes esto inyectado
+    private final ServicioExcursiones servicio; //
 
     // @Autowired
-    // private  RepositorioExcursion repositorioExcursion; // <-- ELIMINA esta inyección directa del repositorio
+    // private  RepositorioExcursion repositorioExcursion;
 
     @Autowired // Puedes mantener este constructor si ya lo tienes
     public ControladorExcursion(ServicioExcursiones servicio) {
@@ -64,24 +64,24 @@ public class ControladorExcursion {
         Excursion excursion = dto.toEntity();
         excursion.setUsuario(usuario);
 
-        servicio.guardarExcursion(excursion); // <-- LLAMA AL SERVICIO EN LUGAR DEL REPOSITORIO
+        servicio.guardarExcursion(excursion);
 
         return "redirect:/excursiones" ;
     }
 
-    @GetMapping("/reservas-excursiones")
-    public String verReservasUsuario(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
-
-        if (usuario == null) {
-            return "redirect:/login";
-        }
-
-        Long idUsuario = usuario.getId(); // ✅ Obtener el ID del usuario logueado
-        List<Excursion> excursiones = servicio.obtenerExcursionesDeUsuario(idUsuario); // ✅ Usar el nuevo método
-
-        model.addAttribute("excursiones", excursiones);
-        return "reservas"; // Asegurate de que esta vista exista y renderice las excursiones
-    }
+//    @GetMapping("/reservas-excursiones")
+//    public String verReservasUsuario(HttpSession session, Model model) {
+//        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
+//
+//        if (usuario == null) {
+//            return "redirect:/login";
+//        }
+//
+//        Long idUsuario = usuario.getId();
+//        List<Excursion> excursiones = servicio.obtenerExcursionesDeUsuario(idUsuario);
+//
+//        model.addAttribute("excursiones", excursiones);
+//        return "reservas"; // Asegurate de que esta vista exista y renderice las excursiones
+//    }
 
 }
