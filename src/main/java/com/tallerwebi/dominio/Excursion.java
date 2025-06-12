@@ -1,5 +1,7 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.entidades.Usuario;
+
 import javax.persistence.*;
 
 @Entity
