@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,16 +28,20 @@ public class ControladorExcursion {
 
     @GetMapping("/excursiones")
     public String verExcursiones(
-            @RequestParam(name = "loc",   defaultValue = "Buenos Aires") String loc,
-            @RequestParam(name = "query", defaultValue = "excursiones")   String query,
+            @RequestParam(name = "loc",   defaultValue = "") String loc,
+            @RequestParam(name = "query", defaultValue = "")   String query,
             Model model,
             HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         model.addAttribute("usuarioLogueado", usuario != null);
 
+        List<ExcursionDTO> lista = new ArrayList<>();
 
-        List<ExcursionDTO> lista = servicio.getExcursiones(loc, query);
+        if (!loc.isBlank()) {
+            lista = servicio.getExcursiones(loc, query);
+        }
+      //  List<ExcursionDTO> lista = servicio.getExcursiones(loc, query);
         model.addAttribute("excursiones", lista);
 
         // Solo el nombre de la plantilla, sin el prefijo Thymeleaf
