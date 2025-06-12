@@ -78,7 +78,7 @@
             <p><strong>Fecha Ida:</strong> <span th:text="${vuelo.fechaIda}"></span></p>
             <p><strong>Fecha Vuelta:</strong> <span th:text="${vuelo.fechaVuelta}"></span></p>
             <p><strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span></p>
-            <form th:action="@{/formulario-reserva}" method="post">
+            <form th:action="@{/formulario-reserva}" method="post" accept-charset="UTF-8">
                 <input type="hidden" name="origen" th:value="${vuelo.origen}" />
                 <input type="hidden" name="destino" th:value="${vuelo.destino}" />
                 <input type="hidden" name="fechaIda" th:value="${vuelo.fechaIda}" />
