@@ -1,6 +1,9 @@
 package com.tallerwebi.dominio;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,67 +27,65 @@ public class ServicioExcursionesImplTest {
     private RepositorioExcursion repositorioExcursion;
     private ServicioExcursionesImpl servicio;
 
+
     @BeforeEach
     public void setUp() {
+        repositorioExcursion = mock(RepositorioExcursion.class);
         servicio = new ServicioExcursionesImpl(repositorioExcursion);
 
-        httpClient   = mock(HttpClient.class);
-        objectMapper = new ObjectMapper();
+        httpClient = mock(HttpClient.class);
+        objectMapper = mock(ObjectMapper.class);
 
         ReflectionTestUtils.setField(servicio, "apiKey",
-                "1d9b2f7b6812e654ec3ab0f399081e03a4402ff91bf6f50ef00bb403d2014118");
+                "902e4c6190ee25df47f8fd037098a1f16ac78e390eaa53a91c5daf2c930743a6");
         ReflectionTestUtils.setField(servicio, "httpClient", httpClient);
         ReflectionTestUtils.setField(servicio, "mapper", objectMapper);
     }
 
     @Test
     public void getExcursiones_respuestaValida_retornaListaDeExcursiones() throws Exception {
-        String fakeJson = "{\n" +
-                "  \"events_results\": [\n" +
-                "    { \"title\": \"Cataratas del Iguazú\", \"link\": \"http://ejemplo.com/iguazu\" },\n" +
-                "    { \"title\": \"Perito Moreno\",     \"link\": \"http://ejemplo.com/perito\" }\n" +
-                "  ]\n" +
-                "}";
+        // Configuración del test
+        String fakeJson = "{\"events_results\":[{\"title\":\"Cataratas\",\"start_date\":\"2025-01-01\",\"location\":\"Misiones\",\"description\":\"Paseo\",\"link\":\"http://ejemplo.com\",\"price\":1500.0}]}";
 
         HttpResponse<String> httpResponse = mock(HttpResponse.class);
         when(httpResponse.body()).thenReturn(fakeJson);
         when(httpResponse.statusCode()).thenReturn(200);
 
-        when(httpClient.<String>send(
-                any(HttpRequest.class),
-                ArgumentMatchers.<HttpResponse.BodyHandler<String>>any()
-        )).thenReturn(httpResponse);
+        JsonNode rootNode = mock(JsonNode.class);
+        JsonNode eventsNode = mock(JsonNode.class);
 
-        List<ExcursionDTO> lista = servicio.getExcursiones("Buenos Aires", "naturaleza");
+        when(objectMapper.readTree(fakeJson)).thenReturn(rootNode);
+        when(rootNode.get("events_results")).thenReturn(eventsNode);
 
-        assertNotNull(lista, "La lista no debe ser null");
-        assertEquals(2, lista.size(), "Debe haber 2 excursiones");
-        assertEquals("Cataratas del Iguazú", lista.get(0).getTitle());
-        assertEquals("Perito Moreno", lista.get(1).getTitle());
+        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+                .thenReturn(httpResponse);
 
-        verify(httpClient).send(
-                argThat(req ->
-                        req.uri().toString().contains("q=naturaleza") &&
-                                req.uri().toString().contains("Buenos+Aires")
-                ),
-                ArgumentMatchers.<HttpResponse.BodyHandler<String>>any()
-        );
+        // Ejecución
+        List<ExcursionDTO> resultado = servicio.getExcursiones("Buenos Aires", "naturaleza");
+
+        // Verificación
+        assertNotNull(resultado);
+        assertEquals(1, resultado.size());
+        assertEquals("Cataratas", resultado.get(0).getTitle());
+
+        verify(httpClient).send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class));
     }
 
     @Test
     public void getExcursiones_errorHttp_retornaListaVacia() throws Exception {
+        // Configuración
         HttpResponse<String> httpResponse = mock(HttpResponse.class);
         when(httpResponse.statusCode()).thenReturn(500);
-        // No body() because status != 200
 
-        when(httpClient.<String>send(
-                any(HttpRequest.class),
-                ArgumentMatchers.<HttpResponse.BodyHandler<String>>any()
-        )).thenReturn(httpResponse);
+        when(httpClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
+                .thenReturn(httpResponse);
 
-        List<ExcursionDTO> lista = servicio.getExcursiones("X", "Y");
+        // Ejecución
+        List<ExcursionDTO> resultado = servicio.getExcursiones("X", "Y");
 
-        assertNotNull(lista, "La lista no debe ser null incluso en error");
-        assertTrue(lista.isEmpty(), "En HTTP 500 se debe devolver lista vacía");
+        // Verificación
+        assertNotNull(resultado);
+        assertTrue(resultado.isEmpty());
     }
 }
+

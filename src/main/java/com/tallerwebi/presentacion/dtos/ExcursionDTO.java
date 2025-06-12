@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tallerwebi.dominio.Excursion;
 import com.tallerwebi.dominio.entidades.Usuario;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.concurrent.ThreadLocalRandom;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -29,6 +32,8 @@ public class ExcursionDTO {
     private Double precio;
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     public ExcursionDTO() {
