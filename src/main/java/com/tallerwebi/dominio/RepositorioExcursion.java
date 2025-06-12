@@ -1,5 +1,8 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.presentacion.dtos.ExcursionDTO;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -8,6 +11,12 @@ import java.util.List;
 
 @Repository
 public class RepositorioExcursion {
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public RepositorioExcursion(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -19,4 +28,13 @@ public class RepositorioExcursion {
     public List<Excursion> obtenerTodas(){
         return entityManager.createQuery("FROM Excursion", Excursion.class).getResultList();
     }
+//    public List<ExcursionDTO> guardar(Long idUsuario) {
+//        return this.sessionFactory.getCurrentSession()
+//                .createQuery(
+//                        "SELECT new com.tallerwebi.presentacion.dtos.ExcursionDTO(h.title, h.url) " +
+//                                "FROM Excursion h WHERE h.usuario.id = :idUsuario", ExcursionDTO.class)
+//                .setParameter("idUsuario", idUsuario)
+//                .getResultList();
+//    }
+
 }

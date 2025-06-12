@@ -5,7 +5,7 @@ package com.tallerwebi.dominio;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tallerwebi.dominio.Excursion; // Asegúrate de importar Excursion
+import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,5 +91,10 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
     @Transactional
     public void guardarExcursion(Excursion excursion) {
         repositorioExcursion.guardar(excursion); // Aquí se usa la variable repositorioExcursion
+    }
+
+    @Override
+    public List<Excursion> obtenerExcursionesDeUsuario(Long idUsuario) {
+        return repositorioExcursion.buscarPorUsuario(idUsuario);
     }
 }

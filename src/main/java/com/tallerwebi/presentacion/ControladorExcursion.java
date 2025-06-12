@@ -5,6 +5,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.Excursion; // Asegúrate de importar Excursion
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,4 +68,19 @@ public class ControladorExcursion {
 
         return "redirect:/excursiones" ;
     }
+
+    @GetMapping("/reservas")
+    public String verReservasUsuario(HttpSession session, Model model) {
+        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        List<Excursion> excursiones = servicio.getExcursiones(usuario.getId());
+
+        model.addAttribute("excursiones", excursiones);
+        return "reservas"; // Asegurate de que esta vista lo reciba y lo renderice
+    }
+
 }
