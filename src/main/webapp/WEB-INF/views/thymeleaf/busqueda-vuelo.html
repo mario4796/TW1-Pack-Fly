@@ -36,6 +36,11 @@
                         <i class="bi bi-moon"></i>
                     </button>
                 </li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-outline-danger ms-lg-2 mt-1 mt-lg-0">Cerrar sesión</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
@@ -88,7 +93,7 @@
                 </li>
             </ul>
             <div class="col-12 d-flex justify-content-center">
-                <a class="btn btn-success col-md-5 mt-2" href="./formulario-hoteles">Buscar hospedaje</a>
+                <a class="btn btn-success col-md-5 mt-2" href="./busqueda-hoteles">Buscar hospedaje</a>
             </div>
         </div>
     </div>
