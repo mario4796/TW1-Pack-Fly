@@ -9,6 +9,7 @@ public class Hotel {
     private Integer reviews;
     private List<Image> images;
     private RatePerNight rate_per_night;
+    private List<String> amenities;
 
     public String getName() {
         return name;
@@ -32,6 +33,10 @@ public class Hotel {
 
     public RatePerNight getRate_per_night() {
         return rate_per_night;
+    }
+
+    public List<String> getAmenities() {
+        return amenities;
     }
 
     public static class Image {

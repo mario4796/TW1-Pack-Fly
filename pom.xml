@@ -150,6 +150,13 @@
             <version>7.11.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- Conector para MySql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+            <scope>runtime</scope>
+        </dependency>
         <!-- compile only, deployed container will provide this -->
         <!--
         <dependency>

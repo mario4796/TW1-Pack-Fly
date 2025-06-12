@@ -1,16 +1,16 @@
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Pack&Fly</title>
+    <title>Pack&Fly</title>
 
-  <!-- Boostrap core css -->
-  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
+    <!-- Boostrap core css -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
 
-  <!-- custom style -->
-  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <!-- custom style -->
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 
 </head>
 
@@ -18,108 +18,117 @@
 
 <!-- Header -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
-      <i class="bi bi-suitcase2 me-1"></i><i class="bi bi-airplane me-2"></i> Pack&Fly
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
-        <li class="nav-item"><a class="nav-link" href="./formulario-hoteles">Ver hoteles</a></li>
-        <!--<li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>-->
-        <!--<li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>-->
-        <!--<li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>-->
-        <a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a>
-        <!--<li class="nav-item"><a class="btn btn-primary ms-2" href="#">Mi Viaje</a></li><li class="nav-item d-flex align-items-center">-->
-        <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button">
-          <i class="bi bi-moon"></i>
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+            <i class="bi bi-suitcase2 me-1"></i><i class="bi bi-airplane me-2"></i> Pack&Fly
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
         </button>
-      </li>
-
-      </ul>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
+                <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
+                <!--<li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>-->
+                <!--<li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>-->
+                <!--<li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>-->
+                <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
+                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
+                <li class="nav-item">
+                    <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
+                        <i class="bi bi-moon"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
 
 <!-- Hero Section -->
 <section class="hero d-flex flex-column">
-  <div class="overlay mt-5">
-    <h1 class="display-4 fw-bold">Tu viaje, a tu manera</h1>
-    <p class="lead">Armá tu paquete ideal: vuelo, hotel, actividades y más.</p>
-    <form class="row g-2 mt-4 bg-body p-3 rounded text-center" th:action="@{/busqueda-vuelo}" method="post">
-      <div class="col-md-3">
-        <input type="text" id="origen" class="form-control" name="origen" placeholder="Origen" required>
-      </div>
-      <div class="col-md-3">
-        <input type="text" id="destino" class="form-control" name="destino" placeholder="Destino" required>
-      </div>
-      <div class="col-md-3">
-        <!--<input type="date" id="fechaIda" class="form-control" name="fechaIda" placeholder="F. de ida" required>-->
-        <input type="text" class="form-control" id="fechaIda" placeholder="F. de ida" name="fechaIda" required
-               onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" />
-      </div>
-      <div class="col-md-3">
-        <!--<input type="date" id="fechaVuelta" class="form-control" name="fechaVuelta" placeholder="F. de vuelta" required>-->
-        <input type="text" class="form-control" id="fechaVuelta" placeholder="F. de vuelta" name="fechaVuelta" required
-               onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" />
-        <!--<select class="form-select">
-          <option selected>Vuelos</option>
-          <option>Servicios</option>
-          <option>Hotel</option>
-          <option>Auto</option>
-          <option>Actividades</option>
-        </select>-->
-      </div>
-      <div class="col-md-12">
-        <button class="btn btn-primary w-100">Buscar Vuelo</button>
-      </div>
-    </form>
-  </div>
-  <!-- Resultados -->
-  <div class="overlay mt-3">
-    <section id="resultados" class="py-5 bg-body rounded">
-      <div class="container">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mb-4">
-          <h3 class="text-body">Recomendados para vos</h3>
-          <div class="btn-group" role="group" id="category-buttons">
-            <button type="button" class="btn btn-outline-secondary active" data-category="destinos"><i class="bi bi-map"></i> Destinos</button>
-            <button type="button" class="btn btn-outline-secondary" data-category="hoteles"><i class="bi bi-house"></i> Hoteles</button>
-            <button type="button" class="btn btn-outline-secondary" data-category="autos"><i class="bi bi-car-front"></i> Autos</button>
-            <button type="button" class="btn btn-outline-secondary" data-category="actividades"><i class="bi bi-star"></i> Actividades</button>
-          </div>
-        </div>
+    <div class="overlay mt-5">
+        <h1 class="display-4 fw-bold">Tu viaje, a tu manera</h1>
+        <p class="lead">Armá tu paquete ideal: vuelo, hotel, actividades y más.</p>
+        <form class="row g-2 mt-4 bg-body p-3 rounded text-center" th:action="@{/busqueda-vuelo}" method="post">
+            <div class="col-md-3">
+                <input type="text" id="origen" class="form-control" name="origen" placeholder="Origen" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="destino" class="form-control" name="destino" placeholder="Destino" required>
+            </div>
+            <div class="col-md-3">
+                <!--<input type="date" id="fechaIda" class="form-control" name="fechaIda" placeholder="F. de ida" required>-->
+                <input type="text" class="form-control" id="fechaIda" placeholder="F. de ida" name="fechaIda" required
+                       onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'"/>
+            </div>
+            <div class="col-md-3">
+                <!--<input type="date" id="fechaVuelta" class="form-control" name="fechaVuelta" placeholder="F. de vuelta" required>-->
+                <input type="text" class="form-control" id="fechaVuelta" placeholder="F. de vuelta" name="fechaVuelta"
+                       required
+                       onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'"/>
+                <!--<select class="form-select">
+                  <option selected>Vuelos</option>
+                  <option>Servicios</option>
+                  <option>Hotel</option>
+                  <option>Auto</option>
+                  <option>Actividades</option>
+                </select>-->
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary w-100">Buscar Vuelo</button>
+            </div>
+        </form>
+    </div>
+    <!-- Resultados -->
+    <div class="overlay mt-3">
+        <section id="resultados" class="py-5 bg-body rounded">
+            <div class="container">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mb-4">
+                    <h3 class="text-body">Recomendados para vos</h3>
+                    <div class="btn-group" role="group" id="category-buttons">
+                        <button type="button" class="btn btn-outline-secondary active" data-category="destinos"><i
+                                class="bi bi-map"></i> Destinos
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" data-category="hoteles"><i
+                                class="bi bi-house"></i> Hoteles
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" data-category="autos"><i
+                                class="bi bi-car-front"></i> Autos
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" data-category="actividades"><i
+                                class="bi bi-star"></i> Actividades
+                        </button>
+                    </div>
+                </div>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container"></div>
-      </div>
-    </section>
-  </div>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container"></div>
+            </div>
+        </section>
+    </div>
 </section>
 
 <!-- Beneficios -->
 <section class="container py-5">
-  <div class="row justify-content-center text-center">
-    <div class="col-md-3 icon-box">
-      <i class="bi bi-sliders"></i>
-      <h5>Viajes a medida</h5>
+    <div class="row justify-content-center text-center">
+        <div class="col-md-3 icon-box">
+            <i class="bi bi-sliders"></i>
+            <h5>Viajes a medida</h5>
+        </div>
+        <div class="col-md-3 icon-box">
+            <i class="bi bi-cash-coin"></i>
+            <h5>Precios bajos</h5>
+        </div>
+        <div class="col-md-3 icon-box">
+            <i class="bi bi-arrow-repeat"></i>
+            <h5>Flexibilidad</h5>
+        </div>
+        <!--
+        <div class="col-md-3 icon-box">
+          <i class="bi bi-shield-lock"></i>
+          <h5>Pagos seguros</h5>
+        </div>
+        -->
     </div>
-    <div class="col-md-3 icon-box">
-      <i class="bi bi-cash-coin"></i>
-      <h5>Precios bajos</h5>
-    </div>
-    <div class="col-md-3 icon-box">
-      <i class="bi bi-arrow-repeat"></i>
-      <h5>Flexibilidad</h5>
-    </div>
-    <!--
-    <div class="col-md-3 icon-box">
-      <i class="bi bi-shield-lock"></i>
-      <h5>Pagos seguros</h5>
-    </div>
-    -->
-  </div>
 </section>
 
 <!-- Arma tu Paquete (habilitar caundo se vaya a utilizar!!!)-->

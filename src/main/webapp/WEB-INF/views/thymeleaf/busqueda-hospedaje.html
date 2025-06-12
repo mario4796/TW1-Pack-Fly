@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Buscar Hoteles</title>
+    <title>Búsqueda de Vuelo</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
@@ -25,17 +25,17 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
-                <li class="nav-item"><a class="nav-link" href="./formulario-hoteles">Ver hoteles</a></li>
+                <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
                 <!--<li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>-->
                 <!--<li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>-->
                 <!--<li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>-->
-                <a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a>
-                <!--<li class="nav-item"><a class="btn btn-primary ms-2" href="#">Mi Viaje</a></li><li class="nav-item d-flex align-items-center">-->
-                <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button">
-                    <i class="bi bi-moon"></i>
-                </button>
+                <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
+                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
+                <li class="nav-item">
+                    <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
+                        <i class="bi bi-moon"></i>
+                    </button>
                 </li>
-
             </ul>
         </div>
     </div>
@@ -47,28 +47,8 @@
         <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-house"></i> Hospedaje</button>
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-star"></i> Excursiones</button>
     </div>
-    <div class="overlay mt-3">
-        <h1>Buscar Hoteles</h1>
-        <form th:action="@{/buscar-hoteles}" method="get">
-            <label for="ciudad">Ciudad:</label>
-            <input type="text" id="ciudad" name="ciudad" required><br><br>
-
-            <label for="checkIn">Fecha de check-in:</label>
-            <input type="date" id="checkIn" name="checkIn" required><br><br>
-
-            <label for="checkOut">Fecha de check-out:</label>
-            <input type="date" id="checkOut" name="checkOut" required><br><br>
-
-            <button type="submit">Buscar</button>
-        </form>
-    </div>
-
-    <div th:if="${error}" class="alert alert-warning" role="alert">
-        <span th:text="${error}"></span>
-    </div>
 </main>
 
-<!-- Bootstrap JS -->
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
