@@ -24,7 +24,7 @@ public class ControladorReservaTest {
     @Mock
     private Model model;
 
-    @Before
+    /*@Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         controlador = new ControladorReserva(servicioReserva);
@@ -57,5 +57,5 @@ public class ControladorReservaTest {
         verify(model).addAttribute("reservas", reservas);
         verify(model).addAttribute("email", email);
         assertEquals("verReservas", vista);
-    }
+    }*/
 }

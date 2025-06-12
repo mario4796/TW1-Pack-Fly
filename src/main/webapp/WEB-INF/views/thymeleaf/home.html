@@ -6,15 +6,12 @@
 
   <title>Pack&Fly</title>
 
-  <!-- Boostrap core css -->
   <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
-
-  <!-- custom style -->
   <link rel="stylesheet" th:href="@{/css/main.css}"/>
 
 </head>
 
-<body data-bs-theme="dark">
+<body>
 
 <!-- Header -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
@@ -28,10 +25,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
 
-                <form th:action="@{/ver-reservas}" method="get" class="d-flex">
+                <!--<form th:action="@{/ver-reservas}" method="get" class="d-flex">
                     <input type="email" name="email" placeholder="Ingrese su email" class="form-control me-2" required>
                     <button type="submit" class="btn btn-primary">Ver Reservas</button>
-                </form>
+                </form>-->
 
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
                 <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
@@ -103,9 +100,9 @@
                         <button type="button" class="btn btn-outline-secondary" data-category="hoteles"><i
                                 class="bi bi-house"></i> Hoteles
                         </button>
-                        <button type="button" class="btn btn-outline-secondary" data-category="autos"><i
+                        <!--<button type="button" class="btn btn-outline-secondary" data-category="autos"><i
                                 class="bi bi-car-front"></i> Autos
-                        </button>
+                        </button>-->
                         <button type="button" class="btn btn-outline-secondary" data-category="actividades"><i
                                 class="bi bi-star"></i> Actividades
                         </button>

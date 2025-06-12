@@ -1,63 +1,37 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Reserva;
+import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.ServicioReserva;
+import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 public class ControladorReserva {
 
-    private ServicioReserva servicioReserva;
+    @Autowired
+    private ServicioHotel hotelService;
 
     @Autowired
-    public ControladorReserva(ServicioReserva servicioReserva) {
-        this.servicioReserva = servicioReserva;
-    }
+    private ServicioReserva servicioReserva;
 
-    @GetMapping("/formulario-reserva")
-    public String mostrarFormularioVacio() {
-        return "formularioReserva";
-    }
+    @GetMapping("/reservas")
+    public String vistaReservas(HttpServletRequest request,
+                                Model model) {
 
-    @PostMapping("/formulario-reserva")
-    public String mostrarFormularioReserva(@RequestParam String origen,
-                                           @RequestParam String destino,
-                                           @RequestParam String fechaIda,
-                                           @RequestParam String fechaVuelta,
-                                           Model model) {
-        model.addAttribute("origen", origen);
-        model.addAttribute("destino", destino);
-        model.addAttribute("fechaIda", fechaIda);
-        model.addAttribute("fechaVuelta", fechaVuelta);
-        return "formularioReserva";
-    }
-
-    @PostMapping("/guardar-reserva")
-    public String guardarReserva(
-            @RequestParam("nombre") String nombre,
-            @RequestParam("email") String email,
-            @RequestParam("origen") String origen,
-            @RequestParam("destino") String destino,
-            @RequestParam("fechaIda") String fechaIda,
-            @RequestParam("fechaVuelta") String fechaVuelta,
-            Model model
-    ) {
-        Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta);
-        servicioReserva.guardarReserva(reserva);
-        return "reservaExitosa";
-    }
-
-    @GetMapping("/ver-reservas")
-    public String verReservas(@RequestParam("email") String email, Model model) {
-        List<Reserva> reservas = servicioReserva.obtenerReservasPorEmail(email);
-        model.addAttribute("reservas", reservas);
-        model.addAttribute("email", email);
-        return "verReservas";
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        List<HotelDto> hoteles = hotelService.buscarReservas(usuario.getId());
+        List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
+        model.addAttribute("vuelos", vuelos);
+        model.addAttribute("hoteles", hoteles);
+        return "reservas";
     }
 
 }

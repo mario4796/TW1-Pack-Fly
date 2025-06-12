@@ -38,7 +38,7 @@ public class ServicioVuelosImpl implements ServicioVuelos {
         String destinoEncoded = URLEncoder.encode(destino.toUpperCase(), StandardCharsets.UTF_8);
 
         String baseUrl = String.format(
-                "https://serpapi.com/search.json?engine=google_flights&departure_id=%s&arrival_id=%s&outbound_date=%s&return_date=%s&api_key=6517d90738cfae130702ee57ecf7d765a99a1d3a0335ee16852c89eec0c6990e",
+                "https://serpapi.com/search.json?engine=google_flights&departure_id=%s&arrival_id=%s&outbound_date=%s&return_date=%s&currency=ARS&api_key=cde27281bb7ca3316860cd43fb4d85c229615d4291c18787b26595b73bb92014",
                 origenEncoded, destinoEncoded, fechaIdaStr, fechaVueltaStr
         );
 
