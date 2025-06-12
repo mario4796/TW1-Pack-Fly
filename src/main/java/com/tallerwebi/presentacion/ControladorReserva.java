@@ -25,7 +25,7 @@ public class ControladorReserva {
     private ServicioReserva servicioReserva;
 
     @Autowired
-    private ServicioExcursiones servicioExcursiones;  // <-- Inyección del servicio de excursiones
+    private ServicioExcursiones servicioExcursiones;
 
     @GetMapping("/reservas")
     public String vistaReservas(HttpServletRequest request, Model model) {
@@ -35,12 +35,11 @@ public class ControladorReserva {
         List<HotelDto> hoteles = hotelService.buscarReservas(usuario.getId());
         List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
 
-        // Obtener excursiones del usuario
         List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
         model.addAttribute("vuelos", vuelos);
         model.addAttribute("hoteles", hoteles);
-        model.addAttribute("excursiones", excursiones);  // <-- Agregar excursiones al modelo
+        model.addAttribute("excursiones", excursiones);
 
         return "reservas";
     }

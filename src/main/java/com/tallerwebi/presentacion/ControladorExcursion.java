@@ -69,19 +69,19 @@ public class ControladorExcursion {
         return "redirect:/excursiones" ;
     }
 
-    @GetMapping("/reservas-excursiones")
-    public String verReservasUsuario(HttpSession session, Model model) {
-        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
-
-        if (usuario == null) {
-            return "redirect:/login";
-        }
-
-        Long idUsuario = usuario.getId();
-        List<Excursion> excursiones = servicio.obtenerExcursionesDeUsuario(idUsuario);
-
-        model.addAttribute("excursiones", excursiones);
-        return "reservas"; // Asegurate de que esta vista exista y renderice las excursiones
-    }
+//    @GetMapping("/reservas-excursiones")
+//    public String verReservasUsuario(HttpSession session, Model model) {
+//        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
+//
+//        if (usuario == null) {
+//            return "redirect:/login";
+//        }
+//
+//        Long idUsuario = usuario.getId();
+//        List<Excursion> excursiones = servicio.obtenerExcursionesDeUsuario(idUsuario);
+//
+//        model.addAttribute("excursiones", excursiones);
+//        return "reservas"; // Asegurate de que esta vista exista y renderice las excursiones
+//    }
 
 }
