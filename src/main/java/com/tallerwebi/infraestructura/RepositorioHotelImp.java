@@ -41,6 +41,15 @@ public class RepositorioHotelImp implements RepositorioHotel {
                 .getResultList();
     }
 
+    @Override
+    public void eliminarReserva(Long idUsuario, String nameHotel) {
+        this.sessionFactory.getCurrentSession()
+                .createQuery("DELETE FROM Hotel h WHERE h.usuario.id = :idUsuario AND h.name = :nameHotel")
+                .setParameter("idUsuario", idUsuario)
+                .setParameter("nameHotel", nameHotel)
+                .executeUpdate();
+    }
+
 
 
 }

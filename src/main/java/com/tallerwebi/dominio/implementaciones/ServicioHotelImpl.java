@@ -44,5 +44,10 @@ public class ServicioHotelImpl implements ServicioHotel {
        return repositorioHotelImp.buscarReserva(idUsuario);
     }
 
+    @Override
+    public void eliminarReserva(Long idUsuario, String nameHotel) {
+       repositorioHotelImp.eliminarReserva(idUsuario, nameHotel);
+    }
+
 
 }
