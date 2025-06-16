@@ -61,4 +61,13 @@ public class ControladorReserva {
         servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
         return "redirect:/reservas";
     }
+
+    @PostMapping("/eliminarReservaExcursion")
+    public String eliminarReservaExcursion(@RequestParam String title,
+                                           HttpServletRequest request) {
+
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        servicioExcursiones.eliminarReserva(usuario.getId(), title);
+        return "redirect:/reservas";
+    }
 }

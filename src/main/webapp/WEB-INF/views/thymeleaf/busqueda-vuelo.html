@@ -84,25 +84,53 @@
         </div>
     </div>
 
-    <div th:if="${vueloUrl}" class="card mt-5 shadow text-light bg-secondary">
-        <div class="card-header bg-primary text-white">
-            Resultado de Búsqueda
+    <div th:if="${vueloUrl}" class="overlay mt-5">
+    <div class="card shadow-lg border-0 bg-body text-body">
+        <div class="card-header d-flex align-items-center bg-primary text-white">
+            <i class="bi bi-airplane-engines-fill me-2"></i>
+            <h5 class="mb-0">Resultado de Búsqueda</h5>
         </div>
         <div class="card-body">
-            <p><strong>Origen:</strong> <span th:text="${vuelo.origen}"></span></p>
-            <p><strong>Destino:</strong> <span th:text="${vuelo.destino}"></span></p>
-            <p><strong>Fecha Ida:</strong> <span th:text="${vuelo.fechaIda}"></span></p>
-            <p><strong>Fecha Vuelta:</strong> <span th:text="${vuelo.fechaVuelta}"></span></p>
-            <p><strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span></p>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p class="mb-1">
+                        <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                        <strong>Origen:</strong> <span th:text="${vuelo.origen}"></span>
+                    </p>
+                    <p class="mb-1">
+                        <i class="bi bi-signpost-split-fill text-primary me-2"></i>
+                        <strong>Destino:</strong> <span th:text="${vuelo.destino}"></span>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-1">
+                        <i class="bi bi-calendar-check text-primary me-2"></i>
+                        <strong>Fecha Ida:</strong> <span th:text="${vuelo.fechaIda}"></span>
+                    </p>
+                    <p class="mb-1">
+                        <i class="bi bi-calendar2-week text-primary me-2"></i>
+                        <strong>Fecha Vuelta:</strong> <span th:text="${vuelo.fechaVuelta}"></span>
+                    </p>
+                </div>
+            </div>
+            <p class="h5 text-success mb-4">
+                <i class="bi bi-cash-stack me-2"></i>
+                <strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span>
+            </p>
+
             <form th:action="@{/formulario-reserva}" method="post" accept-charset="UTF-8">
                 <input type="hidden" name="origen" th:value="${vuelo.origen}"/>
                 <input type="hidden" name="destino" th:value="${vuelo.destino}"/>
                 <input type="hidden" name="fechaIda" th:value="${vuelo.fechaIda}"/>
                 <input type="hidden" name="fechaVuelta" th:value="${vuelo.fechaVuelta}"/>
-                <button type="submit" class="btn btn-success mt-3">Reservar</button>
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-cart-check-fill me-1"></i> Reservar vuelo
+                </button>
             </form>
         </div>
     </div>
+    </div>
+
 </main>
 
 <!-- Bootstrap JS -->

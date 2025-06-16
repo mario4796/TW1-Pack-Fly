@@ -42,124 +42,160 @@
 </nav>
 <main class="container d-flex flex-column align-items-center py-5 mt-5">
     <div class="overlay mt-3">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <h3 class="text-white text-center mb-4">Tus Reservas</h3>
-            <div class="accordion" id="accordionReservas">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h3 class="text-white text-center mb-4">Tus Reservas</h3>
+                <div class="accordion" id="accordionReservas">
 
-                <!-- Vuelos -->
-                <div class="accordion-item" th:if="${vuelos != null and !vuelos.isEmpty()}">
-                    <h2 class="accordion-header" id="headingVuelos">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVuelos" aria-expanded="true" aria-controls="collapseVuelos">
-                            <i class="bi bi-airplane me-2"></i>Vuelos
-                        </button>
-                    </h2>
-                    <div id="collapseVuelos" class="accordion-collapse collapse show" aria-labelledby="headingVuelos" data-bs-parent="#accordionReservas">
-                        <div class="accordion-body">
-                            <div class="row g-3">
-                                <div class="col-md-6" th:each="vuelo : ${vuelos}">
-                                    <div class="card shadow h-100">
-                                        <div class="card-body">
-                                            <p class="card-text mb-1"><strong>Origen:</strong> <span th:text="${vuelo.origen}">test</span></p>
-                                            <p class="card-text mb-1"><strong>Destino:</strong> <span th:text="${vuelo.destino}">test</span></p>
-                                            <p class="card-text mb-1"><strong>Fecha:</strong> <span th:text="${vuelo.fechaIda}">test</span></p>
-                                            <p class="card-text mb-1"><strong>Pasajero:</strong> <span th:text="${vuelo.fechaVuelta}">test</span></p>
-                                        </div>
-                                        <button type="button" class="btn btn-warning">Editar</button>
-                                        <div class="d-grid mt-3">
-                                            <form th:action="@{/eliminarReservaVuelo}" method="post" accept-charset="UTF-8">
-                                                <input type="hidden" name="email" th:value="${vuelo.email}" />
-                                                <input type="hidden" name="fechaIda" th:value="${vuelo.fechaIda}" />
-                                                <input type="hidden" name="fechaVuelta" th:value="${vuelo.fechaVuelta}" />
-                                                <button type="submit" class="btn btn-danger">Eliminar Reserva</button>
-                                            </form>
+                    <!-- Vuelos -->
+                    <div class="accordion-item" th:if="${vuelos != null and !vuelos.isEmpty()}">
+                        <h2 class="accordion-header" id="headingVuelos">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseVuelos" aria-expanded="true"
+                                    aria-controls="collapseVuelos">
+                                <i class="bi bi-airplane me-2"></i>Vuelos
+                            </button>
+                        </h2>
+                        <div id="collapseVuelos" class="accordion-collapse collapse show"
+                             aria-labelledby="headingVuelos" data-bs-parent="#accordionReservas">
+                            <div class="accordion-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6" th:each="vuelo : ${vuelos}">
+                                        <div class="card shadow h-100">
+                                            <div class="card-body">
+                                                <p class="card-text mb-1"><strong>Origen:</strong> <span
+                                                        th:text="${vuelo.origen}">test</span></p>
+                                                <p class="card-text mb-1"><strong>Destino:</strong> <span
+                                                        th:text="${vuelo.destino}">test</span></p>
+                                                <p class="card-text mb-1"><strong>Fecha:</strong> <span
+                                                        th:text="${vuelo.fechaIda}">test</span></p>
+                                                <p class="card-text mb-1"><strong>Pasajero:</strong> <span
+                                                        th:text="${vuelo.fechaVuelta}">test</span></p>
+                                            </div>
+                                            <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
+                                                <button type="button" class="btn btn-warning btn-sm" title="Editar">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <form th:action="@{/eliminarReservaVuelo}" method="post"
+                                                      accept-charset="UTF-8">
+                                                    <input type="hidden" name="email" th:value="${vuelo.email}"/>
+                                                    <input type="hidden" name="fechaIda"
+                                                           th:value="${vuelo.fechaIda}"/>
+                                                    <input type="hidden" name="fechaVuelta"
+                                                           th:value="${vuelo.fechaVuelta}"/>
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Eliminar">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Hoteles -->
-                <div class="accordion-item" th:if="${hoteles != null and !hoteles.isEmpty()}">
-                    <h2 class="accordion-header" id="headingHoteles">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHoteles" aria-expanded="false" aria-controls="collapseHoteles">
-                            <i class="bi bi-building me-2"></i>Hoteles
-                        </button>
-                    </h2>
-                    <div id="collapseHoteles" class="accordion-collapse collapse" aria-labelledby="headingHoteles" data-bs-parent="#accordionReservas">
-                        <div class="accordion-body">
-                            <div class="row g-3">
-                                <div class="col-md-6" th:each="hotel : ${hoteles}">
-                                    <div class="card shadow h-100">
-                                        <div class="card-body">
-                                            <p class="card-text mb-1"><strong>Nombre:</strong> <span th:text="${hotel.name}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Ciudad:</strong> <span th:text="${hotel.ciudad}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Check-in:</strong> <span th:text="${hotel.checkIn}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Check-out:</strong> <span th:text="${hotel.checkout}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Adultos:</strong> <span th:text="${hotel.adults}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Chicos:</strong> <span th:text="${hotel.children}">tesxt</span></p>
+                    <!-- Hoteles -->
+                    <div class="accordion-item" th:if="${hoteles != null and !hoteles.isEmpty()}">
+                        <h2 class="accordion-header" id="headingHoteles">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseHoteles" aria-expanded="false"
+                                    aria-controls="collapseHoteles">
+                                <i class="bi bi-building me-2"></i>Hoteles
+                            </button>
+                        </h2>
+                        <div id="collapseHoteles" class="accordion-collapse collapse" aria-labelledby="headingHoteles"
+                             data-bs-parent="#accordionReservas">
+                            <div class="accordion-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6" th:each="hotel : ${hoteles}">
+                                        <div class="card shadow h-100 position-relative">
+                                            <div class="card-body pb-5"><!-- padding bottom extra para los botones -->
+                                                <p class="card-text mb-1"><strong>Nombre:</strong> <span
+                                                        th:text="${hotel.name}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Ciudad:</strong> <span
+                                                        th:text="${hotel.ciudad}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Check-in:</strong> <span
+                                                        th:text="${hotel.checkIn}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Check-out:</strong> <span
+                                                        th:text="${hotel.checkout}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Adultos:</strong> <span
+                                                        th:text="${hotel.adults}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Chicos:</strong> <span
+                                                        th:text="${hotel.children}">texto</span></p>
+                                            </div>
+
+                                            <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
+                                                <button type="button" class="btn btn-warning btn-sm" title="Editar">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <form th:action="@{/eliminarReservaHotel}" method="post"
+                                                      accept-charset="UTF-8" class="m-0">
+                                                    <input type="hidden" name="name" th:value="${hotel.name}"/>
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Eliminar">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <button type="button" class="btn btn-warning">Editar</button>
-                                    <div class="d-grid mt-3">
-                                        <form th:action="@{/eliminarReservaHotel}" method="post" accept-charset="UTF-8">
-                                            <input type="hidden" name="name" th:value="${hotel.name}" />
-                                            <button type="submit" class="btn btn-danger">Eliminar Reserva</button>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Excursiones -->
-                <div class="accordion-item" th:if="${excursiones != null and !excursiones.isEmpty()}">
-                    <h2 class="accordion-header" id="headingExcursiones">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExcursiones" aria-expanded="false" aria-controls="collapseExcursiones">
-                            <i class="bi bi-tree me-2"></i>Excursiones
-                        </button>
-                    </h2>
-                    <div id="collapseExcursiones" class="accordion-collapse collapse" aria-labelledby="headingExcursiones" data-bs-parent="#accordionReservas">
-                        <div class="accordion-body">
-                            <div class="row g-3">
-                                <div class="col-md-6" th:each="excursion : ${excursiones}">
-                                    <div class="card shadow h-100">
-                                        <div class="card-body">
-                                            <p class="card-text mb-1"><strong>Excursión:</strong> <span th:text="${excursion.title}"></span></p>
-                                            <p class="card-text"><a th:href="${excursion.url}" target="_blank">Ver más detalles</a></p>
+                    <!-- Excursiones -->
+                    <div class="accordion-item" th:if="${excursiones != null and !excursiones.isEmpty()}">
+                        <h2 class="accordion-header" id="headingExcursiones">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExcursiones" aria-expanded="false"
+                                    aria-controls="collapseExcursiones">
+                                <i class="bi bi-tree me-2"></i>Excursiones
+                            </button>
+                        </h2>
+                        <div id="collapseExcursiones" class="accordion-collapse collapse"
+                             aria-labelledby="headingExcursiones" data-bs-parent="#accordionReservas">
+                            <div class="accordion-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6" th:each="excursion : ${excursiones}">
+                                        <div class="card shadow h-100">
+                                            <div class="card-body">
+                                                <p class="card-text mb-1"><strong>Excursión:</strong> <span
+                                                        th:text="${excursion.title}"></span></p>
+                                                <p class="card-text"><a th:href="${excursion.url}" target="_blank">Ver
+                                                    más detalles</a></p>
+                                            </div>
+                                            <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
+                                                <button type="button" class="btn btn-warning btn-sm" title="Editar">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <form th:action="@{/eliminarReservaExcursion}" method="post"
+                                                      accept-charset="UTF-8" class="m-0">
+                                                    <input type="hidden" name="title" th:value="${excursion.title}"/>
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Eliminar">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <button type="button" class="btn btn-warning">Editar</button>
-                                    <div class="d-grid mt-3">
-                                        <form th:action="@{/eliminarReserva}" method="post" accept-charset="UTF-8">
-                                            <input type="hidden" name="name" th:value="${hotel.name}" />
-                                            <input type="hidden" name="ciudad" th:value="${datobusqueda.ciudad}" />
-                                            <input type="hidden" name="checkIn" th:value="${datobusqueda.checkIn}" />
-                                            <input type="hidden" name="checkOut" th:value="${datobusqueda.checkout}" />
-                                            <input type="hidden" name="adults" th:value="${datobusqueda.adults}" />
-                                            <input type="hidden" name="children" th:value="${datobusqueda.children}" />
-                                            <!-- agregá más campos que necesites -->
-                                            <button type="submit" class="btn btn-warning">Seleccionar Hotel</button>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div th:if="${(vuelos == null or vuelos.isEmpty()) and (hoteles == null or hoteles.isEmpty()) and (excursiones == null or excursiones.isEmpty())}">
-                    <div class="alert alert-info text-center mt-4">
-                        No tienes reservas registradas.
+                    <div th:if="${(vuelos == null or vuelos.isEmpty()) and (hoteles == null or hoteles.isEmpty()) and (excursiones == null or excursiones.isEmpty())}">
+                        <div class="alert alert-info text-center mt-4">
+                            No tienes reservas registradas.
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </main>
 
