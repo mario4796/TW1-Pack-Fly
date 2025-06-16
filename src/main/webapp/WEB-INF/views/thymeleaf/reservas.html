@@ -65,6 +65,15 @@
                                             <p class="card-text mb-1"><strong>Fecha:</strong> <span th:text="${vuelo.fechaIda}">test</span></p>
                                             <p class="card-text mb-1"><strong>Pasajero:</strong> <span th:text="${vuelo.fechaVuelta}">test</span></p>
                                         </div>
+                                        <button type="button" class="btn btn-warning">Editar</button>
+                                        <div class="d-grid mt-3">
+                                            <form th:action="@{/eliminarReservaVuelo}" method="post" accept-charset="UTF-8">
+                                                <input type="hidden" name="email" th:value="${vuelo.email}" />
+                                                <input type="hidden" name="fechaIda" th:value="${vuelo.fechaIda}" />
+                                                <input type="hidden" name="fechaVuelta" th:value="${vuelo.fechaVuelta}" />
+                                                <button type="submit" class="btn btn-danger">Eliminar Reserva</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -93,6 +102,13 @@
                                             <p class="card-text mb-1"><strong>Chicos:</strong> <span th:text="${hotel.children}">tesxt</span></p>
                                         </div>
                                     </div>
+                                    <button type="button" class="btn btn-warning">Editar</button>
+                                    <div class="d-grid mt-3">
+                                        <form th:action="@{/eliminarReservaHotel}" method="post" accept-charset="UTF-8">
+                                            <input type="hidden" name="name" th:value="${hotel.name}" />
+                                            <button type="submit" class="btn btn-danger">Eliminar Reserva</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -115,6 +131,19 @@
                                             <p class="card-text mb-1"><strong>Excursión:</strong> <span th:text="${excursion.title}"></span></p>
                                             <p class="card-text"><a th:href="${excursion.url}" target="_blank">Ver más detalles</a></p>
                                         </div>
+                                    </div>
+                                    <button type="button" class="btn btn-warning">Editar</button>
+                                    <div class="d-grid mt-3">
+                                        <form th:action="@{/eliminarReserva}" method="post" accept-charset="UTF-8">
+                                            <input type="hidden" name="name" th:value="${hotel.name}" />
+                                            <input type="hidden" name="ciudad" th:value="${datobusqueda.ciudad}" />
+                                            <input type="hidden" name="checkIn" th:value="${datobusqueda.checkIn}" />
+                                            <input type="hidden" name="checkOut" th:value="${datobusqueda.checkout}" />
+                                            <input type="hidden" name="adults" th:value="${datobusqueda.adults}" />
+                                            <input type="hidden" name="children" th:value="${datobusqueda.children}" />
+                                            <!-- agregá más campos que necesites -->
+                                            <button type="submit" class="btn btn-warning">Seleccionar Hotel</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
