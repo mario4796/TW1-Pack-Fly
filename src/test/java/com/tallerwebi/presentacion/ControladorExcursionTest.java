@@ -79,7 +79,7 @@ public class ControladorExcursionTest {
         controladorExcursion.verExcursiones("Buenos Aires", "excursiones", model, session);
 
         // verificación
-        verify(model).addAttribute("usuarioLogueado", true);
+        verify(model).addAttribute("usuario", usuarioMock);
     }
 
     @Test
@@ -91,6 +91,6 @@ public class ControladorExcursionTest {
         controladorExcursion.verExcursiones("Buenos Aires", "excursiones", model, session);
 
         // verificación
-        verify(model).addAttribute("usuarioLogueado", false);
+        verify(model).addAttribute("usuario", null);
     }
 }
