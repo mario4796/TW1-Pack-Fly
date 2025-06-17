@@ -21,6 +21,10 @@ public class ServicioVuelosImpl implements ServicioVuelos {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
     private final RepositorioVuelo repositorioVuelo;
+    private final String API_KEY = "cde27281bb7ca3316860cd43fb4d85c229615d4291c18787b26595b73bb92014";
+    private final String gl = "ar"; //geolocalizacion ar = argentina
+    private final String hl = "es"; //idioma es = español
+    private final String currency = "ARS"; //formato de moneda ARS = pesos argentinos
 
     public ServicioVuelosImpl(HttpClient httpClient, ObjectMapper objectMapper, RepositorioVuelo repositorioVuelo) {
         this.httpClient = httpClient;
@@ -38,8 +42,8 @@ public class ServicioVuelosImpl implements ServicioVuelos {
         String destinoEncoded = URLEncoder.encode(destino.toUpperCase(), StandardCharsets.UTF_8);
 
         String baseUrl = String.format(
-                "https://serpapi.com/search.json?engine=google_flights&departure_id=%s&arrival_id=%s&outbound_date=%s&return_date=%s&currency=ARS&api_key=cde27281bb7ca3316860cd43fb4d85c229615d4291c18787b26595b73bb92014",
-                origenEncoded, destinoEncoded, fechaIdaStr, fechaVueltaStr
+                "https://serpapi.com/search.json?engine=google_flights&departure_id=%s&arrival_id=%s&outbound_date=%s&return_date=%s&currency=%s&gl=%s&hl=%s&api_key=%s",
+                origenEncoded, destinoEncoded, fechaIdaStr, fechaVueltaStr, currency, gl, hl, API_KEY
         );
 
         HttpRequest request = HttpRequest.newBuilder()
