@@ -20,14 +20,60 @@ body {
     min-height: calc(100vh - 80px);
 }
 
-.reserva{
-    min-height: 100vh;
-    background: linear-gradient(135deg, #71b7e6, #9b59b6);
-    background-attachment: fixed;
+.body_hotel{
+    background-image: url("../img/hotel.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    min-height: calc(100vh - 80px);
 }
 
-[data-bs-theme="dark"].reserva{
-    background: linear-gradient(135deg, #426e8b, #563265);
+[data-bs-theme="dark"].body_hotel{
+    background-image:
+            linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 100%),
+            url("../img/hotel.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    min-height: calc(100vh - 80px);
+}
+
+.body_excursion{
+    background-image:
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 10%, rgba(0, 0, 0, 0) 50%),
+            url("../img/excursion.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    min-height: calc(100vh - 80px);
+}
+
+[data-bs-theme="dark"].body_excursion{
+    background-image:
+            linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(255, 255, 255, 0) 100%),
+            url("../img/excursion.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    min-height: calc(100vh - 80px);
+}
+
+.body_reserva{
+    background-image: url("../img/booking.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    min-height: calc(100vh - 80px);
+}
+
+[data-bs-theme="dark"].body_reserva{
+    background-image:
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(255, 255, 255, 0) 100%),
+            url("../img/booking.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    min-height: calc(100vh - 80px);
 }
 .hero {
     background: url('https://images.unsplash.com/photo-1502920514313-52581002a659?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center/cover;

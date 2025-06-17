@@ -1,4 +1,4 @@
-﻿<!-- src/main/webapp/WEB-INF/views/thymeleaf/excursiones.html -->
+<!-- src/main/webapp/WEB-INF/views/thymeleaf/excursiones.html -->
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -17,7 +17,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 
-<body data-bs-theme="dark">
+<body class="body_excursion">
 
 <!-- Header -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
@@ -65,34 +65,39 @@
 
             <!-- Sección de búsqueda -->
             <section class="py-5 text-center">
-                <h1 class="display-5 fw-bold">Explorá Excursiones</h1>
-                <p class="lead">Buscá actividades y eventos en la ciudad que quieras.</p>
-                <form th:action="@{/excursiones}" method="get" class="row g-2 justify-content-center mt-4">
-                    <div class="col-md-4">
-                        <input name="loc" th:value="${param.loc}" type="text"
-                               class="form-control form-control-lg" placeholder="Ciudad">
-                    </div>
-                    <div class="col-md-4">
-                        <input name="query" th:value="${param.query}" type="text"
-                               class="form-control form-control-lg" placeholder="Qué buscar">
-                    </div>
-                    <div class="col-md-2 d-grid">
-                        <button type="submit" class="btn btn-primary btn-con-spinner">
+                <div class="overlay mt-3">
+                    <h1 class="display-5 fw-bold text-light" >Explorá Excursiones</h1>
+                    <p class="lead text-light">Buscá actividades y eventos en la ciudad que quieras.</p>
+                    <form th:action="@{/excursiones}" method="get" class="row g-2 justify-content-center mt-4">
+                        <div class="col-md-4">
+                            <input name="loc" th:value="${param.loc}" type="text"
+                                   class="form-control form-control-lg" placeholder="Ciudad">
+                        </div>
+                        <div class="col-md-4">
+                            <input name="query" th:value="${param.query}" type="text"
+                                   class="form-control form-control-lg" placeholder="Qué buscar">
+                        </div>
+                        <div class="col-md-2 d-grid">
+                            <button type="submit" class="btn btn-primary btn-con-spinner">
                             <span class="spinner-border spinner-border-sm me-2 d-none spinner-btn" role="status"
                                   aria-hidden="true"></span>
-                            <i class="bi bi-search me-1"></i> Buscar
-                        </button>
-                    </div>
-                </form>
+                                <i class="bi bi-search me-1"></i> Buscar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </section>
 
             <!-- Resultados -->
             <section class="py-5">
                 <div class="row g-4">
-                    <div th:if="${#lists.isEmpty(excursiones)}"
-                         class="col-12 text-center text-muted">
-                        No se encontraron excursiones para esos criterios.
+                    <div th:if="${#lists.isEmpty(excursiones)}" class="col-12">
+                        <div class="alert alert-secondary d-flex align-items-center justify-content-center text-center" role="alert">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <span>No se encontraron excursiones para esos criterios.</span>
+                        </div>
                     </div>
+
 
                     <div th:each="e : ${excursiones}" class="col-sm-6 col-lg-4">
                         <div class="card h-100 shadow-sm">
