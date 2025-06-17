@@ -9,5 +9,5 @@ import java.util.List;
 public interface RepositorioHotel {
     Boolean reservar(Hotel hotel);
     List<HotelDto> buscarReserva(Long idUsuario);
-
+    void eliminarReserva(Long idUsuario, String nameHotel);
 }

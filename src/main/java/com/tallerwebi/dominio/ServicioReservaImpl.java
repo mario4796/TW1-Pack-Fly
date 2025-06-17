@@ -27,4 +27,10 @@ public class ServicioReservaImpl implements ServicioReserva {
         return repositorioReserva.buscarPorEmail(email);
     }
 
+    @Override
+    public void eliminarReserva(String email, String fechaIda, String fechaVuelta) { repositorioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
+
+    }
+
+
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,6 @@ public class ControladorExcursion {
             HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("USUARIO");
-        model.addAttribute("usuarioLogueado", usuario != null);
 
         List<ExcursionDTO> lista = new ArrayList<>();
 
@@ -47,6 +47,7 @@ public class ControladorExcursion {
             lista = servicio.getExcursiones(loc, query);
         }
         model.addAttribute("excursiones", lista);
+        model.addAttribute("usuario", usuario);
 
         return "excursiones";
     }

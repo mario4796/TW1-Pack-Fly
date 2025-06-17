@@ -97,4 +97,9 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
         return repositorioExcursion.obtenerPorUsuario(idUsuario);
     }
 
+    @Override
+    public void eliminarReserva(Long idUsuario, String title) {
+        repositorioExcursion.eliminarReserva(idUsuario, title);
+    }
+
 }

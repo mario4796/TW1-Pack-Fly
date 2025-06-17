@@ -33,4 +33,16 @@ public class RepositorioReservaImpl implements RepositorioReserva {
                 .list();
     }
 
+    @Override
+    public void eliminarReserva(String email, String fechaIda, String fechaVuelta) {
+        this.sessionFactory.getCurrentSession()
+                .createQuery("DELETE FROM Reserva r WHERE r.email = :email AND r.fechaIda = :fechaIda AND r.fechaVuelta = :fechaVuelta")
+                .setParameter("email", email)
+                .setParameter("fechaIda", fechaIda)
+                .setParameter("fechaVuelta", fechaVuelta)
+                .executeUpdate();
+    }
+
+
+
 }

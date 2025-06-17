@@ -43,4 +43,31 @@ public class ControladorReserva {
 
         return "reservas";
     }
+
+    @PostMapping("/eliminarReservaHotel")
+    public String eliminarReservaHotel(@RequestParam String name,
+                                 HttpServletRequest request) {
+
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        hotelService.eliminarReserva(usuario.getId(), name);
+        return "redirect:/reservas";
+    }
+
+    @PostMapping("/eliminarReservaVuelo")
+    public String eliminarReservaVuelo(@RequestParam String email,
+                                       @RequestParam String fechaVuelta,
+                                       @RequestParam String fechaIda) {
+
+        servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
+        return "redirect:/reservas";
+    }
+
+    @PostMapping("/eliminarReservaExcursion")
+    public String eliminarReservaExcursion(@RequestParam String title,
+                                           HttpServletRequest request) {
+
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        servicioExcursiones.eliminarReserva(usuario.getId(), title);
+        return "redirect:/reservas";
+    }
 }

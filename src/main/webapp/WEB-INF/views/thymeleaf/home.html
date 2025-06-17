@@ -24,25 +24,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-
-                <!--<form th:action="@{/ver-reservas}" method="get" class="d-flex">
-                    <input type="email" name="email" placeholder="Ingrese su email" class="form-control me-2" required>
-                    <button type="submit" class="btn btn-primary">Ver Reservas</button>
-                </form>-->
-
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
                 <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
-                <!--<li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>-->
-                <!--<li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>-->
-                <!--<li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>-->
                 <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
-                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
+                <li th:if="${usuario}" class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
                 <li class="nav-item">
                     <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
                         <i class="bi bi-moon"></i>
                     </button>
                 </li>
-                <li class="nav-item">
+                <li th:if="${usuario == null}" class="nav-item">
+                    <a href="./login" class="btn btn-outline-success ms-lg-2 mt-1 mt-lg-0">Iniciar sesión</a>
+                </li>
+                <li th:if="${usuario != null}" class="nav-item">
                     <form th:action="@{/logout}" method="post" style="display:inline;">
                         <button type="submit" class="btn btn-outline-danger ms-lg-2 mt-1 mt-lg-0">Cerrar sesión</button>
                     </form>

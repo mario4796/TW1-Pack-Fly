@@ -44,4 +44,11 @@ public List<Excursion> obtenerPorUsuario(Long idUsuario) {
 }
 
 
+    public void eliminarReserva(Long idUsuario, String title) {
+        this.sessionFactory.getCurrentSession()
+                .createQuery("DELETE FROM Excursion e WHERE e.usuario.id = :idUsuario AND e.title = :title")
+                .setParameter("idUsuario", idUsuario)
+                .setParameter("title", title)
+                .executeUpdate();
+    }
 }

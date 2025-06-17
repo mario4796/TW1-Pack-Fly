@@ -4,12 +4,14 @@ import com.tallerwebi.dominio.Reserva;
 import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.ServicioVuelos;
 import com.tallerwebi.dominio.Vuelo;
+import com.tallerwebi.dominio.entidades.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Controller
@@ -30,7 +32,10 @@ public class ControladorVuelos {
     }
 
     @GetMapping("/busqueda-vuelo")
-    public String vistaBusquedaVuelo() {
+    public String vistaBusquedaVuelo(HttpServletRequest request,
+                                     Model model) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        model.addAttribute("usuario", usuario);
         return "busqueda-vuelo";
     }
 
@@ -40,9 +45,12 @@ public class ControladorVuelos {
             @RequestParam String destino,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaIda,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaVuelta,
+            HttpServletRequest request,
             Model model) {
 
         Vuelo vuelo = servicioVuelos.getVuelo(origen, destino, fechaIda, fechaVuelta);
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        model.addAttribute("usuario", usuario);
 
         if (vuelo != null) {
             model.addAttribute("vuelo", vuelo);
@@ -59,16 +67,18 @@ public class ControladorVuelos {
     }
 
     @GetMapping("/formulario-reserva")
-    public String mostrarFormularioVacio() {
-        return "formularioReserva";
-    }
+    public String mostrarFormularioVacio() {return "formularioReserva";}
 
     @PostMapping("/formulario-reserva")
     public String mostrarFormularioReserva(@RequestParam String origen,
                                            @RequestParam String destino,
                                            @RequestParam String fechaIda,
                                            @RequestParam String fechaVuelta,
+                                           HttpServletRequest request,
                                            Model model) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        model.addAttribute("usuario", usuario);
+
         model.addAttribute("origen", origen);
         model.addAttribute("destino", destino);
         model.addAttribute("fechaIda", fechaIda);
