@@ -40,7 +40,6 @@ public class ControladorExcursion {
             HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("USUARIO");
-        model.addAttribute("usuarioLogueado", usuario != null);
 
         List<ExcursionDTO> lista = new ArrayList<>();
 
@@ -48,6 +47,7 @@ public class ControladorExcursion {
             lista = servicio.getExcursiones(loc, query);
         }
         model.addAttribute("excursiones", lista);
+        model.addAttribute("usuario", usuario);
 
         return "excursiones";
     }

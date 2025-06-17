@@ -26,13 +26,17 @@
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
                 <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
-                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
+                <li th:if="${usuario}" class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver
+                    reservas</a></li>
                 <li class="nav-item">
                     <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
                         <i class="bi bi-moon"></i>
                     </button>
                 </li>
-                <li class="nav-item">
+                <li th:if="${usuario == null}" class="nav-item">
+                    <a href="./login" class="btn btn-outline-success ms-lg-2 mt-1 mt-lg-0">Iniciar sesión</a>
+                </li>
+                <li th:if="${usuario != null}" class="nav-item">
                     <form th:action="@{/logout}" method="post" style="display:inline;">
                         <button type="submit" class="btn btn-outline-danger ms-lg-2 mt-1 mt-lg-0">Cerrar sesión</button>
                     </form>
@@ -63,17 +67,20 @@
                         <div class="col-md-6">
                             <label for="ciudad" class="form-label">Ciudad:</label>
                             <input type="text" id="ciudad" name="ciudad" class="form-control"
-                                   th:value="${datobusqueda != null and datobusqueda.ciudad != null ? datobusqueda.ciudad : ''}" required>
+                                   th:value="${datobusqueda != null and datobusqueda.ciudad != null ? datobusqueda.ciudad : ''}"
+                                   required>
                         </div>
                         <div class="col-md-3">
-                            <label for="checkIn" class="form-label" >Fecha check-in:</label>
+                            <label for="checkIn" class="form-label">Fecha check-in:</label>
                             <input type="date" id="checkIn" name="checkIn" class="form-control"
-                                   th:value="${datobusqueda != null and datobusqueda.checkIn != null ? datobusqueda.checkIn : ''}" required>
+                                   th:value="${datobusqueda != null and datobusqueda.checkIn != null ? datobusqueda.checkIn : ''}"
+                                   required>
                         </div>
                         <div class="col-md-3">
-                            <label for="checkOut" class="form-label" >Fecha check-out:</label>
+                            <label for="checkOut" class="form-label">Fecha check-out:</label>
                             <input type="date" id="checkOut" name="checkOut" class="form-control"
-                                   th:value="${datobusqueda != null and datobusqueda.checkout != null ? datobusqueda.checkout : ''}" required>
+                                   th:value="${datobusqueda != null and datobusqueda.checkout != null ? datobusqueda.checkout : ''}"
+                                   required>
                         </div>
                     </div>
 
@@ -81,22 +88,27 @@
                         <div class="col-md-4">
                             <label for="adults" class="form-label">Cant. adultos:</label>
                             <input type="number" id="adults" name="adults" class="form-control" value="1" min="1"
-                                   th:value="${datobusqueda != null and datobusqueda.adults != null ? datobusqueda.adults : '1'}" required>
+                                   th:value="${datobusqueda != null and datobusqueda.adults != null ? datobusqueda.adults : '1'}"
+                                   required>
                         </div>
                         <div class="col-md-4">
-                            <label for="children" class="form-label" >Cant. niños:</label>
+                            <label for="children" class="form-label">Cant. niños:</label>
                             <input type="number" id="children" name="children" class="form-control" value="0" min="0"
-                                   th:value="${datobusqueda != null and datobusqueda.children != null ? datobusqueda.children : '0'}" required>
+                                   th:value="${datobusqueda != null and datobusqueda.children != null ? datobusqueda.children : '0'}"
+                                   required>
                         </div>
                         <div class="col-md-4">
                             <label for="children_ages" class="form-label">Edades niños (comas sin espacios):</label>
-                            <input type="text" id="children_ages" name="children_ages" class="form-control" placeholder="5,8,10...">
+                            <input type="text" id="children_ages" name="children_ages" class="form-control"
+                                   placeholder="5,8,10...">
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-between">
                         <a class="btn btn-secondary col-md-3" href="./busqueda-vuelo">Volver</a>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary btn-con-spinner">
+                            <span class="spinner-border spinner-border-sm me-2 d-none spinner-btn" role="status"
+                                  aria-hidden="true"></span>
                             <i class="bi bi-search me-1"></i> Buscar
                         </button>
                     </div>
@@ -107,6 +119,13 @@
 
     <div th:if="${hoteles}" class="overlay w-100 mt-2">
         <h1 class="mb-4 text-center">Hoteles encontrados</h1>
+        <div th:if="${usuario == null}"
+             class="alert alert-secondary mt-3 d-flex align-items-center justify-content-center" role="alert">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            <div>
+                Debes <a th:href="@{/login}" class="alert-link">iniciar sesión</a> para poder reservar.
+            </div>
+        </div>
         <p th:if="${#lists.isEmpty(hoteles)}">No se han encontrado hoteles.</p>
 
         <ul class="list-unstyled" th:if="${hoteles != null and !#lists.isEmpty(hoteles)}">
@@ -182,13 +201,14 @@
                                 </div>
 
                                 <div class="d-grid mt-3">
-                                    <form th:action="@{/reservar}" method="post" accept-charset="UTF-8">
-                                        <input type="hidden" name="name" th:value="${hotel.name}" />
-                                        <input type="hidden" name="ciudad" th:value="${datobusqueda.ciudad}" />
-                                        <input type="hidden" name="checkIn" th:value="${datobusqueda.checkIn}" />
-                                        <input type="hidden" name="checkOut" th:value="${datobusqueda.checkout}" />
-                                        <input type="hidden" name="adults" th:value="${datobusqueda.adults}" />
-                                        <input type="hidden" name="children" th:value="${datobusqueda.children}" />
+                                    <form th:if="${usuario != null}" th:action="@{/reservar}" method="post"
+                                          accept-charset="UTF-8">
+                                        <input type="hidden" name="name" th:value="${hotel.name}"/>
+                                        <input type="hidden" name="ciudad" th:value="${datobusqueda.ciudad}"/>
+                                        <input type="hidden" name="checkIn" th:value="${datobusqueda.checkIn}"/>
+                                        <input type="hidden" name="checkOut" th:value="${datobusqueda.checkout}"/>
+                                        <input type="hidden" name="adults" th:value="${datobusqueda.adults}"/>
+                                        <input type="hidden" name="children" th:value="${datobusqueda.children}"/>
                                         <!-- agregá más campos que necesites -->
                                         <button type="submit" class="btn btn-success">Seleccionar Hotel</button>
                                     </form>
@@ -210,5 +230,6 @@
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
 <script type="text/javascript" th:src="@{js/children_age_toggle.js}"></script>
 <script type="text/javascript" th:src="@{js/alert.js}"></script>
+<script type="text/javascript" th:src="@{js/spinner.js}"></script>
 </body>
 </html>

@@ -30,6 +30,7 @@ public class ControladorHotel {
             @RequestParam Integer adults,
             @RequestParam Integer children,
             @RequestParam String children_ages,
+            HttpServletRequest request,
             Model model
     ) {
         List<HotelDto> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut, adults, children, children_ages);
@@ -39,6 +40,8 @@ public class ControladorHotel {
         datobusqueda.setCheckout(checkOut);
         datobusqueda.setAdults(adults);
         datobusqueda.setChildren(children);
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        model.addAttribute("usuario", usuario);
         model.addAttribute("datobusqueda", datobusqueda);
         model.addAttribute("hoteles", hoteles);
         model.addAttribute("iconHelper", iconHelper);
@@ -46,7 +49,10 @@ public class ControladorHotel {
     }
 
     @GetMapping("/busqueda-hoteles")
-    public String mostrarFormulario() {
+    public String mostrarFormulario(HttpServletRequest request,
+                                    Model model) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        model.addAttribute("usuario", usuario);
         return "busqueda-hoteles";
     }
 
