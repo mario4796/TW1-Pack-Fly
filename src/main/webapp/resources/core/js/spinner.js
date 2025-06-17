@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     forms.forEach(form => {
         form.addEventListener("submit", function (event) {
+            if (!form.checkValidity()) {
+                return;
+            }
+
             const submitButton = form.querySelector("button.btn-con-spinner");
 
             if (submitButton) {
