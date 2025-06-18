@@ -14,12 +14,13 @@ class ServicioHotelImplTest {
 
     private RepositorioHotelImp mockRepositorio;
     private ServicioHotelImpl servicioHotel;
+    private ConfiguracionDeApiKey config;
 
     // Descomentar los test para probarlos
     @BeforeEach
     void setUp() {
         mockRepositorio = mock(RepositorioHotelImp.class);
-        servicioHotel = new ServicioHotelImpl(mockRepositorio);
+        servicioHotel = new ServicioHotelImpl(config, mockRepositorio);
     }
 
     @Test

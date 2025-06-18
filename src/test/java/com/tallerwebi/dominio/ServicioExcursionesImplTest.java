@@ -22,16 +22,17 @@ public class ServicioExcursionesImplTest {
     private ObjectMapper objectMapper;
     private RepositorioExcursion repositorioExcursion;
     private ServicioExcursionesImpl servicio;
+    private ConfiguracionDeApiKey config;
 
     @BeforeEach
     public void setUp() {
-        servicio = new ServicioExcursionesImpl(repositorioExcursion);
+        servicio = new ServicioExcursionesImpl(config, repositorioExcursion);
 
         httpClient   = mock(HttpClient.class);
         objectMapper = new ObjectMapper();
 
         ReflectionTestUtils.setField(servicio, "apiKey",
-                "1d9b2f7b6812e654ec3ab0f399081e03a4402ff91bf6f50ef00bb403d2014118");
+                config.getApiKey());
         ReflectionTestUtils.setField(servicio, "httpClient", httpClient);
         ReflectionTestUtils.setField(servicio, "mapper", objectMapper);
     }
