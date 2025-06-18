@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 
-<body class="reserva">
+<body class="body_reserva">
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
     <div class="container">
@@ -73,11 +73,19 @@
                                                         th:text="${vuelo.fechaVuelta}">test</span></p>
                                             </div>
                                             <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
-                                                <button type="button" class="btn btn-warning btn-sm" title="Editar">
+                                                <button type="button"
+                                                        class="btn btn-warning btn-sm btn-editar-vuelo"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editarVueloModal"
+                                                        th:attr="data-email=${vuelo.email},
+                                                                 data-origen=${vuelo.origen},
+                                                                 data-destino=${vuelo.destino},
+                                                                 data-fechaida=${vuelo.fechaIda},
+                                                                 data-fechavuelta=${vuelo.fechaVuelta}">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <form th:action="@{/eliminarReservaVuelo}" method="post"
-                                                      accept-charset="UTF-8">
+                                                      accept-charset="UTF-8" class="form-eliminar-reserva m-0">
                                                     <input type="hidden" name="email" th:value="${vuelo.email}"/>
                                                     <input type="hidden" name="fechaIda"
                                                            th:value="${vuelo.fechaIda}"/>
@@ -127,14 +135,23 @@
                                             </div>
 
                                             <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
-                                                <button type="button" class="btn btn-warning btn-sm" title="Editar">
+                                                <button type="button"
+                                                        class="btn btn-warning btn-sm btn-editar-hotel"
+                                                        title="Editar"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editarHotelModal"
+                                                        th:attr="data-name=${hotel.name},
+                                                                 data-ciudad=${hotel.ciudad},
+                                                                 data-checkin=${hotel.checkIn},
+                                                                 data-checkout=${hotel.checkout},
+                                                                 data-adults=${hotel.adults},
+                                                                 data-children=${hotel.children}">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
-                                                <form th:action="@{/eliminarReservaHotel}" method="post"
-                                                      accept-charset="UTF-8" class="m-0">
+                                                <form th:action="@{/eliminarReservaHotel}" method="post" class="form-eliminar-reserva m-0"
+                                                      accept-charset="UTF-8">
                                                     <input type="hidden" name="name" th:value="${hotel.name}"/>
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                            title="Eliminar">
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
                                                         <i class="bi bi-trash"></i>
                                                     </button>
                                                 </form>
@@ -168,11 +185,16 @@
                                                     más detalles</a></p>
                                             </div>
                                             <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
-                                                <button type="button" class="btn btn-warning btn-sm" title="Editar">
+                                                <button type="button"
+                                                        class="btn btn-warning btn-sm btn-editar-excursion"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editarExcursionModal"
+                                                        th:attr="data-title=${excursion.title},
+                                                                 data-url=${excursion.url}">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <form th:action="@{/eliminarReservaExcursion}" method="post"
-                                                      accept-charset="UTF-8" class="m-0">
+                                                      accept-charset="UTF-8" class="form-eliminar-reserva m-0">
                                                     <input type="hidden" name="title" th:value="${excursion.title}"/>
                                                     <button type="submit" class="btn btn-danger btn-sm"
                                                             title="Eliminar">
@@ -196,11 +218,125 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal vuelo -->
+    <div class="modal fade" id="editarVueloModal" tabindex="-1" aria-labelledby="editarVueloModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/editarReservaVuelo}" method="post" id="formEditarVuelo" accept-charset="UTF-8">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarVueloModalLabel">Editar Vuelo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editVueloEmail" name="email"/>
+                        <input type="hidden" id="editVueloFechaIdaOriginal" name="fechaIdaOriginal"/>
+                        <input type="hidden" id="editVueloFechaVueltaOriginal" name="fechaVueltaOriginal"/>
+                        <div class="mb-3">
+                            <label for="editVueloOrigen" class="form-label">Origen</label>
+                            <input type="text" class="form-control" id="editVueloOrigen" name="origen" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVueloDestino" class="form-label">Destino</label>
+                            <input type="text" class="form-control" id="editVueloDestino" name="destino" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVueloFechaIda" class="form-label">Fecha Ida</label>
+                            <input type="date" class="form-control" id="editVueloFechaIda" name="fechaIda" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVueloFechaVuelta" class="form-label">Fecha Vuelta</label>
+                            <input type="date" class="form-control" id="editVueloFechaVuelta" name="fechaVuelta" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal hotel -->
+    <div class="modal fade" id="editarHotelModal" tabindex="-1" aria-labelledby="editarHotelModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/editarReservaHotel}" method="post" id="formEditarHotel" accept-charset="UTF-8">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarHotelModalLabel">Editar Hotel</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editHotelNameHidden" name="name"/>
+                        <div class="mb-3">
+                            <label for="editHotelName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editHotelName" name="newName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelCiudad" class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="editHotelCiudad" name="ciudad" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelCheckIn" class="form-label">Check-in</label>
+                            <input type="date" class="form-control" id="editHotelCheckIn" name="checkIn" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelCheckOut" class="form-label">Check-out</label>
+                            <input type="date" class="form-control" id="editHotelCheckOut" name="checkout" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelAdults" class="form-label">Adultos</label>
+                            <input type="number" class="form-control" id="editHotelAdults" name="adults" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelChildren" class="form-label">Chicos</label>
+                            <input type="number" class="form-control" id="editHotelChildren" name="children" min="0" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal excursión -->
+    <div class="modal fade" id="editarExcursionModal" tabindex="-1" aria-labelledby="editarExcursionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/editarReservaExcursion}" method="post" id="formEditarExcursion" accept-charset="UTF-8">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarExcursionModalLabel">Editar Excursión</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editExcursionTitleOriginal" name="titleOriginal"/>
+                        <div class="mb-3">
+                            <label for="editExcursionTitle" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editExcursionTitle" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editExcursionUrl" class="form-label">URL</label>
+                            <input type="url" class="form-control" id="editExcursionUrl" name="url">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 
 <script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
+<script type="text/javascript" th:src="@{js/modal.js}"></script>
 
 </body>
 </html>

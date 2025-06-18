@@ -70,4 +70,47 @@ public class ControladorReserva {
         servicioExcursiones.eliminarReserva(usuario.getId(), title);
         return "redirect:/reservas";
     }
+
+    @PostMapping("/editarReservaVuelo")
+    public String editarReservaVuelo(
+            @RequestParam String email,
+            @RequestParam String origen,
+            @RequestParam String destino,
+            @RequestParam String fechaIda,
+            @RequestParam String fechaVuelta,
+            @RequestParam String fechaIdaOriginal,
+            @RequestParam String fechaVueltaOriginal
+    ) {
+        //servicioReserva.editarReserva(email, origen, destino, fechaIda, fechaVuelta, fechaIdaOriginal, fechaVueltaOriginal);
+        return "redirect:/reservas";
+    }
+
+    @PostMapping("/editarReservaHotel")
+    public String editarReservaHotel(
+            @RequestParam String name,
+            @RequestParam String newName,
+            @RequestParam String ciudad,
+            @RequestParam String checkIn,
+            @RequestParam String checkout,
+            @RequestParam Integer adults,
+            @RequestParam Integer children,
+            HttpServletRequest request
+    ) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        hotelService.editarReserva(usuario.getId(), name, newName, ciudad, checkIn, checkout, adults, children);
+        return "redirect:/reservas";
+    }
+
+    @PostMapping("/editarReservaExcursion")
+    public String editarReservaExcursion(
+            @RequestParam String titleOriginal,
+            @RequestParam String title,
+            @RequestParam String url,
+            HttpServletRequest request
+    ) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        //servicioExcursiones.editarReserva(usuario.getId(), titleOriginal, title, url);
+        return "redirect:/reservas";
+    }
+
 }

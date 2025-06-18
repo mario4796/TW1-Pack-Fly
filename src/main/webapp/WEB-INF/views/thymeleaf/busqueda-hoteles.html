@@ -12,7 +12,7 @@
     <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined}"/>
 </head>
 
-<body>
+<body class="body_hotel">
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center" href="./home">
@@ -62,45 +62,52 @@
         <h1 class="text-white text-center mb-4">Buscar Hoteles</h1>
         <div class="card shadow">
             <div class="card-body">
-                <form th:action="@{/buscar-hoteles}" method="get">
+                <form th:action="@{/buscar-hoteles}" method="get" novalidate>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="ciudad" class="form-label">Ciudad:</label>
                             <input type="text" id="ciudad" name="ciudad" class="form-control"
-                                   th:value="${datobusqueda != null and datobusqueda.ciudad != null ? datobusqueda.ciudad : ''}"
-                                   required>
+                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,}" required
+                                   th:value="${datobusqueda != null and datobusqueda.ciudad != null ? datobusqueda.ciudad : ''}">
+                            <div class="invalid-feedback">Ingresá una ciudad válida (solo letras).</div>
                         </div>
                         <div class="col-md-3">
                             <label for="checkIn" class="form-label">Fecha check-in:</label>
                             <input type="date" id="checkIn" name="checkIn" class="form-control"
-                                   th:value="${datobusqueda != null and datobusqueda.checkIn != null ? datobusqueda.checkIn : ''}"
-                                   required>
+                                   min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                                   required
+                                   th:value="${datobusqueda != null and datobusqueda.checkIn != null ? datobusqueda.checkIn : ''}">
+                            <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
                         </div>
                         <div class="col-md-3">
                             <label for="checkOut" class="form-label">Fecha check-out:</label>
                             <input type="date" id="checkOut" name="checkOut" class="form-control"
-                                   th:value="${datobusqueda != null and datobusqueda.checkout != null ? datobusqueda.checkout : ''}"
-                                   required>
+                                   required
+                                   th:value="${datobusqueda != null and datobusqueda.checkout != null ? datobusqueda.checkout : ''}">
+                            <div class="invalid-feedback">Seleccioná una fecha de salida válida.</div>
                         </div>
                     </div>
-
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="adults" class="form-label">Cant. adultos:</label>
                             <input type="number" id="adults" name="adults" class="form-control" value="1" min="1"
-                                   th:value="${datobusqueda != null and datobusqueda.adults != null ? datobusqueda.adults : '1'}"
-                                   required>
+                                   required
+                                   th:value="${datobusqueda != null and datobusqueda.adults != null ? datobusqueda.adults : '1'}">
+                            <div class="invalid-feedback">Debe haber al menos un adulto.</div>
                         </div>
                         <div class="col-md-4">
                             <label for="children" class="form-label">Cant. niños:</label>
                             <input type="number" id="children" name="children" class="form-control" value="0" min="0"
-                                   th:value="${datobusqueda != null and datobusqueda.children != null ? datobusqueda.children : '0'}"
-                                   required>
+                                   required
+                                   th:value="${datobusqueda != null and datobusqueda.children != null ? datobusqueda.children : '0'}">
+                            <div class="invalid-feedback">Debe ser 0 o más.</div>
                         </div>
                         <div class="col-md-4">
                             <label for="children_ages" class="form-label">Edades niños (comas sin espacios):</label>
                             <input type="text" id="children_ages" name="children_ages" class="form-control"
+                                   pattern="^(\d{1,2})(,\d{1,2})*$"
                                    placeholder="5,8,10...">
+                            <div class="invalid-feedback">Ingresá las edades separadas por comas. Ej: 5,8,10</div>
                         </div>
                     </div>
 
@@ -228,8 +235,8 @@
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
-<script type="text/javascript" th:src="@{js/children_age_toggle.js}"></script>
 <script type="text/javascript" th:src="@{js/alert.js}"></script>
 <script type="text/javascript" th:src="@{js/spinner.js}"></script>
+<script type="text/javascript" th:src="@{js/validaciones.js}"></script>
 </body>
 </html>

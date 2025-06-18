@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public class RepositorioHotelImp implements RepositorioHotel {
 
+    @Autowired
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -51,5 +52,19 @@ public class RepositorioHotelImp implements RepositorioHotel {
     }
 
 
+    @Override
+    public Hotel buscarPorUsuarioYNombre(Long idUsuario, String nameHotel) {
+        String hql = "FROM Hotel h WHERE h.usuario.id = :idUsuario AND h.name = :nameHotel";
+        List<Hotel> resultados = sessionFactory.getCurrentSession()
+                .createQuery(hql, Hotel.class)
+                .setParameter("idUsuario", idUsuario)
+                .setParameter("nameHotel", nameHotel)
+                .list();
+        return resultados.isEmpty() ? null : resultados.get(0);
+    }
 
+    @Override
+    public void actualizar(Hotel hotel) {
+        sessionFactory.getCurrentSession().update(hotel);
+    }
 }
