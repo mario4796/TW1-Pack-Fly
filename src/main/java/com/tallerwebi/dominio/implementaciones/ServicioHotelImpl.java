@@ -52,5 +52,19 @@ public class ServicioHotelImpl implements ServicioHotel {
        repositorioHotelImp.eliminarReserva(idUsuario, nameHotel);
     }
 
+    @Override
+    public void editarReserva(Long idUsuario, String name, String newName, String ciudad, String checkIn, String checkout, Integer adults, Integer children) {
+        Hotel reserva = repositorioHotelImp.buscarPorUsuarioYNombre(idUsuario, name);
+        if (reserva != null) {
+            reserva.setName(newName);
+            reserva.setCiudad(ciudad);
+            reserva.setCheckIn(checkIn);
+            reserva.setCheckOut(checkout);
+            reserva.setAdult(adults);
+            reserva.setChildren(children);
+            repositorioHotelImp.actualizar(reserva);
+        }
+    }
+
 
 }

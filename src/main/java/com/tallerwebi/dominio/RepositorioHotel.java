@@ -10,4 +10,6 @@ public interface RepositorioHotel {
     Boolean reservar(Hotel hotel);
     List<HotelDto> buscarReserva(Long idUsuario);
     void eliminarReserva(Long idUsuario, String nameHotel);
+    Hotel buscarPorUsuarioYNombre(Long usuarioId, String nombreHotel);
+    void actualizar(Hotel hotel);
 }
