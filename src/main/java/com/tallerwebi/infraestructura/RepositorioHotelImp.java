@@ -33,11 +33,11 @@ public class RepositorioHotelImp implements RepositorioHotel {
     }
 
     @Override
-    public List<HotelDto> buscarReserva(Long idUsuario) {
+    public List<Hotel> buscarReserva(Long idUsuario) {
         return this.sessionFactory.getCurrentSession()
                 .createQuery(
-                        "SELECT new com.tallerwebi.presentacion.dtos.HotelDto(h.name, h.ciudad, h.checkIn, h.checkOut, h.adult, h.children) " +
-                                "FROM Hotel h WHERE h.usuario.id = :idUsuario", HotelDto.class)
+                        "SELECT new com.tallerwebi.dominio.entidades.Hotel(h.id, h.name, h.ciudad, h.checkIn, h.checkOut, h.adult, h.children) " +
+                                "FROM Hotel h WHERE h.usuario.id = :idUsuario", Hotel.class)
                 .setParameter("idUsuario", idUsuario)
                 .getResultList();
     }

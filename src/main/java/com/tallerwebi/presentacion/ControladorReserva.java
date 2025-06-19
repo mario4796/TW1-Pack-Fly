@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.ServicioExcursiones;
 import com.tallerwebi.dominio.Excursion;
+import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ControladorReserva {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
-        List<HotelDto> hoteles = hotelService.buscarReservas(usuario.getId());
+        List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
         List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
 
         List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
@@ -87,6 +88,7 @@ public class ControladorReserva {
 
     @PostMapping("/editarReservaHotel")
     public String editarReservaHotel(
+            @RequestParam String id,
             @RequestParam String name,
             @RequestParam String newName,
             @RequestParam String ciudad,

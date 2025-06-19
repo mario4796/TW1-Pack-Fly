@@ -127,9 +127,9 @@
                                                 <p class="card-text mb-1"><strong>Check-in:</strong> <span
                                                         th:text="${hotel.checkIn}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Check-out:</strong> <span
-                                                        th:text="${hotel.checkout}">texto</span></p>
+                                                        th:text="${hotel.checkOut}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Adultos:</strong> <span
-                                                        th:text="${hotel.adults}">texto</span></p>
+                                                        th:text="${hotel.adult}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Chicos:</strong> <span
                                                         th:text="${hotel.children}">texto</span></p>
                                             </div>
@@ -140,11 +140,12 @@
                                                         title="Editar"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editarHotelModal"
-                                                        th:attr="data-name=${hotel.name},
+                                                        th:attr="data-id=${hotel.id},
+                                                                 data-name=${hotel.name},
                                                                  data-ciudad=${hotel.ciudad},
                                                                  data-checkin=${hotel.checkIn},
-                                                                 data-checkout=${hotel.checkout},
-                                                                 data-adults=${hotel.adults},
+                                                                 data-checkout=${hotel.checkOut},
+                                                                 data-adults=${hotel.adult},
                                                                  data-children=${hotel.children}">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
@@ -268,6 +269,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" id="editHotelId" name="id"/>
                         <input type="hidden" id="editHotelNameHidden" name="name"/>
                         <div class="mb-3">
                             <label for="editHotelName" class="form-label">Nombre</label>

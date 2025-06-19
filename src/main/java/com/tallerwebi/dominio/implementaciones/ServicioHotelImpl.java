@@ -43,7 +43,7 @@ public class ServicioHotelImpl implements ServicioHotel {
     }
 
     @Override
-    public List<HotelDto> buscarReservas(Long idUsuario) {
+    public List<Hotel> buscarReservas(Long idUsuario) {
        return repositorioHotelImp.buscarReserva(idUsuario);
     }
 
