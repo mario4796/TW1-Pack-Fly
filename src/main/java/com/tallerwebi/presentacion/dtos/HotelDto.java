@@ -19,6 +19,21 @@ public class HotelDto{
     private List<Image> images;
     private RatePerNight rate_per_night;
     private List<String> amenities;
+    private Price price;
+    private Double precio;
+
+    public static class Price {
+        private Double extracted;
+
+        public Double getExtracted() {
+            return extracted;
+        }
+
+        public void setExtracted(Double extracted) {
+            this.extracted = extracted;
+        }
+    }
+
 
     public String getLink() {
         return link;
@@ -55,9 +70,22 @@ public class HotelDto{
 
     public static class RatePerNight {
         private String lowest;
+        private Double extracted_lowest;
 
         public String getLowest() {
             return lowest;
+        }
+
+        public Double getExtracted_lowest() {
+            return extracted_lowest;
+        }
+
+        public void setLowest(String lowest) {
+            this.lowest = lowest;
+        }
+
+        public void setExtracted_lowest(Double extracted_lowest) {
+            this.extracted_lowest = extracted_lowest;
         }
     }
 
@@ -78,6 +106,19 @@ public class HotelDto{
         this.children= children;
         this.childen_ages=children_ages;
     }
+
+    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adults, Integer children, Double precio) {
+        this.name = name;
+        this.ciudad = ciudad;
+        this.checkIn = checkIn;
+        this.checkout = checkOut;
+        this.adults = adults;
+        this.children = children;
+        this.precio = precio;
+    }
+
+
+    public void setPrecio(Double preciobdd) { this.precio = preciobdd; }
 
     public HotelDto() {
         // Constructor por defecto requerido por Jackson
@@ -177,6 +218,18 @@ public class HotelDto{
         //hotel.setId(this.id);
         hotel.setName(this.name);
         return hotel;
+    }
+
+    public Double getPrecio() {
+        if (this.precio != null) {
+            return this.precio;
+        } else if (price != null && price.getExtracted() != null) {
+            return price.getExtracted();
+        } else if (rate_per_night != null && rate_per_night.getExtracted_lowest() != null) {
+            return rate_per_night.getExtracted_lowest();
+        } else {
+            return 0.0;
+        }
     }
 
 }

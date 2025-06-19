@@ -36,7 +36,7 @@ public class RepositorioHotelImp implements RepositorioHotel {
     public List<HotelDto> buscarReserva(Long idUsuario) {
         return this.sessionFactory.getCurrentSession()
                 .createQuery(
-                        "SELECT new com.tallerwebi.presentacion.dtos.HotelDto(h.name, h.ciudad, h.checkIn, h.checkOut, h.adult, h.children) " +
+                        "SELECT new com.tallerwebi.presentacion.dtos.HotelDto(h.name, h.ciudad, h.checkIn, h.checkOut, h.adult, h.children, h.precio) " +
                                 "FROM Hotel h WHERE h.usuario.id = :idUsuario", HotelDto.class)
                 .setParameter("idUsuario", idUsuario)
                 .getResultList();

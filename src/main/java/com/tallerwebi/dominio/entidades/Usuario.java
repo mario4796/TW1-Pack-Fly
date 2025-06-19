@@ -15,6 +15,7 @@ public class Usuario {
     private String password;
     private String rol;
     private Boolean activo = false;
+    private Double apagar;
 
     public Long getId() {
         return id;
@@ -45,6 +46,12 @@ public class Usuario {
     }
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+    public Double getApagar() {
+        return apagar;
+    }
+    public void setApagar(Double aPagar) {
+        this.apagar = aPagar;
     }
 
     public boolean activo() {
