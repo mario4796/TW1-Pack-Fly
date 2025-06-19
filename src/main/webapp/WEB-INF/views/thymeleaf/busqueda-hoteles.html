@@ -62,7 +62,7 @@
         <h1 class="text-white text-center mb-4">Buscar Hoteles</h1>
         <div class="card shadow">
             <div class="card-body">
-                <form th:action="@{/buscar-hoteles}" method="get" novalidate>
+                <form th:action="@{/buscar-hoteles}" method="get" novalidate id="buscarHoteles">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="ciudad" class="form-label">Ciudad:</label>
@@ -83,16 +83,16 @@
                             <label for="checkOut" class="form-label">Fecha check-out:</label>
                             <input type="date" id="checkOut" name="checkOut" class="form-control"
                                    required
-                                   th:value="${datobusqueda != null and datobusqueda.checkout != null ? datobusqueda.checkout : ''}">
+                                   th:value="${datobusqueda != null and datobusqueda.checkOut != null ? datobusqueda.checkOut : ''}">
                             <div class="invalid-feedback">Seleccioná una fecha de salida válida.</div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label for="adults" class="form-label">Cant. adultos:</label>
-                            <input type="number" id="adults" name="adults" class="form-control" value="1" min="1"
+                            <label for="adult" class="form-label">Cant. adultos:</label>
+                            <input type="number" id="adult" name="adult" class="form-control" value="1" min="1"
                                    required
-                                   th:value="${datobusqueda != null and datobusqueda.adults != null ? datobusqueda.adults : '1'}">
+                                   th:value="${datobusqueda != null and datobusqueda.adult != null ? datobusqueda.adult : '1'}">
                             <div class="invalid-feedback">Debe haber al menos un adulto.</div>
                         </div>
                         <div class="col-md-4">
@@ -213,8 +213,8 @@
                                         <input type="hidden" name="name" th:value="${hotel.name}"/>
                                         <input type="hidden" name="ciudad" th:value="${datobusqueda.ciudad}"/>
                                         <input type="hidden" name="checkIn" th:value="${datobusqueda.checkIn}"/>
-                                        <input type="hidden" name="checkOut" th:value="${datobusqueda.checkout}"/>
-                                        <input type="hidden" name="adults" th:value="${datobusqueda.adults}"/>
+                                        <input type="hidden" name="checkOut" th:value="${datobusqueda.checkOut}"/>
+                                        <input type="hidden" name="adult" th:value="${datobusqueda.adult}"/>
                                         <input type="hidden" name="children" th:value="${datobusqueda.children}"/>
                                         <!-- agregá más campos que necesites -->
                                         <button type="submit" class="btn btn-success">Seleccionar Hotel</button>

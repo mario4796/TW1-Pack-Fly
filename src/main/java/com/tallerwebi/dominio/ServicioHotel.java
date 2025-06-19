@@ -12,4 +12,6 @@ public interface ServicioHotel {
     void eliminarReserva (Long idUsuario, String nameHotel);
 
     void editarReserva(Long idHotel, Long idUsuario, String name, String newName, String ciudad, String checkIn, String checkout, Integer adults, Integer children);
+
+    List<HotelDto> obtenerHotelesDto(List<Hotel> hoteles);
 }

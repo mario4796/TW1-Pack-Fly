@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -23,6 +24,13 @@ public class ServicioHotelImpl implements ServicioHotel {
 
     public ServicioHotelImpl(RepositorioHotelImp repositorioHotelImp) {
         this.repositorioHotelImp = repositorioHotelImp;
+    }
+
+    public List<HotelDto> obtenerHotelesDto(List<Hotel> hoteles) {
+        return hoteles.stream()
+                .map(hotel -> new HotelDto(hotel.getId(), hotel.getName(), hotel.getCiudad(), hotel.getCheckIn(),
+                        hotel.getCheckOut(), hotel.getAdult(), hotel.getChildren()))
+                .collect(Collectors.toList());
     }
 
     public List<HotelDto> buscarHoteles(String ciudad, String checkIn, String checkOut, Integer adults, Integer children, String children_ages) {

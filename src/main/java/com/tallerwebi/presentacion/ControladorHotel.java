@@ -27,18 +27,18 @@ public class ControladorHotel {
             @RequestParam String ciudad,
             @RequestParam String checkIn,
             @RequestParam String checkOut,
-            @RequestParam Integer adults,
+            @RequestParam Integer adult,
             @RequestParam Integer children,
             @RequestParam String children_ages,
             HttpServletRequest request,
             Model model
     ) {
-        List<HotelDto> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut, adults, children, children_ages);
+        List<HotelDto> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut, adult, children, children_ages);
         HotelDto datobusqueda  = new HotelDto();
         datobusqueda.setCiudad(ciudad);
         datobusqueda.setCheckIn(checkIn);
-        datobusqueda.setCheckout(checkOut);
-        datobusqueda.setAdults(adults);
+        datobusqueda.setCheckOut(checkOut);
+        datobusqueda.setAdult(adult);
         datobusqueda.setChildren(children);
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         model.addAttribute("usuario", usuario);
@@ -61,7 +61,7 @@ public class ControladorHotel {
                            @RequestParam String ciudad,
                            @RequestParam String checkIn,
                            @RequestParam String checkOut,
-                           @RequestParam Integer adults,
+                           @RequestParam Integer adult,
                            @RequestParam Integer children,
                            HttpServletRequest request) {
 
@@ -76,7 +76,7 @@ public class ControladorHotel {
         hotel.setCiudad(ciudad);
         hotel.setCheckIn(checkIn);
         hotel.setCheckOut(checkOut);
-        hotel.setAdult(adults);
+        hotel.setAdult(adult);
         hotel.setChildren(children);
         hotel.setUsuario(usuario);
         hotelService.reserva(hotel);
