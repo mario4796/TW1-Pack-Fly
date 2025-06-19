@@ -26,13 +26,17 @@ public class ServicioExcursionesImplTest {
 
     @BeforeEach
     public void setUp() {
+        config = mock(ConfiguracionDeApiKey.class); // ✅ agregalo
+        repositorioExcursion = mock(RepositorioExcursion.class); // ✅ también faltaba
+
+        when(config.getApiKey()).thenReturn("fake-key"); // ✅ simulamos una API Key
+
         servicio = new ServicioExcursionesImpl(config, repositorioExcursion);
 
         httpClient   = mock(HttpClient.class);
         objectMapper = new ObjectMapper();
 
-        ReflectionTestUtils.setField(servicio, "apiKey",
-                config.getApiKey());
+        // Estos seteos ahora sí están bien
         ReflectionTestUtils.setField(servicio, "httpClient", httpClient);
         ReflectionTestUtils.setField(servicio, "mapper", objectMapper);
     }
