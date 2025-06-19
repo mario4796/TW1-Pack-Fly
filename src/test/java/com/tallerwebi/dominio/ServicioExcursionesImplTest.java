@@ -26,10 +26,10 @@ public class ServicioExcursionesImplTest {
 
     @BeforeEach
     public void setUp() {
-        config = mock(ConfiguracionDeApiKey.class); // ✅ agregalo
-        repositorioExcursion = mock(RepositorioExcursion.class); // ✅ también faltaba
+        config = mock(ConfiguracionDeApiKey.class);
+        repositorioExcursion = mock(RepositorioExcursion.class);
 
-        when(config.getApiKey()).thenReturn("fake-key"); // ✅ simulamos una API Key
+        when(config.getApiKey()).thenReturn("fake-key");
 
         servicio = new ServicioExcursionesImpl(config, repositorioExcursion);
 
