@@ -111,6 +111,8 @@
                                 <p class="card-text flex-grow-1" th:text="${e.description}">
                                     Descripción breve de la excursión…
                                 </p>
+                                <p class="card-text flex-grow-1" > Precio:  <span th:text="${e.precio}"></span>
+                                </p>
                             </div>
                             <div class="card-footer bg-transparent border-0 text-end">
                                 <a th:href="${e.url}" target="_blank" class="btn btn-outline-primary">
