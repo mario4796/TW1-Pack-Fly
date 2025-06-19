@@ -53,12 +53,12 @@ public class RepositorioHotelImp implements RepositorioHotel {
 
 
     @Override
-    public Hotel buscarPorUsuarioYNombre(Long idUsuario, String nameHotel) {
-        String hql = "FROM Hotel h WHERE h.usuario.id = :idUsuario AND h.name = :nameHotel";
+    public Hotel buscarPorUsuarioYNombre(Long idUsuario, Long idHotel) {
+        String hql = "FROM Hotel h WHERE h.usuario.id = :idUsuario AND h.id = :idHotel";
         List<Hotel> resultados = sessionFactory.getCurrentSession()
                 .createQuery(hql, Hotel.class)
                 .setParameter("idUsuario", idUsuario)
-                .setParameter("nameHotel", nameHotel)
+                .setParameter("idHotel", idHotel)
                 .list();
         return resultados.isEmpty() ? null : resultados.get(0);
     }

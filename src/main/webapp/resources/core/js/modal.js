@@ -8,7 +8,7 @@
             document.getElementById('editHotelCiudad').value = this.getAttribute('data-ciudad');
             document.getElementById('editHotelCheckIn').value = this.getAttribute('data-checkin');
             document.getElementById('editHotelCheckOut').value = this.getAttribute('data-checkOut');
-            document.getElementById('editHotelAdults').value = this.getAttribute('data-adult');
+            document.getElementById('editHotelAdults').value = this.getAttribute('data-adults');
             document.getElementById('editHotelChildren').value = this.getAttribute('data-children');
         });
     });

@@ -88,7 +88,7 @@ public class ControladorReserva {
 
     @PostMapping("/editarReservaHotel")
     public String editarReservaHotel(
-            @RequestParam String id,
+            @RequestParam Long idHotel,
             @RequestParam String name,
             @RequestParam String newName,
             @RequestParam String ciudad,
@@ -99,7 +99,7 @@ public class ControladorReserva {
             HttpServletRequest request
     ) {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-        hotelService.editarReserva(usuario.getId(), name, newName, ciudad, checkIn, checkout, adults, children);
+        hotelService.editarReserva(idHotel, usuario.getId(), name, newName, ciudad, checkIn, checkout, adults, children);
         return "redirect:/reservas";
     }
 
