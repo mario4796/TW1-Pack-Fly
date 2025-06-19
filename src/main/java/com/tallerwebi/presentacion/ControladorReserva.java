@@ -92,12 +92,12 @@ public class ControladorReserva {
             @RequestParam String ciudad,
             @RequestParam String checkIn,
             @RequestParam String checkout,
-            @RequestParam int adults,
-            @RequestParam int children,
+            @RequestParam Integer adults,
+            @RequestParam Integer children,
             HttpServletRequest request
     ) {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-        //hotelService.editarReserva(usuario.getId(), name, newName, ciudad, checkIn, checkout, adults, children);
+        hotelService.editarReserva(usuario.getId(), name, newName, ciudad, checkIn, checkout, adults, children);
         return "redirect:/reservas";
     }
 
