@@ -1,10 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Reserva;
-import com.tallerwebi.dominio.ServicioHotel;
-import com.tallerwebi.dominio.ServicioReserva;
-import com.tallerwebi.dominio.ServicioExcursiones;
-import com.tallerwebi.dominio.Excursion;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +23,9 @@ public class ControladorReserva {
     @Autowired
     private ServicioExcursiones servicioExcursiones;
 
+    @Autowired
+    private ServicioLogin servicioLogin;
+
     @GetMapping("/reservas")
     public String vistaReservas(HttpServletRequest request, Model model) {
 
@@ -37,9 +36,11 @@ public class ControladorReserva {
 
         List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
+        usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(hoteles, vuelos, excursiones));
         model.addAttribute("vuelos", vuelos);
         model.addAttribute("hoteles", hoteles);
         model.addAttribute("excursiones", excursiones);
+        model.addAttribute("usuario", usuario);
 
         return "reservas";
     }
