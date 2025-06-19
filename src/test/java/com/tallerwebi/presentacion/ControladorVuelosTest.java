@@ -112,8 +112,9 @@ public class ControladorVuelosTest {
         String destino = "Madrid";
         String fechaIda = "2025-07-01";
         String fechaVuelta = "2025-07-15";
+        Double precio = 30.0;
 
-        String vista = controladorR.guardarReserva(nombre, email, origen, destino, fechaIda, fechaVuelta, modelMock);
+        String vista = controladorR.guardarReserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio, modelMock);
 
         verify(servicioReserva).guardarReserva(any(Reserva.class));
         assertEquals("redirect:/busqueda-hoteles?reservaExitosa=true", vista);

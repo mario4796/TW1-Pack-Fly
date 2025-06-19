@@ -18,7 +18,7 @@ public class Hotel {
     private String checkOut;
     private Integer adult;
     private Integer children;
-
+    private Double precio;
 
 
     @OneToOne
@@ -76,7 +76,15 @@ public class Hotel {
         this.children = children;
     }
 
-    public Hotel(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children) {
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
+    }
+
+    public Hotel(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio) {
         this.id = id;
         this.name = name;
         this.ciudad = ciudad;
@@ -84,6 +92,7 @@ public class Hotel {
         this.checkOut=checkOut;
         this.adult=adult;
         this.children=children;
+        this.precio= precio;
     }
 
 

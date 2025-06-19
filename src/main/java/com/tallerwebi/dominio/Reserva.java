@@ -17,17 +17,19 @@ public class Reserva {
     private String destino;
     private String fechaIda;
     private String fechaVuelta;
+    private Double precio;
 
     public Reserva() {
     }
 
-    public Reserva(String nombre, String email, String origen, String destino, String fechaIda, String fechaVuelta) {
+    public Reserva(String nombre, String email, String origen, String destino, String fechaIda, String fechaVuelta, Double precio) {
         this.nombre = nombre;
         this.email = email;
         this.origen = origen;
         this.destino = destino;
         this.fechaIda = fechaIda;
         this.fechaVuelta = fechaVuelta;
+        this.precio = precio;
     }
 
     // Getters y Setters
@@ -86,5 +88,13 @@ public class Reserva {
 
     public void setFechaVuelta(String fechaVuelta) {
         this.fechaVuelta = fechaVuelta;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 }
