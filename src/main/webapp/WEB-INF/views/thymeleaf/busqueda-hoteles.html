@@ -165,7 +165,7 @@
 
                                 <p class="card-text mb-1">
                                     <strong>Precio:</strong>
-                                    <span th:text="${hotel.rate_per_night != null ? hotel.rate_per_night.lowest : 'Precio no disponible'}"></span>
+                                    <span th:text="${hotel.precio != 0 ? hotel.precio : 'Precio no disponible'}"></span>
                                 </p>
 
                                 <p class="card-text mb-1">
@@ -216,6 +216,7 @@
                                         <input type="hidden" name="checkOut" th:value="${datobusqueda.checkOut}"/>
                                         <input type="hidden" name="adult" th:value="${datobusqueda.adult}"/>
                                         <input type="hidden" name="children" th:value="${datobusqueda.children}"/>
+                                        <input type="hidden" name="precio" th:value="${hotel.precio}"/>
                                         <!-- agregá más campos que necesites -->
                                         <button type="submit" class="btn btn-success">Seleccionar Hotel</button>
                                     </form>

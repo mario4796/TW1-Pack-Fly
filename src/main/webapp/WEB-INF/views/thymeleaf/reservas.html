@@ -76,6 +76,8 @@
                                                         th:text="${vuelo.fechaIda}">test</span></p>
                                                 <p class="card-text mb-1"><strong>Pasajero:</strong> <span
                                                         th:text="${vuelo.fechaVuelta}">test</span></p>
+                                                <p class="card-text mb-1"><strong>Precio:</strong> <span
+                                                        th:text="${vuelo.precio}">test</span></p>
                                             </div>
                                             <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
                                                 <button type="button"
@@ -137,6 +139,8 @@
                                                         th:text="${hotel.adult}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Chicos:</strong> <span
                                                         th:text="${hotel.children}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Precio:</strong> <span
+                                                        th:text="${hotel.precio}">texto</span></p>
                                             </div>
 
                                             <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
@@ -212,6 +216,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div th:if="${usuario.apagar != null and usuario.apagar > 0}">
+                        <div class="alert alert-success text-center mt-4">
+                            Tu valor a pagar es: <span th:text="${#numbers.formatDecimal(usuario.apagar, 1, 'COMMA', 2, 'POINT')}"></span> ARS
                         </div>
                     </div>
 

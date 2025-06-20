@@ -63,6 +63,7 @@ public class ControladorHotel {
                            @RequestParam String checkOut,
                            @RequestParam Integer adult,
                            @RequestParam Integer children,
+                           @RequestParam Double precio,
                            HttpServletRequest request) {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
@@ -79,6 +80,7 @@ public class ControladorHotel {
         hotel.setAdult(adult);
         hotel.setChildren(children);
         hotel.setUsuario(usuario);
+        hotel.setPrecio(precio);
         hotelService.reserva(hotel);
 
         return "redirect:/excursiones?reservaExitosa=true";
