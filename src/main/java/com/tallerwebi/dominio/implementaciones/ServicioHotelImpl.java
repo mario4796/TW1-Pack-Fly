@@ -31,7 +31,7 @@ public class ServicioHotelImpl implements ServicioHotel {
     public List<HotelDto> obtenerHotelesDto(List<Hotel> hoteles) {
         return hoteles.stream()
                 .map(hotel -> new HotelDto(hotel.getId(), hotel.getName(), hotel.getCiudad(), hotel.getCheckIn(),
-                        hotel.getCheckOut(), hotel.getAdult(), hotel.getChildren()))
+                        hotel.getCheckOut(), hotel.getAdult(), hotel.getChildren(), hotel.getPrecio()))
                 .collect(Collectors.toList());
     }
 

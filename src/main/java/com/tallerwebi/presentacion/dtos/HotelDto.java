@@ -35,7 +35,7 @@ public class HotelDto{
     }
 
 
-    public HotelDto(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children) {
+    public HotelDto(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio) {
         this.id = id;
         this.name = name;
         this.ciudad = ciudad;
@@ -43,6 +43,7 @@ public class HotelDto{
         this.checkOut = checkOut;
         this.adult = adult;
         this.children = children;
+        this.precio = precio;
     }
 
     public String getLink() {
@@ -121,8 +122,8 @@ public class HotelDto{
         this.name = name;
         this.ciudad = ciudad;
         this.checkIn = checkIn;
-        this.checkout = checkOut;
-        this.adults = adults;
+        this.checkOut = checkOut;
+        this.adult = adults;
         this.children = children;
         this.precio = precio;
     }
