@@ -47,7 +47,7 @@
 </nav>
 
 <main class="container d-flex flex-column align-items-center" style="margin-top: 80px;">
-    <div th:if="${param.reservaExitosa}" class="alert alert-success alert-dismissible fade show" role="alert">
+    <div th:if="${param.reservaExitosa}" class="alert alert-success alert-dismissible fade show reserva-exitosa" role="alert">
         <i class="bi bi-check-circle-fill me-2"></i>
         Reserva de vuelo realizada con éxito.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -236,8 +236,7 @@
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
-<script type="text/javascript" th:src="@{js/alert.js}"></script>
-<script type="text/javascript" th:src="@{js/spinner.js}"></script>
+<script type="text/javascript" th:src="@{js/alerts.js}"></script>
 <script type="text/javascript" th:src="@{js/validaciones.js}"></script>
 </body>
 </html>
