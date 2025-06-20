@@ -36,7 +36,7 @@
     // Inicializar estado del campo children_ages
     toggleChildrenAges();
 
-    const forms = document.querySelectorAll("form");
+    const forms = document.querySelectorAll("#buscarHoteles");
 
     forms.forEach((form) => {
         form.addEventListener("submit", function (event) {

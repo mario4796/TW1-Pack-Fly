@@ -2,12 +2,13 @@
 
     document.querySelectorAll('.btn-editar-hotel').forEach(function (btn) {
         btn.addEventListener('click', function () {
+            document.getElementById('editHotelId').value = this.getAttribute('data-id');
             document.getElementById('editHotelName').value = this.getAttribute('data-name');
             document.getElementById('editHotelNameHidden').value = this.getAttribute('data-name');
             document.getElementById('editHotelCiudad').value = this.getAttribute('data-ciudad');
             document.getElementById('editHotelCheckIn').value = this.getAttribute('data-checkin');
-            document.getElementById('editHotelCheckOut').value = this.getAttribute('data-checkout');
-            document.getElementById('editHotelAdults').value = this.getAttribute('data-adults');
+            document.getElementById('editHotelCheckOut').value = this.getAttribute('data-checkOut');
+            document.getElementById('editHotelAdults').value = this.getAttribute('data-adult');
             document.getElementById('editHotelChildren').value = this.getAttribute('data-children');
         });
     });

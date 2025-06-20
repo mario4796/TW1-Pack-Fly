@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 public class ControladorExcursion {
@@ -45,12 +47,23 @@ public class ControladorExcursion {
 
         if (!loc.isBlank()) {
             lista = servicio.getExcursiones(loc, query);
+
+            for (ExcursionDTO excursion : lista) {
+                // Lógica para asignar precio
+                double precio = generarPrecioAleatorio(200, 10000);
+                excursion.setPrecio(precio);
+            }
+
         }
+
+
         model.addAttribute("excursiones", lista);
         model.addAttribute("usuario", usuario);
 
         return "excursiones";
     }
+
+
 
     @PostMapping("/excursiones/guardar")
     public String guardarExcursion(ExcursionDTO dto, HttpSession session, RedirectAttributes redirectAttributes) {
@@ -68,6 +81,14 @@ public class ControladorExcursion {
         servicio.guardarExcursion(excursion);
 
         return "redirect:/excursiones" ;
+    }
+
+
+    private double generarPrecioAleatorio(int min, int max) {
+
+        Random random = new Random();
+        double precioBase = min + (max - min) * random.nextDouble();
+        return Math.round(precioBase /  50) * 50;
     }
 
 //    @GetMapping("/reservas-excursiones")

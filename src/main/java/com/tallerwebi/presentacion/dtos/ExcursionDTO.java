@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tallerwebi.dominio.Excursion;
 import com.tallerwebi.dominio.entidades.Usuario;
 
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -13,10 +14,9 @@ public class ExcursionDTO {
     @JsonProperty("title")
     private String title;
 
-    @JsonProperty("start_date")
     private String startDate;
 
-    @JsonProperty("location")
+    @JsonProperty("name")
     private String location;
 
     @JsonProperty("description")
@@ -25,9 +25,17 @@ public class ExcursionDTO {
     @JsonProperty("link")
     private String url;
 
-    @JsonProperty("price")
     private Double precio;
 
+
+    @JsonProperty("date")
+    private void unpackDate(Map<String, Object> date) {
+        this.startDate = (String) date.get("start_date");
+    }
+    @JsonProperty("venue")
+    private void unpackvenue(Map<String, Object> venue) {
+        this.location = (String) venue.get("name");
+    }
 
     private Usuario usuario;
 
@@ -42,7 +50,6 @@ public class ExcursionDTO {
         this.description = excursion.getDescription();
         this.url = excursion.getUrl();
 
-        this.precio = ThreadLocalRandom.current().nextDouble(1000.0, 5000.0);
     }
     public ExcursionDTO(String title, String url) {
         this.title = title;

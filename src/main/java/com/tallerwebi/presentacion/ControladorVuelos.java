@@ -74,6 +74,7 @@ public class ControladorVuelos {
                                            @RequestParam String destino,
                                            @RequestParam String fechaIda,
                                            @RequestParam String fechaVuelta,
+                                           @RequestParam Double precio,
                                            HttpServletRequest request,
                                            Model model) {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
@@ -83,6 +84,7 @@ public class ControladorVuelos {
         model.addAttribute("destino", destino);
         model.addAttribute("fechaIda", fechaIda);
         model.addAttribute("fechaVuelta", fechaVuelta);
+        model.addAttribute("precio", precio);
         return "formularioReserva";
     }
 
@@ -94,9 +96,10 @@ public class ControladorVuelos {
             @RequestParam("destino") String destino,
             @RequestParam("fechaIda") String fechaIda,
             @RequestParam("fechaVuelta") String fechaVuelta,
+            @RequestParam("precio") Double precio,
             Model model
     ) {
-        Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta);
+        Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
         servicioReserva.guardarReserva(reserva);
         return "redirect:/busqueda-hoteles?reservaExitosa=true";
     }
