@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,6 +26,13 @@ public class ServicioHotelImpl implements ServicioHotel {
     public ServicioHotelImpl(ConfiguracionDeApiKey apiconfig, RepositorioHotelImp repositorioHotelImp) {
         this.apiconfig = apiconfig;
         this.repositorioHotelImp = repositorioHotelImp;
+    }
+
+    public List<HotelDto> obtenerHotelesDto(List<Hotel> hoteles) {
+        return hoteles.stream()
+                .map(hotel -> new HotelDto(hotel.getId(), hotel.getName(), hotel.getCiudad(), hotel.getCheckIn(),
+                        hotel.getCheckOut(), hotel.getAdult(), hotel.getChildren(), hotel.getPrecio()))
+                .collect(Collectors.toList());
     }
 
     public List<HotelDto> buscarHoteles(String ciudad, String checkIn, String checkOut, Integer adults, Integer children, String children_ages) {
@@ -48,7 +56,7 @@ public class ServicioHotelImpl implements ServicioHotel {
     }
 
     @Override
-    public List<HotelDto> buscarReservas(Long idUsuario) {
+    public List<Hotel> buscarReservas(Long idUsuario) {
        return repositorioHotelImp.buscarReserva(idUsuario);
     }
 
@@ -58,8 +66,8 @@ public class ServicioHotelImpl implements ServicioHotel {
     }
 
     @Override
-    public void editarReserva(Long idUsuario, String name, String newName, String ciudad, String checkIn, String checkout, Integer adults, Integer children) {
-        Hotel reserva = repositorioHotelImp.buscarPorUsuarioYNombre(idUsuario, name);
+    public void editarReserva(Long idHotel, Long idUsuario, String name, String newName, String ciudad, String checkIn, String checkout, Integer adults, Integer children) {
+        Hotel reserva = repositorioHotelImp.buscarPorUsuarioYNombre(idUsuario, idHotel);
         if (reserva != null) {
             reserva.setName(newName);
             reserva.setCiudad(ciudad);

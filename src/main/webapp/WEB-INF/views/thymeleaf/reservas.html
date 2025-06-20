@@ -25,13 +25,17 @@
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
                 <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
-                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
+                <li th:if="${usuario}" class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver
+                    reservas</a></li>
                 <li class="nav-item">
                     <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
                         <i class="bi bi-moon"></i>
                     </button>
                 </li>
-                <li class="nav-item">
+                <li th:if="${usuario == null}" class="nav-item">
+                    <a href="./login" class="btn btn-outline-success ms-lg-2 mt-1 mt-lg-0">Iniciar sesión</a>
+                </li>
+                <li th:if="${usuario != null}" class="nav-item">
                     <form th:action="@{/logout}" method="post" style="display:inline;">
                         <button type="submit" class="btn btn-outline-danger ms-lg-2 mt-1 mt-lg-0">Cerrar sesión</button>
                     </form>
@@ -40,10 +44,11 @@
         </div>
     </div>
 </nav>
+
 <main class="container d-flex flex-column align-items-center py-5 mt-5">
     <div class="overlay mt-3">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
+            <div th:if="${usuario != null}" class="col-lg-10">
                 <h3 class="text-white text-center mb-4">Tus Reservas</h3>
                 <div class="accordion" id="accordionReservas">
 
@@ -129,9 +134,9 @@
                                                 <p class="card-text mb-1"><strong>Check-in:</strong> <span
                                                         th:text="${hotel.checkIn}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Check-out:</strong> <span
-                                                        th:text="${hotel.checkout}">texto</span></p>
+                                                        th:text="${hotel.checkOut}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Adultos:</strong> <span
-                                                        th:text="${hotel.adults}">texto</span></p>
+                                                        th:text="${hotel.adult}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Chicos:</strong> <span
                                                         th:text="${hotel.children}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Precio:</strong> <span
@@ -144,11 +149,12 @@
                                                         title="Editar"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editarHotelModal"
-                                                        th:attr="data-name=${hotel.name},
+                                                        th:attr="data-id=${hotel.id},
+                                                                 data-name=${hotel.name},
                                                                  data-ciudad=${hotel.ciudad},
                                                                  data-checkin=${hotel.checkIn},
-                                                                 data-checkout=${hotel.checkout},
-                                                                 data-adults=${hotel.adults},
+                                                                 data-checkOut=${hotel.checkOut},
+                                                                 data-adult=${hotel.adult},
                                                                  data-children=${hotel.children}">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
@@ -225,6 +231,13 @@
                     </div>
                 </div>
             </div>
+            <div th:if="${usuario == null}"
+                 class="alert alert-warning mt-3 d-flex align-items-center justify-content-center" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <div>
+                    Aunque no deberías estar aquí, <a th:href="@{/login}" class="alert-link">inicia sesión</a> para poder ver tus reservas.
+                </div>
+            </div>
         </div>
     </div>
 
@@ -251,11 +264,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="editVueloFechaIda" class="form-label">Fecha Ida</label>
-                            <input type="date" class="form-control" id="editVueloFechaIda" name="fechaIda" required>
+                            <input type="datetime-local" class="form-control" id="editVueloFechaIda" name="fechaIda" required>
                         </div>
                         <div class="mb-3">
                             <label for="editVueloFechaVuelta" class="form-label">Fecha Vuelta</label>
-                            <input type="date" class="form-control" id="editVueloFechaVuelta" name="fechaVuelta" required>
+                            <input type="datetime-local" class="form-control" id="editVueloFechaVuelta" name="fechaVuelta" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -277,6 +290,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" id="editHotelId" name="idHotel"/>
                         <input type="hidden" id="editHotelNameHidden" name="name"/>
                         <div class="mb-3">
                             <label for="editHotelName" class="form-label">Nombre</label>
@@ -292,11 +306,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="editHotelCheckOut" class="form-label">Check-out</label>
-                            <input type="date" class="form-control" id="editHotelCheckOut" name="checkout" required>
+                            <input type="date" class="form-control" id="editHotelCheckOut" name="checkOut" required>
                         </div>
                         <div class="mb-3">
                             <label for="editHotelAdults" class="form-label">Adultos</label>
-                            <input type="number" class="form-control" id="editHotelAdults" name="adults" min="1" required>
+                            <input type="number" class="form-control" id="editHotelAdults" name="adult" min="1" required>
                         </div>
                         <div class="mb-3">
                             <label for="editHotelChildren" class="form-label">Chicos</label>

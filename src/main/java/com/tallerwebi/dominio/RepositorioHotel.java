@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface RepositorioHotel {
     Boolean reservar(Hotel hotel);
-    List<HotelDto> buscarReserva(Long idUsuario);
+    List<Hotel> buscarReserva(Long idUsuario);
     void eliminarReserva(Long idUsuario, String nameHotel);
-    Hotel buscarPorUsuarioYNombre(Long usuarioId, String nombreHotel);
+    Hotel buscarPorUsuarioYNombre(Long usuarioId, Long idHotel);
     void actualizar(Hotel hotel);
 }

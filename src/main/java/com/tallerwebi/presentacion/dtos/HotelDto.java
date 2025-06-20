@@ -5,12 +5,12 @@ import com.tallerwebi.dominio.entidades.Hotel;
 import java.util.List;
 public class HotelDto{
 
-   // private Long id;
+    private Long id;
     private String name;
     private String ciudad;
     private String checkIn;
-    private String checkout;
-    private Integer adults;
+    private String checkOut;
+    private Integer adult;
     private Integer children;
     private String childen_ages;
     private String link;
@@ -34,6 +34,17 @@ public class HotelDto{
         }
     }
 
+
+    public HotelDto(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio) {
+        this.id = id;
+        this.name = name;
+        this.ciudad = ciudad;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.adult = adult;
+        this.children = children;
+        this.precio = precio;
+    }
 
     public String getLink() {
         return link;
@@ -93,16 +104,16 @@ public class HotelDto{
         this.name = name;
         this.ciudad = ciudad;
         this.checkIn = checkIn;
-        this.checkout = checkOut;
-        this.adults = adult;
+        this.checkOut = checkOut;
+        this.adult = adult;
         this.children = children;
     }
 
-    private HotelDto(String ciudad, String checkIn, String checkOut, Integer adults, Integer children, String children_ages){
+    private HotelDto(String ciudad, String checkIn, String checkOut, Integer adult, Integer children, String children_ages){
         this.ciudad =ciudad;
         this.checkIn= checkIn;
-        this.checkout = checkOut;
-        this.adults= adults;
+        this.checkOut = checkOut;
+        this.adult = adult;
         this.children= children;
         this.childen_ages=children_ages;
     }
@@ -111,8 +122,8 @@ public class HotelDto{
         this.name = name;
         this.ciudad = ciudad;
         this.checkIn = checkIn;
-        this.checkout = checkOut;
-        this.adults = adults;
+        this.checkOut = checkOut;
+        this.adult = adults;
         this.children = children;
         this.precio = precio;
     }
@@ -128,6 +139,9 @@ public class HotelDto{
         //this.id = hotel.getId();
         this.name=hotel.getName();
     }
+    public Long getId() {return id;}
+
+    public void setId(Long id) {this.id = id;}
 
     public void setName(String nombre) {
         this.name = nombre;
@@ -153,20 +167,20 @@ public class HotelDto{
         this.checkIn = checkIn;
     }
 
-    public String getCheckout() {
-        return checkout;
+    public String getCheckOut() {
+        return checkOut;
     }
 
-    public void setCheckout(String checkout) {
-        this.checkout = checkout;
+    public void setCheckOut(String checkOut) {
+        this.checkOut = checkOut;
     }
 
-    public Integer getAdults() {
-        return adults;
+    public Integer getAdult() {
+        return adult;
     }
 
-    public void setAdults(Integer adults) {
-        this.adults = adults;
+    public void setAdult(Integer adult) {
+        this.adult = adult;
     }
 
     public Integer getChildren() {

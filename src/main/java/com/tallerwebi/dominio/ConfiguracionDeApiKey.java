@@ -9,10 +9,7 @@ public class ConfiguracionDeApiKey {
     private final  String apiKey;
 
     public ConfiguracionDeApiKey(){
-        Dotenv dotenv = Dotenv.configure()
-                .directory("./")
-                .ignoreIfMissing()
-                .load();
+        Dotenv dotenv = Dotenv.load();
         this.apiKey = dotenv.get("API_KEY");
 
     }

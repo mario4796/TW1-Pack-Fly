@@ -26,10 +26,10 @@ class ServicioHotelImplTest {
     @Test
     void queAlBuscarReservasDevuelvaLasDelRepositorio() {
         Long usuarioId = 1L;
-        List<HotelDto> reservasEsperadas = List.of(new HotelDto(), new HotelDto());
+        List<Hotel> reservasEsperadas = List.of(new Hotel(), new Hotel());
         when(mockRepositorio.buscarReserva(usuarioId)).thenReturn(reservasEsperadas);
 
-        List<HotelDto> resultado = servicioHotel.buscarReservas(usuarioId);
+        List<Hotel> resultado = servicioHotel.buscarReservas(usuarioId);
 
         assertNotNull(resultado);
         assertEquals(2, resultado.size());

@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
+import com.tallerwebi.dominio.entidades.Hotel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,17 +32,21 @@ public class ControladorReserva {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
-        List<HotelDto> hoteles = hotelService.buscarReservas(usuario.getId());
-        List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
+        if (usuario != null) {
+            List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
+            List<HotelDto> hotelesDto = hotelService.obtenerHotelesDto(hoteles);
+            List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
 
-        List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
+            List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
-        usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(hoteles, vuelos, excursiones));
-        model.addAttribute("vuelos", vuelos);
-        model.addAttribute("hoteles", hoteles);
-        model.addAttribute("excursiones", excursiones);
-        model.addAttribute("usuario", usuario);
-
+            usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(hotelesDto, vuelos, excursiones));
+            model.addAttribute("vuelos", vuelos);
+            model.addAttribute("hoteles", hotelesDto);
+            model.addAttribute("excursiones", excursiones);
+            model.addAttribute("usuario", usuario);
+        } else {
+            model.addAttribute("usuario", null);
+        }
         return "reservas";
     }
 
@@ -88,17 +93,18 @@ public class ControladorReserva {
 
     @PostMapping("/editarReservaHotel")
     public String editarReservaHotel(
+            @RequestParam Long idHotel,
             @RequestParam String name,
             @RequestParam String newName,
             @RequestParam String ciudad,
             @RequestParam String checkIn,
-            @RequestParam String checkout,
-            @RequestParam Integer adults,
+            @RequestParam String checkOut,
+            @RequestParam Integer adult,
             @RequestParam Integer children,
             HttpServletRequest request
     ) {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-        hotelService.editarReserva(usuario.getId(), name, newName, ciudad, checkIn, checkout, adults, children);
+        hotelService.editarReserva(idHotel, usuario.getId(), name, newName, ciudad, checkIn, checkOut, adult, children);
         return "redirect:/reservas";
     }
 
