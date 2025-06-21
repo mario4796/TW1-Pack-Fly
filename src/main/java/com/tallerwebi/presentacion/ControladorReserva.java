@@ -106,17 +106,16 @@ public class ControladorReserva {
 
     @PostMapping("/editarReservaVuelo")
     public String editarReservaVuelo(
+            @RequestParam Long idVuelo,
             @RequestParam String email,
             @RequestParam String origen,
             @RequestParam String destino,
             @RequestParam String fechaIda,
             @RequestParam String fechaVuelta,
-            @RequestParam String fechaIdaOriginal,
-            @RequestParam String fechaVueltaOriginal,
             RedirectAttributes redirectAttributes
     ) {
         try {
-            //servicioReserva.editarReserva(email, origen, destino, fechaIda, fechaVuelta, fechaIdaOriginal, fechaVueltaOriginal);
+            servicioReserva.editarReserva(idVuelo, email, origen, destino, fechaIda, fechaVuelta);
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo editada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         }catch (Exception e){
@@ -130,7 +129,6 @@ public class ControladorReserva {
     public String editarReservaHotel(
             @RequestParam Long idHotel,
             @RequestParam String name,
-            @RequestParam String newName,
             @RequestParam String ciudad,
             @RequestParam String checkIn,
             @RequestParam String checkOut,
@@ -141,7 +139,7 @@ public class ControladorReserva {
     ) {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         try {
-            hotelService.editarReserva(idHotel, usuario.getId(), name, newName, ciudad, checkIn, checkOut, adult, children);
+            hotelService.editarReserva(idHotel, usuario.getId(), name, ciudad, checkIn, checkOut, adult, children);
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel editada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         }catch (Exception e){
@@ -153,7 +151,7 @@ public class ControladorReserva {
 
     @PostMapping("/editarReservaExcursion")
     public String editarReservaExcursion(
-            @RequestParam String titleOriginal,
+            @RequestParam Long idExcursion,
             @RequestParam String title,
             @RequestParam String url,
             HttpServletRequest request,
@@ -161,7 +159,7 @@ public class ControladorReserva {
     ) {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         try {
-            //servicioExcursiones.editarReserva(usuario.getId(), titleOriginal, title, url);
+            servicioExcursiones.editarReserva(idExcursion, usuario.getId(), title, url);
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de excursion editada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         }catch (Exception e){
