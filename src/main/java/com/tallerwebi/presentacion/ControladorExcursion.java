@@ -78,9 +78,16 @@ public class ControladorExcursion {
         Excursion excursion = dto.toEntity();
         excursion.setUsuario(usuario);
 
-        servicio.guardarExcursion(excursion);
+        try {
+            servicio.guardarExcursion(excursion);
+            redirectAttributes.addFlashAttribute("mensaje", "Reserva de excursion realizada con éxito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al reservar el hotel.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
 
-        return "redirect:/excursiones" ;
+        return "redirect:/reservas" ;
     }
 
 

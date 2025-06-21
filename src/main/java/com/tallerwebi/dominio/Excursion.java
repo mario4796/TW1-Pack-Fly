@@ -25,6 +25,9 @@ public class Excursion {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    public Long getId() { return id; }
+
+    public void setId(Long id) { this.id = id; }
 
     public Usuario getUsuario() { return usuario; }
 
