@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const alert = document.querySelector('.alert');
-    if (alert) {
+    document.querySelectorAll('.alert.reserva-exitosa').forEach(function(alert) {
         setTimeout(() => {
-            const bsAlert = new bootstrap.Alert(alert);
-            bsAlert.close();
-        }, 3000);as
-    }
+            alert.classList.remove('show');
+            alert.addEventListener('transitionend', function() {
+                alert.remove();
+            }, { once: true });
+        }, 3000);
+    });
 });

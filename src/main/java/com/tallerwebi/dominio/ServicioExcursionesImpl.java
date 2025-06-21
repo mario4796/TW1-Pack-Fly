@@ -5,6 +5,7 @@ package com.tallerwebi.dominio;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,6 +104,16 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
     @Override
     public void eliminarReserva(Long idUsuario, String title) {
         repositorioExcursion.eliminarReserva(idUsuario, title);
+    }
+
+    @Override
+    public void editarReserva(Long idExcursion, Long idUsuario, String title, String url) {
+        Excursion excursion = repositorioExcursion.buscarPorUsuarioYExcursion(idUsuario, idExcursion);
+        if (excursion != null) {
+            excursion.setTitle(title);
+            excursion.setUrl(url);
+            repositorioExcursion.actualizar(excursion);
+        }
     }
 
 }

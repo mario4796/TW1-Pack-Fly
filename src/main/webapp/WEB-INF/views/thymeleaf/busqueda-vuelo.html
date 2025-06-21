@@ -54,24 +54,62 @@
         <h1 class="mb-4 text-center text-light">Buscar Vuelos</h1>
         <div class="card shadow">
             <div class="card-body">
-                <form th:action="@{/busqueda-vuelo}" method="post">
+                <form th:action="@{/busqueda-vuelo}" method="post" novalidate>
                     <div class="row mb-3">
-                    <div class="col-md-3">
-                        <label for="origen" class="form-label">Origen</label>
-                        <input type="text" class="form-control" id="origen" name="origen" required>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="destino" class="form-label">Destino</label>
-                        <input type="text" class="form-control" id="destino" name="destino" required>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="fechaIda" class="form-label">Fecha de Ida</label>
-                        <input type="date" class="form-control" id="fechaIda" name="fechaIda" required>
-                    </div>
-                    <div class="col-md-3">
-                        <label for="fechaVuelta" class="form-label">Fecha de Vuelta</label>
-                        <input type="date" class="form-control" id="fechaVuelta" name="fechaVuelta" required>
-                    </div>
+                        <div class="col-md-3">
+                            <label for="origen" class="form-label">Origen</label>
+                            <select class="form-select" name="origen" id="origen" required>
+                                <option value="">Selecciona un origen</option>
+                                <option value="EZE">Buenos Aires, Argentina (Ezeiza)</option>
+                                <option value="JFK">New York, USA (JFK)</option>
+                                <option value="GRU">Sao Paulo, Brasil (Guarulhos)</option>
+                                <option value="CDG">París, Francia (Charles de Gaulle)</option>
+                                <option value="MAD">Madrid, España (Barajas)</option>
+                                <option value="MEX">Ciudad de México, México (Benito Juárez)</option>
+                                <option value="BOG">Bogotá, Colombia (El Dorado)</option>
+                                <option value="SCL">Santiago, Chile (Arturo Merino Benítez)</option>
+                                <option value="LIM">Lima, Perú (Jorge Chávez)</option>
+                                <option value="LHR">Londres, Reino Unido (Heathrow)</option>
+                                <option value="FRA">Frankfurt, Alemania (Frankfurt Main)</option>
+                                <option value="MIA">Miami, USA (Miami Intl.)</option>
+                                <option value="BCN">Barcelona, España (El Prat)</option>
+                                <option value="AMS">Ámsterdam, Países Bajos (Schiphol)</option>
+                                <option value="PTY">Ciudad de Panamá, Panamá (Tocumen)</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="destino" class="form-label">Destino</label>
+                            <select class="form-select" name="destino" id="destino" required>
+                                <option value="">Selecciona un destino</option>
+                                <option value="EZE">Buenos Aires, Argentina (Ezeiza)</option>
+                                <option value="JFK">New York, USA (JFK)</option>
+                                <option value="GRU">Sao Paulo, Brasil (Guarulhos)</option>
+                                <option value="CDG">París, Francia (Charles de Gaulle)</option>
+                                <option value="MAD">Madrid, España (Barajas)</option>
+                                <option value="MEX">Ciudad de México, México (Benito Juárez)</option>
+                                <option value="BOG">Bogotá, Colombia (El Dorado)</option>
+                                <option value="SCL">Santiago, Chile (Arturo Merino Benítez)</option>
+                                <option value="LIM">Lima, Perú (Jorge Chávez)</option>
+                                <option value="LHR">Londres, Reino Unido (Heathrow)</option>
+                                <option value="FRA">Frankfurt, Alemania (Frankfurt Main)</option>
+                                <option value="MIA">Miami, USA (Miami Intl.)</option>
+                                <option value="BCN">Barcelona, España (El Prat)</option>
+                                <option value="AMS">Ámsterdam, Países Bajos (Schiphol)</option>
+                                <option value="PTY">Ciudad de Panamá, Panamá (Tocumen)</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="fechaIda" class="form-label">Fecha de Ida</label>
+                            <input type="date" class="form-control" id="fechaIda" name="fechaIda" required>
+                            <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="fechaVuelta" class="form-label">Fecha de Vuelta</label>
+                            <input type="date" class="form-control" id="fechaVuelta" name="fechaVuelta" required>
+                            <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-between">
                         <a class="btn btn-secondary col-md-3" href="./home">Volver</a>
@@ -145,6 +183,6 @@
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
-<script type="text/javascript" th:src="@{js/spinner.js}"></script>
+<script type="text/javascript" th:src="@{js/validaciones.js}"></script>
 </body>
 </html>

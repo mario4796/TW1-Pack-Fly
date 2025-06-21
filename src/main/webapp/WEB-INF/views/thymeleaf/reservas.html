@@ -46,6 +46,13 @@
 </nav>
 
 <main class="container d-flex flex-column align-items-center py-5 mt-5">
+    <div th:if="${mensaje}"
+         th:class="'alert alert-' + ${tipo} + ' alert-dismissible fade show reserva-exitosa'"
+         role="alert">
+        <i th:class="'bi ' + (${tipo} == 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill') + ' me-2'"></i>
+        <span th:text="${mensaje}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <div class="overlay mt-3">
         <div class="row justify-content-center">
             <div th:if="${usuario != null}" class="col-lg-10">
@@ -84,7 +91,8 @@
                                                         class="btn btn-warning btn-sm btn-editar-vuelo"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editarVueloModal"
-                                                        th:attr="data-email=${vuelo.email},
+                                                        th:attr="data-id-vuelo=${vuelo.id},
+                                                                 data-email=${vuelo.email},
                                                                  data-origen=${vuelo.origen},
                                                                  data-destino=${vuelo.destino},
                                                                  data-fechaida=${vuelo.fechaIda},
@@ -149,7 +157,7 @@
                                                         title="Editar"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editarHotelModal"
-                                                        th:attr="data-id=${hotel.id},
+                                                        th:attr="data-id-hotel=${hotel.id},
                                                                  data-name=${hotel.name},
                                                                  data-ciudad=${hotel.ciudad},
                                                                  data-checkin=${hotel.checkIn},
@@ -191,6 +199,8 @@
                                             <div class="card-body">
                                                 <p class="card-text mb-1"><strong>Excursión:</strong> <span
                                                         th:text="${excursion.title}"></span></p>
+                                                <p class="card-text mb-1"><strong>Precio:</strong> <span
+                                                        th:text="${excursion.precio}"></span></p>
                                                 <p class="card-text"><a th:href="${excursion.url}" target="_blank">Ver
                                                     más detalles</a></p>
                                             </div>
@@ -199,7 +209,8 @@
                                                         class="btn btn-warning btn-sm btn-editar-excursion"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editarExcursionModal"
-                                                        th:attr="data-title=${excursion.title},
+                                                        th:attr="data-id-excursion=${excursion.id},
+                                                                 data-title=${excursion.title},
                                                                  data-url=${excursion.url}">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
@@ -251,9 +262,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" id="editVueloId" name="idVuelo"/>
                         <input type="hidden" id="editVueloEmail" name="email"/>
-                        <input type="hidden" id="editVueloFechaIdaOriginal" name="fechaIdaOriginal"/>
-                        <input type="hidden" id="editVueloFechaVueltaOriginal" name="fechaVueltaOriginal"/>
                         <div class="mb-3">
                             <label for="editVueloOrigen" class="form-label">Origen</label>
                             <input type="text" class="form-control" id="editVueloOrigen" name="origen" required>
@@ -291,10 +301,9 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="editHotelId" name="idHotel"/>
-                        <input type="hidden" id="editHotelNameHidden" name="name"/>
                         <div class="mb-3">
                             <label for="editHotelName" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="editHotelName" name="newName" required>
+                            <input type="text" class="form-control" id="editHotelName" name="name" required>
                         </div>
                         <div class="mb-3">
                             <label for="editHotelCiudad" class="form-label">Ciudad</label>
@@ -336,7 +345,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" id="editExcursionTitleOriginal" name="titleOriginal"/>
+                        <input type="hidden" id="editExcursionId" name="idExcursion"/>
                         <div class="mb-3">
                             <label for="editExcursionTitle" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="editExcursionTitle" name="title" required>
@@ -360,6 +369,7 @@
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
 <script type="text/javascript" th:src="@{js/modal.js}"></script>
+<script type="text/javascript" th:src="@{js/alerts.js}"></script>
 
 </body>
 </html>
