@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioLogin;
+import com.tallerwebi.dominio.ServicioRecomendacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ public class ControladorLogin {
         model.put("usuario", new Usuario());
         return new ModelAndView("nuevo-usuario", model);
     }
-
+     /*
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public ModelAndView irAHome(HttpServletRequest request) {
         ModelMap model = new ModelMap();
@@ -80,6 +81,24 @@ public class ControladorLogin {
         model.put("usuario", usuario);
         return new ModelAndView("home", model);
     }
+      */
+
+    @Autowired
+    private ServicioRecomendacion servicioRecomendacion;
+
+    @RequestMapping(path = "/home", method = RequestMethod.GET)
+    public ModelAndView irAHome(HttpServletRequest request) {
+        ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        model.put("usuario", usuario);
+
+        // NUEVO: recomendaciones
+        model.put("recomendaciones", servicioRecomendacion.obtenerRecomendacionesPara(usuario));
+
+        return new ModelAndView("home", model);
+    }
+
+
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public ModelAndView inicio() {
