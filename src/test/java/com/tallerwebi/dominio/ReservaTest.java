@@ -8,7 +8,7 @@ public class ReservaTest {
 
     @Test
     public void queSeCreeReservaConDatosCorrectos() {
-        Reserva reserva = new Reserva("Ana", "ana@email.com", "EZE", "MAD", "2025-07-10", "2025-07-25");
+        Reserva reserva = new Reserva("Ana", "ana@email.com", "EZE", "MAD", "2025-07-10", "2025-07-25", 30.0);
 
         assertEquals("Ana", reserva.getNombre());
         assertEquals("ana@email.com", reserva.getEmail());
@@ -16,6 +16,7 @@ public class ReservaTest {
         assertEquals("MAD", reserva.getDestino());
         assertEquals("2025-07-10", reserva.getFechaIda());
         assertEquals("2025-07-25", reserva.getFechaVuelta());
+        assertEquals(30.0, reserva.getPrecio(), 0.001);
     }
 
     @Test

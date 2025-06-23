@@ -5,6 +5,7 @@ package com.tallerwebi.dominio;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,9 @@ import java.util.List;
 @Service
 @Transactional // Puedes poner @Transactional a nivel de clase o en métodos individuales
 public class ServicioExcursionesImpl implements ServicioExcursiones {
-    //a59fc601949d79d62505d4a3c668dedf8e6e4c2756bd401124e13f7c1a4b6ad6
-    private final String apiKey  = "902e4c6190ee25df47f8fd037098a1f16ac78e390eaa53a91c5daf2c930743a6";
-    //private final String apiKey  = "1d9b2f7b6812e654ec3ab0f399081e03a4402ff91bf6f50ef00bb403d2014118";
+
+    private final ConfiguracionDeApiKey apiConfig ;
+
     private static final String BASE_URL = "https://serpapi.com/search";
     private static final String ENGINE   = "google_events";
 
@@ -37,12 +38,15 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
 
     // 2. CONSTRUCTOR PARA INYECTAR EL REPOSITORIO
     @Autowired // Spring usará este constructor para inyectar la dependencia
-    public ServicioExcursionesImpl(RepositorioExcursion repositorioExcursion) {
+    public ServicioExcursionesImpl(ConfiguracionDeApiKey apiConfig, RepositorioExcursion repositorioExcursion) {
+        this.apiConfig = apiConfig;
         this.repositorioExcursion = repositorioExcursion;
     }
 
     @Override
     public List<ExcursionDTO> getExcursiones(String location, String query) {
+        String apiKey = apiConfig.getApiKey();
+
         if (apiKey == null || apiKey.isBlank()) {
             throw new IllegalStateException("SERPAPI_API_KEY no definida");
         }
@@ -95,6 +99,21 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
     @Override
     public List<Excursion> obtenerExcursionesDeUsuario(Long idUsuario) {
         return repositorioExcursion.obtenerPorUsuario(idUsuario);
+    }
+
+    @Override
+    public void eliminarReserva(Long idUsuario, String title) {
+        repositorioExcursion.eliminarReserva(idUsuario, title);
+    }
+
+    @Override
+    public void editarReserva(Long idExcursion, Long idUsuario, String title, String url) {
+        Excursion excursion = repositorioExcursion.buscarPorUsuarioYExcursion(idUsuario, idExcursion);
+        if (excursion != null) {
+            excursion.setTitle(title);
+            excursion.setUrl(url);
+            repositorioExcursion.actualizar(excursion);
+        }
     }
 
 }

@@ -24,25 +24,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-
-                <!--<form th:action="@{/ver-reservas}" method="get" class="d-flex">
-                    <input type="email" name="email" placeholder="Ingrese su email" class="form-control me-2" required>
-                    <button type="submit" class="btn btn-primary">Ver Reservas</button>
-                </form>-->
-
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
                 <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
-                <!--<li class="nav-item"><a class="nav-link" href="#paquete">Arma tu Paquete</a></li>-->
-                <!--<li class="nav-item"><a class="nav-link" href="#">Destinos</a></li>-->
-                <!--<li class="nav-item"><a class="nav-link" href="#">Ayuda</a></li>-->
                 <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
-                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
+                <li th:if="${usuario}" class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
                 <li class="nav-item">
                     <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
                         <i class="bi bi-moon"></i>
                     </button>
                 </li>
-                <li class="nav-item">
+                <li th:if="${usuario == null}" class="nav-item">
+                    <a href="./login" class="btn btn-outline-success ms-lg-2 mt-1 mt-lg-0">Iniciar sesión</a>
+                </li>
+                <li th:if="${usuario != null}" class="nav-item">
                     <form th:action="@{/logout}" method="post" style="display:inline;">
                         <button type="submit" class="btn btn-outline-danger ms-lg-2 mt-1 mt-lg-0">Cerrar sesión</button>
                     </form>
@@ -59,10 +53,47 @@
         <p class="lead">Armá tu paquete ideal: vuelo, hotel, actividades y más.</p>
         <form class="row g-2 mt-4 bg-body p-3 rounded text-center" th:action="@{/busqueda-vuelo}" method="post">
             <div class="col-md-3">
-                <input type="text" id="origen" class="form-control" name="origen" placeholder="Origen" required>
+                <label for="origen" class="form-label visually-hidden">Origen</label>
+                <select class="form-select" name="origen" id="origen" required>
+                    <option value="">Selecciona un origen</option>
+                    <option value="EZE">Buenos Aires, Argentina (Ezeiza)</option>
+                    <option value="JFK">New York, USA (JFK)</option>
+                    <option value="GRU">Sao Paulo, Brasil (Guarulhos)</option>
+                    <option value="CDG">París, Francia (Charles de Gaulle)</option>
+                    <option value="MAD">Madrid, España (Barajas)</option>
+                    <option value="MEX">Ciudad de México, México (Benito Juárez)</option>
+                    <option value="BOG">Bogotá, Colombia (El Dorado)</option>
+                    <option value="SCL">Santiago, Chile (Arturo Merino Benítez)</option>
+                    <option value="LIM">Lima, Perú (Jorge Chávez)</option>
+                    <option value="LHR">Londres, Reino Unido (Heathrow)</option>
+                    <option value="FRA">Frankfurt, Alemania (Frankfurt Main)</option>
+                    <option value="MIA">Miami, USA (Miami Intl.)</option>
+                    <option value="BCN">Barcelona, España (El Prat)</option>
+                    <option value="AMS">Ámsterdam, Países Bajos (Schiphol)</option>
+                    <option value="PTY">Ciudad de Panamá, Panamá (Tocumen)</option>
+                </select>
             </div>
+
             <div class="col-md-3">
-                <input type="text" id="destino" class="form-control" name="destino" placeholder="Destino" required>
+                <label for="destino" class="form-label visually-hidden">Destino</label>
+                <select class="form-select" name="destino" id="destino" required>
+                    <option value="">Selecciona un destino</option>
+                    <option value="EZE">Buenos Aires, Argentina (Ezeiza)</option>
+                    <option value="JFK">New York, USA (JFK)</option>
+                    <option value="GRU">Sao Paulo, Brasil (Guarulhos)</option>
+                    <option value="CDG">París, Francia (Charles de Gaulle)</option>
+                    <option value="MAD">Madrid, España (Barajas)</option>
+                    <option value="MEX">Ciudad de México, México (Benito Juárez)</option>
+                    <option value="BOG">Bogotá, Colombia (El Dorado)</option>
+                    <option value="SCL">Santiago, Chile (Arturo Merino Benítez)</option>
+                    <option value="LIM">Lima, Perú (Jorge Chávez)</option>
+                    <option value="LHR">Londres, Reino Unido (Heathrow)</option>
+                    <option value="FRA">Frankfurt, Alemania (Frankfurt Main)</option>
+                    <option value="MIA">Miami, USA (Miami Intl.)</option>
+                    <option value="BCN">Barcelona, España (El Prat)</option>
+                    <option value="AMS">Ámsterdam, Países Bajos (Schiphol)</option>
+                    <option value="PTY">Ciudad de Panamá, Panamá (Tocumen)</option>
+                </select>
             </div>
             <div class="col-md-3">
                 <!--<input type="date" id="fechaIda" class="form-control" name="fechaIda" placeholder="F. de ida" required>-->

@@ -11,4 +11,7 @@ public interface ServicioExcursiones {
 
     List<Excursion> obtenerExcursionesDeUsuario(Long idUsuario);
 
+    void eliminarReserva(Long idUsuario, String title);
+
+    void editarReserva(Long idExcursion, Long idUsuario, String title, String url);
 }

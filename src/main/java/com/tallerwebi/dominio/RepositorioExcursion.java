@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +45,25 @@ public List<Excursion> obtenerPorUsuario(Long idUsuario) {
 }
 
 
+    public void eliminarReserva(Long idUsuario, String title) {
+        this.sessionFactory.getCurrentSession()
+                .createQuery("DELETE FROM Excursion e WHERE e.usuario.id = :idUsuario AND e.title = :title")
+                .setParameter("idUsuario", idUsuario)
+                .setParameter("title", title)
+                .executeUpdate();
+    }
+
+    public Excursion buscarPorUsuarioYExcursion(Long idUsuario, Long idExcursion) {
+        String hql = "FROM Excursion e WHERE e.usuario.id = :idUsuario AND e.id = :idExcursion";
+        List<Excursion> resultados = sessionFactory.getCurrentSession()
+                .createQuery(hql, Excursion.class)
+                .setParameter("idUsuario", idUsuario)
+                .setParameter("idExcursion", idExcursion)
+                .list();
+        return resultados.isEmpty() ? null : resultados.get(0);
+    }
+
+    public void actualizar(Excursion excursion) {
+        sessionFactory.getCurrentSession().update(excursion);
+    }
 }

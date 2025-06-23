@@ -17,14 +17,26 @@ public class HibernateConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        // dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
+
+        String dbHost = System.getenv("DB_HOST");
+        String dbPort = System.getenv("DB_PORT");
+        String dbName = System.getenv("DB_NAME");
+        String dbUser = System.getenv("DB_USER");
+        String dbPassword = System.getenv("DB_PASSWORD");
+
+        if (dbHost == null) dbHost = "localhost";
+        if (dbPort == null) dbPort = "3306";
+        if (dbName == null) dbName = "tallerwebi";
+        if (dbUser == null) dbUser = "user";
+        if (dbPassword == null) dbPassword = "user";
+
+        String url = String.format("jdbc:mysql://%s:%s/%s?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true",
+                dbHost, dbPort, dbName);
+
+        dataSource.setUrl(url);
+        dataSource.setUsername(dbUser);
+        dataSource.setPassword(dbPassword);
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:hsqldb:mem:db_");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/tallerwebi?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC");
-        dataSource.setUsername("user");
-        dataSource.setPassword("user");
-        // dataSource.setUsername("sa");
-        // dataSource.setPassword("");
         return dataSource;
     }
 
@@ -49,7 +61,7 @@ public class HibernateConfig {
        // properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL57Dialect");
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
-        properties.setProperty("hibernate.hbm2ddl.auto", "create");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         return properties;
     }
 }

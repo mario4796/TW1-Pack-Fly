@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public class RepositorioHotelImp implements RepositorioHotel {
 
+    @Autowired
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -32,15 +33,38 @@ public class RepositorioHotelImp implements RepositorioHotel {
     }
 
     @Override
-    public List<HotelDto> buscarReserva(Long idUsuario) {
+    public List<Hotel> buscarReserva(Long idUsuario) {
         return this.sessionFactory.getCurrentSession()
                 .createQuery(
-                        "SELECT new com.tallerwebi.presentacion.dtos.HotelDto(h.name, h.ciudad, h.checkIn, h.checkOut, h.adult, h.children) " +
-                                "FROM Hotel h WHERE h.usuario.id = :idUsuario", HotelDto.class)
+                        "SELECT new com.tallerwebi.dominio.entidades.Hotel(h.id, h.name, h.ciudad, h.checkIn, h.checkOut, h.adult, h.children, h.precio) " +
+                                "FROM Hotel h WHERE h.usuario.id = :idUsuario", Hotel.class)
                 .setParameter("idUsuario", idUsuario)
                 .getResultList();
     }
 
+    @Override
+    public void eliminarReserva(Long idUsuario, String nameHotel) {
+        this.sessionFactory.getCurrentSession()
+                .createQuery("DELETE FROM Hotel h WHERE h.usuario.id = :idUsuario AND h.name = :nameHotel")
+                .setParameter("idUsuario", idUsuario)
+                .setParameter("nameHotel", nameHotel)
+                .executeUpdate();
+    }
 
 
+    @Override
+    public Hotel buscarPorUsuarioYNombre(Long idUsuario, Long idHotel) {
+        String hql = "FROM Hotel h WHERE h.usuario.id = :idUsuario AND h.id = :idHotel";
+        List<Hotel> resultados = sessionFactory.getCurrentSession()
+                .createQuery(hql, Hotel.class)
+                .setParameter("idUsuario", idUsuario)
+                .setParameter("idHotel", idHotel)
+                .list();
+        return resultados.isEmpty() ? null : resultados.get(0);
+    }
+
+    @Override
+    public void actualizar(Hotel hotel) {
+        sessionFactory.getCurrentSession().update(hotel);
+    }
 }

@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 
-<body class="reserva">
+<body class="body_reserva">
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
     <div class="container">
@@ -25,13 +25,17 @@
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
                 <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
-                <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver reservas</a></li>
+                <li th:if="${usuario}" class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver
+                    reservas</a></li>
                 <li class="nav-item">
                     <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
                         <i class="bi bi-moon"></i>
                     </button>
                 </li>
-                <li class="nav-item">
+                <li th:if="${usuario == null}" class="nav-item">
+                    <a href="./login" class="btn btn-outline-success ms-lg-2 mt-1 mt-lg-0">Iniciar sesión</a>
+                </li>
+                <li th:if="${usuario != null}" class="nav-item">
                     <form th:action="@{/logout}" method="post" style="display:inline;">
                         <button type="submit" class="btn btn-outline-danger ms-lg-2 mt-1 mt-lg-0">Cerrar sesión</button>
                     </form>
@@ -40,103 +44,332 @@
         </div>
     </div>
 </nav>
+
 <main class="container d-flex flex-column align-items-center py-5 mt-5">
+    <div th:if="${mensaje}"
+         th:class="'alert alert-' + ${tipo} + ' alert-dismissible fade show reserva-exitosa'"
+         role="alert">
+        <i th:class="'bi ' + (${tipo} == 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill') + ' me-2'"></i>
+        <span th:text="${mensaje}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     <div class="overlay mt-3">
-    <div class="row justify-content-center">
-        <div class="col-lg-10">
-            <h3 class="text-white text-center mb-4">Tus Reservas</h3>
-            <div class="accordion" id="accordionReservas">
+        <div class="row justify-content-center">
+            <div th:if="${usuario != null}" class="col-lg-10">
+                <h3 class="text-white text-center mb-4">Tus Reservas</h3>
+                <div class="accordion" id="accordionReservas">
 
-                <!-- Vuelos -->
-                <div class="accordion-item" th:if="${vuelos != null and !vuelos.isEmpty()}">
-                    <h2 class="accordion-header" id="headingVuelos">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVuelos" aria-expanded="true" aria-controls="collapseVuelos">
-                            <i class="bi bi-airplane me-2"></i>Vuelos
-                        </button>
-                    </h2>
-                    <div id="collapseVuelos" class="accordion-collapse collapse show" aria-labelledby="headingVuelos" data-bs-parent="#accordionReservas">
-                        <div class="accordion-body">
-                            <div class="row g-3">
-                                <div class="col-md-6" th:each="vuelo : ${vuelos}">
-                                    <div class="card shadow h-100">
-                                        <div class="card-body">
-                                            <p class="card-text mb-1"><strong>Origen:</strong> <span th:text="${vuelo.origen}">test</span></p>
-                                            <p class="card-text mb-1"><strong>Destino:</strong> <span th:text="${vuelo.destino}">test</span></p>
-                                            <p class="card-text mb-1"><strong>Fecha:</strong> <span th:text="${vuelo.fechaIda}">test</span></p>
-                                            <p class="card-text mb-1"><strong>Pasajero:</strong> <span th:text="${vuelo.fechaVuelta}">test</span></p>
+                    <!-- Vuelos -->
+                    <div class="accordion-item" th:if="${vuelos != null and !vuelos.isEmpty()}">
+                        <h2 class="accordion-header" id="headingVuelos">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseVuelos" aria-expanded="true"
+                                    aria-controls="collapseVuelos">
+                                <i class="bi bi-airplane me-2"></i>Vuelos
+                            </button>
+                        </h2>
+                        <div id="collapseVuelos" class="accordion-collapse collapse show"
+                             aria-labelledby="headingVuelos" data-bs-parent="#accordionReservas">
+                            <div class="accordion-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6" th:each="vuelo : ${vuelos}">
+                                        <div class="card shadow h-100">
+                                            <div class="card-body">
+                                                <p class="card-text mb-1"><strong>Origen:</strong> <span
+                                                        th:text="${vuelo.origen}">test</span></p>
+                                                <p class="card-text mb-1"><strong>Destino:</strong> <span
+                                                        th:text="${vuelo.destino}">test</span></p>
+                                                <p class="card-text mb-1"><strong>Fecha:</strong> <span
+                                                        th:text="${vuelo.fechaIda}">test</span></p>
+                                                <p class="card-text mb-1"><strong>Pasajero:</strong> <span
+                                                        th:text="${vuelo.fechaVuelta}">test</span></p>
+                                                <p class="card-text mb-1"><strong>Precio:</strong> <span
+                                                        th:text="${vuelo.precio}">test</span></p>
+                                            </div>
+                                            <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
+                                                <button type="button"
+                                                        class="btn btn-warning btn-sm btn-editar-vuelo"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editarVueloModal"
+                                                        th:attr="data-id-vuelo=${vuelo.id},
+                                                                 data-email=${vuelo.email},
+                                                                 data-origen=${vuelo.origen},
+                                                                 data-destino=${vuelo.destino},
+                                                                 data-fechaida=${vuelo.fechaIda},
+                                                                 data-fechavuelta=${vuelo.fechaVuelta}">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <form th:action="@{/eliminarReservaVuelo}" method="post"
+                                                      accept-charset="UTF-8" class="form-eliminar-reserva m-0">
+                                                    <input type="hidden" name="email" th:value="${vuelo.email}"/>
+                                                    <input type="hidden" name="fechaIda"
+                                                           th:value="${vuelo.fechaIda}"/>
+                                                    <input type="hidden" name="fechaVuelta"
+                                                           th:value="${vuelo.fechaVuelta}"/>
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Eliminar">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Hoteles -->
-                <div class="accordion-item" th:if="${hoteles != null and !hoteles.isEmpty()}">
-                    <h2 class="accordion-header" id="headingHoteles">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHoteles" aria-expanded="false" aria-controls="collapseHoteles">
-                            <i class="bi bi-building me-2"></i>Hoteles
-                        </button>
-                    </h2>
-                    <div id="collapseHoteles" class="accordion-collapse collapse" aria-labelledby="headingHoteles" data-bs-parent="#accordionReservas">
-                        <div class="accordion-body">
-                            <div class="row g-3">
-                                <div class="col-md-6" th:each="hotel : ${hoteles}">
-                                    <div class="card shadow h-100">
-                                        <div class="card-body">
-                                            <p class="card-text mb-1"><strong>Nombre:</strong> <span th:text="${hotel.name}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Ciudad:</strong> <span th:text="${hotel.ciudad}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Check-in:</strong> <span th:text="${hotel.checkIn}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Check-out:</strong> <span th:text="${hotel.checkout}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Adultos:</strong> <span th:text="${hotel.adults}">tesxt</span></p>
-                                            <p class="card-text mb-1"><strong>Chicos:</strong> <span th:text="${hotel.children}">tesxt</span></p>
+                    <!-- Hoteles -->
+                    <div class="accordion-item" th:if="${hoteles != null and !hoteles.isEmpty()}">
+                        <h2 class="accordion-header" id="headingHoteles">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseHoteles" aria-expanded="false"
+                                    aria-controls="collapseHoteles">
+                                <i class="bi bi-building me-2"></i>Hoteles
+                            </button>
+                        </h2>
+                        <div id="collapseHoteles" class="accordion-collapse collapse" aria-labelledby="headingHoteles"
+                             data-bs-parent="#accordionReservas">
+                            <div class="accordion-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6" th:each="hotel : ${hoteles}">
+                                        <div class="card shadow h-100 position-relative">
+                                            <div class="card-body pb-5"><!-- padding bottom extra para los botones -->
+                                                <p class="card-text mb-1"><strong>Nombre:</strong> <span
+                                                        th:text="${hotel.name}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Ciudad:</strong> <span
+                                                        th:text="${hotel.ciudad}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Check-in:</strong> <span
+                                                        th:text="${hotel.checkIn}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Check-out:</strong> <span
+                                                        th:text="${hotel.checkOut}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Adultos:</strong> <span
+                                                        th:text="${hotel.adult}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Chicos:</strong> <span
+                                                        th:text="${hotel.children}">texto</span></p>
+                                                <p class="card-text mb-1"><strong>Precio:</strong> <span
+                                                        th:text="${hotel.precio}">texto</span></p>
+                                            </div>
+
+                                            <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
+                                                <button type="button"
+                                                        class="btn btn-warning btn-sm btn-editar-hotel"
+                                                        title="Editar"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editarHotelModal"
+                                                        th:attr="data-id-hotel=${hotel.id},
+                                                                 data-name=${hotel.name},
+                                                                 data-ciudad=${hotel.ciudad},
+                                                                 data-checkin=${hotel.checkIn},
+                                                                 data-checkOut=${hotel.checkOut},
+                                                                 data-adult=${hotel.adult},
+                                                                 data-children=${hotel.children}">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <form th:action="@{/eliminarReservaHotel}" method="post" class="form-eliminar-reserva m-0"
+                                                      accept-charset="UTF-8">
+                                                    <input type="hidden" name="name" th:value="${hotel.name}"/>
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Excursiones -->
-                <div class="accordion-item" th:if="${excursiones != null and !excursiones.isEmpty()}">
-                    <h2 class="accordion-header" id="headingExcursiones">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExcursiones" aria-expanded="false" aria-controls="collapseExcursiones">
-                            <i class="bi bi-tree me-2"></i>Excursiones
-                        </button>
-                    </h2>
-                    <div id="collapseExcursiones" class="accordion-collapse collapse" aria-labelledby="headingExcursiones" data-bs-parent="#accordionReservas">
-                        <div class="accordion-body">
-                            <div class="row g-3">
-                                <div class="col-md-6" th:each="excursion : ${excursiones}">
-                                    <div class="card shadow h-100">
-                                        <div class="card-body">
-                                            <p class="card-text mb-1"><strong>Excursión:</strong> <span th:text="${excursion.title}"></span></p>
-                                            <p class="card-text"><a th:href="${excursion.url}" target="_blank">Ver más detalles</a></p>
+                    <!-- Excursiones -->
+                    <div class="accordion-item" th:if="${excursiones != null and !excursiones.isEmpty()}">
+                        <h2 class="accordion-header" id="headingExcursiones">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseExcursiones" aria-expanded="false"
+                                    aria-controls="collapseExcursiones">
+                                <i class="bi bi-tree me-2"></i>Excursiones
+                            </button>
+                        </h2>
+                        <div id="collapseExcursiones" class="accordion-collapse collapse"
+                             aria-labelledby="headingExcursiones" data-bs-parent="#accordionReservas">
+                            <div class="accordion-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6" th:each="excursion : ${excursiones}">
+                                        <div class="card shadow h-100">
+                                            <div class="card-body">
+                                                <p class="card-text mb-1"><strong>Excursión:</strong> <span
+                                                        th:text="${excursion.title}"></span></p>
+                                                <p class="card-text mb-1"><strong>Precio:</strong> <span
+                                                        th:text="${excursion.precio}"></span></p>
+                                                <p class="card-text"><a th:href="${excursion.url}" target="_blank">Ver
+                                                    más detalles</a></p>
+                                            </div>
+                                            <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
+                                                <button type="button"
+                                                        class="btn btn-warning btn-sm btn-editar-excursion"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editarExcursionModal"
+                                                        th:attr="data-id-excursion=${excursion.id},
+                                                                 data-title=${excursion.title},
+                                                                 data-url=${excursion.url}">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <form th:action="@{/eliminarReservaExcursion}" method="post"
+                                                      accept-charset="UTF-8" class="form-eliminar-reserva m-0">
+                                                    <input type="hidden" name="title" th:value="${excursion.title}"/>
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Eliminar">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div th:if="${usuario.apagar != null and usuario.apagar > 0}">
+                        <div class="alert alert-success text-center mt-4">
+                            Tu valor a pagar es: <span th:text="${#numbers.formatDecimal(usuario.apagar, 1, 'COMMA', 2, 'POINT')}"></span> ARS
+                        </div>
+                    </div>
 
-                <div th:if="${(vuelos == null or vuelos.isEmpty()) and (hoteles == null or hoteles.isEmpty()) and (excursiones == null or excursiones.isEmpty())}">
-                    <div class="alert alert-info text-center mt-4">
-                        No tienes reservas registradas.
+                    <div th:if="${(vuelos == null or vuelos.isEmpty()) and (hoteles == null or hoteles.isEmpty()) and (excursiones == null or excursiones.isEmpty())}">
+                        <div class="alert alert-info text-center mt-4">
+                            No tienes reservas registradas.
+                        </div>
                     </div>
                 </div>
-
+            </div>
+            <div th:if="${usuario == null}"
+                 class="alert alert-warning mt-3 d-flex align-items-center justify-content-center" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <div>
+                    Aunque no deberías estar aquí, <a th:href="@{/login}" class="alert-link">inicia sesión</a> para poder ver tus reservas.
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal vuelo -->
+    <div class="modal fade" id="editarVueloModal" tabindex="-1" aria-labelledby="editarVueloModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/editarReservaVuelo}" method="post" id="formEditarVuelo" accept-charset="UTF-8">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarVueloModalLabel">Editar Vuelo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editVueloId" name="idVuelo"/>
+                        <input type="hidden" id="editVueloEmail" name="email"/>
+                        <div class="mb-3">
+                            <label for="editVueloOrigen" class="form-label">Origen</label>
+                            <input type="text" class="form-control" id="editVueloOrigen" name="origen" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVueloDestino" class="form-label">Destino</label>
+                            <input type="text" class="form-control" id="editVueloDestino" name="destino" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVueloFechaIda" class="form-label">Fecha Ida</label>
+                            <input type="datetime-local" class="form-control" id="editVueloFechaIda" name="fechaIda" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editVueloFechaVuelta" class="form-label">Fecha Vuelta</label>
+                            <input type="datetime-local" class="form-control" id="editVueloFechaVuelta" name="fechaVuelta" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal hotel -->
+    <div class="modal fade" id="editarHotelModal" tabindex="-1" aria-labelledby="editarHotelModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/editarReservaHotel}" method="post" id="formEditarHotel" accept-charset="UTF-8">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarHotelModalLabel">Editar Hotel</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editHotelId" name="idHotel"/>
+                        <div class="mb-3">
+                            <label for="editHotelName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editHotelName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelCiudad" class="form-label">Ciudad</label>
+                            <input type="text" class="form-control" id="editHotelCiudad" name="ciudad" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelCheckIn" class="form-label">Check-in</label>
+                            <input type="date" class="form-control" id="editHotelCheckIn" name="checkIn" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelCheckOut" class="form-label">Check-out</label>
+                            <input type="date" class="form-control" id="editHotelCheckOut" name="checkOut" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelAdults" class="form-label">Adultos</label>
+                            <input type="number" class="form-control" id="editHotelAdults" name="adult" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editHotelChildren" class="form-label">Chicos</label>
+                            <input type="number" class="form-control" id="editHotelChildren" name="children" min="0" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal excursión -->
+    <div class="modal fade" id="editarExcursionModal" tabindex="-1" aria-labelledby="editarExcursionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/editarReservaExcursion}" method="post" id="formEditarExcursion" accept-charset="UTF-8">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarExcursionModalLabel">Editar Excursión</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="editExcursionId" name="idExcursion"/>
+                        <div class="mb-3">
+                            <label for="editExcursionTitle" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editExcursionTitle" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editExcursionUrl" class="form-label">URL</label>
+                            <input type="url" class="form-control" id="editExcursionUrl" name="url">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </main>
 
 <script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
+<script type="text/javascript" th:src="@{js/modal.js}"></script>
+<script type="text/javascript" th:src="@{js/alerts.js}"></script>
 
 </body>
 </html>
