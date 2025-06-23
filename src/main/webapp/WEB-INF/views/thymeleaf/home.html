@@ -113,6 +113,16 @@
                   <option>Actividades</option>
                 </select>-->
             </div>
+            <div class="col-md-6">
+                <label for="precioMin" class="form-label">Precio mínimo</label>
+                <input type="number" step="0.01" class="form-control" id="precioMin" name="precioMin"
+                       placeholder="Ej: 100">
+            </div>
+            <div class="col-md-6">
+                <label for="precioMax" class="form-label">Precio máximo</label>
+                <input type="number" step="0.01" class="form-control" id="precioMax" name="precioMax"
+                       placeholder="Ej: 1000">
+            </div>
             <div class="col-md-12">
                 <button class="btn btn-primary w-100">Buscar Vuelo</button>
             </div>
@@ -141,21 +151,22 @@
                     </div>
                 </div>
                     -->
-                <div class="container mt-5">
-                    <h3>Recomendaciones para vos</h3>
-                    <div class="row">
-                        <div th:each="rec : ${recomendaciones}" class="col-md-4 mb-3">
-                            <div class="card h-100">
-                                <img th:src="${rec.imagenUrl}" class="card-img-top" alt="Imagen recomendación">
-                                <div class="card-body">
-                                    <h5 th:text="${rec.tipo} + ': ' + ${rec.titulo}" class="card-title"></h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container"></div>
+                <!-- PARA FUTURO SPRINT, recomendaciones basadas en las reservas activas
+               <div class="container mt-5">
+                   <h3>Recomendaciones para vos</h3>
+                   <div class="row">
+                       <div th:each="rec : ${recomendaciones}" class="col-md-4 mb-3">
+                           <div class="card h-100">
+                               <img th:src="${rec.imagenUrl}" class="card-img-top" alt="Imagen recomendación">
+                               <div class="card-body">
+                                   <h5 th:text="${rec.tipo} + ': ' + ${rec.titulo}" class="card-title"></h5>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+                -->
+               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container"></div>
             </div>
         </section>
     </div>

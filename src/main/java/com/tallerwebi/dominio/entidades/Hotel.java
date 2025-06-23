@@ -19,6 +19,7 @@ public class Hotel {
     private Integer adult;
     private Integer children;
     private Double precio;
+    private String imagen;
 
 
     @OneToOne
@@ -112,4 +113,13 @@ public class Hotel {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
 }

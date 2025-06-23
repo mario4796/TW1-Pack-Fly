@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ControladorHotel {
@@ -23,6 +24,7 @@ public class ControladorHotel {
     @Autowired private IconHelper iconHelper;
 
     @GetMapping("/buscar-hoteles")
+
     public String buscar(
             @RequestParam String ciudad,
             @RequestParam String checkIn,
@@ -30,23 +32,40 @@ public class ControladorHotel {
             @RequestParam Integer adult,
             @RequestParam Integer children,
             @RequestParam String children_ages,
+            @RequestParam(required = false) Double precioMin,
+            @RequestParam(required = false) Double precioMax,
             HttpServletRequest request,
             Model model
     ) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        model.addAttribute("usuario", usuario); // ✅ Solución clave
+
         List<HotelDto> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut, adult, children, children_ages);
-        HotelDto datobusqueda  = new HotelDto();
+
+        if (precioMin != null && precioMax != null) {
+            hoteles = hoteles.stream()
+                    .filter(h -> h.getPrecio() >= precioMin && h.getPrecio() <= precioMax)
+                    .collect(Collectors.toList());
+        }
+
+        model.addAttribute("hoteles", hoteles); // asegúrate que sea "hoteles"
+        model.addAttribute("precioMin", precioMin);
+        model.addAttribute("precioMax", precioMax);
+
+        HotelDto datobusqueda = new HotelDto();
         datobusqueda.setCiudad(ciudad);
         datobusqueda.setCheckIn(checkIn);
         datobusqueda.setCheckOut(checkOut);
         datobusqueda.setAdult(adult);
         datobusqueda.setChildren(children);
-        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-        model.addAttribute("usuario", usuario);
+        datobusqueda.setChildren_ages(children_ages);
+
         model.addAttribute("datobusqueda", datobusqueda);
-        model.addAttribute("hoteles", hoteles);
-        model.addAttribute("iconHelper", iconHelper);
+
         return "busqueda-hoteles";
     }
+
+
 
     @GetMapping("/busqueda-hoteles")
     public String mostrarFormulario(HttpServletRequest request,

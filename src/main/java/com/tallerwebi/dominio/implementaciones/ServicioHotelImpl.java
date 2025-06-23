@@ -46,6 +46,7 @@ public class ServicioHotelImpl implements ServicioHotel {
         );
         System.out.println("URL de consulta: " + url);
 
+
         HotelResponse response = restTemplate.getForObject(url, HotelResponse.class);
         return response != null ? response.getProperties() : List.of();
     }
