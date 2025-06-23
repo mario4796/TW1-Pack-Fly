@@ -73,7 +73,7 @@ public class ControladorExcursionTest {
     public void queAgregueUsuarioLogueadoAlModeloCuandoExisteSesion() {
         // preparación
         Usuario usuarioMock = mock(Usuario.class);
-        when(session.getAttribute("usuario")).thenReturn(usuarioMock);
+        when(session.getAttribute("USUARIO")).thenReturn(usuarioMock);
 
         // ejecución
         controladorExcursion.verExcursiones("Buenos Aires", "excursiones", model, session);
@@ -85,7 +85,7 @@ public class ControladorExcursionTest {
     @Test
     public void queNoAgregueUsuarioLogueadoAlModeloCuandoNoHaySesion() {
         // preparación
-        when(session.getAttribute("usuario")).thenReturn(null);
+        when(session.getAttribute("USUARIO")).thenReturn(null);
 
         // ejecución
         controladorExcursion.verExcursiones("Buenos Aires", "excursiones", model, session);
