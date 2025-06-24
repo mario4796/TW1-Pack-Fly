@@ -1,8 +1,12 @@
 package com.tallerwebi.presentacion.dtos;
 
 import com.tallerwebi.dominio.entidades.Hotel;
-
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+
 public class HotelDto{
 
     private Long id;
@@ -21,6 +25,9 @@ public class HotelDto{
     private List<String> amenities;
     private Price price;
     private Double precio;
+    @JsonProperty("thumbnail")
+    private String imagen;
+
 
     public static class Price {
         private Double extracted;
@@ -191,13 +198,16 @@ public class HotelDto{
         this.children = children;
     }
 
-    public String getChilden_ages() {
-        return childen_ages;
+    private String children_ages;
+
+    public String getChildren_ages() {
+        return children_ages;
     }
 
-    public void setChilden_ages(String childen_ages) {
-        this.childen_ages = childen_ages;
+    public void setChildren_ages(String children_ages) {
+        this.children_ages = children_ages;
     }
+
 
     public void setLink(String link) {
         this.link = link;
@@ -245,5 +255,14 @@ public class HotelDto{
             return 0.0;
         }
     }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
 
 }

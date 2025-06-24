@@ -12,4 +12,5 @@ public interface RepositorioHotel {
     void eliminarReserva(Long idUsuario, String nameHotel);
     Hotel buscarPorUsuarioYNombre(Long usuarioId, Long idHotel);
     void actualizar(Hotel hotel);
+    List<Hotel> obtenerTodos();
 }

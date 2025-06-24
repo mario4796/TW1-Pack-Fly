@@ -45,26 +45,42 @@ public class ControladorVuelos {
             @RequestParam String destino,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaIda,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaVuelta,
+            @RequestParam(required = false) Double precioMin,
+            @RequestParam(required = false) Double precioMax,
             HttpServletRequest request,
             Model model) {
 
-        Vuelo vuelo = servicioVuelos.getVuelo(origen, destino, fechaIda, fechaVuelta);
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         model.addAttribute("usuario", usuario);
 
+        Vuelo vuelo = servicioVuelos.getVuelo(origen, destino, fechaIda, fechaVuelta);
+
         if (vuelo != null) {
-            model.addAttribute("vuelo", vuelo);
-            model.addAttribute("vueloUrl", true);
-            model.addAttribute("valorIda", vuelo.getPrecio() );
-            model.addAttribute("valorVuelta", vuelo.getPrecio());
-            // model.addAttribute("fechaIda", fechaIda);
-            // model.addAttribute("fechaVuelta", fechaVuelta);
+            boolean dentroRango = true;
+
+            if (precioMin != null && precioMax != null) {
+                double precioVuelo = vuelo.getPrecio();
+                dentroRango = (precioVuelo >= precioMin && precioVuelo <= precioMax);
+            }
+
+            if (dentroRango) {
+                model.addAttribute("vuelo", vuelo);
+                model.addAttribute("vueloUrl", true);
+                model.addAttribute("valorIda", vuelo.getPrecio());
+                model.addAttribute("valorVuelta", vuelo.getPrecio());
+            } else {
+                model.addAttribute("error", "No hay vuelos en el rango de precio indicado.");
+            }
         } else {
             model.addAttribute("error", "Vuelo no encontrado");
         }
 
+        model.addAttribute("precioMin", precioMin);
+        model.addAttribute("precioMax", precioMax);
+
         return "busqueda-vuelo";
     }
+
 
     @GetMapping("/formulario-reserva")
     public String mostrarFormularioVacio() {return "formularioReserva";}

@@ -6,6 +6,8 @@ import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import java.util.List;
 
@@ -67,4 +69,16 @@ public class RepositorioHotelImp implements RepositorioHotel {
     public void actualizar(Hotel hotel) {
         sessionFactory.getCurrentSession().update(hotel);
     }
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    public List<Hotel> obtenerTodos() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Hotel", Hotel.class)
+                .getResultList();
+    }
+
+
 }
