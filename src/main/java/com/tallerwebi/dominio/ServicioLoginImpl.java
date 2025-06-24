@@ -57,9 +57,12 @@ public class ServicioLoginImpl implements ServicioLogin {
 
         if (excursiones != null) {
             for (Excursion excursion : excursiones) {
-                deuda += excursion.getPrecio();
+                if (excursion != null && excursion.getPrecio() != null) {
+                    deuda += excursion.getPrecio();
+                }
             }
         }
+
 
         return deuda;
     }
