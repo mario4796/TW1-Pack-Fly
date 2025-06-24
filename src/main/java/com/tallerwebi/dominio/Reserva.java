@@ -1,5 +1,10 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.entidades.Usuario;
+
+import javax.persistence.ManyToOne;
+
+
 import javax.persistence.*;
 
 @Entity
@@ -18,6 +23,9 @@ public class Reserva {
     private String fechaIda;
     private String fechaVuelta;
     private Double precio;
+    @ManyToOne
+    private Usuario usuario;
+
 
     public Reserva() {
     }
@@ -97,4 +105,13 @@ public class Reserva {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }
