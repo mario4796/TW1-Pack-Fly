@@ -137,8 +137,16 @@
         </div>
     </div>
 
+    <div th:if="${error}" class="alert alert-warning text-center mt-3" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <span th:text="${error}">Error desconocido</span>
+    </div>
+
+
     <div th:if="${vueloUrl}" class="overlay mt-5">
-    <div class="card shadow-lg border-0 bg-body text-body">
+
+
+        <div class="card shadow-lg border-0 bg-body text-body">
         <div class="card-header d-flex align-items-center bg-primary text-white">
             <i class="bi bi-airplane-engines-fill me-2"></i>
             <h5 class="mb-0">Resultado de Búsqueda</h5>
@@ -171,6 +179,9 @@
                 <strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span>
             </p>
 
+
+
+
             <form th:if="${usuario != null}" th:action="@{/formulario-reserva}" method="post" accept-charset="UTF-8">
                 <input type="hidden" name="origen" th:value="${vuelo.origen}"/>
                 <input type="hidden" name="destino" th:value="${vuelo.destino}"/>
@@ -192,7 +203,6 @@
         </div>
     </div>
     </div>
-
 </main>
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
