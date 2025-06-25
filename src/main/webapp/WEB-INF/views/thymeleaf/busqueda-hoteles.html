@@ -145,8 +145,9 @@
              class="alert alert-secondary mt-3 d-flex align-items-center justify-content-center" role="alert">
             <i class="bi bi-info-circle-fill me-2"></i>
             <div>
-                Debes <a th:href="@{/login}" class="alert-link">iniciar sesión</a> para poder reservar.
+                Debes <a href="" data-bs-toggle="modal" data-bs-target="#loginModal">iniciar sesión</a> para poder reservar.
             </div>
+
         </div>
         <p th:if="${#lists.isEmpty(hoteles)}">No se han encontrado hoteles.</p>
 
