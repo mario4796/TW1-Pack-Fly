@@ -34,7 +34,10 @@
                     </button>
                 </li>
                 <li th:if="${usuario == null}" class="nav-item">
-                    <a href="./login" class="btn btn-outline-success ms-lg-2 mt-1 mt-lg-0">Iniciar sesión</a>
+<!--                    <a href="./login" class="btn btn-outline-success ms-lg-2 mt-1 mt-lg-0">Iniciar sesión</a>-->
+                    <button class="btn btn-outline-success ms-lg-2 mt-1 mt-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        Iniciar Sesión
+                    </button>
                 </li>
                 <li th:if="${usuario != null}" class="nav-item">
                     <form th:action="@{/logout}" method="post" style="display:inline;">
@@ -245,7 +248,7 @@
         <span th:text="${error}"></span>
     </div>
 </main>
-
+<div th:replace="login-modal :: loginModal"></div>
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
 <script type="text/javascript" th:src="@{js/alerts.js}"></script>

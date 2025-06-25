@@ -1,0 +1,47 @@
+<!-- fragments/login-modal.html -->
+<div th:fragment="loginModal">
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- FORMULARIO con th:object -->
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center mb-4">Iniciar Sesión</h3>
+
+                    <form th:action="@{/validar-login}" method="POST" th:object="${datosLogin}">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                                <input th:field="*{email}" id="email" type="email" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                <input th:field="*{password}" type="password" id="password" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button id="btn-login" class="btn btn-primary btn-lg" type="submit">Ingresar</button>
+                        </div>
+
+                        <p th:if="${error != null}" class="alert alert-danger mt-3" th:text="'Error: ' + ${error}"></p>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a id="ir-a-registrarme" href="nuevo-usuario">¿No tenés cuenta? Registrate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para abrir modal si hay error -->
+    <script th:if="${error != null}">
+        var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        loginModal.show();
+    </script>
+</div>
