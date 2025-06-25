@@ -44,7 +44,7 @@ public class ControladorHotel {
             Model model
     ) {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-        model.addAttribute("usuario", usuario); // ✅ Solución clave
+        model.addAttribute("usuario", usuario); //
 
         List<HotelDto> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut, adult, children, children_ages);
 
@@ -54,7 +54,7 @@ public class ControladorHotel {
                     .collect(Collectors.toList());
         }
 
-        model.addAttribute("hoteles", hoteles); // asegúrate que sea "hoteles"
+        model.addAttribute("hoteles", hoteles);
         model.addAttribute("precioMin", precioMin);
         model.addAttribute("precioMax", precioMax);
 

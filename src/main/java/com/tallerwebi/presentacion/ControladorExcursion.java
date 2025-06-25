@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioExcursiones;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,8 +31,9 @@ public class ControladorExcursion {
             @RequestParam(name = "precioMin", required = false) Double precioMin,
             @RequestParam(name = "precioMax", required = false) Double precioMax,
             Model model,
-            HttpSession session) {
-
+            HttpServletRequest request) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        model.addAttribute("usuario", usuario); //
         List<ExcursionDTO> lista = servicioExcursiones.getExcursiones(loc, query);
 
         for (ExcursionDTO excursion : lista) {
@@ -46,7 +49,9 @@ public class ControladorExcursion {
         }
 
         model.addAttribute("excursiones", lista);
-        model.addAttribute("usuario", session.getAttribute("usuario"));
+        //model.addAttribute("usuario", session.getAttribute("usuario"));
+        //model.addAttribute("usuario", session.getAttribute("usuarioLogueado"));
+
         return "excursiones";
     }
 
