@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -20,6 +21,11 @@ import java.util.stream.Collectors;
 public class ControladorHotel {
     @Autowired
     private ServicioHotel hotelService;
+
+    @Autowired
+    private ServicioPreferenciaUsuario servicioPreferenciaUsuario;
+
+
 
     @Autowired private IconHelper iconHelper;
 
@@ -101,6 +107,13 @@ public class ControladorHotel {
         hotel.setUsuario(usuario);
         hotel.setPrecio(precio);
         hotelService.reserva(hotel);
+
+
+        if (usuario != null) {
+            int cantidadPersonas = (adult != null ? adult : 0) + (children != null ? children : 0);
+            servicioPreferenciaUsuario.registrarReservaHotel(usuario, cantidadPersonas);
+        }
+
 
         return "redirect:/excursiones?reservaExitosa=true";
     }
