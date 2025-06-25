@@ -1,4 +1,4 @@
-// src/main/java/com/tallerwebi/dominio/ExcursionImpl.java
+
 package com.tallerwebi.presentacion.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

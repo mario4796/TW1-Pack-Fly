@@ -59,7 +59,6 @@
                 <h3 class="text-white text-center mb-4">Tus Reservas</h3>
                 <div class="accordion" id="accordionReservas">
 
-                    <!-- Vuelos -->
                     <div class="accordion-item" th:if="${vuelos != null and !vuelos.isEmpty()}">
                         <h2 class="accordion-header" id="headingVuelos">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -119,7 +118,6 @@
                         </div>
                     </div>
 
-                    <!-- Hoteles -->
                     <div class="accordion-item" th:if="${hoteles != null and !hoteles.isEmpty()}">
                         <h2 class="accordion-header" id="headingHoteles">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -181,7 +179,6 @@
                         </div>
                     </div>
 
-                    <!-- Excursiones -->
                     <div class="accordion-item" th:if="${excursiones != null and !excursiones.isEmpty()}">
                         <h2 class="accordion-header" id="headingExcursiones">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -252,7 +249,6 @@
         </div>
     </div>
 
-    <!-- Modal vuelo -->
     <div class="modal fade" id="editarVueloModal" tabindex="-1" aria-labelledby="editarVueloModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -290,7 +286,6 @@
         </div>
     </div>
 
-    <!-- Modal hotel -->
     <div class="modal fade" id="editarHotelModal" tabindex="-1" aria-labelledby="editarHotelModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -335,7 +330,6 @@
         </div>
     </div>
 
-    <!-- Modal excursión -->
     <div class="modal fade" id="editarExcursionModal" tabindex="-1" aria-labelledby="editarExcursionModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

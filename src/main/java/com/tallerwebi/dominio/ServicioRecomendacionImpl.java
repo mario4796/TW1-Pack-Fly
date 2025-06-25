@@ -37,16 +37,15 @@ public class ServicioRecomendacionImpl implements ServicioRecomendacion {
     public List<RecomendacionDTO> obtenerRecomendacionesPara(Usuario usuario) {
         List<RecomendacionDTO> recomendaciones = new ArrayList<>();
 
-        // Excursiones
+
         repositorioExcursion.obtenerTodas().stream().limit(3).forEach(e ->
                 recomendaciones.add(new RecomendacionDTO("Excursión", e.getTitle(), e.getUrl())));
 
-        // Hoteles desde la API
+
         List<HotelDto> hotelesApi = servicioHotel.buscarHoteles("Buenos Aires", "2025-10-01", "2025-10-03", 2, 0, "");
         hotelesApi.stream().limit(3).forEach(h ->
                 recomendaciones.add(new RecomendacionDTO("Hotel", h.getName(), h.getImagen())));
 
-        // Vuelos (aún usando imagen fija)
         repositorioVuelo.obtenerTodos().stream().limit(3).forEach(v ->
                 recomendaciones.add(new RecomendacionDTO("Vuelo", v.getDestino(), "https://via.placeholder.com/300x180.png?text=Vuelo")));
 

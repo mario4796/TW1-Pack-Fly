@@ -1,6 +1,6 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.dominio.entidades.Hotel;
+import com.tallerwebi.dominio.entidades.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,10 @@ import java.util.List;
 @Transactional
 public class ServicioReservaImpl implements ServicioReserva {
 
-    private RepositorioReserva repositorioReserva;
+    private final RepositorioReserva repositorioReserva;
+
+    @Autowired
+    private ServicioPreferenciaUsuario servicioPreferenciaUsuario;
 
     @Autowired
     public ServicioReservaImpl(RepositorioReserva repositorioReserva) {
@@ -21,6 +24,17 @@ public class ServicioReservaImpl implements ServicioReserva {
     @Override
     public void guardarReserva(Reserva reserva) {
         repositorioReserva.guardar(reserva);
+
+
+        int cantidadAsientos = 1;
+        int millas = 100;
+
+        Usuario usuario = reserva.getUsuario();
+        if (usuario != null) {
+            servicioPreferenciaUsuario.registrarReservaVuelo(usuario, cantidadAsientos, millas);
+        } else {
+            System.out.println("No se pudo registrar preferencias: la reserva no tiene asociado un usuario");
+        }
     }
 
     @Override
@@ -34,7 +48,8 @@ public class ServicioReservaImpl implements ServicioReserva {
     }
 
     @Override
-    public void editarReserva(Long idVuelo, String email, String origen, String destino, String fechaIda, String fechaVuelta) {
+    public void editarReserva(Long idVuelo, String email, String origen, String destino,
+                              String fechaIda, String fechaVuelta) {
         Reserva reserva = repositorioReserva.buscarPorIdyEmail(email, idVuelo);
         if (reserva != null) {
             reserva.setOrigen(origen);
@@ -45,5 +60,18 @@ public class ServicioReservaImpl implements ServicioReserva {
         }
     }
 
-
+    @Override
+    public long contarReservasUltimosDias(String email, int dias) {
+        List<Reserva> reservas = repositorioReserva.buscarPorEmail(email);
+        return reservas.stream()
+                .filter(r -> {
+                    try {
+                        java.time.LocalDate fechaIda = java.time.LocalDate.parse(r.getFechaIda());
+                        return fechaIda.isAfter(java.time.LocalDate.now().minusDays(dias));
+                    } catch (Exception e) {
+                        return false;
+                    }
+                })
+                .count();
+    }
 }

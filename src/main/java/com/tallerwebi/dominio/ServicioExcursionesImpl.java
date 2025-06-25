@@ -1,5 +1,4 @@
-// src/main/java/com/tallerwebi/dominio/ServicioExcursionesImpl.java
-// src/main/java/com/tallerwebi/dominio/ServicioExcursionesImpl.java
+
 package com.tallerwebi.dominio;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -10,7 +9,7 @@ import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional; // O si usas Spring: import org.springframework.transaction.annotation.Transactional;
+import javax.transaction.Transactional;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -22,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@Transactional // Puedes poner @Transactional a nivel de clase o en métodos individuales
+@Transactional
 public class ServicioExcursionesImpl implements ServicioExcursiones {
 
     private final ConfiguracionDeApiKey apiConfig ;
@@ -33,10 +32,10 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final ObjectMapper mapper   = new ObjectMapper();
 
-    // 1. DECLARACIÓN DEL REPOSITORIO
+
     private RepositorioExcursion repositorioExcursion;
 
-    // 2. CONSTRUCTOR PARA INYECTAR EL REPOSITORIO
+
     @Autowired // Spring usará este constructor para inyectar la dependencia
     public ServicioExcursionesImpl(ConfiguracionDeApiKey apiConfig, RepositorioExcursion repositorioExcursion) {
         this.apiConfig = apiConfig;
@@ -88,13 +87,12 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
         return Collections.emptyList();
     }
 
-    // 3. IMPLEMENTACIÓN DEL NUEVO MÉT ODO TRANSACCIONAL
+
     @Override
-    // Si @Transactional está a nivel de clase, no es estrictamente necesario aquí, pero es buena práctica para claridad.
-    // Si la anotación de clase es de javax.transaction, entonces sí es necesario aquí.
+
     @Transactional
     public void guardarExcursion(Excursion excursion) {
-        repositorioExcursion.guardar(excursion); // Aquí se usa la variable repositorioExcursion
+        repositorioExcursion.guardar(excursion);
     }
     @Override
     public List<Excursion> obtenerExcursionesDeUsuario(Long idUsuario) {
