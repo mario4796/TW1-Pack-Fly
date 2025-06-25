@@ -22,7 +22,6 @@ public class ServicioPreferenciaUsuarioImpl implements ServicioPreferenciaUsuari
         p.setTipoViajeVuelo(cantidadAsientos == 1 ? "Solitario" : "Familiar");
         p.setMillasAcumuladas((p.getMillasAcumuladas() != null ? p.getMillasAcumuladas() : 0) + millas);
 
-        // Verificar si viajó más de una vez en las últimas 2 semanas
         long cantidad = servicioReserva.contarReservasUltimosDias(usuario.getEmail(), 14);
         p.setViajeroFrecuente(cantidad > 1);
 
@@ -39,7 +38,7 @@ public class ServicioPreferenciaUsuarioImpl implements ServicioPreferenciaUsuari
     @Override
     public void registrarReservaExcursion(Usuario usuario, String tipoExcursion) {
         PreferenciaUsuario p = getOcrear(usuario);
-        p.setTipoExcursionPreferida(tipoExcursion); // podés hacer conteo también si querés
+        p.setTipoExcursionPreferida(tipoExcursion);
         repositorio.actualizar(p);
     }
 
@@ -54,7 +53,5 @@ public class ServicioPreferenciaUsuarioImpl implements ServicioPreferenciaUsuari
         return p;
 
     }
-
-
 
 }

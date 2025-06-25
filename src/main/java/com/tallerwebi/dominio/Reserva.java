@@ -40,7 +40,7 @@ public class Reserva {
         this.precio = precio;
     }
 
-    // Getters y Setters
+
 
     public Long getId() {
         return id;

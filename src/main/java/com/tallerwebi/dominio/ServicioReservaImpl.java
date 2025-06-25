@@ -13,7 +13,6 @@ public class ServicioReservaImpl implements ServicioReserva {
 
     private final RepositorioReserva repositorioReserva;
 
-    // ✅ Inyectamos el servicio de preferencias dentro de la clase
     @Autowired
     private ServicioPreferenciaUsuario servicioPreferenciaUsuario;
 
@@ -26,11 +25,11 @@ public class ServicioReservaImpl implements ServicioReserva {
     public void guardarReserva(Reserva reserva) {
         repositorioReserva.guardar(reserva);
 
-        // Simular lógica: 1 asiento por reserva, 100 millas por vuelo
+
         int cantidadAsientos = 1;
         int millas = 100;
 
-        Usuario usuario = reserva.getUsuario(); // la Reserva ya contiene el Usuario
+        Usuario usuario = reserva.getUsuario();
         if (usuario != null) {
             servicioPreferenciaUsuario.registrarReservaVuelo(usuario, cantidadAsientos, millas);
         } else {

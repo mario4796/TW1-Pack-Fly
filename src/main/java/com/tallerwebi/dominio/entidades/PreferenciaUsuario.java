@@ -12,14 +12,14 @@ public class PreferenciaUsuario {
     @OneToOne
     private Usuario usuario;
 
-    private String tipoViajeVuelo; // "Solitario" o "Familiar"
-    private Boolean viajeroFrecuente; // true si viajó más de una vez en las últimas 2 semanas
+    private String tipoViajeVuelo;
+    private Boolean viajeroFrecuente;
     private Integer millasAcumuladas;
 
-    private String tipoHospedaje; // "Solitario" o "Familiar"
-    private String tipoExcursionPreferida; // "Aventura", "Cultural", etc.
+    private String tipoHospedaje;
+    private String tipoExcursionPreferida;
 
-    // Getters y Setters
+
     public Long getId() {
         return id;
     }

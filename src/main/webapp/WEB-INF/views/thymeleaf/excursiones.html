@@ -1,4 +1,4 @@
-<!-- src/main/webapp/WEB-INF/views/thymeleaf/excursiones.html -->
+
 <!DOCTYPE HTML>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,19 +7,16 @@
 
     <title>Pack&Fly · Excursiones</title>
 
-    <!-- Boostrap core css -->
+
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
 
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 
-    <!-- custom style -->
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 
 <body class="body_excursion">
 
-<!-- Header -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center" href="./home">
@@ -53,7 +50,6 @@
     </div>
 </nav>
 
-<!-- Contenido principal -->
 <main class="container d-flex flex-column align-items-center" style="margin-top: 80px;">
     <div th:if="${param.reservaExitosa}" class="alert alert-success alert-dismissible fade show reserva-exitosa" role="alert">
         <i class="bi bi-check-circle-fill me-2"></i>
@@ -68,7 +64,6 @@
     <section class="pt-5 mt-4">
         <div class="container">
 
-            <!-- Sección de búsqueda -->
             <section class="py-5 text-center">
                 <div class="overlay mt-3">
                     <h1 class="display-5 fw-bold text-light" >Explorá Excursiones</h1>
@@ -112,7 +107,6 @@
                 </div>
             </section>
 
-            <!-- Resultados -->
             <section class="py-5">
                 <div class="row g-4">
                     <div th:if="${#lists.isEmpty(excursiones)}" class="col-12">
@@ -125,7 +119,6 @@
 
                     <div th:each="e : ${excursiones}" class="col-sm-6 col-lg-4">
                         <div class="card h-100 shadow-sm">
-                            <!-- Podrías agregar <img> con th:src si la API devuelve imágenes -->
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title" th:text="${e.title}">Título de la excursión</h5>
                                 <h6 class="card-subtitle mb-2 text-muted"
@@ -143,7 +136,6 @@
                                     Ver más
                                 </a>
                                 <div th:if="${usuario != null}">
-                                    <!-- Formulario para guardar en la base de datos -->
                                     <form th:action="@{/excursiones/guardar}" method="post" accept-charset="UTF-8">
                                         <input type="hidden" name="title" th:value="${e.title}"/>
                                         <input type="hidden" name="startDate" th:value="${e.startDate}"/>
@@ -175,7 +167,6 @@
     </section>
 </main>
 
-<!-- Bootstrap JS y Dark Mode -->
 <script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/dark-mode.js}"></script>
 <script type="text/javascript" th:src="@{js/validaciones.js}"></script>
