@@ -103,7 +103,7 @@ public class ControladorVuelos {
         model.addAttribute("precio", precio);
         return "formularioReserva";
     }
-
+/*
     @PostMapping("/guardar-reserva")
     public String guardarReserva(
             @RequestParam("nombre") String nombre,
@@ -118,7 +118,29 @@ public class ControladorVuelos {
         Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
         servicioReserva.guardarReserva(reserva);
         return "redirect:/busqueda-hoteles?reservaExitosa=true";
+    }*/
+
+    @PostMapping("/guardar-reserva")
+    public String guardarReserva(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("email") String email,
+            @RequestParam("origen") String origen,
+            @RequestParam("destino") String destino,
+            @RequestParam("fechaIda") String fechaIda,
+            @RequestParam("fechaVuelta") String fechaVuelta,
+            @RequestParam("precio") Double precio,
+            HttpServletRequest request,
+            Model model
+    ) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+        Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
+        reserva.setUsuario(usuario); // ✅ Enlaza el usuario con la reserva
+
+        servicioReserva.guardarReserva(reserva);
+        return "redirect:/busqueda-hoteles?reservaExitosa=true";
     }
+
 
 
     /*@GetMapping("/ver-reservas")

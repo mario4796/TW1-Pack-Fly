@@ -29,7 +29,6 @@ public class Vuelo {
     private String fechaIda;
     private String fechaVuelta;
 
-    // Getters y setters básicos
 
     public Long getId() {
         return id;
@@ -96,10 +95,8 @@ public class Vuelo {
             this.fechaVuelta = segmentos.get(0).getAeropuertoLlegada().getFecha();
         }
     }
-
-    // =============================
     // Clases internas para el JSON
-    // =============================
+
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SegmentoVuelo {

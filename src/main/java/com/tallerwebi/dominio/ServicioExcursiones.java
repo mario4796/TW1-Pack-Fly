@@ -1,4 +1,4 @@
-// src/main/java/com/tallerwebi/dominio/ServicioExcursiones.java
+
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;

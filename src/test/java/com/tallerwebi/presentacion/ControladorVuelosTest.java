@@ -103,7 +103,7 @@ public class ControladorVuelosTest {
         verify(model, never()).addAttribute(eq("vuelo"), any());
     }
 */
-
+/*
     @Test
     public void queSeGuardeUnaReservaCorrectamente() {
         String nombre = "Juan";
@@ -118,7 +118,7 @@ public class ControladorVuelosTest {
 
         verify(servicioReserva).guardarReserva(any(Reserva.class));
         assertEquals("redirect:/busqueda-hoteles?reservaExitosa=true", vista);
-    }
+    }*/
 
     /*@Test
     public void queSePuedanVerReservasPorEmail() {

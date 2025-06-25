@@ -1,4 +1,3 @@
-// src/main/java/com/tallerwebi/dominio/ExcursionResponse.java
 package com.tallerwebi.dominio;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

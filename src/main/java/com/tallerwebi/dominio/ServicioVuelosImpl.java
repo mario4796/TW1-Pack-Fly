@@ -22,9 +22,9 @@ public class ServicioVuelosImpl implements ServicioVuelos {
     private final ObjectMapper objectMapper;
     private final RepositorioVuelo repositorioVuelo;
     private final  ConfiguracionDeApiKey apiKeyConfig;
-    private final String gl = "ar"; //geolocalizacion ar = argentina
-    private final String hl = "es"; //idioma es = español
-    private final String currency = "ARS"; //formato de moneda ARS = pesos argentinos
+    private final String gl = "ar";
+    private final String hl = "es";
+    private final String currency = "ARS";
 
     public ServicioVuelosImpl(HttpClient httpClient, ObjectMapper objectMapper, RepositorioVuelo repositorioVuelo, ConfiguracionDeApiKey apiKeyConfig) {
         this.httpClient = httpClient;
@@ -58,7 +58,7 @@ public class ServicioVuelosImpl implements ServicioVuelos {
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // 👉 Agregá esta línea para ver la respuesta JSON en consola:
+
             System.out.println("Respuesta cruda de SerpAPI:\n" + response.body());
 
             if (response.statusCode() == 200) {
@@ -67,7 +67,7 @@ public class ServicioVuelosImpl implements ServicioVuelos {
                 if (result.getMejoresVuelos() != null && !result.getMejoresVuelos().isEmpty()) {
                     Vuelo vuelo = result.getMejoresVuelos().get(0);
 
-                    // Guardar en base de datos
+
                     repositorioVuelo.guardar(vuelo);
 
                     return vuelo;
