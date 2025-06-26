@@ -1,6 +1,8 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.Excursion;
 import com.tallerwebi.dominio.ServicioExcursiones;
+import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ public class ControladorExcursion {
     @Autowired
     public ControladorExcursion(ServicioExcursiones servicioExcursiones) {
         this.servicioExcursiones = servicioExcursiones;
+
     }
 
     @GetMapping("/excursiones")
@@ -58,28 +61,26 @@ public class ControladorExcursion {
     private double generarPrecioAleatorio(int min, int max) {
         return Math.round((min + Math.random() * (max - min)) / 100) * 100;
     }
-/*
-    @PostMapping("/guardar")
-    public String guardarReserva(
-            @RequestParam("idExcursion") Long idExcursion,
-            HttpServletRequest request,
-            RedirectAttributes redirectAttributes
-    ) {
-        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
-        if (usuario == null) {
-            redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para reservar.");
+    @PostMapping("/excursiones/guardar")
+    public String guardarExcursion(ExcursionDTO dto, HttpSession session, RedirectAttributes redirectAttributes) {
+
+        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
+
+        if (usuario == null || !usuario.activo()) {
+            redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para guardar excursiones");
             return "redirect:/login";
         }
-
         try {
-            servicioReserva.guardarReservaExcursion(idExcursion, usuario);
-            redirectAttributes.addFlashAttribute("mensaje", "¡Reserva de excursión realizada con éxito!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "No se pudo realizar la reserva: " + e.getMessage());
-        }
+            Excursion excursion = dto.toEntity();
+            excursion.setUsuario(usuario);
 
-        return "redirect:/excursiones";
+            servicioExcursiones.guardarExcursion(excursion);
+            redirectAttributes.addFlashAttribute("mensaje", "¡Excursión guardada con éxito!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "No se pudo guardar la excursión: " + e.getMessage());
+        }
+        return "redirect:/excursiones" ;
     }
-    */
+
 }
