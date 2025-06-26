@@ -1,5 +1,5 @@
 # Usa la imagen oficial de MySQL como base
-FROM mysql:5.7
+FROM mysql:8.0.33
 
 # Establece las variables de entorno para la configuración de MySQL
 ENV MYSQL_ROOT_PASSWORD=rootpassword

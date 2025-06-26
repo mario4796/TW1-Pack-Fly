@@ -93,7 +93,7 @@ public class ControladorLogin {
         model.put("usuario", usuario);
 
         // NUEVO: recomendaciones
-        model.put("recomendaciones", servicioRecomendacion.obtenerRecomendacionesPara(usuario));
+         model.put("recomendaciones", servicioRecomendacion.obtenerRecomendacionesPara(usuario));
 
         return new ModelAndView("home", model);
     }

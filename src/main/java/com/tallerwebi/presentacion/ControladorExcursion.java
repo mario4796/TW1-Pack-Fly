@@ -80,7 +80,7 @@ public class ControladorExcursion {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "No se pudo guardar la excursión: " + e.getMessage());
         }
-        return "redirect:/excursiones" ;
+        return "redirect:/reservas" ;
     }
 
 }

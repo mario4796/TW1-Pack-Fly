@@ -5,6 +5,12 @@ public class RecomendacionDTO {
     private String titulo;
     private String imagenUrl;
 
+
+
+    public RecomendacionDTO(){
+
+    }
+
     public RecomendacionDTO(String tipo, String titulo, String imagenUrl) {
         this.tipo = tipo;
         this.titulo = titulo;
