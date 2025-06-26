@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.implementaciones.ServicioHotelImpl;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.utils.IconHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,12 @@ public class ControladorHotel {
     private ServicioPreferenciaUsuario servicioPreferenciaUsuario;
 
 
-
     @Autowired private IconHelper iconHelper;
+
+    public ControladorHotel(ServicioHotel servicioHotel, ServicioPreferenciaUsuario servicioPreferenciaUsuario) {
+        this.hotelService = servicioHotel;
+        this.servicioPreferenciaUsuario = servicioPreferenciaUsuario;
+    }
 
     @GetMapping("/buscar-hoteles")
 
