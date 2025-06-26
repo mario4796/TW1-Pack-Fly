@@ -15,6 +15,9 @@ RUN apt-get update && apt-get install -y wget && \
 # Copia el archivo WAR al directorio webapps de Jetty
 COPY target/tallerwebi-base-1.0-SNAPSHOT.war $JETTY_HOME/webapps/
 
+# Copia el archivo .env al directorio de jetty
+COPY .env $JETTY_HOME/.env
+
 # Expone el puerto en el que Jetty corre (por defecto 8080)
 EXPOSE 8080
 
