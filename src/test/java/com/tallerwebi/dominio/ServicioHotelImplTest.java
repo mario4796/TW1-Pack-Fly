@@ -16,7 +16,6 @@ class ServicioHotelImplTest {
     private ServicioHotelImpl servicioHotel;
     private ConfiguracionDeApiKey config;
 
-    // Descomentar los test para probarlos
     @BeforeEach
     void setUp() {
         mockRepositorio = mock(RepositorioHotelImp.class);
@@ -81,8 +80,8 @@ class ServicioHotelImplTest {
         assertTrue(resultado.isEmpty());
     }
 */
-        /*/////////////////////////////////////////////////////////////////
+        /*
         El try and catch ponerlo en ServicioHotelImpl cuando esté terminado
         y agregar mensaje de error o validación en la vista.
-        //////////////////////////////////////////////////////////////// */
+         */
 }

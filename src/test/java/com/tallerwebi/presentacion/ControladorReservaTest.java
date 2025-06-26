@@ -1,61 +1,70 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Reserva;
 import com.tallerwebi.dominio.ServicioReserva;
+import com.tallerwebi.dominio.ServicioExcursiones;
+import com.tallerwebi.dominio.ServicioHotel;
+import com.tallerwebi.dominio.ServicioLogin;
+import com.tallerwebi.dominio.Reserva;
+import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class ControladorReservaTest {
 
-    private ControladorReserva controlador;
+    @Mock private ServicioReserva servicioReserva;
+    @Mock private ServicioHotel servicioHotel;
+    @Mock private ServicioExcursiones servicioExcursiones;
+    @Mock private ServicioLogin servicioLogin;
+    @Mock private HttpServletRequest request;
+    @Mock private HttpSession session;
+    @Mock private Model model;
 
-    @Mock
-    private ServicioReserva servicioReserva;
+    @InjectMocks
+    private ControladorReserva controladorReserva;
 
-    @Mock
-    private Model model;
-
-    /*@Before
+    @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        controlador = new ControladorReserva(servicioReserva);
     }
 
     @Test
-    public void queSeGuardeUnaReservaCorrectamente() {
-        String nombre = "Juan";
-        String email = "juan@correo.com";
-        String origen = "Buenos Aires";
-        String destino = "Madrid";
-        String fechaIda = "2025-07-01";
-        String fechaVuelta = "2025-07-15";
+    public void queSeMuestreLaVistaReservasConDatosDelUsuario() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        usuario.setEmail("test@correo.com");
 
-        String vista = controlador.guardarReserva(nombre, email, origen, destino, fechaIda, fechaVuelta, model);
-
-        verify(servicioReserva).guardarReserva(any(Reserva.class));
-        assertEquals("reservaExitosa", vista);
-    }
-
-    @Test
-    public void queSePuedanVerReservasPorEmail() {
-        String email = "test@correo.com";
         List<Reserva> reservas = Arrays.asList(new Reserva(), new Reserva());
-        when(servicioReserva.obtenerReservasPorEmail(email)).thenReturn(reservas);
+        List<HotelDto> hoteles = Arrays.asList(new HotelDto(), new HotelDto());
 
-        String vista = controlador.verReservas(email, model);
+        when(request.getSession()).thenReturn(session);
+        when(session.getAttribute("USUARIO")).thenReturn(usuario);
+        when(servicioHotel.buscarReservas(1L)).thenReturn(Arrays.asList());
+        when(servicioHotel.obtenerHotelesDto(anyList())).thenReturn(hoteles);
+        when(servicioReserva.obtenerReservasPorEmail(usuario.getEmail())).thenReturn(reservas);
+        when(servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId())).thenReturn(Arrays.asList());
+        when(servicioLogin.obtenerDeudaDelUsuario(hoteles, reservas, Arrays.asList())).thenReturn(123.45);
 
-        verify(servicioReserva).obtenerReservasPorEmail(email);
-        verify(model).addAttribute("reservas", reservas);
-        verify(model).addAttribute("email", email);
-        assertEquals("verReservas", vista);
-    }*/
+        String vista = controladorReserva.vistaReservas(request, model);
+
+        verify(model).addAttribute("vuelos", reservas);
+        verify(model).addAttribute("hoteles", hoteles);
+        verify(model).addAttribute("excursiones", Arrays.asList());
+        verify(model).addAttribute("usuario", usuario);
+        verify(servicioLogin).obtenerDeudaDelUsuario(hoteles, reservas, Arrays.asList());
+
+        assert vista.equals("reservas");
+    }
 }
