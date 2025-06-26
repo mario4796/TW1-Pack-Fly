@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,8 +51,6 @@ public class ControladorExcursion {
         }
 
         model.addAttribute("excursiones", lista);
-        //model.addAttribute("usuario", session.getAttribute("usuario"));
-        //model.addAttribute("usuario", session.getAttribute("usuarioLogueado"));
 
         return "excursiones";
     }
@@ -58,4 +58,28 @@ public class ControladorExcursion {
     private double generarPrecioAleatorio(int min, int max) {
         return Math.round((min + Math.random() * (max - min)) / 100) * 100;
     }
+/*
+    @PostMapping("/guardar")
+    public String guardarReserva(
+            @RequestParam("idExcursion") Long idExcursion,
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes
+    ) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+        if (usuario == null) {
+            redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para reservar.");
+            return "redirect:/login";
+        }
+
+        try {
+            servicioReserva.guardarReservaExcursion(idExcursion, usuario);
+            redirectAttributes.addFlashAttribute("mensaje", "¡Reserva de excursión realizada con éxito!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "No se pudo realizar la reserva: " + e.getMessage());
+        }
+
+        return "redirect:/excursiones";
+    }
+    */
 }
