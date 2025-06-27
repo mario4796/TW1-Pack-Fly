@@ -1,4 +1,6 @@
 package com.tallerwebi.dominio;
+import com.tallerwebi.dominio.entidades.Reserva;
+
 import java.util.List;
 
 public interface ServicioReserva {

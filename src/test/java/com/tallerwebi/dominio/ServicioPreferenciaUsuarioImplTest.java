@@ -2,6 +2,7 @@ package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.entidades.PreferenciaUsuario;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.implementaciones.ServicioPreferenciaUsuarioImpl;
 import com.tallerwebi.infraestructura.RepositorioPreferenciaUsuario;
 import org.junit.Test;
 import org.junit.runner.RunWith;

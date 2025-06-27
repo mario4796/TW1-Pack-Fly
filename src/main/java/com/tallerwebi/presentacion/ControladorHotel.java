@@ -120,7 +120,7 @@ public class ControladorHotel {
         }
 
 
-        return "redirect:/excursiones?reservaExitosa=true";
+        return "redirect:/busqueda-excursiones?reservaExitosa=true";
     }
 
 

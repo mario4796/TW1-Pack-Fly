@@ -1,6 +1,7 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Reserva;
+import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.infraestructura.implementaciones.RepositorioReservaImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

@@ -1,6 +1,7 @@
 
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 
 import java.util.List;
