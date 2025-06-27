@@ -85,6 +85,7 @@ public class ControladorExcursion {
 
             servicioExcursiones.guardarExcursion(excursion);
             redirectAttributes.addFlashAttribute("mensaje", "¡Excursión guardada con éxito!");
+            redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "No se pudo guardar la excursión: " + e.getMessage());
         }
