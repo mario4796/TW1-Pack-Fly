@@ -1,7 +1,7 @@
-package com.tallerwebi.infraestructura;
+package com.tallerwebi.infraestructura.implementaciones;
 
-import com.tallerwebi.dominio.RepositorioVuelo;
-import com.tallerwebi.dominio.Vuelo;
+import com.tallerwebi.infraestructura.RepositorioVuelo;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;

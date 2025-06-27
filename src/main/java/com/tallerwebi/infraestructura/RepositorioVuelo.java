@@ -1,8 +1,8 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.infraestructura;
 
 import java.util.List;
-import java.util.List;
-import com.tallerwebi.dominio.Vuelo;
+
+import com.tallerwebi.dominio.entidades.Vuelo;
 
 public interface RepositorioVuelo {
     void guardar(Vuelo vuelo);

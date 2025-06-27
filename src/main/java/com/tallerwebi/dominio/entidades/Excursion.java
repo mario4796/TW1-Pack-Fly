@@ -1,6 +1,4 @@
-package com.tallerwebi.dominio;
-
-import com.tallerwebi.dominio.entidades.Usuario;
+package com.tallerwebi.dominio.entidades;
 
 import javax.persistence.*;
 

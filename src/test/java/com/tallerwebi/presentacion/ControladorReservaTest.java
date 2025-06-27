@@ -4,7 +4,7 @@ import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.ServicioExcursiones;
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.Reserva;
+import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.junit.Before;

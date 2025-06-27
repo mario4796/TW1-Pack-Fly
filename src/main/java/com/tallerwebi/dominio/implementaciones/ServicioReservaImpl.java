@@ -1,5 +1,9 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.implementaciones;
 
+import com.tallerwebi.infraestructura.RepositorioReserva;
+import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
+import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

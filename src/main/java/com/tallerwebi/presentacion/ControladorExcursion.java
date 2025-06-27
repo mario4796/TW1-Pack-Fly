@@ -1,8 +1,7 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Excursion;
+import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.ServicioExcursiones;
-import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;

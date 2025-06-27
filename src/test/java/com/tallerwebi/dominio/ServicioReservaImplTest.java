@@ -1,5 +1,8 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.implementaciones.ServicioReservaImpl;
+import com.tallerwebi.infraestructura.RepositorioReserva;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

@@ -1,5 +1,7 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.implementaciones;
 
+import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
+import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.PreferenciaUsuario;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioPreferenciaUsuario;

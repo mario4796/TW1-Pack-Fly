@@ -1,4 +1,4 @@
-package com.tallerwebi.dominio.entidades;
+package com.tallerwebi.presentacion.response;
 
 import com.tallerwebi.presentacion.dtos.HotelDto;
 

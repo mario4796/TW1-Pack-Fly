@@ -1,6 +1,11 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.implementaciones;
 
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.infraestructura.RepositorioHotel;
+import com.tallerwebi.infraestructura.RepositorioReserva;
+import com.tallerwebi.infraestructura.RepositorioVuelo;
+import com.tallerwebi.infraestructura.implementaciones.RepositorioExcursion;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.dtos.RecomendacionDTO;
 import org.springframework.stereotype.Service;

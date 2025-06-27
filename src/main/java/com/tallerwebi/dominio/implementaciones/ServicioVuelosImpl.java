@@ -1,6 +1,11 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.implementaciones;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tallerwebi.config.ConfiguracionDeApiKey;
+import com.tallerwebi.infraestructura.RepositorioVuelo;
+import com.tallerwebi.dominio.ServicioVuelos;
+import com.tallerwebi.dominio.entidades.Vuelo;
+import com.tallerwebi.presentacion.response.VueloResponse;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,7 +26,7 @@ public class ServicioVuelosImpl implements ServicioVuelos {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
     private final RepositorioVuelo repositorioVuelo;
-    private final  ConfiguracionDeApiKey apiKeyConfig;
+    private final ConfiguracionDeApiKey apiKeyConfig;
     private final String gl = "ar";
     private final String hl = "es";
     private final String currency = "ARS";

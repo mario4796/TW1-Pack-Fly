@@ -1,4 +1,4 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Component;
