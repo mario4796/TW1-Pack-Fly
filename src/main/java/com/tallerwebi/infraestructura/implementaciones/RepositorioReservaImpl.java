@@ -1,8 +1,7 @@
-package com.tallerwebi.infraestructura;
+package com.tallerwebi.infraestructura.implementaciones;
 
-import com.tallerwebi.dominio.Reserva;
-import com.tallerwebi.dominio.RepositorioReserva;
-import com.tallerwebi.dominio.entidades.Hotel;
+import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.infraestructura.RepositorioReserva;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

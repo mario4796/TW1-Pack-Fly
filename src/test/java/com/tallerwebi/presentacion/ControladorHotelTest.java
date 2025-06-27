@@ -1,16 +1,12 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioExcursionesImpl;
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
-import com.tallerwebi.dominio.implementaciones.ServicioHotelImpl;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
-import com.tallerwebi.presentacion.utils.IconHelper;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,7 +76,7 @@ public class ControladorHotelTest {
                 12000.0,
                 request);
 
-        assertEquals("redirect:/excursiones?reservaExitosa=true", vista);
+        assertEquals("redirect:/busqueda-excursiones?reservaExitosa=true", vista);
 
         verify(servicioHotel).reserva(any(Hotel.class));
         verify(servicioPreferenciaUsuario).registrarReservaHotel(eq(usuario), eq(1));

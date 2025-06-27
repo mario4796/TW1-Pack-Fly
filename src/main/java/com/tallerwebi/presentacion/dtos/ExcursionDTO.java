@@ -3,11 +3,10 @@ package com.tallerwebi.presentacion.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tallerwebi.dominio.Excursion;
+import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.entidades.Usuario;
 
 import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExcursionDTO {

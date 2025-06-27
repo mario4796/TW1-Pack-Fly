@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.entidades.Reserva;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

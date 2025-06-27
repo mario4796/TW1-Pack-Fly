@@ -1,7 +1,7 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.infraestructura.implementaciones;
 
-import com.tallerwebi.dominio.entidades.Hotel;
-import com.tallerwebi.presentacion.dtos.ExcursionDTO;
+import com.tallerwebi.dominio.entidades.Excursion;
+import com.tallerwebi.infraestructura.RepositorioExcursion;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,21 +11,23 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class RepositorioExcursion {
+public class RepositorioExcursionImpl implements RepositorioExcursion {
     private SessionFactory sessionFactory;
 
     @Autowired
-    public RepositorioExcursion(SessionFactory sessionFactory) {
+    public RepositorioExcursionImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Override
     public void guardar(Excursion excursion){
         entityManager.persist(excursion);
     }
 
+    @Override
     public List<Excursion> obtenerTodas(){
         return entityManager.createQuery("FROM Excursion", Excursion.class).getResultList();
     }
@@ -37,6 +39,7 @@ public class RepositorioExcursion {
 //                .setParameter("idUsuario", idUsuario)
 //                .getResultList();
 //    }
+@Override
 public List<Excursion> obtenerPorUsuario(Long idUsuario) {
     return entityManager.createQuery(
                     "FROM Excursion e WHERE e.usuario.id = :idUsuario", Excursion.class)
@@ -45,6 +48,7 @@ public List<Excursion> obtenerPorUsuario(Long idUsuario) {
 }
 
 
+    @Override
     public void eliminarReserva(Long idUsuario, String title) {
         this.sessionFactory.getCurrentSession()
                 .createQuery("DELETE FROM Excursion e WHERE e.usuario.id = :idUsuario AND e.title = :title")
@@ -53,6 +57,7 @@ public List<Excursion> obtenerPorUsuario(Long idUsuario) {
                 .executeUpdate();
     }
 
+    @Override
     public Excursion buscarPorUsuarioYExcursion(Long idUsuario, Long idExcursion) {
         String hql = "FROM Excursion e WHERE e.usuario.id = :idUsuario AND e.id = :idExcursion";
         List<Excursion> resultados = sessionFactory.getCurrentSession()
@@ -63,6 +68,7 @@ public List<Excursion> obtenerPorUsuario(Long idUsuario) {
         return resultados.isEmpty() ? null : resultados.get(0);
     }
 
+    @Override
     public void actualizar(Excursion excursion) {
         sessionFactory.getCurrentSession().update(excursion);
     }

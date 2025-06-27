@@ -1,6 +1,12 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.implementaciones;
 
+import com.tallerwebi.dominio.ServicioHotel;
+import com.tallerwebi.dominio.ServicioRecomendacion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.infraestructura.implementaciones.RepositorioExcursionImpl;
+import com.tallerwebi.infraestructura.RepositorioHotel;
+import com.tallerwebi.infraestructura.RepositorioReserva;
+import com.tallerwebi.infraestructura.RepositorioVuelo;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.dtos.RecomendacionDTO;
 import org.springframework.stereotype.Service;
@@ -16,20 +22,20 @@ public class ServicioRecomendacionImpl implements ServicioRecomendacion {
     private final RepositorioReserva repositorioReserva;
     private final RepositorioVuelo repositorioVuelo;
     private final RepositorioHotel repositorioHotel;
-    private final RepositorioExcursion repositorioExcursion;
+    private final RepositorioExcursionImpl repositorioExcursionImpl;
     private final ServicioHotel servicioHotel;
 
     public ServicioRecomendacionImpl(
             RepositorioReserva reservaRepo,
             RepositorioVuelo vueloRepo,
             RepositorioHotel hotelRepo,
-            RepositorioExcursion excursionRepo,
+            RepositorioExcursionImpl excursionRepo,
             ServicioHotel servicioHotel
     ) {
         this.repositorioReserva = reservaRepo;
         this.repositorioVuelo = vueloRepo;
         this.repositorioHotel = hotelRepo;
-        this.repositorioExcursion = excursionRepo;
+        this.repositorioExcursionImpl = excursionRepo;
         this.servicioHotel = servicioHotel;
     }
 
@@ -38,7 +44,7 @@ public class ServicioRecomendacionImpl implements ServicioRecomendacion {
         List<RecomendacionDTO> recomendaciones = new ArrayList<>();
 
 
-        repositorioExcursion.obtenerTodas().stream().limit(3).forEach(e ->
+        repositorioExcursionImpl.obtenerTodas().stream().limit(3).forEach(e ->
                 recomendaciones.add(new RecomendacionDTO("Excursión", e.getTitle(), e.getUrl())));
 
 

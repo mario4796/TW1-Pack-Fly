@@ -1,8 +1,6 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Hotel;
-import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.presentacion.dtos.HotelDto;
 
 import java.util.List;
 

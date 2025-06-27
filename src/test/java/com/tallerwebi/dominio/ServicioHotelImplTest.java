@@ -1,9 +1,9 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.config.ConfiguracionDeApiKey;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.implementaciones.ServicioHotelImpl;
-import com.tallerwebi.infraestructura.RepositorioHotelImp;
-import com.tallerwebi.presentacion.dtos.HotelDto;
+import com.tallerwebi.infraestructura.implementaciones.RepositorioHotelImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;

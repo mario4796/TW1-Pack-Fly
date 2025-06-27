@@ -1,4 +1,6 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.infraestructura;
+import com.tallerwebi.dominio.entidades.Reserva;
+
 import java.util.List;
 
 public interface RepositorioReserva {

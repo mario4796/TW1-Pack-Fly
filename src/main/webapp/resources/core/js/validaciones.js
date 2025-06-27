@@ -9,7 +9,7 @@
     const forms = [
         document.querySelector('form[action*="/buscar-hoteles"]'),
         document.querySelector('form[action*="/busqueda-vuelo"]'),
-        document.querySelector('form[action*="/excursiones"]')
+        document.querySelector('form[action*="/buscar-excursiones"]')
     ].filter(Boolean); // solo los que existen en la vista
 
     // Setea min de fecha en hoteles y vuelos (si existen)

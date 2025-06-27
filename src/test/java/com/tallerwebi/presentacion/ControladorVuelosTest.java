@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioVuelos;
-import com.tallerwebi.dominio.Vuelo;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Usuario;
 import org.junit.Before;
 import org.junit.Test;
