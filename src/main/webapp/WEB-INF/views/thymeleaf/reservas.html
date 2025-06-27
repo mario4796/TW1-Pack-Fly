@@ -24,7 +24,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
                 <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/excursiones}">Ver Excursiones</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/busqueda-excursiones}">Ver Excursiones</a></li>
                 <li th:if="${usuario}" class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver
                     reservas</a></li>
                 <li class="nav-item">
@@ -111,6 +111,10 @@
                                                         <i class="bi bi-trash"></i>
                                                     </button>
                                                 </form>
+                                                <form th:action="@{/pago-formulario}" method="get">
+                                                    <input type="hidden" name="idReserva" th:value="${vuelo.id}" />
+                                                    <button type="submit" class="btn btn-sm btn-outline-success">Pagar</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -133,7 +137,7 @@
                                 <div class="row g-3">
                                     <div class="col-md-6" th:each="hotel : ${hoteles}">
                                         <div class="card shadow h-100 position-relative">
-                                            <div class="card-body pb-5"><!-- padding bottom extra para los botones -->
+                                            <div class="card-body pb-5">
                                                 <p class="card-text mb-1"><strong>Nombre:</strong> <span
                                                         th:text="${hotel.name}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Ciudad:</strong> <span
@@ -171,6 +175,10 @@
                                                     <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
                                                         <i class="bi bi-trash"></i>
                                                     </button>
+                                                </form>
+                                                <form th:action="@{/pago-formulario}" method="get">
+                                                    <input type="hidden" name="idReserva" th:value="${hotel.id}" />
+                                                    <button type="submit" class="btn btn-outline-success btn-sm mt-2">Pagar</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -219,6 +227,10 @@
                                                             title="Eliminar">
                                                         <i class="bi bi-trash"></i>
                                                     </button>
+                                                </form>
+                                                <form th:action="@{/pago-formulario}" method="get">
+                                                    <input type="hidden" name="idReserva" th:value="${excursion.id}" />
+                                                    <button type="submit" class="btn btn-outline-success btn-sm mt-2">Pagar</button>
                                                 </form>
                                             </div>
                                         </div>

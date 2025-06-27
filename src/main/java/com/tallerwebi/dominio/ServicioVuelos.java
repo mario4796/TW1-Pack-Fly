@@ -1,5 +1,7 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.entidades.Vuelo;
+
 import java.util.Date;
 
 public interface ServicioVuelos {

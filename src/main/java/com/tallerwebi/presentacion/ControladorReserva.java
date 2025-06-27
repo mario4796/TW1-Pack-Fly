@@ -1,6 +1,8 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
+import com.tallerwebi.dominio.entidades.Excursion;
+import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.dominio.entidades.Hotel;

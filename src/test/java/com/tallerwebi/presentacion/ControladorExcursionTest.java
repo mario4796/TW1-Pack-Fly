@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioExcursionesImpl;
-import com.tallerwebi.dominio.Excursion;
+import com.tallerwebi.dominio.implementaciones.ServicioExcursionesImpl;
+import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.junit.Before;

@@ -1,9 +1,9 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Reserva;
+import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.ServicioVuelos;
-import com.tallerwebi.dominio.Vuelo;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
