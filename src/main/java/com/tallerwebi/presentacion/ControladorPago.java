@@ -76,12 +76,14 @@ public class ControladorPago {
                 reserva = new Reserva();
                 reserva.setUsuario(usuario);
                 reserva.setPrecio(hotel.getPrecio());
+                servicioReserva.guardarReserva(reserva);
             } else {
                 Excursion excursion = servicioExcursiones.buscarReservaPorIdYUsuario(idReserva, usuario.getId());
                 if (excursion != null) {
                     reserva = new Reserva();
                     reserva.setUsuario(usuario);
                     reserva.setPrecio(excursion.getPrecio());
+                    servicioReserva.guardarReserva(reserva);
                 } else {
                     throw new RuntimeException("Reserva no encontrada");
                 }
