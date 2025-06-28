@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class ControladorHotelTest {
     }
 
     @Test
-    public void queSePuedaReservarUnHotelCorrectamenteYDevuelvaLaVistaCorrecta(){
+    public void queSePuedaReservarUnHotelCorrectamenteYDevuelvaLaVistaCorrecta() throws MessagingException {
         Usuario usuario = new Usuario();
         when(session.getAttribute("USUARIO")).thenReturn(usuario);
 

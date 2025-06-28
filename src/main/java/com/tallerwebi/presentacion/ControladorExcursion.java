@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioEmail;
 import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.ServicioExcursiones;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -21,6 +22,9 @@ import java.util.stream.Collectors;
 public class ControladorExcursion {
 
     private final ServicioExcursiones servicioExcursiones;
+
+    @Autowired
+    private ServicioEmail servicioEmail;
 
     @Autowired
     public ControladorExcursion(ServicioExcursiones servicioExcursiones) {
@@ -84,11 +88,29 @@ public class ControladorExcursion {
             excursion.setUsuario(usuario);
 
             servicioExcursiones.guardarExcursion(excursion);
+
+            String asunto = "¡Excursión reservada con éxito!";
+            String cuerpo = "Hola " + usuario.getEmail() + ",\n\n"
+                    + "Has reservado la siguiente excursión:\n"
+                    + "Título: " + dto.getTitle() + "\n"
+                    + "Destino: " + dto.getLocation() + "\n"
+                    + "Precio estimado: $" + dto.getPrecio() + "\n"
+                    + "\nGracias por reservar con Pack&Fly.";
+
+            try {
+                servicioEmail.enviarCorreo(usuario.getEmail(), asunto, cuerpo);
+            } catch (Exception ex) {
+                System.err.println("Error al enviar email de excursión: " + ex.getMessage());
+            }
+
             redirectAttributes.addFlashAttribute("mensaje", "¡Excursión guardada con éxito!");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "No se pudo guardar la excursión: " + e.getMessage());
         }
+
+
+
         return "redirect:/reservas" ;
     }
 

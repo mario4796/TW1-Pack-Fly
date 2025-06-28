@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioEmail;
 import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.ServicioVuelos;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -18,6 +20,10 @@ import java.util.Date;
 public class ControladorVuelos {
     @Autowired
     private ServicioVuelos servicioVuelos;
+
+    @Autowired
+    private ServicioEmail servicioEmail;
+
 
     @Autowired
     private ServicioReserva servicioReserva;
@@ -131,13 +137,26 @@ public class ControladorVuelos {
             @RequestParam("precio") Double precio,
             HttpServletRequest request,
             Model model
-    ) {
+    ) throws MessagingException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
         Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
         reserva.setUsuario(usuario); // ✅ Enlaza el usuario con la reserva
 
         servicioReserva.guardarReserva(reserva);
+
+        servicioEmail.enviarCorreo(
+                email,
+                "Confirmación de Reserva - Pack&Fly",
+                "¡Gracias por tu reserva, " + nombre + "\n"
+                        + "Vuelo: " + origen + " → " + destino + "\n"
+                        + "Fecha ida: " + fechaIda + "\n"
+                        + "Fecha vuelta:" + fechaVuelta + "\n"
+                        + "Precio: $" + precio + "\n"
+                        + "Recorda que tenes hasta 7 dias antes de la reservacion para pagar, si no su reservacion sera ELIMINADA"
+
+        );
+
         return "redirect:/busqueda-hoteles?reservaExitosa=true";
     }
 

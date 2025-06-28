@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioEmail;
 import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.ServicioHotel;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 public class ControladorHotel {
     @Autowired
     private ServicioHotel hotelService;
+    @Autowired
+    private ServicioEmail servicioEmail;
 
     @Autowired
     private ServicioPreferenciaUsuario servicioPreferenciaUsuario;
@@ -94,7 +98,7 @@ public class ControladorHotel {
                            @RequestParam Integer adult,
                            @RequestParam Integer children,
                            @RequestParam Double precio,
-                           HttpServletRequest request) {
+                           HttpServletRequest request) throws MessagingException {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
        // System.out.println("Usuario de la sesión: " + usuario);
@@ -118,6 +122,18 @@ public class ControladorHotel {
             int cantidadPersonas = (adult != null ? adult : 0) + (children != null ? children : 0);
             servicioPreferenciaUsuario.registrarReservaHotel(usuario, cantidadPersonas);
         }
+
+        servicioEmail.enviarCorreo(
+                usuario.getEmail(),
+                "Confirmación de Reserva - Pack&Fly",
+                "¡Gracias por tu reserva, " + "\n"
+                        + "Hotel: " + name + " " + ciudad + "\n"
+                        + "Fecha ida: " + checkIn + "\n"
+                        + "Fecha vuelta:" + checkOut + "\n"
+                        + "Precio: $" + precio + "\n"
+                        + "Recorda que tenes hasta 7 dias antes de la reservacion para pagar, si no su reservacion sera ELIMINADA"
+
+        );
 
 
         return "redirect:/busqueda-excursiones?reservaExitosa=true";
