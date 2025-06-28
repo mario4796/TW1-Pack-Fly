@@ -3,7 +3,7 @@ package com.tallerwebi.dominio;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tallerwebi.config.ConfiguracionDeApiKey;
 import com.tallerwebi.dominio.implementaciones.ServicioExcursionesImpl;
-import com.tallerwebi.infraestructura.implementaciones.RepositorioExcursion;
+import com.tallerwebi.infraestructura.implementaciones.RepositorioExcursionImpl;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,18 +23,18 @@ public class ServicioExcursionesImplTest {
 
     private HttpClient httpClient;
     private ObjectMapper objectMapper;
-    private RepositorioExcursion repositorioExcursion;
+    private RepositorioExcursionImpl repositorioExcursionImpl;
     private ServicioExcursionesImpl servicio;
     private ConfiguracionDeApiKey config;
 
     @BeforeEach
     public void setUp() {
         config = mock(ConfiguracionDeApiKey.class);
-        repositorioExcursion = mock(RepositorioExcursion.class);
+        repositorioExcursionImpl = mock(RepositorioExcursionImpl.class);
 
         when(config.getApiKey()).thenReturn("fake-key");
 
-        servicio = new ServicioExcursionesImpl(config, repositorioExcursion);
+        servicio = new ServicioExcursionesImpl(config, repositorioExcursionImpl);
 
         httpClient   = mock(HttpClient.class);
         objectMapper = new ObjectMapper();

@@ -3,7 +3,7 @@ package com.tallerwebi.dominio.implementaciones;
 import com.tallerwebi.config.ConfiguracionDeApiKey;
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.entidades.Hotel;
-import com.tallerwebi.presentacion.response.HotelResponse;
+import com.tallerwebi.dominio.entidades.HotelResponse;
 import com.tallerwebi.infraestructura.implementaciones.RepositorioHotelImp;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.springframework.stereotype.Service;

@@ -76,7 +76,7 @@ public class ControladorHotelTest {
                 12000.0,
                 request);
 
-        assertEquals("redirect:/excursiones?reservaExitosa=true", vista);
+        assertEquals("redirect:/busqueda-excursiones?reservaExitosa=true", vista);
 
         verify(servicioHotel).reserva(any(Hotel.class));
         verify(servicioPreferenciaUsuario).registrarReservaHotel(eq(usuario), eq(1));

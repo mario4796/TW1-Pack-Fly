@@ -28,7 +28,16 @@ public class ControladorExcursion {
 
     }
 
-    @GetMapping("/excursiones")
+    @GetMapping("/busqueda-excursiones")
+    public String mostrarFormulario(HttpServletRequest request,
+                                    Model model) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("alert", false);
+        return "busqueda-excursiones";
+    }
+
+    @GetMapping("/buscar-excursiones")
     public String verExcursiones(
             @RequestParam(name = "loc", defaultValue = "") String loc,
             @RequestParam(name = "query", defaultValue = "") String query,
@@ -51,10 +60,10 @@ public class ControladorExcursion {
                             (precioMax == null || e.getPrecio() <= precioMax))
                     .collect(Collectors.toList());
         }
-
+        model.addAttribute("alert", true);
         model.addAttribute("excursiones", lista);
 
-        return "excursiones";
+        return "busqueda-excursiones";
     }
 
     private double generarPrecioAleatorio(int min, int max) {
@@ -76,6 +85,7 @@ public class ControladorExcursion {
 
             servicioExcursiones.guardarExcursion(excursion);
             redirectAttributes.addFlashAttribute("mensaje", "¡Excursión guardada con éxito!");
+            redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "No se pudo guardar la excursión: " + e.getMessage());
         }

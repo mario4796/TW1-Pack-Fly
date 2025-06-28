@@ -5,9 +5,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tallerwebi.config.ConfiguracionDeApiKey;
-import com.tallerwebi.dominio.entidades.Excursion;
-import com.tallerwebi.infraestructura.implementaciones.RepositorioExcursion;
 import com.tallerwebi.dominio.ServicioExcursiones;
+import com.tallerwebi.dominio.entidades.Excursion;
+import com.tallerwebi.infraestructura.implementaciones.RepositorioExcursionImpl;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,13 +36,13 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
     private final ObjectMapper mapper   = new ObjectMapper();
 
 
-    private RepositorioExcursion repositorioExcursion;
+    private RepositorioExcursionImpl repositorioExcursionImpl;
 
 
     @Autowired // Spring usará este constructor para inyectar la dependencia
-    public ServicioExcursionesImpl(ConfiguracionDeApiKey apiConfig, RepositorioExcursion repositorioExcursion) {
+    public ServicioExcursionesImpl(ConfiguracionDeApiKey apiConfig, RepositorioExcursionImpl repositorioExcursionImpl) {
         this.apiConfig = apiConfig;
-        this.repositorioExcursion = repositorioExcursion;
+        this.repositorioExcursionImpl = repositorioExcursionImpl;
     }
 
     @Override
@@ -95,25 +95,25 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
 
     @Transactional
     public void guardarExcursion(Excursion excursion) {
-        repositorioExcursion.guardar(excursion);
+        repositorioExcursionImpl.guardar(excursion);
     }
     @Override
     public List<Excursion> obtenerExcursionesDeUsuario(Long idUsuario) {
-        return repositorioExcursion.obtenerPorUsuario(idUsuario);
+        return repositorioExcursionImpl.obtenerPorUsuario(idUsuario);
     }
 
     @Override
     public void eliminarReserva(Long idUsuario, String title) {
-        repositorioExcursion.eliminarReserva(idUsuario, title);
+        repositorioExcursionImpl.eliminarReserva(idUsuario, title);
     }
 
     @Override
     public void editarReserva(Long idExcursion, Long idUsuario, String title, String url) {
-        Excursion excursion = repositorioExcursion.buscarPorUsuarioYExcursion(idUsuario, idExcursion);
+        Excursion excursion = repositorioExcursionImpl.buscarPorUsuarioYExcursion(idUsuario, idExcursion);
         if (excursion != null) {
             excursion.setTitle(title);
             excursion.setUrl(url);
-            repositorioExcursion.actualizar(excursion);
+            repositorioExcursionImpl.actualizar(excursion);
         }
     }
 
