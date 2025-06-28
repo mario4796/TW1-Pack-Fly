@@ -73,6 +73,11 @@
                             <div class="accordion-body">
                                 <div class="row g-3">
                                     <div class="col-md-6" th:each="vuelo : ${vuelos}">
+                                        <div class="d-flex justify-content-between mt-2">
+                                            <span th:if="${vuelo != null and reservasPagadas[vuelo.id]}" class="badge bg-success align-self-center">Pagado</span>
+                                            <a th:if="${vuelo != null and !reservasPagadas[vuelo.id]}" th:href="@{/pago-formulario(idReserva=${vuelo.id})}" class="btn btn-primary">Pagar</a>
+                                        </div>
+
                                         <div class="card shadow h-100">
                                             <div class="card-body">
                                                 <p class="card-text mb-1"><strong>Origen:</strong> <span
@@ -113,7 +118,9 @@
                                                 </form>
                                                 <form th:action="@{/pago-formulario}" method="get">
                                                     <input type="hidden" name="idReserva" th:value="${vuelo.id}" />
-                                                    <button type="submit" class="btn btn-sm btn-outline-success">Pagar</button>
+                                                    <span th:if="${reservasPagadas[vuelo.id]}" class="badge bg-success">Pagado</span>
+                                                    <a th:if="${!reservasPagadas[vuelo.id]}" th:href="@{/pago-formulario(idReserva=${vuelo.id})}" class="btn btn-primary">Pagar</a>
+
                                                 </form>
                                             </div>
                                         </div>
@@ -178,7 +185,12 @@
                                                 </form>
                                                 <form th:action="@{/pago-formulario}" method="get">
                                                     <input type="hidden" name="idReserva" th:value="${hotel.id}" />
-                                                    <button type="submit" class="btn btn-outline-success btn-sm mt-2">Pagar</button>
+                                                    <span th:if="${reservasPagadas[hotel.id]}" class="badge bg-success">Pagado</span>
+                                                    <a th:if="${!reservasPagadas[hotel.id]}" th:href="@{/pago-formulario(idReserva=${hotel.id})}" class="btn btn-primary">Pagar</a>
+
+
+
+
                                                 </form>
                                             </div>
                                         </div>
@@ -230,7 +242,12 @@
                                                 </form>
                                                 <form th:action="@{/pago-formulario}" method="get">
                                                     <input type="hidden" name="idReserva" th:value="${excursion.id}" />
-                                                    <button type="submit" class="btn btn-outline-success btn-sm mt-2">Pagar</button>
+                                                    <span th:if="${reservasPagadas[excursion.id]}" class="badge bg-success">Pagado</span>
+                                                    <a th:if="${!reservasPagadas[excursion.id]}" th:href="@{/pago-formulario(idReserva=${excursion.id})}" class="btn btn-primary">Pagar</a>
+
+
+
+
                                                 </form>
                                             </div>
                                         </div>

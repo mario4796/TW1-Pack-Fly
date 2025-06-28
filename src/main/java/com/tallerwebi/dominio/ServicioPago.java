@@ -5,4 +5,5 @@ import com.tallerwebi.dominio.entidades.Reserva;
 
 public interface ServicioPago {
     Pago procesarPago(Reserva reserva, String numeroTarjeta, String titular);
+    boolean estaPagada(Long idReserva);
 }

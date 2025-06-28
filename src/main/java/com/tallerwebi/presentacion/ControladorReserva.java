@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ControladorReserva {
@@ -30,6 +32,10 @@ public class ControladorReserva {
     @Autowired
     private ServicioLogin servicioLogin;
 
+    @Autowired
+    private ServicioPago servicioPago;
+
+    /*
     @GetMapping("/reservas")
     public String vistaReservas(HttpServletRequest request, Model model) {
 
@@ -51,7 +57,44 @@ public class ControladorReserva {
             model.addAttribute("usuario", null);
         }
         return "reservas";
+    }*/
+
+    @GetMapping("/reservas")
+    public String vistaReservas(HttpServletRequest request, Model model) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+        if (usuario != null) {
+            List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
+            List<HotelDto> hotelesDto = hotelService.obtenerHotelesDto(hoteles);
+            List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
+            List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
+
+            Map<Long, Boolean> reservasPagadas = new HashMap<>();
+
+            for (Reserva r : vuelos) {
+                reservasPagadas.put(r.getId(), servicioPago.estaPagada(r.getId()));
+            }
+            for (HotelDto h : hotelesDto) {
+                reservasPagadas.put(h.getId(), servicioPago.estaPagada(h.getId()));
+            }
+            for (Excursion e : excursiones) {
+                reservasPagadas.put(e.getId(), servicioPago.estaPagada(e.getId()));
+            }
+
+            usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(hotelesDto, vuelos, excursiones));
+            model.addAttribute("vuelos", vuelos);
+            model.addAttribute("hoteles", hotelesDto);
+            model.addAttribute("excursiones", excursiones);
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("reservasPagadas", reservasPagadas);
+        } else {
+            model.addAttribute("usuario", null);
+        }
+
+        return "reservas";
     }
+
+
 
     @PostMapping("/eliminarReservaHotel")
     public String eliminarReservaHotel(@RequestParam String name,
