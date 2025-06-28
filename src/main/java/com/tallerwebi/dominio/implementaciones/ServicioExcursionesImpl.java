@@ -31,6 +31,8 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
 
     private static final String BASE_URL = "https://serpapi.com/search";
     private static final String ENGINE   = "google_events";
+    private final String gl = "ar";
+    private final String hl = "es";
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final ObjectMapper mapper   = new ObjectMapper();
@@ -55,12 +57,14 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
         try {
             String fullQuery = query + " in " + location;
             String url = String.format(
-                    "%s?engine=%s&api_key=%s&q=%s&location=%s",
+                    "%s?engine=%s&api_key=%s&q=%s&location=%s&gl=%s&hl=%s",
                     BASE_URL,
                     URLEncoder.encode(ENGINE,   StandardCharsets.UTF_8),
                     URLEncoder.encode(apiKey,   StandardCharsets.UTF_8),
                     URLEncoder.encode(fullQuery,StandardCharsets.UTF_8),
-                    URLEncoder.encode(location, StandardCharsets.UTF_8)
+                    URLEncoder.encode(location, StandardCharsets.UTF_8),
+                    URLEncoder.encode(gl,   StandardCharsets.UTF_8),
+                    URLEncoder.encode(hl,   StandardCharsets.UTF_8)
             );
 
             System.out.println("Llamando a SerpApi: " + url);

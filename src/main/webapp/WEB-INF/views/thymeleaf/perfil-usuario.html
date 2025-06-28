@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Perfil de Usuario | Pack&Fly</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
 </head>
 <body>
 
+<!-- NAVBAR reutilizado -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
@@ -51,9 +52,9 @@
             <div class="card mb-3">
                 <img src="https://ui-avatars.com/api/?name=Usuario" class="card-img-top rounded-circle mx-auto mt-4" style="width: 120px; height: 120px;" alt="Foto de perfil">
                 <div class="card-body text-center">
-                    <h5 class="card-title" th:text="${usuario.nombre}">Juan Pérez</h5>
-                    <p class="card-text">Nivel: <span class="fw-bold" th:text="${usuario.nivel}">Oro</span></p>
-                    <p class="card-text">Millas acumuladas: <strong th:text="${usuario.millas}">12.500</strong></p>
+                    <h5 class="card-title" th:text="${usuariop.nombre}">Juan Pérez</h5>
+                    <p class="card-text">Nivel: <span class="fw-bold" th:text="${usuariop.nivel}">Oro</span></p>
+                    <p class="card-text">Millas acumuladas: <strong th:text="${usuariop.millas}">12.500</strong></p>
                 </div>
             </div>
             <!-- Preferencias y configuración -->
@@ -75,15 +76,19 @@
                 <li class="nav-item">
                     <a class="nav-link" id="wishlist-tab" data-bs-toggle="tab" href="#wishlist" role="tab">Wishlist</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="reservas-tab" data-bs-toggle="tab" href="#reservas" role="tab">Reservas</a>
+                </li>
             </ul>
             <div class="tab-content p-3" id="profileTabsContent">
                 <div class="tab-pane fade show active" id="stats" role="tabpanel">
+                    <!-- ... Estadísticas ... -->
                     <div class="row text-center">
                         <div class="col-6 col-md-4 mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Viajes realizados</h6>
-                                    <p class="display-6" th:text="${usuario.viajes}">8</p>
+                                    <p class="display-6" th:text="${usuariop.viajes}">8</p>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +96,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Destinos visitados</h6>
-                                    <p class="display-6" th:text="${usuario.destinos}">5</p>
+                                    <p class="display-6" th:text="${usuariop.destinos}">5</p>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +104,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Ranking</h6>
-                                    <p class="display-6" th:text="${usuario.ranking}">#2</p>
+                                    <p class="display-6" th:text="${usuariop.ranking}">#2</p>
                                 </div>
                             </div>
                         </div>
@@ -113,19 +118,114 @@
                 <div class="tab-pane fade" id="history" role="tabpanel">
                     <h5>Últimos viajes</h5>
                     <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center" th:each="viaje: ${usuario.historialViajes}">
+                        <li class="list-group-item d-flex justify-content-between align-items-center" th:each="viaje: ${usuariop.historialViajes}">
                             <span th:text="${viaje.destino}">Madrid</span>
                             <span class="badge bg-primary rounded-pill" th:text="${viaje.fecha}">12/06/2025</span>
                         </li>
-                        <!-- Más items -->
                     </ul>
                 </div>
                 <div class="tab-pane fade" id="wishlist" role="tabpanel">
                     <h5>Wishlist de destinos</h5>
                     <ul class="list-group">
-                        <li class="list-group-item" th:each="destino: ${usuario.wishlist}" th:text="${destino}">Tokio</li>
+                        <li class="list-group-item" th:each="destino: ${usuariop.wishlist}" th:text="${destino}">Tokio</li>
                     </ul>
                 </div>
+                <!-- Pestaña de Reservas -->
+                <div class="tab-pane fade" id="reservas" role="tabpanel">
+                    <h5>Tus Reservas</h5>
+                    <div class="accordion overflow-auto" id="accordionReservasPerfil" style="max-height: 300px;">
+                        <!-- Vuelos -->
+                        <div class="accordion-item" th:if="${vuelos != null and !vuelos.isEmpty()}">
+                            <h2 class="accordion-header" id="headingVuelosPerfil">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseVuelosPerfil" aria-expanded="true"
+                                        aria-controls="collapseVuelosPerfil">
+                                    <i class="bi bi-airplane me-2"></i>Vuelos
+                                </button>
+                            </h2>
+                            <div id="collapseVuelosPerfil" class="accordion-collapse collapse"
+                                 aria-labelledby="headingVuelosPerfil" data-bs-parent="#accordionReservasPerfil">
+                                <div class="accordion-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6" th:each="vuelo : ${vuelos}">
+                                            <div class="card shadow h-100">
+                                                <div class="card-body">
+                                                    <p class="card-text mb-1"><strong>Origen:</strong> <span th:text="${vuelo.origen}">test</span></p>
+                                                    <p class="card-text mb-1"><strong>Destino:</strong> <span th:text="${vuelo.destino}">test</span></p>
+                                                    <p class="card-text mb-1"><strong>Fecha:</strong> <span th:text="${vuelo.fechaIda}">test</span></p>
+                                                    <p class="card-text mb-1"><strong>Pasajero:</strong> <span th:text="${vuelo.fechaVuelta}">test</span></p>
+                                                    <p class="card-text mb-1"><strong>Precio:</strong> <span th:text="${vuelo.precio}">test</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Hoteles -->
+                        <div class="accordion-item" th:if="${hoteles != null and !hoteles.isEmpty()}">
+                            <h2 class="accordion-header" id="headingHotelesPerfil">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseHotelesPerfil" aria-expanded="false"
+                                        aria-controls="collapseHotelesPerfil">
+                                    <i class="bi bi-building me-2"></i>Hoteles
+                                </button>
+                            </h2>
+                            <div id="collapseHotelesPerfil" class="accordion-collapse collapse"
+                                 aria-labelledby="headingHotelesPerfil" data-bs-parent="#accordionReservasPerfil">
+                                <div class="accordion-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6" th:each="hotel : ${hoteles}">
+                                            <div class="card shadow h-100 position-relative">
+                                                <div class="card-body pb-5">
+                                                    <p class="card-text mb-1"><strong>Nombre:</strong> <span th:text="${hotel.name}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Ciudad:</strong> <span th:text="${hotel.ciudad}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Check-in:</strong> <span th:text="${hotel.checkIn}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Check-out:</strong> <span th:text="${hotel.checkOut}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Adultos:</strong> <span th:text="${hotel.adult}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Chicos:</strong> <span th:text="${hotel.children}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Precio:</strong> <span th:text="${hotel.precio}">texto</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Excursiones -->
+                        <div class="accordion-item" th:if="${excursiones != null and !excursiones.isEmpty()}">
+                            <h2 class="accordion-header" id="headingExcursionesPerfil">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExcursionesPerfil" aria-expanded="false"
+                                        aria-controls="collapseExcursionesPerfil">
+                                    <i class="bi bi-tree me-2"></i>Excursiones
+                                </button>
+                            </h2>
+                            <div id="collapseExcursionesPerfil" class="accordion-collapse collapse"
+                                 aria-labelledby="headingExcursionesPerfil" data-bs-parent="#accordionReservasPerfil">
+                                <div class="accordion-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6" th:each="excursion : ${excursiones}">
+                                            <div class="card shadow h-100">
+                                                <div class="card-body">
+                                                    <p class="card-text mb-1"><strong>Excursión:</strong> <span th:text="${excursion.title}"></span></p>
+                                                    <p class="card-text mb-1"><strong>Precio:</strong> <span th:text="${excursion.precio}"></span></p>
+                                                    <p class="card-text"><a th:href="${excursion.url}" target="_blank">Ver más detalles</a></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${(vuelos == null or vuelos.isEmpty()) and (hoteles == null or hoteles.isEmpty()) and (excursiones == null or excursiones.isEmpty())}">
+                            <div class="alert alert-info text-center mt-4">
+                                No tienes reservas registradas.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin pestaña reservas -->
             </div>
         </div>
     </div>
