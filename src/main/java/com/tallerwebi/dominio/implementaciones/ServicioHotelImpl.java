@@ -80,5 +80,10 @@ public class ServicioHotelImpl implements ServicioHotel {
         }
     }
 
+    @Override
+    public Hotel buscarReservaPorIdYUsuario(Long idHotel, Long idUsuario) {
+        return repositorioHotelImp.buscarPorUsuarioYNombre(idUsuario, idHotel);
+    }
+
 
 }

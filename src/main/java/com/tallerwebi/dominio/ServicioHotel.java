@@ -10,8 +10,8 @@ public interface ServicioHotel {
     void reserva(Hotel hotel);
     List<Hotel> buscarReservas(Long idUsuario);
     void eliminarReserva (Long idUsuario, String nameHotel);
-
     void editarReserva(Long idHotel, Long idUsuario, String name, String ciudad, String checkIn, String checkout, Integer adults, Integer children);
-
     List<HotelDto> obtenerHotelesDto(List<Hotel> hoteles);
+    Hotel buscarReservaPorIdYUsuario(Long idHotel, Long idUsuario);
+
 }

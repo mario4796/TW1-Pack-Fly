@@ -117,4 +117,9 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
         }
     }
 
+    @Override
+    public Excursion buscarReservaPorIdYUsuario(Long idExcursion, Long idUsuario) {
+        return repositorioExcursionImpl.buscarPorUsuarioYExcursion(idUsuario, idExcursion);
+    }
+
 }
