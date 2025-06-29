@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura.implementaciones;
 
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioPago;
 import com.tallerwebi.dominio.entidades.Pago;
 import org.hibernate.SessionFactory;
@@ -17,7 +18,7 @@ public class RepositorioPagoImpl implements RepositorioPago {
     }
 
     @Override
-    public void guardar(Pago pago) {
+    public void guardar(Pago pago, Long id) {
         sessionFactory.getCurrentSession().save(pago);
     }
 

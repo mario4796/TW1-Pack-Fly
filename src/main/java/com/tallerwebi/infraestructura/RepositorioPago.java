@@ -2,6 +2,6 @@ package com.tallerwebi.infraestructura;
 import com.tallerwebi.dominio.entidades.Pago;
 
 public interface RepositorioPago {
-    void guardar(Pago pago);
+    void guardar(Pago pago, Long id);
     boolean existePagoPorReserva(Long idReserva);
 }

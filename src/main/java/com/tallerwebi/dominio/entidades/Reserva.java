@@ -22,6 +22,7 @@ public class Reserva {
     private String fechaVuelta;
     private Double precio;
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @OneToOne

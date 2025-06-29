@@ -76,6 +76,9 @@ public class ControladorPago {
             return "redirect:/login";
         }
 
+        System.out.println("Email usuario: " + usuario.getEmail() + ", ID reserva: " + idReserva);
+
+
         Reserva reserva = servicioReserva.buscarPorIdYEmail(usuario.getEmail(), idReserva);
 
         if (reserva == null) {
@@ -87,14 +90,11 @@ public class ControladorPago {
             return "redirect:/home";
         }
 
-        servicioPago.procesarPago(reserva, numeroTarjeta, titular);
+        servicioPago.procesarPago(reserva, numeroTarjeta, usuario.getId());
 
         model.addAttribute("mensaje", "Pago realizado con éxito.");
         return "redirect:/reservas";
     }
-
-
-
 
 
 

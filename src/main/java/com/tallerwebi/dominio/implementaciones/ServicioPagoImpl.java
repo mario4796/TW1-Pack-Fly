@@ -23,16 +23,15 @@ public class ServicioPagoImpl implements ServicioPago {
     }
 
     @Override
-    public Pago procesarPago(Reserva reserva, String numeroTarjeta, String titular) {
+    public Pago procesarPago(Reserva reserva, String numeroTarjeta, Long usuarioId) {
         Pago pago = new Pago();
         pago.setReserva(reserva);
         pago.setNumeroTarjeta(numeroTarjeta);
-        pago.setTitular(titular);
         pago.setMontoPagado(reserva.getPrecio());
         pago.setFechaPago(LocalDateTime.now());
         pago.setPagoExitoso(true);
 
-        repositorioPago.guardar(pago);
+        repositorioPago.guardar(pago, usuarioId);
 
         return pago;
     }

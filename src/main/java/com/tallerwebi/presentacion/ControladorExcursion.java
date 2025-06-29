@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.ServicioExcursiones;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -27,6 +28,10 @@ public class ControladorExcursion {
         this.servicioExcursiones = servicioExcursiones;
 
     }
+
+    @Autowired
+    private ServicioReserva servicioReserva;
+
 
     @GetMapping("/busqueda-excursiones")
     public String mostrarFormulario(HttpServletRequest request,
@@ -69,7 +74,7 @@ public class ControladorExcursion {
     private double generarPrecioAleatorio(int min, int max) {
         return Math.round((min + Math.random() * (max - min)) / 100) * 100;
     }
-
+/*
     @PostMapping("/excursiones/guardar")
     public String guardarExcursion(ExcursionDTO dto, HttpSession session, RedirectAttributes redirectAttributes) {
 
@@ -90,6 +95,31 @@ public class ControladorExcursion {
             redirectAttributes.addFlashAttribute("error", "No se pudo guardar la excursión: " + e.getMessage());
         }
         return "redirect:/reservas" ;
+    }*/
+
+    @PostMapping("/excursiones/guardar")
+    public String guardarExcursion(ExcursionDTO dto, HttpSession session, RedirectAttributes redirectAttributes) {
+
+        Usuario usuario = (Usuario) session.getAttribute("USUARIO");
+
+        if (usuario == null || !usuario.activo()) {
+            redirectAttributes.addFlashAttribute("error", "Debes iniciar sesión para guardar excursiones");
+            return "redirect:/login";
+        }
+        try {
+            Excursion excursion = dto.toEntity();
+            excursion.setUsuario(usuario);
+
+            // ✅ Guarda la reserva correctamente vinculada al usuario y excursión
+            servicioReserva.guardarReservaExcursion(excursion, usuario);
+
+            redirectAttributes.addFlashAttribute("mensaje", "¡Excursión reservada con éxito!");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "No se pudo guardar la excursión: " + e.getMessage());
+        }
+        return "redirect:/reservas";
     }
+
 
 }
