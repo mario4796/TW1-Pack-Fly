@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.servlet.http.HttpSession;
 
@@ -60,7 +62,8 @@ public class ControladorPago {
                                @RequestParam String numeroTarjeta,
                                @RequestParam String titular,
                                HttpSession session,
-                               Model model) {
+                               Model model,
+                               RedirectAttributes redirectAttributes) {
         Usuario usuario = (Usuario) session.getAttribute("USUARIO");
 
         if (usuario == null) {
@@ -90,9 +93,11 @@ public class ControladorPago {
             }
         }
 
-        Pago pago = servicioPago.procesarPago(reserva, numeroTarjeta, titular);
-        model.addAttribute("pago", pago);
-        return "pago-exitoso";
+        servicioPago.procesarPago(reserva, numeroTarjeta, titular);
+        redirectAttributes.addFlashAttribute("mensaje", "¡Pago realizado con éxito!");
+        redirectAttributes.addFlashAttribute("tipo", "success");
+        return "redirect:/reservas";
     }
+
 
 }

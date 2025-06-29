@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio.implementaciones;
 
 import com.tallerwebi.dominio.ServicioLogin;
+import com.tallerwebi.dominio.ServicioPago;
 import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
+
 
 @Service("servicioLogin")
 @Transactional
@@ -43,6 +46,7 @@ public class ServicioLoginImpl implements ServicioLogin {
         repositorioUsuario.modificar(usuario);
     }
 
+    /*
     @Override
     public Double obtenerDeudaDelUsuario(List<HotelDto> hoteles, List<Reserva> vuelos, List<Excursion> excursiones) {
         double deuda = 0.0;
@@ -70,6 +74,39 @@ public class ServicioLoginImpl implements ServicioLogin {
 
         return deuda;
     }
+    */
+    @Autowired
+    private ServicioPago servicioPago;
+
+    @Override
+    public Double obtenerDeudaDelUsuario(List<HotelDto> hoteles, List<Reserva> vuelos, List<Excursion> excursiones) {
+        double totalReservado = 0.0;
+        double totalPagado = 0.0;
+
+        for (Reserva r : vuelos) {
+            totalReservado += r.getPrecio();
+            if (servicioPago.estaPagada(r.getId())) {
+                totalPagado += r.getPrecio();
+            }
+        }
+
+        for (HotelDto h : hoteles) {
+            totalReservado += h.getPrecio();
+            if (servicioPago.estaPagada(h.getId())) {
+                totalPagado += h.getPrecio();
+            }
+        }
+
+        for (Excursion e : excursiones) {
+            totalReservado += e.getPrecio();
+            if (servicioPago.estaPagada(e.getId())) {
+                totalPagado += e.getPrecio();
+            }
+        }
+
+        return totalReservado - totalPagado;
+    }
+
 
 }
 
