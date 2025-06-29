@@ -15,7 +15,7 @@ public class Reserva {
     private String nombre;
     private String email;
 
-    // Datos del vuelo
+
     private String origen;
     private String destino;
     private String fechaIda;
@@ -23,6 +23,11 @@ public class Reserva {
     private Double precio;
     @ManyToOne
     private Usuario usuario;
+
+    @OneToOne
+    @JoinColumn(name = "excursion_id")
+    private Excursion excursion;
+
 
 
     public Reserva() {
@@ -110,6 +115,15 @@ public class Reserva {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+
+    public Excursion getExcursion() {
+        return excursion;
+    }
+
+    public void setExcursion(Excursion excursion) {
+        this.excursion = excursion;
     }
 
 }

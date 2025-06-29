@@ -42,10 +42,21 @@ public class RepositorioReservaImpl implements RepositorioReserva {
                 .setParameter("fechaVuelta", fechaVuelta)
                 .executeUpdate();
     }
-
+/*
     @Override
     public Reserva buscarPorIdyEmail(String email, Long idVuelo) {
         String hql = "FROM Reserva r WHERE r.email = :email AND r.id = :idVuelo";
+        List<Reserva> resultados = sessionFactory.getCurrentSession()
+                .createQuery(hql, Reserva.class)
+                .setParameter("email", email)
+                .setParameter("idVuelo", idVuelo)
+                .list();
+        return resultados.isEmpty() ? null : resultados.get(0);
+    }
+*/
+
+    public Reserva buscarPorIdyEmail(String email, Long idVuelo) {
+        String hql = "FROM Reserva r WHERE r.usuario.email = :email AND r.id = :idVuelo";
         List<Reserva> resultados = sessionFactory.getCurrentSession()
                 .createQuery(hql, Reserva.class)
                 .setParameter("email", email)
@@ -59,5 +70,17 @@ public class RepositorioReservaImpl implements RepositorioReserva {
         sessionFactory.getCurrentSession().update(reserva);
     }
 
+    @Override
+    public Reserva buscarPorExcursionYUsuario(Long idExcursion, Long idUsuario) {
+        String hql = "FROM Reserva r WHERE r.excursion.id = :idExcursion AND r.usuario.id = :idUsuario";
+        List<Reserva> resultados = sessionFactory.getCurrentSession()
+                .createQuery(hql, Reserva.class)
+                .setParameter("idExcursion", idExcursion)
+                .setParameter("idUsuario", idUsuario)
+                .list();
+        return resultados.isEmpty() ? null : resultados.get(0);
+    }
+
+    
 
 }

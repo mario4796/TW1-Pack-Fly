@@ -9,4 +9,5 @@ public interface RepositorioReserva {
     void eliminarReserva(String email, String fechaIda, String fechaVuelta);
     Reserva buscarPorIdyEmail(String email, Long idVuelo);
     void actualizar(Reserva reserva);
+    Reserva buscarPorExcursionYUsuario(Long idExcursion, Long idUsuario);
 }

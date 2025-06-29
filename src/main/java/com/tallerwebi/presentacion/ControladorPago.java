@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 @Controller
 public class ControladorPago {
@@ -48,9 +49,15 @@ public class ControladorPago {
 
         Excursion excursion = servicioExcursiones.buscarReservaPorIdYUsuario(idReserva, usuario.getId());
         if (excursion != null) {
+            Reserva reservaExcursion = servicioReserva.buscarReservaPorExcursionYUsuario(excursion.getId(), usuario.getId());
+            boolean estaPagado = reservaExcursion != null && servicioPago.estaPagada(reservaExcursion.getId());
+
             model.addAttribute("reserva", excursion);
+            model.addAttribute("idReserva", reservaExcursion != null ? reservaExcursion.getId() : null);
+            model.addAttribute("estaPagado", estaPagado);
             return "pago-formulario";
         }
+
 
         throw new RuntimeException("Reserva no encontrada");
     }
@@ -62,42 +69,33 @@ public class ControladorPago {
                                @RequestParam String numeroTarjeta,
                                @RequestParam String titular,
                                HttpSession session,
-                               Model model,
-                               RedirectAttributes redirectAttributes) {
+                               Model model) {
         Usuario usuario = (Usuario) session.getAttribute("USUARIO");
 
         if (usuario == null) {
             return "redirect:/login";
         }
 
-        String email = usuario.getEmail();
-        Reserva reserva = servicioReserva.buscarPorIdYEmail(email, idReserva);
+        Reserva reserva = servicioReserva.buscarPorIdYEmail(usuario.getEmail(), idReserva);
 
         if (reserva == null) {
-            Hotel hotel = servicioHotel.buscarReservaPorIdYUsuario(idReserva, usuario.getId());
-            if (hotel != null) {
-                reserva = new Reserva();
-                reserva.setUsuario(usuario);
-                reserva.setPrecio(hotel.getPrecio());
-                servicioReserva.guardarReserva(reserva);
-            } else {
-                Excursion excursion = servicioExcursiones.buscarReservaPorIdYUsuario(idReserva, usuario.getId());
-                if (excursion != null) {
-                    reserva = new Reserva();
-                    reserva.setUsuario(usuario);
-                    reserva.setPrecio(excursion.getPrecio());
-                    servicioReserva.guardarReserva(reserva);
-                } else {
-                    throw new RuntimeException("Reserva no encontrada");
-                }
-            }
+            throw new RuntimeException("No se encontró la reserva con el ID proporcionado para el usuario.");
+        }
+
+        if (servicioPago.estaPagada(idReserva)) {
+            model.addAttribute("mensaje", "La reserva ya fue pagada anteriormente.");
+            return "redirect:/home";
         }
 
         servicioPago.procesarPago(reserva, numeroTarjeta, titular);
-        redirectAttributes.addFlashAttribute("mensaje", "¡Pago realizado con éxito!");
-        redirectAttributes.addFlashAttribute("tipo", "success");
+
+        model.addAttribute("mensaje", "Pago realizado con éxito.");
         return "redirect:/reservas";
     }
+
+
+
+
 
 
 }

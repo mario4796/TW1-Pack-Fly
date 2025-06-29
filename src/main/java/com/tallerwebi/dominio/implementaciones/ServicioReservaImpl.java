@@ -2,11 +2,13 @@ package com.tallerwebi.dominio.implementaciones;
 
 import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
 import com.tallerwebi.dominio.ServicioReserva;
+import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioReserva;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -14,6 +16,9 @@ import java.util.List;
 @Service("servicioReserva")
 @Transactional
 public class ServicioReservaImpl implements ServicioReserva {
+
+
+
 
     private final RepositorioReserva repositorioReserva;
 
@@ -83,4 +88,23 @@ public class ServicioReservaImpl implements ServicioReserva {
     public Reserva buscarPorIdYEmail(String email, Long id) {
         return repositorioReserva.buscarPorIdyEmail(email, id);
     }
+
+    @Override
+    public void guardarReservaExcursion(Excursion excursion, Usuario usuario) {
+        Reserva reserva = new Reserva();
+        reserva.setUsuario(usuario);
+        reserva.setPrecio(excursion.getPrecio());
+        reserva.setExcursion(excursion);
+
+        repositorioReserva.guardar(reserva);
+    }
+
+    @Override
+    public Reserva buscarReservaPorExcursionYUsuario(Long idExcursion, Long idUsuario) {
+        return repositorioReserva.buscarPorExcursionYUsuario(idExcursion, idUsuario);
+    }
+
+
+
+
 }
