@@ -35,9 +35,10 @@ public class ServicioHotelImpl implements ServicioHotel {
                 .collect(Collectors.toList());
     }
 
-    public List<HotelDto> buscarHoteles(String ciudad, String checkIn, String checkOut, Integer adults, Integer children, String children_ages) {
+    public List<HotelDto> buscarHoteles(String ciudad, String checkIn, String checkOut, Integer adults, Integer children) {
 
         String API_KEY = apiconfig.getApiKey();
+        String children_ages = generarChildrenAges(children);
 
         RestTemplate restTemplate = new RestTemplate();
         String url = String.format(
@@ -49,6 +50,13 @@ public class ServicioHotelImpl implements ServicioHotel {
 
         HotelResponse response = restTemplate.getForObject(url, HotelResponse.class);
         return response != null ? response.getProperties() : List.of();
+    }
+
+    private String generarChildrenAges(Integer children) {
+        if (children == null || children <= 0) {
+            return "";
+        }
+        return String.join(",", java.util.Collections.nCopies(children, "10"));
     }
 
     @Override

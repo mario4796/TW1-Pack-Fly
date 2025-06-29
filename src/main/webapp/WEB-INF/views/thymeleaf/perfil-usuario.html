@@ -50,9 +50,11 @@
         <!-- Perfil e info básica -->
         <div class="col-md-4">
             <div class="card mb-3">
-                <img src="https://ui-avatars.com/api/?name=Usuario" class="card-img-top rounded-circle mx-auto mt-4" style="width: 120px; height: 120px;" alt="Foto de perfil">
+                <img th:src="@{'https://ui-avatars.com/api/?name=' + ${usuario.nombre} + '+' + ${usuario.apellido}}"
+                     class="card-img-top rounded-circle mx-auto mt-4" style="width: 120px; height: 120px;"
+                     alt="Foto de perfil">
                 <div class="card-body text-center">
-                    <h5 class="card-title" th:text="${usuariop.nombre}">Juan Pérez</h5>
+                    <h5 class="card-title" th:text="${usuario.nombre + ' ' + usuario.apellido}"></h5>
                     <p class="card-text">Nivel: <span class="fw-bold" th:text="${usuariop.nivel}">Oro</span></p>
                     <p class="card-text">Millas acumuladas: <strong th:text="${usuariop.millas}">12.500</strong></p>
                 </div>

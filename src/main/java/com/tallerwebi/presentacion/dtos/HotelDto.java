@@ -16,7 +16,6 @@ public class HotelDto{
     private String checkOut;
     private Integer adult;
     private Integer children;
-    private String childen_ages;
     private String link;
     private Double overall_rating;
     private Integer reviews;
@@ -116,13 +115,12 @@ public class HotelDto{
         this.children = children;
     }
 
-    private HotelDto(String ciudad, String checkIn, String checkOut, Integer adult, Integer children, String children_ages){
+    private HotelDto(String ciudad, String checkIn, String checkOut, Integer adult, Integer children){
         this.ciudad =ciudad;
         this.checkIn= checkIn;
         this.checkOut = checkOut;
         this.adult = adult;
         this.children= children;
-        this.childen_ages=children_ages;
     }
 
     public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adults, Integer children, Double precio) {
@@ -197,17 +195,6 @@ public class HotelDto{
     public void setChildren(Integer children) {
         this.children = children;
     }
-
-    private String children_ages;
-
-    public String getChildren_ages() {
-        return children_ages;
-    }
-
-    public void setChildren_ages(String children_ages) {
-        this.children_ages = children_ages;
-    }
-
 
     public void setLink(String link) {
         this.link = link;

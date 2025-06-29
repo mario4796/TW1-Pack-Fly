@@ -42,7 +42,6 @@ public class ControladorHotel {
             @RequestParam String checkOut,
             @RequestParam Integer adult,
             @RequestParam Integer children,
-            @RequestParam String children_ages,
             @RequestParam(required = false) Double precioMin,
             @RequestParam(required = false) Double precioMax,
             HttpServletRequest request,
@@ -51,7 +50,7 @@ public class ControladorHotel {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         model.addAttribute("usuario", usuario); //
 
-        List<HotelDto> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut, adult, children, children_ages);
+        List<HotelDto> hoteles = hotelService.buscarHoteles(ciudad, checkIn, checkOut, adult, children);
 
         if (precioMin != null && precioMax != null) {
             hoteles = hoteles.stream()
@@ -69,7 +68,6 @@ public class ControladorHotel {
         datobusqueda.setCheckOut(checkOut);
         datobusqueda.setAdult(adult);
         datobusqueda.setChildren(children);
-        datobusqueda.setChildren_ages(children_ages);
 
         model.addAttribute("datobusqueda", datobusqueda);
 
