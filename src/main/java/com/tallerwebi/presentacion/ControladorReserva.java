@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class ControladorReserva {
 
     @Autowired
     private ServicioLogin servicioLogin;
+
+    @Autowired
+    private ServicioEmail servicioEmail;
 
     @GetMapping("/reservas")
     public String vistaReservas(HttpServletRequest request, Model model) {
@@ -56,17 +60,26 @@ public class ControladorReserva {
     @PostMapping("/eliminarReservaHotel")
     public String eliminarReservaHotel(@RequestParam String name,
                                        HttpServletRequest request,
-                                       RedirectAttributes redirectAttributes) {
+                                       RedirectAttributes redirectAttributes) throws MessagingException {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         try {
             hotelService.eliminarReserva(usuario.getId(), name);
+
+            servicioEmail.enviarCorreo(
+                    usuario.getEmail(),
+                    "Reserva de hotel eliminada - Pack&Fly",
+                    "Hola " + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly."
+            );
+
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al eliminar la reserva de hotel.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
+
+
 
         return "redirect:/reservas";
 
@@ -78,15 +91,26 @@ public class ControladorReserva {
                                        @RequestParam String fechaIda,
                                        RedirectAttributes redirectAttributes) {
 
+
+
         try {
             servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
+
+            servicioEmail.enviarCorreo(
+                    email,
+                    "Reserva de vuelo eliminada - Pack&Fly",
+                    "Hola " + ",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros."
+            );
+
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al eliminar la reserva de vuelo.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
+
         return "redirect:/reservas";
+
     }
 
     @PostMapping("/eliminarReservaExcursion")
@@ -97,6 +121,13 @@ public class ControladorReserva {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         try {
             servicioExcursiones.eliminarReserva(usuario.getId(), title);
+
+            servicioEmail.enviarCorreo(
+                    usuario.getEmail(),
+                    "Reserva de excursión eliminada - Pack&Fly",
+                    "Hola " +  ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto."
+            );
+
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de excursion eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
