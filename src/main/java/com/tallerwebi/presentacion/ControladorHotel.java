@@ -70,6 +70,7 @@ public class ControladorHotel {
         datobusqueda.setChildren(children);
 
         model.addAttribute("datobusqueda", datobusqueda);
+        model.addAttribute("iconHelper", iconHelper);
 
         return "busqueda-hoteles";
     }

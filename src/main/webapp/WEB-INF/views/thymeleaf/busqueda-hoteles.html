@@ -176,9 +176,9 @@
                                 <p class="card-text mb-1">
                                     <strong>Rating:</strong>
                                     <span th:text="${hotel.overall_rating}">Rating</span>
-                                    &nbsp; | &nbsp;
+                                    <!--&nbsp; | &nbsp;
                                     <strong>Reviews:</strong>
-                                    <span th:text="${hotel.reviews}">0</span>
+                                    <span th:text="${hotel.reviews}">0</span>-->
                                 </p>
 
                                 <!--<a th:href="${hotel.link}" class="text-decoration-none d-inline-block mt-2"
@@ -203,8 +203,8 @@
                                             <div class="col mb-2" th:each="amenity : ${hotel.amenities}">
                                                 <div class="d-flex align-items-center">
                                                     <span class="material-symbols-outlined me-2"
-                                                          style="font-size: 20px;"></span>
-                                                          <!---th:text="${iconHelper.getAmenityIcon(amenity)}">help</span>-->
+                                                          style="font-size: 20px;"
+                                                          th:text="${iconHelper.getAmenityIcon(amenity)}">help</span>
                                                     <span th:text="${amenity}">Amenity</span>
                                                 </div>
                                             </div>
