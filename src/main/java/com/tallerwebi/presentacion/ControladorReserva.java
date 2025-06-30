@@ -65,12 +65,13 @@ public class ControladorReserva {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         try {
             hotelService.eliminarReserva(usuario.getId(), name);
-
+            String email = usuario.getEmail();
             servicioEmail.enviarCorreo(
-                    usuario.getEmail(),
+                    email,
                     "Reserva de hotel eliminada - Pack&Fly",
                     "Hola " + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly."
             );
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su reserva.");
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
@@ -101,6 +102,7 @@ public class ControladorReserva {
                     "Reserva de vuelo eliminada - Pack&Fly",
                     "Hola " + ",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros."
             );
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su vuelo.");
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
@@ -121,12 +123,13 @@ public class ControladorReserva {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         try {
             servicioExcursiones.eliminarReserva(usuario.getId(), title);
-
+            String email = usuario.getEmail();
             servicioEmail.enviarCorreo(
-                    usuario.getEmail(),
+                    email,
                     "Reserva de excursión eliminada - Pack&Fly",
                     "Hola " +  ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto."
             );
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su excursion" + title);
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de excursion eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");

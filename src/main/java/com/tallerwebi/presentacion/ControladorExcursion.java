@@ -88,17 +88,22 @@ public class ControladorExcursion {
             excursion.setUsuario(usuario);
 
             servicioExcursiones.guardarExcursion(excursion);
-
+            String email = usuario.getEmail();
+            String titulo = dto.getTitle();
             String asunto = "¡Excursión reservada con éxito!";
-            String cuerpo = "Hola " + usuario.getEmail() + ",\n\n"
+            String cuerpo = "Hola " + email + ",\n\n"
                     + "Has reservado la siguiente excursión:\n"
-                    + "Título: " + dto.getTitle() + "\n"
+                    + "Título: " + titulo + "\n"
                     + "Destino: " + dto.getLocation() + "\n"
                     + "Precio estimado: $" + dto.getPrecio() + "\n"
                     + "\nGracias por reservar con Pack&Fly.";
 
             try {
                 servicioEmail.enviarCorreo(usuario.getEmail(), asunto, cuerpo);
+
+                servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de excursion",
+                        "El usuario "+email+" ha realizado una reserva de la excursion "+titulo);
+
             } catch (Exception ex) {
                 System.err.println("Error al enviar email de excursión: " + ex.getMessage());
             }
