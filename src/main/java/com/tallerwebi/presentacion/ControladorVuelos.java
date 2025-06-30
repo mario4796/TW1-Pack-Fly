@@ -149,7 +149,7 @@ public class ControladorVuelos {
             servicioEmail.enviarCorreo(
                     email,
                     "Confirmación de Reserva - Pack&Fly",
-                    "¡Gracias por tu reserva, " + nombre + "\n"
+                    "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
                             + "Vuelo: " + origen + " → " + destino + "\n"
                             + "Fecha ida: " + fechaIda + "\n"
                             + "Fecha vuelta:" + fechaVuelta + "\n"
