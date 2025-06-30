@@ -163,7 +163,7 @@ body {
     margin-right: 6px;
 }
 
-#children_ages[readonly] {
+/*#children_ages[readonly] {
     cursor: not-allowed;
     user-select: none;
-}
+}*/

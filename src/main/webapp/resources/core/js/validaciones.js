@@ -25,7 +25,7 @@
 
     // Hoteles: lógica niños/edades
     const childrenInput = document.getElementById("children");
-    const childrenAgesInput = document.getElementById("children_ages");
+    /*const childrenAgesInput = document.getElementById("children_ages");
     if (childrenInput) {
         childrenInput.addEventListener("input", function () {
             toggleChildrenAges();
@@ -35,7 +35,7 @@
     if (childrenAgesInput) {
         childrenAgesInput.addEventListener("input", validarChildrenAges);
     }
-    if (childrenAgesInput) toggleChildrenAges();
+    if (childrenAgesInput) toggleChildrenAges();*/
 
     forms.forEach((form) => {
         form.addEventListener("submit", function (event) {
@@ -48,9 +48,9 @@
             if (fechaIdaInput && fechaVueltaInput) fechasValidas = validarFechas(fechaIdaInput, fechaVueltaInput);
 
             let edadesValidas = true;
-            if (childrenInput && childrenAgesInput) edadesValidas = validarChildrenAges();
+            //if (childrenInput && childrenAgesInput) edadesValidas = validarChildrenAges();
 
-            if (!fechasValidas || !edadesValidas || !form.checkValidity()) {
+            if (!fechasValidas || !form.checkValidity()) {
                 event.stopPropagation();
                 form.classList.add("was-validated");
                 return;
@@ -90,7 +90,7 @@
     }
 
     // Funciones hoteles - edades niños (solo aplica si existen los campos)
-    function toggleChildrenAges() {
+    /*function toggleChildrenAges() {
         if (!childrenInput || !childrenAgesInput) return;
         const childrenCount = parseInt(childrenInput.value, 10);
         if (isNaN(childrenCount) || childrenCount === 0) {
@@ -103,9 +103,9 @@
             childrenAgesInput.readOnly = false;
             childrenAgesInput.placeholder = "5,8,10...";
         }
-    }
+    }*/
 
-    function validarChildrenAges() {
+    /*function validarChildrenAges() {
         if (!childrenInput || !childrenAgesInput) return true;
         const childrenCount = parseInt(childrenInput.value, 10);
         const value = childrenAgesInput.value.trim();
@@ -133,5 +133,5 @@
         }
         childrenAgesInput.classList.add("is-valid");
         return true;
-    }
+    }*/
 });

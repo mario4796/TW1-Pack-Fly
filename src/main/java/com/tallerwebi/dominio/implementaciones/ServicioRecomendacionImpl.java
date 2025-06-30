@@ -48,7 +48,7 @@ public class ServicioRecomendacionImpl implements ServicioRecomendacion {
                 recomendaciones.add(new RecomendacionDTO("Excursión", e.getTitle(), e.getUrl())));
 
 
-        List<HotelDto> hotelesApi = servicioHotel.buscarHoteles("Buenos Aires", "2025-10-01", "2025-10-03", 2, 0, "");
+        List<HotelDto> hotelesApi = servicioHotel.buscarHoteles("Buenos Aires", "2025-10-01", "2025-10-03", 2, 0);
         hotelesApi.stream().limit(3).forEach(h ->
                 recomendaciones.add(new RecomendacionDTO("Hotel", h.getName(), h.getImagen())));
 

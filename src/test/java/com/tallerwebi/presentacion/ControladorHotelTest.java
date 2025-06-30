@@ -45,7 +45,7 @@ public class ControladorHotelTest {
     @Test
     public void queAlSolicitarUnHotelDevuelvaLaVistaCorrecta(){
         List<HotelDto> hoteles = new ArrayList<>();
-        when(servicioHotel.buscarHoteles(anyString(),anyString(),anyString(),anyInt(), anyInt(), anyString())).thenReturn(hoteles);
+        when(servicioHotel.buscarHoteles(anyString(),anyString(),anyString(),anyInt(), anyInt())).thenReturn(hoteles);
 
         String vista = controladorHotel.buscar(
                 "Mendoza",
@@ -53,7 +53,6 @@ public class ControladorHotelTest {
                 "07/07/2025",
                 1,
                 0,
-                "",
                 12000.0,
                 15000.0,
                 request,

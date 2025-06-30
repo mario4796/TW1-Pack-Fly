@@ -43,14 +43,61 @@ public class ControladorReserva {
             List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
             List<HotelDto> hotelesDto = hotelService.obtenerHotelesDto(hoteles);
             List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
-
             List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
+
+            // Intentar pasar los calculos a un servicio si es posible
+            double subtotal = 0.0;
+            double impuestos = 0.0;
+            double descuentos = 0.0;
+
+            // Suma precios de vuelos
+            if (vuelos != null) {
+                for (Reserva vuelo : vuelos) {
+                    if (vuelo.getPrecio() != null) {
+                        subtotal += vuelo.getPrecio();
+                    }
+                }
+            }
+            // Suma precios de hoteles
+            if (hotelesDto != null) {
+                for (HotelDto hotel : hotelesDto) {
+                    if (hotel.getPrecio() != null) {
+                        subtotal += hotel.getPrecio();
+                    }
+                }
+            }
+            // Suma precios de excursiones
+            if (excursiones != null) {
+                for (Excursion excursion : excursiones) {
+                    if (excursion.getPrecio() != null) {
+                        subtotal += excursion.getPrecio();
+                    }
+                }
+            }
+
+            //21% de impuestos
+            impuestos = subtotal * 0.21;
+
+            //10% de descuento si hay más de 3 reservas en total
+            int cantidadReservas = (vuelos != null ? vuelos.size() : 0)
+                    + (hotelesDto != null ? hotelesDto.size() : 0)
+                    + (excursiones != null ? excursiones.size() : 0);
+            if (cantidadReservas >= 3) {
+                descuentos = subtotal * 0.10;
+            }
+
+            double total = subtotal + impuestos - descuentos;
 
             usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(hotelesDto, vuelos, excursiones));
             model.addAttribute("vuelos", vuelos);
             model.addAttribute("hoteles", hotelesDto);
             model.addAttribute("excursiones", excursiones);
             model.addAttribute("usuario", usuario);
+
+            model.addAttribute("subtotal", String.format("%.2f", subtotal));
+            model.addAttribute("impuestos", String.format("%.2f", impuestos));
+            model.addAttribute("descuentos", String.format("%.2f", descuentos));
+            model.addAttribute("total", String.format("%.2f", total));
         } else {
             model.addAttribute("usuario", null);
         }

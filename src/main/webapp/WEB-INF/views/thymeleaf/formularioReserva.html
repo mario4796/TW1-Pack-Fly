@@ -11,13 +11,8 @@
 </head>
 
 <body data-bs-theme="dark">
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center" th:href="@{/home}">
-      <i class="bi bi-suitcase2 me-1"></i><i class="bi bi-airplane me-2"></i> Pack&Fly
-    </a>
-  </div>
-</nav>
+
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <main class="container mt-5 pt-5">
   <h2 class="text-light text-center mb-4">Formulario de Reserva</h2>
@@ -63,5 +58,8 @@
   </form>
 
 </main>
+
+<script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
 </body>
 </html>

@@ -7,44 +7,13 @@
     <title>Reservas</title>
 
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 
 <body class="body_reserva">
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold d-flex align-items-center" href="./home">
-            <i class="bi bi-suitcase2 me-1"></i><i class="bi bi-airplane me-2"></i> Pack&Fly
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="./busqueda-vuelo">Buscar vuelos</a></li>
-                <li class="nav-item"><a class="nav-link" href="./busqueda-hoteles">Ver hoteles</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/busqueda-excursiones}">Ver Excursiones</a></li>
-                <li th:if="${usuario}" class="nav-item"><a class="btn btn-primary ms-lg-2" href="./reservas">Ver
-                    reservas</a></li>
-                <li class="nav-item">
-                    <button id="themeToggle" class="btn btn-outline-secondary ms-lg-2 mt-1 mt-lg-0" type="button">
-                        <i class="bi bi-moon"></i>
-                    </button>
-                </li>
-                <li th:if="${usuario == null}" class="nav-item">
-                    <a href="./login" class="btn btn-outline-success ms-lg-2 mt-1 mt-lg-0">Iniciar sesión</a>
-
-                </li>
-                <li th:if="${usuario != null}" class="nav-item">
-                    <form th:action="@{/logout}" method="post" style="display:inline;">
-                        <button type="submit" class="btn btn-outline-danger ms-lg-2 mt-1 mt-lg-0">Cerrar sesión</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <main class="container d-flex flex-column align-items-center py-5 mt-5">
     <div th:if="${mensaje}"
@@ -54,12 +23,14 @@
         <span th:text="${mensaje}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    <div class="overlay mt-3">
-        <div class="row justify-content-center">
-            <div th:if="${usuario != null}" class="col-lg-10">
+
+    <div class="row justify-content-center w-100 mt-3">
+        <div th:if="${usuario != null}" class="col-lg-8">
+            <div class="overlay p-4">
                 <h3 class="text-white text-center mb-4">Tus Reservas</h3>
                 <div class="accordion" id="accordionReservas">
 
+                    <!-- Vuelos -->
                     <div class="accordion-item" th:if="${vuelos != null and !vuelos.isEmpty()}">
                         <h2 class="accordion-header" id="headingVuelos">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -87,8 +58,7 @@
                                                         th:text="${vuelo.precio}">test</span></p>
                                             </div>
                                             <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
-                                                <button type="button"
-                                                        class="btn btn-warning btn-sm btn-editar-vuelo"
+                                                <button type="button" class="btn btn-warning btn-sm btn-editar-vuelo"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editarVueloModal"
                                                         th:attr="data-id-vuelo=${vuelo.id},
@@ -102,8 +72,7 @@
                                                 <form th:action="@{/eliminarReservaVuelo}" method="post"
                                                       accept-charset="UTF-8" class="form-eliminar-reserva m-0">
                                                     <input type="hidden" name="email" th:value="${vuelo.email}"/>
-                                                    <input type="hidden" name="fechaIda"
-                                                           th:value="${vuelo.fechaIda}"/>
+                                                    <input type="hidden" name="fechaIda" th:value="${vuelo.fechaIda}"/>
                                                     <input type="hidden" name="fechaVuelta"
                                                            th:value="${vuelo.fechaVuelta}"/>
                                                     <button type="submit" class="btn btn-danger btn-sm"
@@ -119,6 +88,7 @@
                         </div>
                     </div>
 
+                    <!-- Hoteles -->
                     <div class="accordion-item" th:if="${hoteles != null and !hoteles.isEmpty()}">
                         <h2 class="accordion-header" id="headingHoteles">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -133,7 +103,7 @@
                                 <div class="row g-3">
                                     <div class="col-md-6" th:each="hotel : ${hoteles}">
                                         <div class="card shadow h-100 position-relative">
-                                            <div class="card-body pb-5"><!-- padding bottom extra para los botones -->
+                                            <div class="card-body pb-5">
                                                 <p class="card-text mb-1"><strong>Nombre:</strong> <span
                                                         th:text="${hotel.name}">texto</span></p>
                                                 <p class="card-text mb-1"><strong>Ciudad:</strong> <span
@@ -149,10 +119,8 @@
                                                 <p class="card-text mb-1"><strong>Precio:</strong> <span
                                                         th:text="${hotel.precio}">texto</span></p>
                                             </div>
-
                                             <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
-                                                <button type="button"
-                                                        class="btn btn-warning btn-sm btn-editar-hotel"
+                                                <button type="button" class="btn btn-warning btn-sm btn-editar-hotel"
                                                         title="Editar"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#editarHotelModal"
@@ -165,10 +133,12 @@
                                                                  data-children=${hotel.children}">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
-                                                <form th:action="@{/eliminarReservaHotel}" method="post" class="form-eliminar-reserva m-0"
+                                                <form th:action="@{/eliminarReservaHotel}" method="post"
+                                                      class="form-eliminar-reserva m-0"
                                                       accept-charset="UTF-8">
                                                     <input type="hidden" name="name" th:value="${hotel.name}"/>
-                                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Eliminar">
                                                         <i class="bi bi-trash"></i>
                                                     </button>
                                                 </form>
@@ -180,6 +150,7 @@
                         </div>
                     </div>
 
+                    <!-- Excursiones -->
                     <div class="accordion-item" th:if="${excursiones != null and !excursiones.isEmpty()}">
                         <h2 class="accordion-header" id="headingExcursiones">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -227,11 +198,6 @@
                             </div>
                         </div>
                     </div>
-                    <div th:if="${usuario.apagar != null and usuario.apagar > 0}">
-                        <div class="alert alert-success text-center mt-4">
-                            Tu valor a pagar es: <span th:text="${#numbers.formatDecimal(usuario.apagar, 1, 'COMMA', 2, 'POINT')}"></span> ARS
-                        </div>
-                    </div>
 
                     <div th:if="${(vuelos == null or vuelos.isEmpty()) and (hoteles == null or hoteles.isEmpty()) and (excursiones == null or excursiones.isEmpty())}">
                         <div class="alert alert-info text-center mt-4">
@@ -240,17 +206,70 @@
                     </div>
                 </div>
             </div>
-            <div th:if="${usuario == null}"
-                 class="alert alert-warning mt-3 d-flex align-items-center justify-content-center" role="alert">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                <div>
-                    Aunque no deberías estar aquí, <a th:href="@{/login}" class="alert-link">inicia sesión</a> para poder ver tus reservas.
+        </div>
+        <!-- Tarjeta de resumen de pago -->
+        <div class="col-lg-4">
+            <div class="overlay p-4">
+                <div th:if="${usuario != null}" class="align-self-start">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header bg-secondary text-white">
+                            <h5 class="mb-0">Resumen de Pago</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                          title="Suma de todos los precios antes de impuestos y descuentos.">
+                                        Subtotal
+                                        <i class="bi bi-info-circle ms-1"></i>
+                                    </span>
+                                    <span th:text="'$' + ${subtotal}">0.00</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                          title="Impuestos aplicados según la ley vigente (IVA 21%).">
+                                        Impuestos
+                                        <i class="bi bi-info-circle ms-1"></i>
+                                    </span>
+                                    <span th:text="'$' + ${impuestos}">0.00</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                          title="Descuentos automáticos por promociones o cantidad de reservas.">
+                                        Descuentos
+                                        <i class="bi bi-info-circle ms-1"></i>
+                                        </span>
+                                    <span th:text="'$' + ${descuentos}">0.00</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center fw-bold">
+                                    Total a pagar
+                                    <span class="fw-bold" th:text="'$' + ${total}">0.00</span>
+                                </li>
+                            </ul>
+                            <form th:action="@{/reservas/confirmar}" method="post">
+                                <button class="btn btn-success w-100" type="submit">
+                                    Confirmar Reserva
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div th:if="${usuario == null}"
+             class="alert alert-warning mt-3 d-flex align-items-center justify-content-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <div>
+                Aunque no deberías estar aquí, <a th:href="@{/login}" class="alert-link">inicia sesión</a> para poder
+                ver tus reservas.
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="editarVueloModal" tabindex="-1" aria-labelledby="editarVueloModalLabel" aria-hidden="true">
+
+    <div class="modal fade" id="editarVueloModal" tabindex="-1" aria-labelledby="editarVueloModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form th:action="@{/editarReservaVuelo}" method="post" id="formEditarVuelo" accept-charset="UTF-8">
@@ -271,11 +290,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="editVueloFechaIda" class="form-label">Fecha Ida</label>
-                            <input type="datetime-local" class="form-control" id="editVueloFechaIda" name="fechaIda" required>
+                            <input type="datetime-local" class="form-control" id="editVueloFechaIda" name="fechaIda"
+                                   required>
                         </div>
                         <div class="mb-3">
                             <label for="editVueloFechaVuelta" class="form-label">Fecha Vuelta</label>
-                            <input type="datetime-local" class="form-control" id="editVueloFechaVuelta" name="fechaVuelta" required>
+                            <input type="datetime-local" class="form-control" id="editVueloFechaVuelta"
+                                   name="fechaVuelta" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -287,7 +308,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editarHotelModal" tabindex="-1" aria-labelledby="editarHotelModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editarHotelModal" tabindex="-1" aria-labelledby="editarHotelModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form th:action="@{/editarReservaHotel}" method="post" id="formEditarHotel" accept-charset="UTF-8">
@@ -315,11 +337,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="editHotelAdults" class="form-label">Adultos</label>
-                            <input type="number" class="form-control" id="editHotelAdults" name="adult" min="1" required>
+                            <input type="number" class="form-control" id="editHotelAdults" name="adult" min="1"
+                                   required>
                         </div>
                         <div class="mb-3">
                             <label for="editHotelChildren" class="form-label">Chicos</label>
-                            <input type="number" class="form-control" id="editHotelChildren" name="children" min="0" required>
+                            <input type="number" class="form-control" id="editHotelChildren" name="children" min="0"
+                                   required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -331,10 +355,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editarExcursionModal" tabindex="-1" aria-labelledby="editarExcursionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editarExcursionModal" tabindex="-1" aria-labelledby="editarExcursionModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form th:action="@{/editarReservaExcursion}" method="post" id="formEditarExcursion" accept-charset="UTF-8">
+                <form th:action="@{/editarReservaExcursion}" method="post" id="formEditarExcursion"
+                      accept-charset="UTF-8">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editarExcursionModalLabel">Editar Excursión</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -359,13 +385,12 @@
         </div>
     </div>
 </main>
-<div th:replace="login-modal :: loginModal"></div>
 
-<script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
-<link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
 <script type="text/javascript" th:src="@{js/modal.js}"></script>
 <script type="text/javascript" th:src="@{js/alerts.js}"></script>
+<script type="text/javascript" th:src="@{js/tooltips.js}"></script>
 
 </body>
 </html>
