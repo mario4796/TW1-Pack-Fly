@@ -116,7 +116,7 @@ public class ControladorReserva {
             servicioEmail.enviarCorreo(
                     email,
                     "Reserva de hotel eliminada - Pack&Fly",
-                    "Hola " + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly."
+                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly."
             );
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su reserva.");
 
@@ -137,8 +137,10 @@ public class ControladorReserva {
     public String eliminarReservaVuelo(@RequestParam String email,
                                        @RequestParam String fechaVuelta,
                                        @RequestParam String fechaIda,
+                                       HttpServletRequest request,
                                        RedirectAttributes redirectAttributes) {
 
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
 
         try {
@@ -147,7 +149,7 @@ public class ControladorReserva {
             servicioEmail.enviarCorreo(
                     email,
                     "Reserva de vuelo eliminada - Pack&Fly",
-                    "Hola " + ",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros."
+                    "Hola " + usuario.getNombre() +",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros."
             );
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su vuelo.");
 
@@ -174,7 +176,7 @@ public class ControladorReserva {
             servicioEmail.enviarCorreo(
                     email,
                     "Reserva de excursión eliminada - Pack&Fly",
-                    "Hola " +  ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto."
+                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto."
             );
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su excursion" + title);
 

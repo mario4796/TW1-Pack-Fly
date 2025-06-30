@@ -91,7 +91,7 @@ public class ControladorExcursion {
             String email = usuario.getEmail();
             String titulo = dto.getTitle();
             String asunto = "¡Excursión reservada con éxito!";
-            String cuerpo = "Hola " + email + ",\n\n"
+            String cuerpo = "Hola " + usuario.getNombre() + ",\n\n"
                     + "Has reservado la siguiente excursión:\n"
                     + "Título: " + titulo + "\n"
                     + "Destino: " + dto.getLocation() + "\n"

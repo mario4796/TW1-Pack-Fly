@@ -127,7 +127,7 @@ public class ControladorHotel {
             servicioEmail.enviarCorreo(
                     email,
                     "Confirmación de Reserva - Pack&Fly",
-                    "¡Gracias por tu reserva, " + "\n"
+                    "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
                             + "Hotel: " + name + " " + ciudad + "\n"
                             + "Fecha entrada: " + checkIn + "\n"
                             + "Fecha salida:" + checkOut + "\n"
