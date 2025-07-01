@@ -47,6 +47,7 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
         this.repositorioExcursionImpl = repositorioExcursionImpl;
     }
 
+
     @Override
     public List<ExcursionDTO> getExcursiones(String location, String query) {
         String apiKey = apiConfig.getApiKey();
@@ -120,5 +121,11 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
             repositorioExcursionImpl.actualizar(excursion);
         }
     }
+
+    @Override
+    public Excursion buscarPorId(Long id) {
+        return repositorioExcursionImpl.buscarPorId(id);
+    }
+
 
 }
