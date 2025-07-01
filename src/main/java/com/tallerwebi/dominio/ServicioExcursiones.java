@@ -15,4 +15,8 @@ public interface ServicioExcursiones {
     void eliminarReserva(Long idUsuario, String title);
 
     void editarReserva(Long idExcursion, Long idUsuario, String title, String url);
+
+    Excursion buscarPorId(Long id);
+
+
 }

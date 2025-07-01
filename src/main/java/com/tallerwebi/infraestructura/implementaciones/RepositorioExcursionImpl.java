@@ -72,4 +72,15 @@ public List<Excursion> obtenerPorUsuario(Long idUsuario) {
     public void actualizar(Excursion excursion) {
         sessionFactory.getCurrentSession().update(excursion);
     }
+
+    @Override
+    public Excursion buscarPorId(Long id) {
+        return sessionFactory.getCurrentSession().get(Excursion.class, id);
+    }
+
+
+
 }
+
+
+

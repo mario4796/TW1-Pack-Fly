@@ -247,9 +247,13 @@
                                 </li>
                             </ul>
                             <form th:action="@{/reservas/confirmar}" method="post">
-                                <button class="btn btn-success w-100" type="submit">
+                                <a th:href="@{/pago-formulario(
+                                                reservaId=${reserva.id},
+                                                hotelId=${reserva.hotel != null}?${reserva.hotel.id}:null,
+                                                excursionId=${reserva.excursion != null}?${reserva.excursion.id}:null )}"
+                                   class="btn btn-primary">
                                     Confirmar Reserva
-                                </button>
+                                </a>
                             </form>
                         </div>
                     </div>

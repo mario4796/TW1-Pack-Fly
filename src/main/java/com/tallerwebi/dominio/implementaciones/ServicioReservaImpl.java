@@ -78,4 +78,11 @@ public class ServicioReservaImpl implements ServicioReserva {
                 })
                 .count();
     }
+
+    @Override
+    public Reserva buscarPorId(Long id) {
+        return repositorioReserva.buscarPorId(id);
+    }
+
+
 }

@@ -59,5 +59,9 @@ public class RepositorioReservaImpl implements RepositorioReserva {
         sessionFactory.getCurrentSession().update(reserva);
     }
 
+    @Override
+    public Reserva buscarPorId(Long id) {
+        return sessionFactory.getCurrentSession().get(Reserva.class, id);
+    }
 
 }

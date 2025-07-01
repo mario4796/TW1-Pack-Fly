@@ -9,5 +9,6 @@ public interface ServicioReserva {
     void eliminarReserva (String email, String fechaIda, String fechaVuelta);
     void editarReserva(Long idVuelo, String email, String origen, String destino, String fechaIda, String fechaVuelta);
     long contarReservasUltimosDias(String email, int dias);
+    Reserva buscarPorId(Long id);
 
 }
