@@ -13,9 +13,8 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container mt-5 pt-5">
-    <div class="row">
-        <!-- Perfil e info básica -->
-        <div class="col-md-4">
+    <div class="d-flex flex-column flex-md-row gap-4">
+        <div class="d-flex flex-column align-self-start" style="width: 300px;">
             <div class="card mb-3">
                 <img th:src="@{'https://ui-avatars.com/api/?name=' + ${usuario.nombre} + '+' + ${usuario.apellido}}"
                      class="card-img-top rounded-circle mx-auto mt-4" style="width: 120px; height: 120px;"
@@ -26,18 +25,35 @@
                     <p class="card-text">Millas acumuladas: <strong th:text="${usuariop.millas}">12.500</strong></p>
                 </div>
             </div>
-            <!-- Preferencias y configuración -->
+
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action">Editar perfil</a>
-                <a href="#" class="list-group-item list-group-item-action">Preferencias de viaje</a>
+                <div class="dropdown">
+                    <a href="#" class="list-group-item list-group-item-action dropdown-toggle" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Editar perfil
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                               data-bs-target="#modalCambiarPassword">Cambiar contraseña</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                               data-bs-target="#modalCambiarEmail">Cambiar email</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                               data-bs-target="#modalCambiarNombre">Cambiar nombre y apellido</a></li>
+                    </ul>
+                </div>
+                <a href="#" class="list-group-item list-group-item-action"
+                   data-bs-toggle="modal" data-bs-target="#modalPreferenciasViaje">
+                    Preferencias de viaje
+                </a>
                 <a href="#" class="list-group-item list-group-item-action">Configuración de notificaciones</a>
             </div>
         </div>
         <!-- Estadísticas y actividad -->
-        <div class="col-md-8">
+        <div class="flex-grow-1">
             <ul class="nav nav-tabs" id="profileTabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="stats-tab" data-bs-toggle="tab" href="#stats" role="tab">Estadísticas</a>
+                    <a class="nav-link active" id="stats-tab" data-bs-toggle="tab" href="#stats"
+                       role="tab">Estadísticas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="history-tab" data-bs-toggle="tab" href="#history" role="tab">Historial</a>
@@ -51,7 +67,7 @@
             </ul>
             <div class="tab-content p-3" id="profileTabsContent">
                 <div class="tab-pane fade show active" id="stats" role="tabpanel">
-                    <!-- ... Estadísticas ... -->
+                    <!-- Estadísticas -->
                     <div class="row text-center">
                         <div class="col-6 col-md-4 mb-3">
                             <div class="card">
@@ -81,13 +97,16 @@
                     <hr>
                     <h5>Progreso a siguiente nivel</h5>
                     <div class="progress mb-3">
-                        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">Oro</div>
+                        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
+                             aria-valuemin="0" aria-valuemax="100">Oro
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="history" role="tabpanel">
                     <h5>Últimos viajes</h5>
                     <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center" th:each="viaje: ${usuariop.historialViajes}">
+                        <li class="list-group-item d-flex justify-content-between align-items-center"
+                            th:each="viaje: ${usuariop.historialViajes}">
                             <span th:text="${viaje.destino}">Madrid</span>
                             <span class="badge bg-primary rounded-pill" th:text="${viaje.fecha}">12/06/2025</span>
                         </li>
@@ -96,7 +115,8 @@
                 <div class="tab-pane fade" id="wishlist" role="tabpanel">
                     <h5>Wishlist de destinos</h5>
                     <ul class="list-group">
-                        <li class="list-group-item" th:each="destino: ${usuariop.wishlist}" th:text="${destino}">Tokio</li>
+                        <li class="list-group-item" th:each="destino: ${usuariop.wishlist}" th:text="${destino}">Tokio
+                        </li>
                     </ul>
                 </div>
                 <!-- Pestaña de Reservas -->
@@ -119,11 +139,16 @@
                                         <div class="col-md-6" th:each="vuelo : ${vuelos}">
                                             <div class="card shadow h-100">
                                                 <div class="card-body">
-                                                    <p class="card-text mb-1"><strong>Origen:</strong> <span th:text="${vuelo.origen}">test</span></p>
-                                                    <p class="card-text mb-1"><strong>Destino:</strong> <span th:text="${vuelo.destino}">test</span></p>
-                                                    <p class="card-text mb-1"><strong>Fecha:</strong> <span th:text="${vuelo.fechaIda}">test</span></p>
-                                                    <p class="card-text mb-1"><strong>Pasajero:</strong> <span th:text="${vuelo.fechaVuelta}">test</span></p>
-                                                    <p class="card-text mb-1"><strong>Precio:</strong> <span th:text="${vuelo.precio}">test</span></p>
+                                                    <p class="card-text mb-1"><strong>Origen:</strong> <span
+                                                            th:text="${vuelo.origen}">test</span></p>
+                                                    <p class="card-text mb-1"><strong>Destino:</strong> <span
+                                                            th:text="${vuelo.destino}">test</span></p>
+                                                    <p class="card-text mb-1"><strong>Fecha:</strong> <span
+                                                            th:text="${vuelo.fechaIda}">test</span></p>
+                                                    <p class="card-text mb-1"><strong>Pasajero:</strong> <span
+                                                            th:text="${vuelo.fechaVuelta}">test</span></p>
+                                                    <p class="card-text mb-1"><strong>Precio:</strong> <span
+                                                            th:text="${vuelo.precio}">test</span></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,13 +172,20 @@
                                         <div class="col-md-6" th:each="hotel : ${hoteles}">
                                             <div class="card shadow h-100 position-relative">
                                                 <div class="card-body pb-5">
-                                                    <p class="card-text mb-1"><strong>Nombre:</strong> <span th:text="${hotel.name}">texto</span></p>
-                                                    <p class="card-text mb-1"><strong>Ciudad:</strong> <span th:text="${hotel.ciudad}">texto</span></p>
-                                                    <p class="card-text mb-1"><strong>Check-in:</strong> <span th:text="${hotel.checkIn}">texto</span></p>
-                                                    <p class="card-text mb-1"><strong>Check-out:</strong> <span th:text="${hotel.checkOut}">texto</span></p>
-                                                    <p class="card-text mb-1"><strong>Adultos:</strong> <span th:text="${hotel.adult}">texto</span></p>
-                                                    <p class="card-text mb-1"><strong>Chicos:</strong> <span th:text="${hotel.children}">texto</span></p>
-                                                    <p class="card-text mb-1"><strong>Precio:</strong> <span th:text="${hotel.precio}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Nombre:</strong> <span
+                                                            th:text="${hotel.name}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Ciudad:</strong> <span
+                                                            th:text="${hotel.ciudad}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Check-in:</strong> <span
+                                                            th:text="${hotel.checkIn}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Check-out:</strong> <span
+                                                            th:text="${hotel.checkOut}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Adultos:</strong> <span
+                                                            th:text="${hotel.adult}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Chicos:</strong> <span
+                                                            th:text="${hotel.children}">texto</span></p>
+                                                    <p class="card-text mb-1"><strong>Precio:</strong> <span
+                                                            th:text="${hotel.precio}">texto</span></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -177,9 +209,12 @@
                                         <div class="col-md-6" th:each="excursion : ${excursiones}">
                                             <div class="card shadow h-100">
                                                 <div class="card-body">
-                                                    <p class="card-text mb-1"><strong>Excursión:</strong> <span th:text="${excursion.title}"></span></p>
-                                                    <p class="card-text mb-1"><strong>Precio:</strong> <span th:text="${excursion.precio}"></span></p>
-                                                    <p class="card-text"><a th:href="${excursion.url}" target="_blank">Ver más detalles</a></p>
+                                                    <p class="card-text mb-1"><strong>Excursión:</strong> <span
+                                                            th:text="${excursion.title}"></span></p>
+                                                    <p class="card-text mb-1"><strong>Precio:</strong> <span
+                                                            th:text="${excursion.precio}"></span></p>
+                                                    <p class="card-text"><a th:href="${excursion.url}" target="_blank">Ver
+                                                        más detalles</a></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -194,13 +229,264 @@
                         </div>
                     </div>
                 </div>
-                <!-- Fin pestaña reservas -->
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modal: Cambiar Contraseña -->
+<div class="modal fade" id="modalCambiarPassword" tabindex="-1" aria-labelledby="labelCambiarPassword"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:action="@{/cambiar-password}" method="post" class="modal-content" id="formCambiarPassword" novalidate>
+            <div class="modal-header">
+                <h5 class="modal-title" id="labelCambiarPassword"><i class="bi bi-pencil-square me-2"></i>Cambiar Contraseña</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="nueva" class="form-label">Nueva contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input id="nueva" type="password" class="form-control" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="repetir" class="form-label">Repetir contraseña</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                        <input id="repetir" type="password" class="form-control" name="password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Cambiar Email -->
+<div class="modal fade" id="modalCambiarEmail" tabindex="-1" aria-labelledby="labelCambiarEmail" aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:action="@{/cambiar-email}" method="post" class="modal-content" id="formCambiarEmail" novalidate>
+            <div class="modal-header">
+                <h5 class="modal-title" id="labelCambiarEmail"><i class="bi bi-pencil-square me-2"></i>Cambiar Email</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="emailAnterior" class="form-label">Email anterior</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                        <input th:value="${usuario.email}" id="emailAnterior" type="email" class="form-control"
+                               disabled>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Nuevo email</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                        <input id="email" type="email" class="form-control" name="email"
+                               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+                        <div class="invalid-feedback">
+                            Ingresá un correo electrónico válido.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Cambiar Nombre y Apellido -->
+<div class="modal fade" id="modalCambiarNombre" tabindex="-1" aria-labelledby="labelCambiarNombre" aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:action="@{/cambiar-nombreYApellido}" method="post" class="modal-content" id="formCambiarNombreApellido" novalidate>
+            <div class="modal-header">
+                <h5 class="modal-title" id="labelCambiarNombre"><i class="bi bi-pencil-square me-2"></i>Cambiar Nombre y Apellido</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Nombre y apellido anterior</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                        <div class="form-floating">
+                            <input th:value="${usuario.nombre}" id="nombreAnterior" class="form-control"
+                                   placeholder="Nombre" disabled/>
+                            <label for="nombre">Nombre</label>
+                        </div>
+                        <div class="form-floating">
+                            <input th:value="${usuario.apellido}" id="apellidoAnterior" class="form-control"
+                                   placeholder="Apellido" disabled/>
+                            <label for="apellido">Apellido</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nuevo nombre y apellido</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+
+                        <div class="form-floating">
+                            <input id="nombre" class="form-control" placeholder="Nombre" name="nombre"
+                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required />
+                            <label for="nombre">Nombre</label>
+                            <div class="invalid-feedback">Ingresá un nombre válido (solo letras).</div>
+                        </div>
+
+                        <div class="form-floating">
+                            <input id="apellido" class="form-control" placeholder="Apellido" name="apellido"
+                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required />
+                            <label for="apellido">Apellido</label>
+                            <div class="invalid-feedback">Ingresá un apellido válido (solo letras).</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Preferencias de Viaje -->
+<div class="modal fade" id="modalPreferenciasViaje" tabindex="-1" aria-labelledby="modalPreferenciasViajeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form method="post" th:action="@{/preferencias}" class="modal-content needs-validation" novalidate>
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalPreferenciasViajeLabel">
+                    <i class="bi bi-gear-fill me-2"></i>Preferencias de viaje
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Origen favorito -->
+                <div class="mb-3">
+                    <label for="origen" class="form-label">Aeropuerto de origen preferido</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-airplane-engines-fill"></i></span>
+                        <input type="text" class="form-control" id="origen" name="departure_id" placeholder="Ej: EZE, BUE, MIA" required>
+                    </div>
+                    <div class="invalid-feedback">Ingresá un aeropuerto válido.</div>
+                </div>
+
+                <!-- Destinos favoritos -->
+                <div class="mb-3">
+                    <label for="destinos" class="form-label">Destinos favoritos</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                        <input type="text" class="form-control" id="destinos" name="arrival_id" placeholder="Ej: NYC, LON, PAR (separados por coma)">
+                    </div>
+                </div>
+
+                <!-- Rango de fechas -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="fechaDesde" class="form-label">Fecha desde</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar-event-fill"></i></span>
+                            <input type="date" class="form-control" id="fechaDesde" name="outbound_date_start">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fechaHasta" class="form-label">Fecha hasta</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar-event-fill"></i></span>
+                            <input type="date" class="form-control" id="fechaHasta" name="outbound_date_end">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Clase de cabina -->
+                <div class="mb-3">
+                    <label for="claseCabina" class="form-label">Clase preferida</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-briefcase-fill"></i></span>
+                        <select class="form-select" id="claseCabina" name="travel_class">
+                            <option value="1">Económica</option>
+                            <option value="2">Premium Económica</option>
+                            <option value="3">Ejecutiva / Business</option>
+                            <option value="4">Primera clase</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Horarios -->
+                <div class="mb-3">
+                    <label class="form-label">Horarios preferidos</label>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="manana" id="horaManana" name="horarioVuelo">
+                                <label class="form-check-label" for="horaManana">Mañana (6-12 hs)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="tarde" id="horaTarde" name="horarioVuelo">
+                                <label class="form-check-label" for="horaTarde">Tarde (12-18 hs)</label>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="noche" id="horaNoche" name="horarioVuelo">
+                                <label class="form-check-label" for="horaNoche">Noche (18-24 hs)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="madrugada" id="horaMadrugada" name="horarioVuelo">
+                                <label class="form-check-label" for="horaMadrugada">Madrugada (0-6 hs)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Moneda y presupuesto máximo en la misma fila -->
+                <div class="row mb-3 align-items-end">
+                    <div class="col-md-4">
+                        <label for="currency" class="form-label">Moneda</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+                            <select class="form-select" id="currency" name="currency">
+                                <option value="USD" selected>Dólar (USD)</option>
+                                <option value="ARS">Peso Argentino (ARS)</option>
+                                <option value="EUR">Euro (EUR)</option>
+                                <option value="BRL">Real (BRL)</option>
+                                <option value="GBP">Libra Esterlina (GBP)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <label for="presupuestoMax" class="form-label">Presupuesto máximo</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
+                            <input type="number" class="form-control" id="presupuestoMax" name="presupuestoMax" min="0" step="50" placeholder="Ej: 1500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Guardar preferencias</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="fragments/toast :: toastFragment(${mensaje}, ${tipo})"></div>
+
 <script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
+<script type="text/javascript" th:src="@{js/validaciones.js}"></script>
+<script type="text/javascript" th:src="@{js/alerts.js}"></script>
+
 </body>
 </html>

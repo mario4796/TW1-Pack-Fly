@@ -23,20 +23,6 @@
     if (fechaIdaInput) fechaIdaInput.setAttribute("min", fechaMinima);
     if (fechaVueltaInput) fechaVueltaInput.setAttribute("min", fechaMinima);
 
-    // Hoteles: lógica niños/edades
-    const childrenInput = document.getElementById("children");
-    /*const childrenAgesInput = document.getElementById("children_ages");
-    if (childrenInput) {
-        childrenInput.addEventListener("input", function () {
-            toggleChildrenAges();
-            validarChildrenAges();
-        });
-    }
-    if (childrenAgesInput) {
-        childrenAgesInput.addEventListener("input", validarChildrenAges);
-    }
-    if (childrenAgesInput) toggleChildrenAges();*/
-
     forms.forEach((form) => {
         form.addEventListener("submit", function (event) {
             event.preventDefault();
@@ -46,9 +32,6 @@
             if (checkInInput && checkOutInput) fechasValidas = validarFechas(checkInInput, checkOutInput);
             // Validar fechas vuelo
             if (fechaIdaInput && fechaVueltaInput) fechasValidas = validarFechas(fechaIdaInput, fechaVueltaInput);
-
-            let edadesValidas = true;
-            //if (childrenInput && childrenAgesInput) edadesValidas = validarChildrenAges();
 
             if (!fechasValidas || !form.checkValidity()) {
                 event.stopPropagation();
@@ -89,49 +72,72 @@
         }
     }
 
-    // Funciones hoteles - edades niños (solo aplica si existen los campos)
-    /*function toggleChildrenAges() {
-        if (!childrenInput || !childrenAgesInput) return;
-        const childrenCount = parseInt(childrenInput.value, 10);
-        if (isNaN(childrenCount) || childrenCount === 0) {
-            childrenAgesInput.readOnly = true;
-            childrenAgesInput.placeholder = "Sin niños";
-            childrenAgesInput.value = "";
-            childrenAgesInput.setCustomValidity("");
-            childrenAgesInput.classList.remove("is-invalid", "is-valid");
-        } else {
-            childrenAgesInput.readOnly = false;
-            childrenAgesInput.placeholder = "5,8,10...";
-        }
-    }*/
+    // Validación de cambio de contraseña (perfil-usuario)
+    const formCambiarPassword = document.querySelector("#formCambiarPassword");
+    if (formCambiarPassword) {
+        const nueva = document.querySelector("#nueva");
+        const repetir = document.querySelector("#repetir");
 
-    /*function validarChildrenAges() {
-        if (!childrenInput || !childrenAgesInput) return true;
-        const childrenCount = parseInt(childrenInput.value, 10);
-        const value = childrenAgesInput.value.trim();
-        childrenAgesInput.setCustomValidity("");
-        childrenAgesInput.classList.remove("is-invalid", "is-valid");
-        if (isNaN(childrenCount) || childrenCount === 0) return true;
-        if (value === "") {
-            childrenAgesInput.setCustomValidity("Debe ingresar las edades de los niños.");
-            childrenAgesInput.classList.add("is-invalid");
-            return false;
-        }
-        const edades = value.split(",").map(e => e.trim());
-        if (edades.length !== childrenCount) {
-            childrenAgesInput.setCustomValidity(`Debe ingresar exactamente ${childrenCount} edad${childrenCount > 1 ? "es" : ""}.`);
-            childrenAgesInput.classList.add("is-invalid");
-            return false;
-        }
-        for (let edad of edades) {
-            const num = parseInt(edad, 10);
-            if (isNaN(num) || num < 0 || num > 17) {
-                childrenAgesInput.setCustomValidity("Las edades deben ser enteros entre 0 y 17.");
-                childrenAgesInput.classList.add("is-invalid");
-                return false;
+        formCambiarPassword.addEventListener("submit", function (e) {
+            if (nueva && repetir && nueva.value !== repetir.value) {
+                e.preventDefault();
+                repetir.classList.add("is-invalid");
+
+                if (!document.querySelector("#errorRepetir")) {
+                    const errorMsg = document.createElement("div");
+                    errorMsg.className = "invalid-feedback";
+                    errorMsg.id = "errorRepetir";
+                    errorMsg.innerText = "Las contraseñas no coinciden.";
+                    repetir.parentNode.appendChild(errorMsg);
+                }
+            } else {
+                repetir.classList.remove("is-invalid");
+                const error = document.querySelector("#errorRepetir");
+                if (error) error.remove();
             }
-        }
-        childrenAgesInput.classList.add("is-valid");
-        return true;
-    }*/
+        });
+    }
+
+    // Validación de cambio de email (perfil-usuario)
+    const formEmail = document.querySelector("#formCambiarEmail");
+    if (formEmail) {
+        const emailInput = document.querySelector("#email");
+
+        formEmail.addEventListener("submit", function (e) {
+            if (!emailInput.checkValidity()) {
+                e.preventDefault();
+                emailInput.classList.add("is-invalid");
+            } else {
+                emailInput.classList.remove("is-invalid");
+            }
+        });
+    }
+
+    // Validación de cambio de nombre y apellido (perfil-usuario)
+    const formNombreApellido = document.querySelector("#formCambiarNombreApellido");
+    if (formNombreApellido) {
+        const nombreInput = document.querySelector("#nombre");
+        const apellidoInput = document.querySelector("#apellido");
+
+        formNombreApellido.addEventListener("submit", function (e) {
+            let valido = true;
+
+            if (!nombreInput.checkValidity()) {
+                nombreInput.classList.add("is-invalid");
+                valido = false;
+            } else {
+                nombreInput.classList.remove("is-invalid");
+            }
+
+            if (!apellidoInput.checkValidity()) {
+                apellidoInput.classList.add("is-invalid");
+                valido = false;
+            } else {
+                apellidoInput.classList.remove("is-invalid");
+            }
+
+            if (!valido) e.preventDefault();
+        });
+    }
+
 });

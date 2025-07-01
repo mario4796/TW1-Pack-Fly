@@ -71,5 +71,42 @@ public class ServicioLoginImpl implements ServicioLogin {
         return deuda;
     }
 
+    @Override
+    public void modificarPassword(Long idUsuario, String password) {
+        Usuario usuario = repositorioUsuario.buscarUsuarioPorId(idUsuario);
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+        usuario.setPassword(password); // Ideal: encriptarla
+        repositorioUsuario.guardar(usuario);
+    }
+
+    @Override
+    public void modificarEmail(Long idUsuario, String email) {
+        Usuario usuario = repositorioUsuario.buscarUsuarioPorId(idUsuario);
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+        usuario.setEmail(email);
+        repositorioUsuario.guardar(usuario);
+    }
+
+    @Override
+    public void modificarNombreYApellido(Long idUsuario, String nombre, String apellido) {
+        Usuario usuario = repositorioUsuario.buscarUsuarioPorId(idUsuario);
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+        usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        repositorioUsuario.guardar(usuario);
+    }
+
+    @Override
+    public Usuario buscarUsuarioPorId(Long idUsuario) {
+        return repositorioUsuario.buscarUsuarioPorId(idUsuario);
+    }
+
+
 }
 

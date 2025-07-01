@@ -16,13 +16,6 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <main class="container d-flex flex-column align-items-center py-5 mt-5">
-    <div th:if="${mensaje}"
-         th:class="'alert alert-' + ${tipo} + ' alert-dismissible fade show reserva-exitosa'"
-         role="alert">
-        <i th:class="'bi ' + (${tipo} == 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill') + ' me-2'"></i>
-        <span th:text="${mensaje}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
 
     <div class="row justify-content-center w-100 mt-3">
         <div th:if="${usuario != null}" class="col-lg-8">
@@ -399,6 +392,8 @@
         </div>
     </div>
 </main>
+
+<div th:replace="fragments/toast :: toastFragment(${mensaje}, ${tipo})"></div>
 
 <script type="text/javascript" th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
