@@ -29,6 +29,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
+    public Usuario buscarUsuarioPorId(Long id) {
+        return sessionFactory.getCurrentSession().get(Usuario.class, id);
+    }
+
+    @Override
     public void guardar(Usuario usuario) {
         sessionFactory.getCurrentSession().save(usuario);
     }
