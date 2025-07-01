@@ -123,25 +123,25 @@ public class ControladorHotel {
         }
         String email = usuario.getEmail();
 
-//        try {
-//            servicioEmail.enviarCorreo(
-//                    email,
-//                    "Confirmación de Reserva - Pack&Fly",
-//                    "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
-//                            + "Hotel: " + name + " " + ciudad + "\n"
-//                            + "Fecha entrada: " + checkIn + "\n"
-//                            + "Fecha salida:" + checkOut + "\n"
-//                            + "Precio: $" + precio + "\n"
-//                            + "Recorda que tenes hasta 7 dias antes de la reservacion para pagar, si no su reservacion sera ELIMINADA"
-//
-//            );
-//            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva Reserva de hotel","El usuario "+email+" ha realizado una reserva con \n"
-//                    + "Fecha entrada: " + checkIn + "\n"
-//                    + "Fecha salida:" + checkOut + "\n"
-//                    + "Precio: $" + precio + "\n");
-//        } catch (Exception ex) {
-//            System.err.println("Error al enviar email de reserva de Hotel: " + ex.getMessage());
-//        }
+        try {
+            servicioEmail.enviarCorreo(
+                    email,
+                    "Confirmación de Reserva - Pack&Fly",
+                    "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
+                            + "Hotel: " + name + " " + ciudad + "\n"
+                            + "Fecha entrada: " + checkIn + "\n"
+                            + "Fecha salida:" + checkOut + "\n"
+                            + "Precio: $" + precio + "\n"
+                            + "Recorda que tenes hasta 7 dias antes de la fecha "+ checkIn + "  para pagar, si no su reservacion sera ELIMINADA"
+
+            );
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva Reserva de hotel","El usuario "+email+" ha realizado una reserva con \n"
+                    + "Fecha entrada: " + checkIn + "\n"
+                    + "Fecha salida:" + checkOut + "\n"
+                    + "Precio: $" + precio + "\n");
+        } catch (Exception ex) {
+            System.err.println("Error al enviar email de reserva de Hotel: " + ex.getMessage());
+        }
 
 
         return "redirect:/busqueda-excursiones?reservaExitosa=true";

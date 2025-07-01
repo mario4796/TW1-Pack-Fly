@@ -145,26 +145,26 @@ public class ControladorVuelos {
 
         servicioReserva.guardarReserva(reserva);
 
-//        try {
-//                 servicioEmail.enviarCorreo(
-//                  email,
-//                   "Confirmación de Reserva - Pack&Fly",
-//                  "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
-//                          + "Vuelo: " + origen + " → " + destino + "\n"
-//                          + "Fecha ida: " + fechaIda + "\n"
-//                          + "Fecha vuelta:" + fechaVuelta + "\n"
-//                          + "Precio: $" + precio + "\n"
-//                        + "Recorda que tenes hasta 7 dias antes de la reservacion para pagar, si no su reservacion sera ELIMINADA"
-//
-//         );
-//          servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de vuelo",
-//                  "El usuario "+email+" ha reservado un vuelo de " + origen+ " a "+ destino+"\n"
-//                  + "Fecha ida: " + fechaIda + "\n"
-//                  + "Fecha vuelta:" + fechaVuelta + "\n"
-//                 + "Precio: $" + precio + "\n");
-//        } catch (Exception ex) {
-//          System.err.println("Error al enviar email de reserva de vuelo: " + ex.getMessage());
-//        }
+        try {
+                 servicioEmail.enviarCorreo(
+                  email,
+                   "Confirmación de Reserva - Pack&Fly",
+                  "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
+                          + "Vuelo: " + origen + " → " + destino + "\n"
+                          + "Fecha ida: " + fechaIda + "\n"
+                          + "Fecha vuelta:" + fechaVuelta + "\n"
+                          + "Precio: $" + precio + "\n"
+                        + "Recorda que tenes hasta 7 dias antes de la fecha "+ fechaIda + " para pagar, si no su reservacion sera ELIMINADA"
+
+         );
+          servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de vuelo",
+                  "El usuario "+email+" ha reservado un vuelo de " + origen+ " a "+ destino+"\n"
+                  + "Fecha ida: " + fechaIda + "\n"
+                  + "Fecha vuelta:" + fechaVuelta + "\n"
+                 + "Precio: $" + precio + "\n");
+        } catch (Exception ex) {
+          System.err.println("Error al enviar email de reserva de vuelo: " + ex.getMessage());
+        }
 
         return "redirect:/busqueda-hoteles?reservaExitosa=true";
     }

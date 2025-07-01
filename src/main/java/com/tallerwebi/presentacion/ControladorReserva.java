@@ -113,17 +113,17 @@ public class ControladorReserva {
         try {
             hotelService.eliminarReserva(usuario.getId(), name);
             String email = usuario.getEmail();
-//            servicioEmail.enviarCorreo(
-//                    email,
-//                    "Reserva de hotel eliminada - Pack&Fly",
-//                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly."
-//            );
-//            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su reserva.");
+            servicioEmail.enviarCorreo(
+                    email,
+                    "Reserva de hotel eliminada - Pack&Fly",
+                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly."
+            );
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su reserva.");
 
-//            redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel eliminada con éxito.");
+            redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al eliminar la reserva de hotel.");
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al eliminar la reserva de hotel.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
 
@@ -146,17 +146,17 @@ public class ControladorReserva {
         try {
             servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
 
-//            servicioEmail.enviarCorreo(
-//                    email,
-//                    "Reserva de vuelo eliminada - Pack&Fly",
-//                    "Hola " + usuario.getNombre() +",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros."
-//            );
-//            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su vuelo.");
-//
-//            redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo eliminada con éxito.");
+            servicioEmail.enviarCorreo(
+                    email,
+                    "Reserva de vuelo eliminada - Pack&Fly",
+                    "Hola " + usuario.getNombre() +",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros."
+            );
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su vuelo.");
+
+            redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al eliminar la reserva de vuelo.");
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al eliminar la reserva de vuelo.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
 
@@ -173,17 +173,17 @@ public class ControladorReserva {
         try {
             servicioExcursiones.eliminarReserva(usuario.getId(), title);
             String email = usuario.getEmail();
-//            servicioEmail.enviarCorreo(
-//                    email,
-//                    "Reserva de excursión eliminada - Pack&Fly",
-//                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto."
-//            );
-//            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su excursion" + title);
+            servicioEmail.enviarCorreo(
+                    email,
+                    "Reserva de excursión eliminada - Pack&Fly",
+                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto."
+            );
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su excursion" + title);
 
-//            redirectAttributes.addFlashAttribute("mensaje", "Reserva de excursion eliminada con éxito.");
+            redirectAttributes.addFlashAttribute("mensaje", "Reserva de excursion eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al eliminar la reserva de excursion.");
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al eliminar la reserva de excursion.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
         return "redirect:/reservas";
