@@ -98,17 +98,17 @@ public class ControladorExcursion {
                     + "Precio estimado: $" + dto.getPrecio() + "\n"
                     + "\nGracias por reservar con Pack&Fly.";
 
-            try {
-                servicioEmail.enviarCorreo(usuario.getEmail(), asunto, cuerpo);
-
-                servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de excursion",
-                        "El usuario "+email+" ha realizado una reserva de la excursion "+titulo);
-
-            } catch (Exception ex) {
-                System.err.println("Error al enviar email de excursión: " + ex.getMessage());
-            }
-
-            redirectAttributes.addFlashAttribute("mensaje", "¡Excursión guardada con éxito!");
+//            try {
+//                servicioEmail.enviarCorreo(usuario.getEmail(), asunto, cuerpo);
+//
+//                servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de excursion",
+//                        "El usuario "+email+" ha realizado una reserva de la excursion "+titulo);
+//
+//            } catch (Exception ex) {
+//                System.err.println("Error al enviar email de excursión: " + ex.getMessage());
+//            }
+//
+//            redirectAttributes.addFlashAttribute("mensaje", "¡Excursión guardada con éxito!");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "No se pudo guardar la excursión: " + e.getMessage());
