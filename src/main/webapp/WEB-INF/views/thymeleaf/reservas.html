@@ -246,11 +246,25 @@
                                     <span class="fw-bold" th:text="'$' + ${total}">0.00</span>
                                 </li>
                             </ul>
-                            <form th:action="@{/reservas/confirmar}" method="post">
-                                <button class="btn btn-success w-100" type="submit">
+                            <!-- <form th:action="@{/pago-formulario}" method="post">
+                                <a th:href="@{/pago-formulario(
+                                                reservaId=${reserva.id},
+                                                hotelId=${reserva.hotel != null}?${reserva.hotel.id}:null,
+                                                excursionId=${reserva.excursion != null}?${reserva.excursion.id}:null )}"
+                                   class="btn btn-primary">
                                     Confirmar Reserva
+                                </a>
+                            </form>-->
+
+                           <!-- <form th:action="@{/pago-formulario}" method="post"
+                                  accept-charset="UTF-8" class="form-confirmarReserva m-0">
+                                <input type="hidden" name="reservaId" th:value="${reservas.id}"/>
+                                <input type="hidden" name="hotelId" th:value="${hoteles.id}"/>
+                                <input type="hidden" name="excursionId" th:value="${excursion.id}"/>"
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        title="Confirmar Reserva">
                                 </button>
-                            </form>
+                            </form>-->
                         </div>
                     </div>
                 </div>

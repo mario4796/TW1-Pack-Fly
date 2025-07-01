@@ -79,5 +79,9 @@ public class RepositorioHotelImp implements RepositorioHotel {
                 .getResultList();
     }
 
+    @Override
+    public Hotel buscarPorId(Long id) {
+        return sessionFactory.getCurrentSession().get(Hotel.class, id);
+    }
 
 }

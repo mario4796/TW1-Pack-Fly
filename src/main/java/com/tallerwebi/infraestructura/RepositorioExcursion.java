@@ -12,4 +12,6 @@ public interface RepositorioExcursion {
     void eliminarReserva(Long idUsuario, String title);
     Excursion buscarPorUsuarioYExcursion(Long idUsuario, Long idExcursion);
     void actualizar(Excursion excursion);
+    Excursion buscarPorId(Long id);
+
 }

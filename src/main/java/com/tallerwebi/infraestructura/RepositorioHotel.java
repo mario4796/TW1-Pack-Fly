@@ -11,4 +11,6 @@ public interface RepositorioHotel {
     Hotel buscarPorUsuarioYNombre(Long usuarioId, Long idHotel);
     void actualizar(Hotel hotel);
     List<Hotel> obtenerTodos();
+    Hotel buscarPorId(Long id);
+
 }
