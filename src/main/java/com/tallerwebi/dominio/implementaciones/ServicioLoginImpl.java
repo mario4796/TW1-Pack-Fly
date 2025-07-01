@@ -44,8 +44,9 @@ public class ServicioLoginImpl implements ServicioLogin {
     }
 
     @Override
-    public Double obtenerDeudaDelUsuario(List<HotelDto> hoteles, List<Reserva> vuelos, List<Excursion> excursiones) {
+    public Double obtenerDeudaDelUsuario(Long idUsuario, List<HotelDto> hoteles, List<Reserva> vuelos, List<Excursion> excursiones) {
         double deuda = 0.0;
+        Usuario usuario = repositorioUsuario.buscarUsuarioPorId(idUsuario);
 
         if (hoteles != null) {
             for (HotelDto hotel : hoteles) {
@@ -67,7 +68,11 @@ public class ServicioLoginImpl implements ServicioLogin {
             }
         }
 
-
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+        usuario.setApagar(deuda);
+        repositorioUsuario.guardar(usuario);
         return deuda;
     }
 

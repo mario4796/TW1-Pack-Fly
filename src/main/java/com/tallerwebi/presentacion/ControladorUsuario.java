@@ -65,7 +65,7 @@ public class ControladorUsuario {
 
         List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
-        usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(hotelesDto, vuelos, excursiones));
+        usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones));
         model.addAttribute("vuelos", vuelos);
         model.addAttribute("hoteles", hotelesDto);
         model.addAttribute("excursiones", excursiones);

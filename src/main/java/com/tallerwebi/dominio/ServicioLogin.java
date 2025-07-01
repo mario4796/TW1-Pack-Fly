@@ -13,7 +13,7 @@ public interface ServicioLogin {
     Usuario consultarUsuario(String email, String password);
     void registrar(Usuario usuario) throws UsuarioExistente;
     void modificarUsuario(Usuario usuario);
-    Double obtenerDeudaDelUsuario(List<HotelDto> hoteles, List<Reserva> vuelos, List<Excursion> excursiones);
+    Double obtenerDeudaDelUsuario(Long id, List<HotelDto> hoteles, List<Reserva> vuelos, List<Excursion> excursiones);
 
     void modificarPassword(Long id, String password);
     void modificarEmail(Long id, String email);

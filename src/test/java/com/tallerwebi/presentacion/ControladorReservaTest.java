@@ -55,7 +55,7 @@ public class ControladorReservaTest {
         when(servicioHotel.obtenerHotelesDto(anyList())).thenReturn(hoteles);
         when(servicioReserva.obtenerReservasPorEmail(usuario.getEmail())).thenReturn(reservas);
         when(servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId())).thenReturn(Arrays.asList());
-        when(servicioLogin.obtenerDeudaDelUsuario(hoteles, reservas, Arrays.asList())).thenReturn(123.45);
+        when(servicioLogin.obtenerDeudaDelUsuario(usuario.getId() ,hoteles, reservas, Arrays.asList())).thenReturn(123.45);
 
         String vista = controladorReserva.vistaReservas(request, model);
 
@@ -63,7 +63,7 @@ public class ControladorReservaTest {
         verify(model).addAttribute("hoteles", hoteles);
         verify(model).addAttribute("excursiones", Arrays.asList());
         verify(model).addAttribute("usuario", usuario);
-        verify(servicioLogin).obtenerDeudaDelUsuario(hoteles, reservas, Arrays.asList());
+        verify(servicioLogin).obtenerDeudaDelUsuario(usuario.getId(), hoteles, reservas, Arrays.asList());
 
         assert vista.equals("reservas");
     }
