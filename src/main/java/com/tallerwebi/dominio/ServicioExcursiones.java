@@ -18,5 +18,8 @@ public interface ServicioExcursiones {
 
     Excursion buscarPorId(Long id);
 
+    void pagarExcursiones(Long id);
 
+
+    List<Excursion> obtenerExcursionesDeUsuarioPagados(Long id);
 }

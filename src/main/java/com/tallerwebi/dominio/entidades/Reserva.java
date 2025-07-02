@@ -34,7 +34,7 @@ public class Reserva {
     public Reserva() {
     }
 
-    public Reserva(String nombre, String email, String origen, String destino, String fechaIda, String fechaVuelta, Double precio, Boolean pagado) {
+    public Reserva(String nombre, String email, String origen, String destino, String fechaIda, String fechaVuelta, Double precio) {
         this.nombre = nombre;
         this.email = email;
         this.origen = origen;
@@ -42,7 +42,7 @@ public class Reserva {
         this.fechaIda = fechaIda;
         this.fechaVuelta = fechaVuelta;
         this.precio = precio;
-        this.pagado= pagado;
+        this.pagado= false;
     }
 
 

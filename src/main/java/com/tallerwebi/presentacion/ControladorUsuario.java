@@ -46,20 +46,23 @@ public class ControladorUsuario {
         usuariop.put("viajes", 8);
         usuariop.put("destinos", 5);
         usuariop.put("ranking", 2);
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
-        // Historial de viajes de prueba
-        List<Map<String, String>> historialViajes = Arrays.asList(
-                Map.of("destino", "Madrid", "fecha", "12/06/2025"),
-                Map.of("destino", "Roma", "fecha", "20/04/2025")
-        );
-        usuariop.put("historialViajes", historialViajes);
+        List<Hotel> hotelesPagados = hotelService.buscarHotelesPagados(usuario.getId());
+        List<HotelDto> hotelesDtoPagados = hotelService.obtenerHotelesDto(hotelesPagados);
+        List<Reserva> vuelosPagados = servicioReserva.obtenerReservasPorEmailPagados(usuario.getEmail());
+        List<Excursion> excursionesPagadas = servicioExcursiones.obtenerExcursionesDeUsuarioPagados(usuario.getId());
+
+
+        //usuariop.put("historialViajes", historialViajes);
 
         // Wishlist de destinos de prueba
         List<String> wishlist = Arrays.asList("Tokio", "Sydney", "Toronto");
         usuariop.put("wishlist", wishlist);
 
         //reserva
-        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+
         List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
         List<HotelDto> hotelesDto = hotelService.obtenerHotelesDto(hoteles);
         List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());

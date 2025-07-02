@@ -10,5 +10,7 @@ public interface RepositorioReserva {
     Reserva buscarPorIdyEmail(String email, Long idVuelo);
     void actualizar(Reserva reserva);
     Reserva buscarPorId(Long id);
+    void pagarReservasDeVuelo(String email);
+    List<Reserva> buscarPorEmailPagadas (String email);
 
 }
