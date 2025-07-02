@@ -9,6 +9,7 @@ import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
+import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,7 +66,9 @@ public class ControladorUsuario {
 
         List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
-        usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones));
+        ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
+        usuario.setApagar(resumen.getTotal());
+
         model.addAttribute("vuelos", vuelos);
         model.addAttribute("hoteles", hotelesDto);
         model.addAttribute("excursiones", excursiones);

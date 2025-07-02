@@ -7,6 +7,7 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
+import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,36 +45,62 @@ public class ServicioLoginImpl implements ServicioLogin {
     }
 
     @Override
-    public Double obtenerDeudaDelUsuario(Long idUsuario, List<HotelDto> hoteles, List<Reserva> vuelos, List<Excursion> excursiones) {
-        double deuda = 0.0;
-        Usuario usuario = repositorioUsuario.buscarUsuarioPorId(idUsuario);
+    public ResumenPagoDto obtenerDeudaDelUsuario(Long idUsuario, List<HotelDto> hoteles, List<Reserva> vuelos, List<Excursion> excursiones) {
+        double subtotal = 0.0;
+        double impuestos = 0.0;
+        double descuentos = 0.0;
+        double cargosServicio = 0.0;
 
-        if (hoteles != null) {
-            for (HotelDto hotel : hoteles) {
-                deuda += hotel.getPrecio();
-            }
-        }
-
+        // Suma precios de vuelos
         if (vuelos != null) {
             for (Reserva vuelo : vuelos) {
-                deuda += vuelo.getPrecio();
-            }
-        }
-
-        if (excursiones != null) {
-            for (Excursion excursion : excursiones) {
-                if (excursion != null && excursion.getPrecio() != null) {
-                    deuda += excursion.getPrecio();
+                if (vuelo.getPrecio() != null) {
+                    subtotal += vuelo.getPrecio();
                 }
             }
         }
 
+        // Suma precios de hoteles
+        if (hoteles != null) {
+            for (HotelDto hotel : hoteles) {
+                if (hotel.getPrecio() != null) {
+                    subtotal += hotel.getPrecio();
+                }
+            }
+        }
+
+        // Suma precios de excursiones
+        if (excursiones != null) {
+            for (Excursion excursion : excursiones) {
+                if (excursion.getPrecio() != null) {
+                    subtotal += excursion.getPrecio();
+                }
+            }
+        }
+
+        // 21% de impuestos
+        impuestos = subtotal * 0.21;
+
+        // 10% de descuento si hay más de 3 reservas
+        int cantidadReservas = (vuelos != null ? vuelos.size() : 0)
+                + (hoteles != null ? hoteles.size() : 0)
+                + (excursiones != null ? excursiones.size() : 0);
+        if (cantidadReservas >= 3) {
+            descuentos = subtotal * 0.10;
+        }
+
+        // 5% de cargos de servicio sobre el subtotal
+        cargosServicio = subtotal * 0.05;
+
+        double total = subtotal + impuestos + cargosServicio - descuentos;
+
+        Usuario usuario = repositorioUsuario.buscarUsuarioPorId(idUsuario);
         if (usuario == null) {
             throw new RuntimeException("Usuario no encontrado");
         }
-        usuario.setApagar(deuda);
+        usuario.setApagar(total);
         repositorioUsuario.guardar(usuario);
-        return deuda;
+        return new ResumenPagoDto(subtotal, impuestos, cargosServicio, descuentos, total);
     }
 
     @Override
