@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioPago;
-import com.tallerwebi.dominio.ServicioReserva;
-import com.tallerwebi.dominio.ServicioHotel;
-import com.tallerwebi.dominio.ServicioExcursiones;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.entidades.Excursion;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -27,17 +25,19 @@ public class ControladorPago {
     private final ServicioReserva servicioReserva;
     private final ServicioHotel servicioHotel;
     private final ServicioExcursiones servicioExcursiones;
+    private final ServicioEmail servicioEmail;
 
     @Autowired
     public ControladorPago(
             ServicioPago servicioPago,
             ServicioReserva servicioReserva,
             ServicioHotel servicioHotel,
-            ServicioExcursiones servicioExcursiones) {
+            ServicioExcursiones servicioExcursiones, ServicioEmail servicioEmail) {
         this.servicioPago = servicioPago;
         this.servicioReserva = servicioReserva;
         this.servicioHotel = servicioHotel;
         this.servicioExcursiones = servicioExcursiones;
+        this.servicioEmail = servicioEmail;
     }
 
     /**
@@ -75,7 +75,7 @@ public class ControladorPago {
             @RequestParam("reservaId") Long reservaId,
             @RequestParam(value = "hotelId", required = false) Long hotelId,
             @RequestParam(value = "excursionId", required = false) Long excursionId,
-            HttpSession session) {
+            HttpSession session) throws MessagingException {
 
         Usuario usuario = (Usuario) session.getAttribute("USUARIO");
 
@@ -84,6 +84,18 @@ public class ControladorPago {
         Excursion excursion = (excursionId != null) ? servicioExcursiones.buscarPorId(excursionId) : null;
 
         servicioPago.procesarPago(reserva, hotel, excursion);
+
+        servicioEmail.enviarCorreo(
+                usuario.getEmail(),
+                "Pago de reserva",
+                "Hola" + usuario.getNombre() + "\n"
+                        + "Su pago de la reserva fue exitoso \n"
+                        + "Datos de la reserva :"
+                        + "Vuelo : " + reserva.getDestino() + "Fecha ida :" + reserva.getFechaIda() + "Fecha vuelta:" + reserva.getFechaVuelta() + "\n"
+                        + "Hotel :" + hotel.getName() + " " + hotel.getCiudad() + "Fechas: " + hotel.getCheckIn() + " " + hotel.getCheckOut() + "\n"
+                        + "Excursion :" + excursion.getTitle() + "Lugar : " + excursion.getLocation()
+        );
+
         return "redirect:/reservas";
     }
 }
