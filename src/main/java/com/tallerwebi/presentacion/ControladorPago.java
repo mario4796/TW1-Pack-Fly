@@ -45,14 +45,15 @@ public class ControladorPago {
      */
     @GetMapping("/pago-formulario")
     public String mostrarFormularioPago(
-            @RequestParam("reservaId") Long reservaId,
+        /*    @RequestParam("reservaId") Long reservaId,
             @RequestParam(value = "hotelId", required = false) Long hotelId,
-            @RequestParam(value = "excursionId", required = false) Long excursionId,
+            @RequestParam(value = "excursionId", required = false) Long excursionId,*/
             Model model,
             HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("USUARIO");
-
+        model.addAttribute("usuario", usuario);
+    /*
         // Obtener entidades por ID
         Reserva reserva     = servicioReserva.buscarPorId(reservaId);
         Hotel   hotel       = (hotelId != null)     ? servicioHotel.buscarPorId(hotelId)       : null;
@@ -63,7 +64,7 @@ public class ControladorPago {
         model.addAttribute("excursion", excursion);
         model.addAttribute("reservaId", reservaId);
         model.addAttribute("hotelId", hotelId);
-        model.addAttribute("excursionId", excursionId);
+        model.addAttribute("excursionId", excursionId); */
         return "pagoFormulario";
     }
 
@@ -72,18 +73,20 @@ public class ControladorPago {
      */
     @PostMapping("/pagar")
     public String realizarPago(
-            @RequestParam("reservaId") Long reservaId,
+         /*   @RequestParam("reservaId") Long reservaId,
             @RequestParam(value = "hotelId", required = false) Long hotelId,
-            @RequestParam(value = "excursionId", required = false) Long excursionId,
+            @RequestParam(value = "excursionId", required = false) Long excursionId,*/
+            Model model,
             HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("USUARIO");
+        model.addAttribute("usuario", usuario);
 
-        Reserva reserva     = servicioReserva.buscarPorId(reservaId);
+       /* Reserva reserva     = servicioReserva.buscarPorId(reservaId);
         Hotel   hotel       = (hotelId != null)     ? servicioHotel.buscarPorId(hotelId)       : null;
         Excursion excursion = (excursionId != null) ? servicioExcursiones.buscarPorId(excursionId) : null;
 
-        servicioPago.procesarPago(reserva, hotel, excursion);
+        servicioPago.procesarPago(reserva, hotel, excursion);*/
         return "redirect:/reservas";
     }
 }

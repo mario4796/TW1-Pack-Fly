@@ -49,6 +49,7 @@ public class ControladorReserva {
             double subtotal = 0.0;
             double impuestos = 0.0;
             double descuentos = 0.0;
+            double cargosServicio = 0.0;
 
             // Suma precios de vuelos
             if (vuelos != null) {
@@ -58,6 +59,7 @@ public class ControladorReserva {
                     }
                 }
             }
+
             // Suma precios de hoteles
             if (hotelesDto != null) {
                 for (HotelDto hotel : hotelesDto) {
@@ -66,6 +68,7 @@ public class ControladorReserva {
                     }
                 }
             }
+
             // Suma precios de excursiones
             if (excursiones != null) {
                 for (Excursion excursion : excursiones) {
@@ -75,10 +78,10 @@ public class ControladorReserva {
                 }
             }
 
-            //21% de impuestos
+            // 21% de impuestos
             impuestos = subtotal * 0.21;
 
-            //10% de descuento si hay más de 3 reservas en total
+            // 10% de descuento si hay más de 3 reservas
             int cantidadReservas = (vuelos != null ? vuelos.size() : 0)
                     + (hotelesDto != null ? hotelesDto.size() : 0)
                     + (excursiones != null ? excursiones.size() : 0);
@@ -86,7 +89,10 @@ public class ControladorReserva {
                 descuentos = subtotal * 0.10;
             }
 
-            double total = subtotal + impuestos - descuentos;
+            // 5% de cargos de servicio sobre el subtotal
+            cargosServicio = subtotal * 0.05;
+
+            double total = subtotal + impuestos + cargosServicio - descuentos;
 
             usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones));
             model.addAttribute("vuelos", vuelos);
@@ -97,6 +103,7 @@ public class ControladorReserva {
             model.addAttribute("subtotal", String.format("%.2f", subtotal));
             model.addAttribute("impuestos", String.format("%.2f", impuestos));
             model.addAttribute("descuentos", String.format("%.2f", descuentos));
+            model.addAttribute("cargosServicio", String.format("%.2f", cargosServicio));
             model.addAttribute("total", String.format("%.2f", total));
         } else {
             model.addAttribute("usuario", null);

@@ -20,7 +20,15 @@ public class Hotel {
     private Integer children;
     private Double precio;
     private String imagen;
+    private Boolean pagado;
 
+    public Boolean getPagado() {
+        return pagado;
+    }
+
+    public void setPagado(Boolean pagado) {
+        this.pagado = pagado;
+    }
 
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
@@ -85,7 +93,7 @@ public class Hotel {
         this.precio = precio;
     }
 
-    public Hotel(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio) {
+    public Hotel(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio, Boolean pagado) {
         this.id = id;
         this.name = name;
         this.ciudad = ciudad;
@@ -94,6 +102,7 @@ public class Hotel {
         this.adult=adult;
         this.children=children;
         this.precio= precio;
+        this.pagado= pagado;
     }
 
 

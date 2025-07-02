@@ -21,6 +21,12 @@ public class Reserva {
     private String fechaIda;
     private String fechaVuelta;
     private Double precio;
+    private Boolean pagado;
+
+    public Boolean getPagado() {
+        return pagado;
+    }
+
     @ManyToOne
     private Usuario usuario;
 
@@ -28,7 +34,7 @@ public class Reserva {
     public Reserva() {
     }
 
-    public Reserva(String nombre, String email, String origen, String destino, String fechaIda, String fechaVuelta, Double precio) {
+    public Reserva(String nombre, String email, String origen, String destino, String fechaIda, String fechaVuelta, Double precio, Boolean pagado) {
         this.nombre = nombre;
         this.email = email;
         this.origen = origen;
@@ -36,6 +42,7 @@ public class Reserva {
         this.fechaIda = fechaIda;
         this.fechaVuelta = fechaVuelta;
         this.precio = precio;
+        this.pagado= pagado;
     }
 
 

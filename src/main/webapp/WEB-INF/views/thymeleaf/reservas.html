@@ -228,6 +228,14 @@
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                          title="Recargo del 5% por costos operativos">
+                                        Cargos por servicios
+                                        <i class="bi bi-info-circle ms-1"></i>
+                                    </span>
+                                    <span th:text="'$' + ${cargosServicio}">0.00</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span data-bs-toggle="tooltip" data-bs-placement="top"
                                           title="Descuentos automáticos por promociones o cantidad de reservas.">
                                         Descuentos
                                         <i class="bi bi-info-circle ms-1"></i>
@@ -249,15 +257,12 @@
                                 </a>
                             </form>-->
 
-                           <!-- <form th:action="@{/pago-formulario}" method="post"
+                            <form th:action="@{/pago-formulario}" method="get"
                                   accept-charset="UTF-8" class="form-confirmarReserva m-0">
-                                <input type="hidden" name="reservaId" th:value="${reservas.id}"/>
-                                <input type="hidden" name="hotelId" th:value="${hoteles.id}"/>
-                                <input type="hidden" name="excursionId" th:value="${excursion.id}"/>"
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                        title="Confirmar Reserva">
+                                <button type="submit" class="btn btn-primary"
+                                        title="Confirmar Reserva">Confirmar Reserva
                                 </button>
-                            </form>-->
+                            </form>
                         </div>
                     </div>
                 </div>
