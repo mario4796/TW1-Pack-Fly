@@ -22,6 +22,7 @@ public class HotelDto{
     private List<Image> images;
     private RatePerNight rate_per_night;
     private List<String> amenities;
+    private Boolean pagado;
     private Price price;
     private Double precio;
     @JsonProperty("thumbnail")
@@ -41,7 +42,7 @@ public class HotelDto{
     }
 
 
-    public HotelDto(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio) {
+    public HotelDto(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio,Boolean pagado) {
         this.id = id;
         this.name = name;
         this.ciudad = ciudad;
@@ -50,6 +51,7 @@ public class HotelDto{
         this.adult = adult;
         this.children = children;
         this.precio = precio;
+        this.pagado=false;
     }
 
     public String getLink() {
@@ -106,13 +108,14 @@ public class HotelDto{
         }
     }
 
-    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children) {
+    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Boolean pagado) {
         this.name = name;
         this.ciudad = ciudad;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.adult = adult;
         this.children = children;
+        this.pagado=false;
     }
 
     private HotelDto(String ciudad, String checkIn, String checkOut, Integer adult, Integer children){
@@ -123,7 +126,7 @@ public class HotelDto{
         this.children= children;
     }
 
-    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adults, Integer children, Double precio) {
+    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adults, Integer children, Double precio, Boolean pagado) {
         this.name = name;
         this.ciudad = ciudad;
         this.checkIn = checkIn;
@@ -131,6 +134,7 @@ public class HotelDto{
         this.adult = adults;
         this.children = children;
         this.precio = precio;
+        this.pagado=false;
     }
 
 
@@ -229,6 +233,22 @@ public class HotelDto{
         //hotel.setId(this.id);
         hotel.setName(this.name);
         return hotel;
+    }
+
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
+    public Boolean getPagado() {
+        return pagado;
+    }
+
+    public void setPagado(Boolean pagado) {
+        this.pagado = pagado;
     }
 
     public Double getPrecio() {

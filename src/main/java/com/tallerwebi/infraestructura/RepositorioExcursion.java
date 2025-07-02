@@ -13,5 +13,7 @@ public interface RepositorioExcursion {
     Excursion buscarPorUsuarioYExcursion(Long idUsuario, Long idExcursion);
     void actualizar(Excursion excursion);
     Excursion buscarPorId(Long id);
+    void pagarExcursiones(Long id);
 
+    List<Excursion> obtenerPorUsuarioPagado(Long id);
 }

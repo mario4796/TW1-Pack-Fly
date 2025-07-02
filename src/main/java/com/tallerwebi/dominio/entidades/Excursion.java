@@ -17,7 +17,16 @@ public class Excursion {
     @Transient
     private String description;
     private String url;
-    private Double precio; // Nuevo campo
+    private Double precio;
+    private Boolean pagado;
+
+    public Boolean getPagado() {
+        return pagado;
+    }
+
+    public void setPagado(Boolean pagado) {
+        this.pagado = pagado;
+    }
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")

@@ -21,6 +21,12 @@ public class Reserva {
     private String fechaIda;
     private String fechaVuelta;
     private Double precio;
+    private Boolean pagado;
+
+    public Boolean getPagado() {
+        return pagado;
+    }
+
     @ManyToOne
     private Usuario usuario;
 
@@ -36,6 +42,7 @@ public class Reserva {
         this.fechaIda = fechaIda;
         this.fechaVuelta = fechaVuelta;
         this.precio = precio;
+        this.pagado= false;
     }
 
 

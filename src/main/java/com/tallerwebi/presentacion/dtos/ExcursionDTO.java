@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import org.hibernate.query.criteria.internal.predicate.BooleanExpressionPredicate;
 
 import java.util.Map;
 
@@ -14,6 +15,7 @@ public class ExcursionDTO {
     private String title;
 
     private String startDate;
+    private Boolean pagado;
 
     @JsonProperty("name")
     private String location;
@@ -48,6 +50,7 @@ public class ExcursionDTO {
         this.location = excursion.getLocation();
         this.description = excursion.getDescription();
         this.url = excursion.getUrl();
+        this.pagado= excursion.getPagado();
 
     }
     public ExcursionDTO(String title, String url) {
@@ -64,6 +67,7 @@ public class ExcursionDTO {
         entidad.setDescription(this.description);
         entidad.setUrl(this.url);
         entidad.setPrecio(this.precio);
+        entidad.setPagado(false);
         entidad.setUsuario(usuario);
 
 
