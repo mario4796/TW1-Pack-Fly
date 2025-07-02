@@ -124,7 +124,7 @@ public class ControladorHotel {
         }
         String email = usuario.getEmail();
 
-        try {
+        /*try {
             servicioEmail.enviarCorreo(
                     email,
                     "Confirmación de Reserva - Pack&Fly",
@@ -142,7 +142,7 @@ public class ControladorHotel {
                     + "Precio: $" + precio + "\n");
         } catch (Exception ex) {
             System.err.println("Error al enviar email de reserva de Hotel: " + ex.getMessage());
-        }
+        }*/
 
 
         return "redirect:/busqueda-excursiones?reservaExitosa=true";

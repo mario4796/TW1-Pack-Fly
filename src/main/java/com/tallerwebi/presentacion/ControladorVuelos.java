@@ -145,7 +145,7 @@ public class ControladorVuelos {
 
         servicioReserva.guardarReserva(reserva);
 
-        try {
+        /*try {
             servicioEmail.enviarCorreo(
                     email,
                     "Confirmación de Reserva - Pack&Fly",
@@ -164,7 +164,7 @@ public class ControladorVuelos {
                     + "Precio: $" + precio + "\n");
         } catch (Exception ex) {
             System.err.println("Error al enviar email de reserva de vuelo: " + ex.getMessage());
-        }
+        }*/
 
         return "redirect:/busqueda-hoteles?reservaExitosa=true";
     }
