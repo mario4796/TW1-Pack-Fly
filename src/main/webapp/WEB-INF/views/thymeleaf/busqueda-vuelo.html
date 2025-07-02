@@ -31,22 +31,22 @@
                         <div class="col-md-3">
                             <label for="origen" class="form-label">Origen</label>
                             <select class="form-select" name="origen" id="origen" required>
-                                <option value="">Selecciona un origen</option>
-                                <option value="EZE">Buenos Aires, Argentina (Ezeiza)</option>
-                                <option value="JFK">New York, USA (JFK)</option>
-                                <option value="GRU">Sao Paulo, Brasil (Guarulhos)</option>
-                                <option value="CDG">París, Francia (Charles de Gaulle)</option>
-                                <option value="MAD">Madrid, España (Barajas)</option>
-                                <option value="MEX">Ciudad de México, México (Benito Juárez)</option>
-                                <option value="BOG">Bogotá, Colombia (El Dorado)</option>
-                                <option value="SCL">Santiago, Chile (Arturo Merino Benítez)</option>
-                                <option value="LIM">Lima, Perú (Jorge Chávez)</option>
-                                <option value="LHR">Londres, Reino Unido (Heathrow)</option>
-                                <option value="FRA">Frankfurt, Alemania (Frankfurt Main)</option>
-                                <option value="MIA">Miami, USA (Miami Intl.)</option>
-                                <option value="BCN">Barcelona, España (El Prat)</option>
-                                <option value="AMS">Ámsterdam, Países Bajos (Schiphol)</option>
-                                <option value="PTY">Ciudad de Panamá, Panamá (Tocumen)</option>
+                                <option value="">Selecciona un destino</option>
+                                <option value="EZE" th:selected="${origen=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
+                                <option value="JFK" th:selected="${origen=='JFK'}">New York, USA (JFK)</option>
+                                <option value="GRU" th:selected="${origen=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
+                                <option value="CDG" th:selected="${origen=='CDG'}">París, Francia (Charles de Gaulle)</option>
+                                <option value="MAD" th:selected="${origen=='MAD'}">Madrid, España (Barajas)</option>
+                                <option value="MEX" th:selected="${origen=='MEX'}">Ciudad de México, México (Benito Juárez)</option>
+                                <option value="BOG" th:selected="${origen=='BOG'}">Bogotá, Colombia (El Dorado)</option>
+                                <option value="SCL" th:selected="${origen=='SCL'}">Santiago, Chile (Arturo Merino Benítez)</option>
+                                <option value="LIM" th:selected="${origen=='LIM'}">Lima, Perú (Jorge Chávez)</option>
+                                <option value="LHR" th:selected="${origen=='LHR'}">Londres, Reino Unido (Heathrow)</option>
+                                <option value="FRA" th:selected="${origen=='FRA'}">Frankfurt, Alemania (Frankfurt Main)</option>
+                                <option value="MIA" th:selected="${origen=='MIA'}">Miami, USA (Miami Intl.)</option>
+                                <option value="BCN" th:selected="${origen=='BCN'}">Barcelona, España (El Prat)</option>
+                                <option value="AMS" th:selected="${origen=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
+                                <option value="PTY" th:selected="${origen=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
                             </select>
                             <div class="invalid-feedback">Seleccioná un destino.</div>
                         </div>
@@ -55,33 +55,33 @@
                             <label for="destino" class="form-label">Destino</label>
                             <select class="form-select" name="destino" id="destino" required>
                                 <option value="">Selecciona un destino</option>
-                                <option value="EZE">Buenos Aires, Argentina (Ezeiza)</option>
-                                <option value="JFK">New York, USA (JFK)</option>
-                                <option value="GRU">Sao Paulo, Brasil (Guarulhos)</option>
-                                <option value="CDG">París, Francia (Charles de Gaulle)</option>
-                                <option value="MAD">Madrid, España (Barajas)</option>
-                                <option value="MEX">Ciudad de México, México (Benito Juárez)</option>
-                                <option value="BOG">Bogotá, Colombia (El Dorado)</option>
-                                <option value="SCL">Santiago, Chile (Arturo Merino Benítez)</option>
-                                <option value="LIM">Lima, Perú (Jorge Chávez)</option>
-                                <option value="LHR">Londres, Reino Unido (Heathrow)</option>
-                                <option value="FRA">Frankfurt, Alemania (Frankfurt Main)</option>
-                                <option value="MIA">Miami, USA (Miami Intl.)</option>
-                                <option value="BCN">Barcelona, España (El Prat)</option>
-                                <option value="AMS">Ámsterdam, Países Bajos (Schiphol)</option>
-                                <option value="PTY">Ciudad de Panamá, Panamá (Tocumen)</option>
+                                <option value="EZE" th:selected="${destino=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
+                                <option value="JFK" th:selected="${destino=='JFK'}">New York, USA (JFK)</option>
+                                <option value="GRU" th:selected="${destino=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
+                                <option value="CDG" th:selected="${destino=='CDG'}">París, Francia (Charles de Gaulle)</option>
+                                <option value="MAD" th:selected="${destino=='MAD'}">Madrid, España (Barajas)</option>
+                                <option value="MEX" th:selected="${destino=='MEX'}">Ciudad de México, México (Benito Juárez)</option>
+                                <option value="BOG" th:selected="${destino=='BOG'}">Bogotá, Colombia (El Dorado)</option>
+                                <option value="SCL" th:selected="${destino=='SCL'}">Santiago, Chile (Arturo Merino Benítez)</option>
+                                <option value="LIM" th:selected="${destino=='LIM'}">Lima, Perú (Jorge Chávez)</option>
+                                <option value="LHR" th:selected="${destino=='LHR'}">Londres, Reino Unido (Heathrow)</option>
+                                <option value="FRA" th:selected="${destino=='FRA'}">Frankfurt, Alemania (Frankfurt Main)</option>
+                                <option value="MIA" th:selected="${destino=='MIA'}">Miami, USA (Miami Intl.)</option>
+                                <option value="BCN" th:selected="${destino=='BCN'}">Barcelona, España (El Prat)</option>
+                                <option value="AMS" th:selected="${destino=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
+                                <option value="PTY" th:selected="${destino=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
                             </select>
                             <div class="invalid-feedback">Seleccioná un destino.</div>
                         </div>
 
                         <div class="col-md-3">
                             <label for="fechaIda" class="form-label">Fecha de Ida</label>
-                            <input type="date" class="form-control" id="fechaIda" name="fechaIda" required>
+                            <input type="date" class="form-control" id="fechaIda" name="fechaIda" th:value="${fechaIda}" required>
                             <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
                         </div>
                         <div class="col-md-3">
                             <label for="fechaVuelta" class="form-label">Fecha de Vuelta</label>
-                            <input type="date" class="form-control" id="fechaVuelta" name="fechaVuelta" required>
+                            <input type="date" class="form-control" id="fechaVuelta" name="fechaVuelta" th:value="${fechaVuelta}" required>
                             <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
                         </div>
                     </div>
