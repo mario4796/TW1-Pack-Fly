@@ -76,6 +76,14 @@ public class ControladorHotel {
         model.addAttribute("datobusqueda", datobusqueda);
         model.addAttribute("iconHelper", iconHelper);
 
+        model.addAttribute("ciudad", ciudad);
+        model.addAttribute("checkIn", checkIn);
+        model.addAttribute("checkOut", checkOut);
+        model.addAttribute("precioMin", precioMin);
+        model.addAttribute("precioMax", precioMax);
+        model.addAttribute("adult", adult);
+        model.addAttribute("children", children);
+
         return "busqueda-hoteles";
     }
 
