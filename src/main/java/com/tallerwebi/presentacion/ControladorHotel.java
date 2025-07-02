@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -105,6 +106,7 @@ public class ControladorHotel {
                            @RequestParam Integer adult,
                            @RequestParam Integer children,
                            @RequestParam Double precio,
+                           RedirectAttributes redirectAttributes,
                            HttpServletRequest request) throws MessagingException {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
@@ -123,7 +125,16 @@ public class ControladorHotel {
         hotel.setUsuario(usuario);
         hotel.setPrecio(precio);
         hotel.setPagado(false);
-        hotelService.reserva(hotel);
+
+
+        try {
+            hotelService.reserva(hotel);
+            redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel creada con éxito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al crear la reserva de hotel.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
 
 
         if (usuario != null) {
@@ -153,7 +164,7 @@ public class ControladorHotel {
         }*/
 
 
-        return "redirect:/busqueda-excursiones?reservaExitosa=true";
+        return "redirect:/busqueda-excursiones";
     }
 
 

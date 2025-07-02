@@ -222,12 +222,20 @@ public class ControladorReserva {
     ) {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
-        List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
-        hotelService.pagarHotelesDto(hoteles);
-        servicioReserva.pagarRerservasDeVuelo(usuario.getEmail());
-        servicioExcursiones.pagarExcursiones(usuario.getId());
 
-       // ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
+        try {
+            List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
+            hotelService.pagarHotelesDto(hoteles);
+            servicioReserva.pagarRerservasDeVuelo(usuario.getEmail());
+            servicioExcursiones.pagarExcursiones(usuario.getId());
+            redirectAttributes.addFlashAttribute("mensaje", "Pago realizado con éxito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
+
+        // ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
        // usuario.setApagar(resumen.getTotal());
 
 

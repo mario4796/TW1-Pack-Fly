@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -140,6 +141,7 @@ public class ControladorVuelos {
             @RequestParam("fechaVuelta") String fechaVuelta,
             @RequestParam("precio") Double precio,
             HttpServletRequest request,
+            RedirectAttributes redirectAttributes,
             Model model
     ) throws MessagingException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
@@ -147,7 +149,15 @@ public class ControladorVuelos {
         Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
         reserva.setUsuario(usuario); // Enlaza el usuario con la reserva
 
-        servicioReserva.guardarReserva(reserva);
+
+        try {
+            servicioReserva.guardarReserva(reserva);
+            redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo creada con éxito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al crear la reserva de vuelo.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
 
         /*try {
             servicioEmail.enviarCorreo(
@@ -170,7 +180,7 @@ public class ControladorVuelos {
             System.err.println("Error al enviar email de reserva de vuelo: " + ex.getMessage());
         }*/
 
-        return "redirect:/busqueda-hoteles?reservaExitosa=true";
+        return "redirect:/busqueda-hoteles";
     }
 
 

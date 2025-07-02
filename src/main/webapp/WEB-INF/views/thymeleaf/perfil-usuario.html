@@ -131,7 +131,7 @@
                     <ul class="list-group mb-3" th:if="${excursionesPagadas != null and !excursionesPagadas.isEmpty()}">
                         <li class="list-group-item" th:each="exc : ${excursionesPagadas}">
                             <b th:text="${exc.title}">Excursión</b>
-                            <span class="badge bg-warning ms-2" th:text="${exc.precio}"></span>
+                            <span class="badge bg-warning ms-2" th:text="${exc.startDate}"></span>
                         </li>
                     </ul>
                     <p th:if="${excursionesPagadas == null or excursionesPagadas.isEmpty()}">- No hay excursiones pagadas.</p>

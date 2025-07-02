@@ -18,12 +18,7 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <main class="container d-flex flex-column align-items-center" style="margin-top: 80px;">
-    <div th:if="${param.reservaExitosa}" class="alert alert-success alert-dismissible fade show reserva-exitosa"
-         role="alert">
-        <i class="bi bi-check-circle-fill me-2"></i>
-        Reserva de hotel realizada con éxito.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+
     <div class="btn-group col-md-12" role="group">
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-map"></i> Vuelo</button>
         <button type="button" class="btn btn-outline-secondary disabled"><i class="bi bi-house"></i> Hospedaje</button>
@@ -159,6 +154,8 @@
 
 </main>
 <div th:replace="fragments/login-modal :: loginModal"></div>
+<div th:replace="fragments/toast :: toastFragment(${mensaje}, ${tipo})"></div>
+
 <script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/dark-mode.js}"></script>
 <script type="text/javascript" th:src="@{js/validaciones.js}"></script>

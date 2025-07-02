@@ -8,6 +8,7 @@ import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -64,6 +65,11 @@ public class ControladorHotelTest {
     @Test
     public void queSePuedaReservarUnHotelCorrectamenteYDevuelvaLaVistaCorrecta() throws MessagingException {
         Usuario usuario = new Usuario();
+        HttpSession session = mock(HttpSession.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
+
+        when(request.getSession()).thenReturn(session);
         when(session.getAttribute("USUARIO")).thenReturn(usuario);
 
         String vista = controladorHotel.reservar(
@@ -74,9 +80,10 @@ public class ControladorHotelTest {
                 1,
                 0,
                 12000.0,
+                redirectAttributes,
                 request);
 
-        assertEquals("redirect:/busqueda-excursiones?reservaExitosa=true", vista);
+        assertEquals("redirect:/busqueda-excursiones", vista);
 
         verify(servicioHotel).reserva(any(Hotel.class));
         verify(servicioPreferenciaUsuario).registrarReservaHotel(eq(usuario), eq(1));

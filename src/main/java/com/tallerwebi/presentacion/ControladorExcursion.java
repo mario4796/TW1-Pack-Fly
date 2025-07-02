@@ -108,13 +108,12 @@ public class ControladorExcursion {
 //                System.err.println("Error al enviar email de excursión: " + ex.getMessage());
 //            }
 //
-//            redirectAttributes.addFlashAttribute("mensaje", "¡Excursión guardada con éxito!");
+            redirectAttributes.addFlashAttribute("mensaje", "Reserva de excusrion creada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "No se pudo guardar la excursión: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al crear la reserva de excursion.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
         }
-
-
 
         return "redirect:/reservas" ;
     }
