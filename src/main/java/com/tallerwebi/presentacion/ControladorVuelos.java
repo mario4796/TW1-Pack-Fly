@@ -83,6 +83,10 @@ public class ControladorVuelos {
 
         model.addAttribute("precioMin", precioMin);
         model.addAttribute("precioMax", precioMax);
+        model.addAttribute("origen", origen);
+        model.addAttribute("destino", destino);
+        model.addAttribute("fechaIda", fechaIda);
+        model.addAttribute("fechaVuelta", fechaVuelta);
 
         return "busqueda-vuelo";
     }
