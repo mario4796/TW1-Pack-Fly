@@ -84,5 +84,15 @@ public class ServicioReservaImpl implements ServicioReserva {
         return repositorioReserva.buscarPorId(id);
     }
 
+    @Override
+    public void pagarRerservasDeVuelo(String email) {
+        repositorioReserva.pagarReservasDeVuelo(email);
+    }
+
+    @Override
+    public List<Reserva> obtenerReservasPorEmailPagados(String email) {
+        return repositorioReserva.buscarPorEmailPagadas(email);
+    }
+
 
 }

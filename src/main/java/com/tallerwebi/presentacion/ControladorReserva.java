@@ -215,4 +215,24 @@ public class ControladorReserva {
         return "redirect:/reservas";
     }
 
+    @PostMapping("/pagar")
+    public String pagar(
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes
+    ) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+        List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
+        hotelService.pagarHotelesDto(hoteles);
+        servicioReserva.pagarRerservasDeVuelo(usuario.getEmail());
+        servicioExcursiones.pagarExcursiones(usuario.getId());
+
+       // ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
+       // usuario.setApagar(resumen.getTotal());
+
+
+
+        return "redirect:/perfil-usuario";
+    }
+
 }

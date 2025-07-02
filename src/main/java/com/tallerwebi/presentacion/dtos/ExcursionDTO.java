@@ -67,7 +67,7 @@ public class ExcursionDTO {
         entidad.setDescription(this.description);
         entidad.setUrl(this.url);
         entidad.setPrecio(this.precio);
-        entidad.setPagado(this.pagado);
+        entidad.setPagado(false);
         entidad.setUsuario(usuario);
 
 

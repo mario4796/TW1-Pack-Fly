@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.entidades.Hotel;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 
 import java.util.List;
@@ -15,5 +16,11 @@ public interface ServicioHotel {
 
     List<HotelDto> obtenerHotelesDto(List<Hotel> hoteles);
 
+    void pagarHotelesDto(List<Hotel> hoteles);
+
     Hotel buscarPorId(Long id);
+
+    List<Hotel> buscarHotelesPagados(Long id);
+
+
 }

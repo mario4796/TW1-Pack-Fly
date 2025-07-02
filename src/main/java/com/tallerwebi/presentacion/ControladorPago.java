@@ -71,22 +71,22 @@ public class ControladorPago {
     /**
      * Procesa el pago y redirige de vuelta a la lista de reservas.
      */
-    @PostMapping("/pagar")
+    /* @PostMapping("/pagar")
     public String realizarPago(
-         /*   @RequestParam("reservaId") Long reservaId,
+           @RequestParam("reservaId") Long reservaId,
             @RequestParam(value = "hotelId", required = false) Long hotelId,
-            @RequestParam(value = "excursionId", required = false) Long excursionId,*/
+            @RequestParam(value = "excursionId", required = false) Long excursionId,
             Model model,
             HttpSession session) {
 
         Usuario usuario = (Usuario) session.getAttribute("USUARIO");
         model.addAttribute("usuario", usuario);
 
-       /* Reserva reserva     = servicioReserva.buscarPorId(reservaId);
+       Reserva reserva     = servicioReserva.buscarPorId(reservaId);
         Hotel   hotel       = (hotelId != null)     ? servicioHotel.buscarPorId(hotelId)       : null;
         Excursion excursion = (excursionId != null) ? servicioExcursiones.buscarPorId(excursionId) : null;
 
-        servicioPago.procesarPago(reserva, hotel, excursion);*/
+        servicioPago.procesarPago(reserva, hotel, excursion);
         return "redirect:/reservas";
-    }
+    }*/
 }

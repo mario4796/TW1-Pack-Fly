@@ -102,7 +102,7 @@ public class Hotel {
         this.adult=adult;
         this.children=children;
         this.precio= precio;
-        this.pagado= pagado;
+        this.pagado= false;
     }
 
 

@@ -114,6 +114,7 @@ public class ControladorHotel {
         hotel.setChildren(children);
         hotel.setUsuario(usuario);
         hotel.setPrecio(precio);
+        hotel.setPagado(false);
         hotelService.reserva(hotel);
 
 
