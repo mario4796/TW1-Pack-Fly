@@ -28,10 +28,11 @@ public class RepositorioReservaImpl implements RepositorioReserva {
     @Override
     public List<Reserva> buscarPorEmail(String email) {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM Reserva WHERE email = :email", Reserva.class)
+                .createQuery("FROM Reserva WHERE email = :email AND pagado = false", Reserva.class)
                 .setParameter("email", email)
                 .list();
     }
+
 
     @Override
     public void eliminarReserva(String email, String fechaIda, String fechaVuelta) {
@@ -63,5 +64,22 @@ public class RepositorioReservaImpl implements RepositorioReserva {
     public Reserva buscarPorId(Long id) {
         return sessionFactory.getCurrentSession().get(Reserva.class, id);
     }
+
+    @Override
+    public void pagarReservasDeVuelo(String email) {
+        sessionFactory.getCurrentSession()
+                .createQuery("UPDATE Reserva SET pagado = true WHERE email = :email")
+                .setParameter("email", email)
+                .executeUpdate();
+    }
+
+    @Override
+    public List<Reserva> buscarPorEmailPagadas(String email) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Reserva WHERE email = :email AND pagado = true", Reserva.class)
+                .setParameter("email", email)
+                .list();
+    }
+
 
 }

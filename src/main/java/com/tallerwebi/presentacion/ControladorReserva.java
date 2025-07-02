@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.dominio.entidades.Hotel;
+import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -45,59 +46,19 @@ public class ControladorReserva {
             List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
             List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
-            // Intentar pasar los calculos a un servicio si es posible
-            double subtotal = 0.0;
-            double impuestos = 0.0;
-            double descuentos = 0.0;
+            ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
+            usuario.setApagar(resumen.getTotal());
 
-            // Suma precios de vuelos
-            if (vuelos != null) {
-                for (Reserva vuelo : vuelos) {
-                    if (vuelo.getPrecio() != null) {
-                        subtotal += vuelo.getPrecio();
-                    }
-                }
-            }
-            // Suma precios de hoteles
-            if (hotelesDto != null) {
-                for (HotelDto hotel : hotelesDto) {
-                    if (hotel.getPrecio() != null) {
-                        subtotal += hotel.getPrecio();
-                    }
-                }
-            }
-            // Suma precios de excursiones
-            if (excursiones != null) {
-                for (Excursion excursion : excursiones) {
-                    if (excursion.getPrecio() != null) {
-                        subtotal += excursion.getPrecio();
-                    }
-                }
-            }
-
-            //21% de impuestos
-            impuestos = subtotal * 0.21;
-
-            //10% de descuento si hay más de 3 reservas en total
-            int cantidadReservas = (vuelos != null ? vuelos.size() : 0)
-                    + (hotelesDto != null ? hotelesDto.size() : 0)
-                    + (excursiones != null ? excursiones.size() : 0);
-            if (cantidadReservas >= 3) {
-                descuentos = subtotal * 0.10;
-            }
-
-            double total = subtotal + impuestos - descuentos;
-
-            usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones));
             model.addAttribute("vuelos", vuelos);
             model.addAttribute("hoteles", hotelesDto);
             model.addAttribute("excursiones", excursiones);
             model.addAttribute("usuario", usuario);
 
-            model.addAttribute("subtotal", String.format("%.2f", subtotal));
-            model.addAttribute("impuestos", String.format("%.2f", impuestos));
-            model.addAttribute("descuentos", String.format("%.2f", descuentos));
-            model.addAttribute("total", String.format("%.2f", total));
+            model.addAttribute("subtotal", String.format("%.2f", resumen.getSubtotal()));
+            model.addAttribute("impuestos", String.format("%.2f", resumen.getImpuestos()));
+            model.addAttribute("descuentos", String.format("%.2f", resumen.getDescuentos()));
+            model.addAttribute("cargosServicio", String.format("%.2f", resumen.getCargosServicio()));
+            model.addAttribute("total", String.format("%.2f", resumen.getTotal()));
         } else {
             model.addAttribute("usuario", null);
         }
@@ -113,12 +74,12 @@ public class ControladorReserva {
         try {
             hotelService.eliminarReserva(usuario.getId(), name);
             String email = usuario.getEmail();
-            servicioEmail.enviarCorreo(
+            /*servicioEmail.enviarCorreo(
                     email,
                     "Reserva de hotel eliminada - Pack&Fly",
                     "Hola " + usuario.getNombre() + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly."
             );
-            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su reserva.");
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su reserva.");*/
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
@@ -146,12 +107,12 @@ public class ControladorReserva {
         try {
             servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
 
-            servicioEmail.enviarCorreo(
+           /* servicioEmail.enviarCorreo(
                     email,
                     "Reserva de vuelo eliminada - Pack&Fly",
                     "Hola " + usuario.getNombre() +",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros."
             );
-            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su vuelo.");
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su vuelo.");*/
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
@@ -173,12 +134,12 @@ public class ControladorReserva {
         try {
             servicioExcursiones.eliminarReserva(usuario.getId(), title);
             String email = usuario.getEmail();
-            servicioEmail.enviarCorreo(
+            /*servicioEmail.enviarCorreo(
                     email,
                     "Reserva de excursión eliminada - Pack&Fly",
                     "Hola " + usuario.getNombre() + ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto."
             );
-            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su excursion" + title);
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su excursion" + title);*/
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de excursion eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
@@ -252,6 +213,34 @@ public class ControladorReserva {
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
         return "redirect:/reservas";
+    }
+
+    @PostMapping("/pagar")
+    public String pagar(
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes
+    ) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+
+        try {
+            List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
+            hotelService.pagarHotelesDto(hoteles);
+            servicioReserva.pagarRerservasDeVuelo(usuario.getEmail());
+            servicioExcursiones.pagarExcursiones(usuario.getId());
+            redirectAttributes.addFlashAttribute("mensaje", "Pago realizado con éxito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
+
+        // ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
+       // usuario.setApagar(resumen.getTotal());
+
+
+
+        return "redirect:/perfil-usuario";
     }
 
 }

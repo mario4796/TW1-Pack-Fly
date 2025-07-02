@@ -2,6 +2,7 @@ package com.tallerwebi.infraestructura.implementaciones;
 
 import com.tallerwebi.infraestructura.RepositorioHotel;
 import com.tallerwebi.dominio.entidades.Hotel;
+import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,11 +38,12 @@ public class RepositorioHotelImp implements RepositorioHotel {
     public List<Hotel> buscarReserva(Long idUsuario) {
         return this.sessionFactory.getCurrentSession()
                 .createQuery(
-                        "SELECT new com.tallerwebi.dominio.entidades.Hotel(h.id, h.name, h.ciudad, h.checkIn, h.checkOut, h.adult, h.children, h.precio) " +
-                                "FROM Hotel h WHERE h.usuario.id = :idUsuario", Hotel.class)
+                        "SELECT new com.tallerwebi.dominio.entidades.Hotel(h.id, h.name, h.ciudad, h.checkIn, h.checkOut, h.adult, h.children, h.precio, h.pagado) " +
+                                "FROM Hotel h WHERE h.usuario.id = :idUsuario AND h.pagado = false", Hotel.class)
                 .setParameter("idUsuario", idUsuario)
                 .getResultList();
     }
+
 
     @Override
     public void eliminarReserva(Long idUsuario, String nameHotel) {
@@ -82,6 +84,30 @@ public class RepositorioHotelImp implements RepositorioHotel {
     @Override
     public Hotel buscarPorId(Long id) {
         return sessionFactory.getCurrentSession().get(Hotel.class, id);
+    }
+
+    @Override
+    public void pagarHoteles(List<Hotel> hoteles) {
+        for (Hotel hotel : hoteles) {
+            if (hotel.getUsuario() == null) {
+                Hotel hotelCompleto = sessionFactory.getCurrentSession().get(Hotel.class, hotel.getId());
+                hotelCompleto.setPagado(true);
+                sessionFactory.getCurrentSession().update(hotelCompleto);
+            } else {
+                hotel.setPagado(true);
+                sessionFactory.getCurrentSession().update(hotel);
+            }
+        }
+    }
+
+    @Override
+    public List<Hotel> buscarHotelesPagados(Long idUsuario) {
+        return this.sessionFactory.getCurrentSession()
+                .createQuery(
+                        "SELECT new com.tallerwebi.dominio.entidades.Hotel(h.id, h.name, h.ciudad, h.checkIn, h.checkOut, h.adult, h.children, h.precio, h.pagado) " +
+                                "FROM Hotel h WHERE h.usuario.id = :idUsuario AND h.pagado = true", Hotel.class)
+                .setParameter("idUsuario", idUsuario)
+                .getResultList();
     }
 
 }

@@ -31,9 +31,11 @@ public class ServicioHotelImpl implements ServicioHotel {
     public List<HotelDto> obtenerHotelesDto(List<Hotel> hoteles) {
         return hoteles.stream()
                 .map(hotel -> new HotelDto(hotel.getId(), hotel.getName(), hotel.getCiudad(), hotel.getCheckIn(),
-                        hotel.getCheckOut(), hotel.getAdult(), hotel.getChildren(), hotel.getPrecio()))
+                        hotel.getCheckOut(), hotel.getAdult(), hotel.getChildren(), hotel.getPrecio(), hotel.getPagado()))
                 .collect(Collectors.toList());
     }
+
+
 
     public List<HotelDto> buscarHoteles(String ciudad, String checkIn, String checkOut, Integer adults, Integer children) {
 
@@ -93,6 +95,17 @@ public class ServicioHotelImpl implements ServicioHotel {
         return repositorioHotelImp.buscarPorId(id);
     }
 
+    @Override
+    public List<Hotel> buscarHotelesPagados(Long id) {
+        return repositorioHotelImp.buscarHotelesPagados(id);
+    }
+
+
+
+    @Override
+    public void pagarHotelesDto(List<Hotel> hoteles) {
+        repositorioHotelImp.pagarHoteles(hoteles);
+    }
 
 
 }

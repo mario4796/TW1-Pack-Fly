@@ -127,5 +127,15 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
         return repositorioExcursionImpl.buscarPorId(id);
     }
 
+    @Override
+    public void pagarExcursiones(Long id) {
+        repositorioExcursionImpl.pagarExcursiones(id);
+    }
+
+    @Override
+    public List<Excursion> obtenerExcursionesDeUsuarioPagados(Long id) {
+        return repositorioExcursionImpl.obtenerPorUsuarioPagado(id);
+    }
+
 
 }

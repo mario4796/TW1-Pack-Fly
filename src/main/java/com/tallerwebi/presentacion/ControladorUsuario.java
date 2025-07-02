@@ -9,6 +9,7 @@ import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
+import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,32 +46,47 @@ public class ControladorUsuario {
         usuariop.put("viajes", 8);
         usuariop.put("destinos", 5);
         usuariop.put("ranking", 2);
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
-        // Historial de viajes de prueba
-        List<Map<String, String>> historialViajes = Arrays.asList(
-                Map.of("destino", "Madrid", "fecha", "12/06/2025"),
-                Map.of("destino", "Roma", "fecha", "20/04/2025")
-        );
-        usuariop.put("historialViajes", historialViajes);
+        List<Hotel> hotelesPagados = hotelService.buscarHotelesPagados(usuario.getId());
+        List<HotelDto> hotelesDtoPagados = hotelService.obtenerHotelesDto(hotelesPagados);
+        List<Reserva> vuelosPagados = servicioReserva.obtenerReservasPorEmailPagados(usuario.getEmail());
+        List<Excursion> excursionesPagadas = servicioExcursiones.obtenerExcursionesDeUsuarioPagados(usuario.getId());
+
+
+        //usuariop.put("historialViajes", historialViajes);
 
         // Wishlist de destinos de prueba
         List<String> wishlist = Arrays.asList("Tokio", "Sydney", "Toronto");
         usuariop.put("wishlist", wishlist);
 
         //reserva
-        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+
         List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
         List<HotelDto> hotelesDto = hotelService.obtenerHotelesDto(hoteles);
+
+        System.out.println("Hoteles pagados encontrados: " + hotelesDtoPagados.size());
+        for (HotelDto h : hotelesDtoPagados) {
+            System.out.println("Hotel pagado: " + h.getName() + " | Pagado: " + h.getPagado());
+        }
+
         List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
 
         List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
-        usuario.setApagar(servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones));
+        ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
+        usuario.setApagar(resumen.getTotal());
+
         model.addAttribute("vuelos", vuelos);
         model.addAttribute("hoteles", hotelesDto);
         model.addAttribute("excursiones", excursiones);
         model.addAttribute("usuario", usuario);
         model.addAttribute("usuariop", usuariop);
+
+        model.addAttribute("hotelesPagados", hotelesDtoPagados);
+        model.addAttribute("vuelosPagados", vuelosPagados);
+        model.addAttribute("excursionesPagadas", excursionesPagadas);
 
         return "perfil-usuario";
     }

@@ -42,10 +42,11 @@ public class RepositorioExcursionImpl implements RepositorioExcursion {
 @Override
 public List<Excursion> obtenerPorUsuario(Long idUsuario) {
     return entityManager.createQuery(
-                    "FROM Excursion e WHERE e.usuario.id = :idUsuario", Excursion.class)
+                    "FROM Excursion e WHERE e.usuario.id = :idUsuario AND e.pagado = false", Excursion.class)
             .setParameter("idUsuario", idUsuario)
             .getResultList();
 }
+
 
 
     @Override
@@ -78,6 +79,21 @@ public List<Excursion> obtenerPorUsuario(Long idUsuario) {
         return sessionFactory.getCurrentSession().get(Excursion.class, id);
     }
 
+    @Override
+    public void pagarExcursiones(Long id) {
+        sessionFactory.getCurrentSession()
+                .createQuery("UPDATE Excursion e SET e.pagado = true WHERE e.usuario.id = :id AND e.pagado = false")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
+    public List<Excursion> obtenerPorUsuarioPagado(Long id) {
+        return entityManager.createQuery(
+                        "FROM Excursion e WHERE e.usuario.id = :idUsuario AND e.pagado = true", Excursion.class)
+                .setParameter("idUsuario", id)
+                .getResultList();
+    }
 
 
 }

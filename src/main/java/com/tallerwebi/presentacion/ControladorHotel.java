@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +77,14 @@ public class ControladorHotel {
         model.addAttribute("datobusqueda", datobusqueda);
         model.addAttribute("iconHelper", iconHelper);
 
+        model.addAttribute("ciudad", ciudad);
+        model.addAttribute("checkIn", checkIn);
+        model.addAttribute("checkOut", checkOut);
+        model.addAttribute("precioMin", precioMin);
+        model.addAttribute("precioMax", precioMax);
+        model.addAttribute("adult", adult);
+        model.addAttribute("children", children);
+
         return "busqueda-hoteles";
     }
 
@@ -97,6 +106,7 @@ public class ControladorHotel {
                            @RequestParam Integer adult,
                            @RequestParam Integer children,
                            @RequestParam Double precio,
+                           RedirectAttributes redirectAttributes,
                            HttpServletRequest request) throws MessagingException {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
@@ -114,7 +124,17 @@ public class ControladorHotel {
         hotel.setChildren(children);
         hotel.setUsuario(usuario);
         hotel.setPrecio(precio);
-        hotelService.reserva(hotel);
+        hotel.setPagado(false);
+
+
+        try {
+            hotelService.reserva(hotel);
+            redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel creada con éxito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al crear la reserva de hotel.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
 
 
         if (usuario != null) {
@@ -123,7 +143,7 @@ public class ControladorHotel {
         }
         String email = usuario.getEmail();
 
-        try {
+        /*try {
             servicioEmail.enviarCorreo(
                     email,
                     "Confirmación de Reserva - Pack&Fly",
@@ -132,7 +152,7 @@ public class ControladorHotel {
                             + "Fecha entrada: " + checkIn + "\n"
                             + "Fecha salida:" + checkOut + "\n"
                             + "Precio: $" + precio + "\n"
-                            + "Recorda que tenes hasta 7 dias antes de la fecha "+ checkIn + "  para pagar, si no su reservacion sera ELIMINADA"
+                            + "Recorda que tenes hasta 7 dias antes de la reservacion para pagar, si no su reservacion sera ELIMINADA"
 
             );
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva Reserva de hotel","El usuario "+email+" ha realizado una reserva con \n"
@@ -141,10 +161,10 @@ public class ControladorHotel {
                     + "Precio: $" + precio + "\n");
         } catch (Exception ex) {
             System.err.println("Error al enviar email de reserva de Hotel: " + ex.getMessage());
-        }
+        }*/
 
 
-        return "redirect:/busqueda-excursiones?reservaExitosa=true";
+        return "redirect:/busqueda-excursiones";
     }
 
 

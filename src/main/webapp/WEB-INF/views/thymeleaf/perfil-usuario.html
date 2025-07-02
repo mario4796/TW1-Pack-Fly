@@ -21,8 +21,8 @@
                      alt="Foto de perfil">
                 <div class="card-body text-center">
                     <h5 class="card-title" th:text="${usuario.nombre + ' ' + usuario.apellido}"></h5>
-                    <p class="card-text">Nivel: <span class="fw-bold" th:text="${usuariop.nivel}">Oro</span></p>
-                    <p class="card-text">Millas acumuladas: <strong th:text="${usuariop.millas}">12.500</strong></p>
+                    <!--<p class="card-text">Nivel: <span class="fw-bold" th:text="${usuariop.nivel}">Oro</span></p>
+                    <p class="card-text">Millas acumuladas: <strong th:text="${usuariop.millas}">12.500</strong></p>-->
                 </div>
             </div>
 
@@ -41,32 +41,32 @@
                                data-bs-target="#modalCambiarNombre">Cambiar nombre y apellido</a></li>
                     </ul>
                 </div>
-                <a href="#" class="list-group-item list-group-item-action"
+                <!--<a href="#" class="list-group-item list-group-item-action"
                    data-bs-toggle="modal" data-bs-target="#modalPreferenciasViaje">
                     Preferencias de viaje
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">Configuración de notificaciones</a>
+                <a href="#" class="list-group-item list-group-item-action">Configuración de notificaciones</a>-->
             </div>
         </div>
         <!-- Estadísticas y actividad -->
         <div class="flex-grow-1">
             <ul class="nav nav-tabs" id="profileTabs" role="tablist">
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link active" id="stats-tab" data-bs-toggle="tab" href="#stats"
                        role="tab">Estadísticas</a>
-                </li>
+                </li>-->
                 <li class="nav-item">
-                    <a class="nav-link" id="history-tab" data-bs-toggle="tab" href="#history" role="tab">Historial</a>
+                    <a class="nav-link active" id="history-tab" data-bs-toggle="tab" href="#history" role="tab">Historial</a>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link" id="wishlist-tab" data-bs-toggle="tab" href="#wishlist" role="tab">Wishlist</a>
-                </li>
+                </li>-->
                 <li class="nav-item">
                     <a class="nav-link" id="reservas-tab" data-bs-toggle="tab" href="#reservas" role="tab">Reservas</a>
                 </li>
             </ul>
             <div class="tab-content p-3" id="profileTabsContent">
-                <div class="tab-pane fade show active" id="stats" role="tabpanel">
+                <div class="tab-pane fade" id="stats" role="tabpanel"> <!-- agregar active y show a la clase cuando se vuevla a usar -->
                     <!-- Estadísticas -->
                     <div class="row text-center">
                         <div class="col-6 col-md-4 mb-3">
@@ -102,21 +102,50 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="history" role="tabpanel">
-                    <h5>Últimos viajes</h5>
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center"
-                            th:each="viaje: ${usuariop.historialViajes}">
-                            <span th:text="${viaje.destino}">Madrid</span>
-                            <span class="badge bg-primary rounded-pill" th:text="${viaje.fecha}">12/06/2025</span>
+                <div class="tab-pane fade active show" id="history" role="tabpanel">
+                    <h5>Historial de viajes pagados</h5>
+
+                    <!-- Hoteles pagados -->
+                    <h6 class="mt-3">Hoteles</h6>
+                    <ul class="list-group mb-3" th:if="${hotelesPagados != null and !hotelesPagados.isEmpty()}">
+                        <li class="list-group-item" th:each="hotel : ${hotelesPagados}">
+                            <b th:text="${hotel.name}">Hotel</b> - <span th:text="${hotel.ciudad}">Ciudad</span>
+                            <span class="badge bg-success ms-2" th:text="'Check-in: ' + ${hotel.checkIn}"></span>
+                            <span class="badge bg-info ms-2" th:text="'Check-out: ' + ${hotel.checkOut}"></span>
                         </li>
                     </ul>
+                    <p th:if="${hotelesPagados == null or hotelesPagados.isEmpty()}">- No hay hoteles pagados.</p>
+
+                    <!-- Vuelos pagados -->
+                    <h6 class="mt-3">Vuelos</h6>
+                    <ul class="list-group mb-3" th:if="${vuelosPagados != null and !vuelosPagados.isEmpty()}">
+                        <li class="list-group-item" th:each="vuelo : ${vuelosPagados}">
+                            <b th:text="${vuelo.origen}">Origen</b> &rarr; <span th:text="${vuelo.destino}">Destino</span>
+                            <span class="badge bg-primary ms-2" th:text="${vuelo.fechaIda}"></span>
+                        </li>
+                    </ul>
+                    <p th:if="${vuelosPagados == null or vuelosPagados.isEmpty()}">- No hay vuelos pagados.</p>
+
+                    <!-- Excursiones pagadas -->
+                    <h6 class="mt-3">Excursiones</h6>
+                    <ul class="list-group mb-3" th:if="${excursionesPagadas != null and !excursionesPagadas.isEmpty()}">
+                        <li class="list-group-item" th:each="exc : ${excursionesPagadas}">
+                            <b th:text="${exc.title}">Excursión</b>
+                            <span class="badge bg-warning ms-2" th:text="${exc.startDate}"></span>
+                        </li>
+                    </ul>
+                    <p th:if="${excursionesPagadas == null or excursionesPagadas.isEmpty()}">- No hay excursiones pagadas.</p>
                 </div>
+                <!-- Whitelist -->
                 <div class="tab-pane fade" id="wishlist" role="tabpanel">
                     <h5>Wishlist de destinos</h5>
                     <ul class="list-group">
                         <li class="list-group-item" th:each="destino: ${usuariop.wishlist}" th:text="${destino}">Tokio
                         </li>
+                        <form th:action="@{/agregar-destino-wishlist}" method="post" class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Agregar destino" name="destino"/>
+                            <button class="btn btn-primary" type="submit">Agregar</button>
+                        </form>
                     </ul>
                 </div>
                 <!-- Pestaña de Reservas -->

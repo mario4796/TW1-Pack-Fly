@@ -18,64 +18,45 @@
 <!-- Navbar común -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<main class="container d-flex flex-column align-items-center" style="margin-top: 80px;">
-  <div class="overlay mt-3 col-md-8">
-    <h1 class="mb-4 text-center text-light">Pago</h1>
-    <div class="card shadow-lg">
-      <div class="card-body">
-        <form th:action="@{/pagar}" method="post">
-          <!-- IDs ocultos -->
-          <input type="hidden" name="reservaId" th:value="${reservaId}" />
-          <input type="hidden" name="hotelId" th:value="${hotelId}" />
-          <input type="hidden" name="excursionId" th:value="${excursionId}" />
+<main class="container py-5 mt-5">
+  <h1 class="text-white text-center mb-4">Pago</h1>
 
-          <!-- Paso: Método de Pago (solo Tarjeta) -->
-          <div class="mb-4">
-            <h5 class="mb-3">Método de Pago</h5>
-            <div class="btn-group" role="group">
-              <label class="btn btn-outline-primary active">
-                <input type="radio" name="metodo" value="tarjeta" checked hidden />
-                <i class="bi bi-credit-card me-2"></i>Tarjeta
-              </label>
-            </div>
-          </div>
+  <form th:action="@{/pagar}" method="post" class="bg-dark text-white p-4 rounded shadow">
 
-          <!-- Información de Pago -->
-          <div class="mb-4">
-            <h5 class="mb-3">Información de Pago</h5>
-            <div class="mb-3">
-              <input type="text" name="numeroTarjeta" class="form-control"
-                     placeholder="Número de tarjeta de crédito" required />
-            </div>
-            <div class="row mb-3">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <input type="text" class="form-control" readonly
-                       th:value="${#session.getAttribute('USUARIO').nombreCompleto}" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" class="form-control" readonly
-                       th:value="${#session.getAttribute('USUARIO').dni}" />
-              </div>
-            </div>
-            <div class="row mb-4">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <input type="month" name="fechaVencimiento" class="form-control"
-                       required />
-              </div>
-              <div class="col-md-6">
-                <input type="text" name="codigoSeguridad" class="form-control"
-                       placeholder="Código de seguridad" required />
-              </div>
-            </div>
-            <div class="d-flex justify-content-between">
-              <a class="btn btn-secondary" th:href="@{/reservas}">Volver</a>
-              <button type="submit" class="btn btn-success">Confirmar Pago</button>
-            </div>
-          </div>
-        </form>
+
+    <h4 class="mb-3">Seleccionar metodos de pago</h4>
+    <div class="btn-group mb-4 w-100" role="group">
+      <input type="radio" class="btn-check" name="metodo" id="metodoTarjeta" value="tarjeta" checked>
+      <label class="btn btn-outline-light" for="metodoTarjeta"><i class="bi bi-credit-card"></i> Tarjeta</label>
+
+
+      <input type="radio" class="btn-check" name="metodo" id="metodoCuenta" value="cuenta">
+      <!--<label class="btn btn-outline-light" for="metodoCuenta"><i class="bi bi-wallet2"></i> Efectivo</label>-->
+    </div>
+
+    <h4 class="mb-3">Datos de Pago</h4>
+    <div class="mb-3">
+      <input type="text" name="numeroTarjeta" placeholder="Número de tarjeta de crédito" required class="form-control"/>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <input type="text" name="titular" placeholder="Nombre completo del titular de la tarjeta" required class="form-control"/>
+      </div>
+      <div class="col">
+        <input type="text" name="dniTitular" placeholder="DNI del titular de la tarjeta" required class="form-control"/>
       </div>
     </div>
-  </div>
+    <div class="row mb-3">
+      <div class="col">
+        <input type="month" name="fechaVencimiento" placeholder="Fecha de vencimiento" required class="form-control"/>
+      </div>
+      <div class="col">
+        <input type="text" name="codigoSeguridad" placeholder="Código de seguridad" required class="form-control"/>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100 mt-3">Confirmar Pago</button>
+  </form>
 </main>
 
 <!-- Modal de login si corresponde -->
