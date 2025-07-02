@@ -89,8 +89,14 @@ public class RepositorioHotelImp implements RepositorioHotel {
     @Override
     public void pagarHoteles(List<Hotel> hoteles) {
         for (Hotel hotel : hoteles) {
-            hotel.setPagado(true);
-            sessionFactory.getCurrentSession().update(hotel);
+            if (hotel.getUsuario() == null) {
+                Hotel hotelCompleto = sessionFactory.getCurrentSession().get(Hotel.class, hotel.getId());
+                hotelCompleto.setPagado(true);
+                sessionFactory.getCurrentSession().update(hotelCompleto);
+            } else {
+                hotel.setPagado(true);
+                sessionFactory.getCurrentSession().update(hotel);
+            }
         }
     }
 

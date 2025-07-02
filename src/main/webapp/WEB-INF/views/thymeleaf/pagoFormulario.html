@@ -19,22 +19,22 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <main class="container py-5 mt-5">
-  <h1 class="text-white text-center mb-4">PAGO</h1>
+  <h1 class="text-white text-center mb-4">Pago</h1>
 
   <form th:action="@{/pagar}" method="post" class="bg-dark text-white p-4 rounded shadow">
 
 
-    <h4 class="mb-3">SELECCIONAR MÉTODO DE PAGO</h4>
+    <h4 class="mb-3">Seleccionar metodos de pago</h4>
     <div class="btn-group mb-4 w-100" role="group">
       <input type="radio" class="btn-check" name="metodo" id="metodoTarjeta" value="tarjeta" checked>
       <label class="btn btn-outline-light" for="metodoTarjeta"><i class="bi bi-credit-card"></i> Tarjeta</label>
 
 
-      <input type="radio" class="btn-check" name="metodo" id="metodoCuenta" value="cuenta">
+      <!--<input type="radio" class="btn-check" name="metodo" id="metodoCuenta" value="cuenta">
       <label class="btn btn-outline-light" for="metodoCuenta"><i class="bi bi-wallet2"></i> Efectivo</label>
-    </div>
+    </div>-->
 
-    <h4 class="mb-3">INFORMACIÓN DE PAGO</h4>
+    <h4 class="mb-3">Datos de Pago</h4>
     <div class="mb-3">
       <input type="text" name="numeroTarjeta" placeholder="Número de tarjeta de crédito" required class="form-control"/>
     </div>

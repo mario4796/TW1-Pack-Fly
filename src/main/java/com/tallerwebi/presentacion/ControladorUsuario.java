@@ -65,6 +65,12 @@ public class ControladorUsuario {
 
         List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
         List<HotelDto> hotelesDto = hotelService.obtenerHotelesDto(hoteles);
+
+        System.out.println("Hoteles pagados encontrados: " + hotelesDtoPagados.size());
+        for (HotelDto h : hotelesDtoPagados) {
+            System.out.println("Hotel pagado: " + h.getName() + " | Pagado: " + h.getPagado());
+        }
+
         List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
 
         List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
@@ -77,6 +83,10 @@ public class ControladorUsuario {
         model.addAttribute("excursiones", excursiones);
         model.addAttribute("usuario", usuario);
         model.addAttribute("usuariop", usuariop);
+
+        model.addAttribute("hotelesPagados", hotelesDtoPagados);
+        model.addAttribute("vuelosPagados", vuelosPagados);
+        model.addAttribute("excursionesPagadas", excursionesPagadas);
 
         return "perfil-usuario";
     }
