@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -143,7 +143,7 @@ public class ControladorHotel {
         }
         String email = usuario.getEmail();
 
-        /*try {
+        try {
             servicioEmail.enviarCorreo(
                     email,
                     "Confirmación de Reserva - Pack&Fly",
@@ -161,7 +161,7 @@ public class ControladorHotel {
                     + "Precio: $" + precio + "\n");
         } catch (Exception ex) {
             System.err.println("Error al enviar email de reserva de Hotel: " + ex.getMessage());
-        }*/
+        }
 
 
         return "redirect:/busqueda-excursiones";

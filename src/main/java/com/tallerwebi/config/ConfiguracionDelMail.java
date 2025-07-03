@@ -4,8 +4,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
 
 @Component
 public class ConfiguracionDelMail {
@@ -23,7 +23,7 @@ public class ConfiguracionDelMail {
         props.put("mail.smtp.port", "587");
 
         return Session.getInstance(props,
-                new javax.mail.Authenticator() {
+                new jakarta.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }

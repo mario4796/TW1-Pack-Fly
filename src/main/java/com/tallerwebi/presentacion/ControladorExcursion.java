@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -98,16 +99,16 @@ public class ControladorExcursion {
                     + "Precio estimado: $" + dto.getPrecio() + "\n"
                     + "\nGracias por reservar con Pack&Fly.";
 
-//            try {
-//                servicioEmail.enviarCorreo(usuario.getEmail(), asunto, cuerpo);
-//
-//                servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de excursion",
-//                        "El usuario "+email+" ha realizado una reserva de la excursion "+titulo);
-//
-//            } catch (Exception ex) {
-//                System.err.println("Error al enviar email de excursión: " + ex.getMessage());
-//            }
-//
+            try {
+                servicioEmail.enviarCorreo(usuario.getEmail(), asunto, cuerpo);
+
+                servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de excursion",
+                        "El usuario "+email+" ha realizado una reserva de la excursion "+titulo);
+
+            } catch (Exception ex) {
+                System.err.println("Error al enviar email de excursión: " + ex.getMessage());
+            }
+
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de excusrion creada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {

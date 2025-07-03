@@ -50,8 +50,8 @@ public class HibernateConfig {
     }
 
     @Bean
-    public HibernateTransactionManager transactionManager() {
-        return new HibernateTransactionManager(sessionFactory(dataSource()).getObject());
+    public HibernateTransactionManager transactionManager(LocalSessionFactoryBean sessionFactory) {
+        return new HibernateTransactionManager(sessionFactory.getObject());
     }
 
     private Properties hibernateProperties() {
