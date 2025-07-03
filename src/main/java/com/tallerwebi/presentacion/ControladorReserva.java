@@ -1,11 +1,8 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
-import com.tallerwebi.dominio.entidades.Excursion;
-import com.tallerwebi.dominio.entidades.Reserva;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.presentacion.dtos.HotelDto;
-import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,12 +71,12 @@ public class ControladorReserva {
         try {
             hotelService.eliminarReserva(usuario.getId(), name);
             String email = usuario.getEmail();
-            /*servicioEmail.enviarCorreo(
+            servicioEmail.enviarCorreo(
                     email,
                     "Reserva de hotel eliminada - Pack&Fly",
                     "Hola " + usuario.getNombre() + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly."
             );
-            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su reserva.");*/
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su reserva.");
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
@@ -107,12 +104,12 @@ public class ControladorReserva {
         try {
             servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
 
-           /* servicioEmail.enviarCorreo(
+            servicioEmail.enviarCorreo(
                     email,
                     "Reserva de vuelo eliminada - Pack&Fly",
                     "Hola " + usuario.getNombre() +",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros."
             );
-            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su vuelo.");*/
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su vuelo.");
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
@@ -134,12 +131,12 @@ public class ControladorReserva {
         try {
             servicioExcursiones.eliminarReserva(usuario.getId(), title);
             String email = usuario.getEmail();
-            /*servicioEmail.enviarCorreo(
+            servicioEmail.enviarCorreo(
                     email,
                     "Reserva de excursión eliminada - Pack&Fly",
                     "Hola " + usuario.getNombre() + ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto."
             );
-            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su excursion" + title);*/
+            servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su excursion" + title);
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de excursion eliminada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
@@ -219,7 +216,7 @@ public class ControladorReserva {
     public String pagar(
             HttpServletRequest request,
             RedirectAttributes redirectAttributes
-    ) {
+    ) throws MessagingException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
 
@@ -234,6 +231,7 @@ public class ControladorReserva {
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
+
 
         // ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
        // usuario.setApagar(resumen.getTotal());

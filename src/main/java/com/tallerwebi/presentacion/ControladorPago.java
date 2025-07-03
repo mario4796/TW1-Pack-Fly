@@ -71,7 +71,8 @@ public class ControladorPago {
     /**
      * Procesa el pago y redirige de vuelta a la lista de reservas.
      */
-    /* @PostMapping("/pagar")
+    /*
+    @PostMapping("/pagar")
     public String realizarPago(
            @RequestParam("reservaId") Long reservaId,
             @RequestParam(value = "hotelId", required = false) Long hotelId,
