@@ -39,15 +39,14 @@ public class RepositorioExcursionImpl implements RepositorioExcursion {
 //                .setParameter("idUsuario", idUsuario)
 //                .getResultList();
 //    }
-@Override
-public List<Excursion> obtenerPorUsuario(Long idUsuario) {
-    return entityManager.createQuery(
-                    "FROM Excursion e WHERE e.usuario.id = :idUsuario AND e.pagado = false", Excursion.class)
-            .setParameter("idUsuario", idUsuario)
-            .getResultList();
-}
 
-
+    @Override
+            public List<Excursion> obtenerPorUsuario(Long idUsuario) {
+                return entityManager.createQuery(
+                                "FROM Excursion e WHERE e.usuario.id = :idUsuario AND e.pagado = false", Excursion.class)
+                        .setParameter("idUsuario", idUsuario)
+                        .getResultList();
+            }
 
     @Override
     public void eliminarReserva(Long idUsuario, String title) {
