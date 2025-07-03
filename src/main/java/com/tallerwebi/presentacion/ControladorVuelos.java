@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.mail.MessagingException;
+import jakarta.mail.MessagingException;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -159,7 +160,7 @@ public class ControladorVuelos {
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
 
-        try {
+       try {
             servicioEmail.enviarCorreo(
                     email,
                     "Confirmación de Reserva - Pack&Fly",

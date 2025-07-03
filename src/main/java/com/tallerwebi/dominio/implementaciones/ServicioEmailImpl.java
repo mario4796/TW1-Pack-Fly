@@ -1,18 +1,21 @@
 package com.tallerwebi.dominio.implementaciones;
 import com.tallerwebi.config.ConfiguracionDelMail;
 import com.tallerwebi.dominio.ServicioEmail;
+import io.github.cdimascio.dotenv.Dotenv;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.mail.*;
-import javax.mail.internet.*;
+import jakarta.mail.*;
+
 
 @Service
 public class ServicioEmailImpl implements ServicioEmail {
-
+    Dotenv dotenv = Dotenv.load();
     private final ConfiguracionDelMail config;
-    private final String correoRemitente = System.getenv("CORREO_REMITENTE");
-    private final String contraseña = System.getenv("CONTRASENA_CORREO");
+    private final String correoRemitente = dotenv.get("CORREO_REMITENTE");
+    private final String contraseña = dotenv.get("CONTRASENA_CORREO");
 
     @Autowired
     public ServicioEmailImpl(ConfiguracionDelMail config) {
@@ -20,7 +23,7 @@ public class ServicioEmailImpl implements ServicioEmail {
     }
 
     @Override
-    public void enviarCorreo(String destinatario, String asunto, String cuerpo) throws MessagingException {
+    public void enviarCorreo(String destinatario, String asunto, String cuerpo) throws MessagingException{
 
 
 

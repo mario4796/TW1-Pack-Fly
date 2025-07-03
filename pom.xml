@@ -163,19 +163,14 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Conector para MySql -->
-          <dependency>
-              <groupId>com.mysql</groupId>
-              <artifactId>mysql-connector-j</artifactId>
-              <version>${mysql.version}</version>
-              <scope>runtime</scope>
-          </dependency>
 
         <dependency>
             <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
-            <version>1.6.2</version>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
         </dependency>
+
+
 
         <!-- compile only, deployed container will provide this -->
         <!--

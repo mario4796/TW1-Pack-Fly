@@ -26,3 +26,4 @@ WORKDIR $JETTY_HOME
 
 # Comando para iniciar Jetty y desplegar el archivo WAR
 CMD ["java", "-jar", "./start.jar"]
+
