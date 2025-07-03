@@ -25,7 +25,6 @@ public class ControladorVuelos {
     @Autowired
     private ServicioEmail servicioEmail;
 
-
     @Autowired
     private ServicioReserva servicioReserva;
 
@@ -92,8 +91,8 @@ public class ControladorVuelos {
         return "busqueda-vuelo";
     }
 
-
     @GetMapping("/formulario-reserva")
+
     public String mostrarFormularioVacio() {return "formularioReserva";}
 
     @PostMapping("/formulario-reserva")
@@ -104,32 +103,18 @@ public class ControladorVuelos {
                                            @RequestParam Double precio,
                                            HttpServletRequest request,
                                            Model model) {
-        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-        model.addAttribute("usuario", usuario);
 
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+        model.addAttribute("usuario", usuario);
         model.addAttribute("origen", origen);
         model.addAttribute("destino", destino);
         model.addAttribute("fechaIda", fechaIda);
         model.addAttribute("fechaVuelta", fechaVuelta);
         model.addAttribute("precio", precio);
+
         return "formularioReserva";
     }
-/*
-    @PostMapping("/guardar-reserva")
-    public String guardarReserva(
-            @RequestParam("nombre") String nombre,
-            @RequestParam("email") String email,
-            @RequestParam("origen") String origen,
-            @RequestParam("destino") String destino,
-            @RequestParam("fechaIda") String fechaIda,
-            @RequestParam("fechaVuelta") String fechaVuelta,
-            @RequestParam("precio") Double precio,
-            Model model
-    ) {
-        Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
-        servicioReserva.guardarReserva(reserva);
-        return "redirect:/busqueda-hoteles?reservaExitosa=true";
-    }*/
 
     @PostMapping("/guardar-reserva")
     public String guardarReserva(
@@ -142,13 +127,13 @@ public class ControladorVuelos {
             @RequestParam("precio") Double precio,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes,
-            Model model
-    ) throws MessagingException {
-        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+            Model model)
 
+            throws MessagingException {
+
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
         reserva.setUsuario(usuario); // Enlaza el usuario con la reserva
-
 
         try {
             servicioReserva.guardarReserva(reserva);
@@ -182,16 +167,5 @@ public class ControladorVuelos {
 
         return "redirect:/busqueda-hoteles";
     }
-
-
-
-    /*@GetMapping("/ver-reservas")
-    public String verReservas(@RequestParam("email") String email, Model model) {
-        List<Reserva> reservas = servicioReserva.obtenerReservasPorEmail(email);
-        model.addAttribute("reservas", reservas);
-        model.addAttribute("email", email);
-        return "verReservas";
-    }*/
-
 
 }

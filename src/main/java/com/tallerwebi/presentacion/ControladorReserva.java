@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -68,8 +67,9 @@ public class ControladorReserva {
     @PostMapping("/eliminarReservaHotel")
     public String eliminarReservaHotel(@RequestParam String name,
                                        HttpServletRequest request,
-                                       RedirectAttributes redirectAttributes) throws MessagingException {
+                                       RedirectAttributes redirectAttributes)
 
+            throws MessagingException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         try {
             hotelService.eliminarReserva(usuario.getId(), name);
@@ -88,10 +88,7 @@ public class ControladorReserva {
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
 
-
-
         return "redirect:/reservas";
-
     }
 
     @PostMapping("/eliminarReservaVuelo")
@@ -102,7 +99,6 @@ public class ControladorReserva {
                                        RedirectAttributes redirectAttributes) {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-
 
         try {
             servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
@@ -122,8 +118,7 @@ public class ControladorReserva {
         }
 
         return "redirect:/reservas";
-
-    }
+        }
 
     @PostMapping("/eliminarReservaExcursion")
     public String eliminarReservaExcursion(@RequestParam String title,
@@ -234,11 +229,59 @@ public class ControladorReserva {
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
+        try {
+            List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
+            List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
+            List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
+
+            StringBuilder cuerpo = new StringBuilder();
+            cuerpo.append("Hola ").append(usuario.getNombre()).append(",\n\n")
+                    .append("Te confirmamos que tu pago fue realizado con éxito.\n")
+                    .append("Aquí está el detalle de tus reservas:\n\n");
+
+            cuerpo.append("✈️ Vuelos:\n");
+            if (vuelos.isEmpty()) {
+                cuerpo.append("  - No hay vuelos reservados.\n");
+            } else {
+                for (Reserva vuelo : vuelos) {
+                    cuerpo.append(" | Fecha ida: ").append(vuelo.getFechaIda())
+                            .append(" | Destino: ").append(vuelo.getDestino()).append("\n");
+                }
+            }
+
+            cuerpo.append("\n🏨 Hoteles:\n");
+            if (hoteles.isEmpty()) {
+                cuerpo.append("  - No hay hoteles reservados.\n");
+            } else {
+                for (Hotel hotel : hoteles) {
+                    cuerpo.append(" | Nombre: ").append(hotel.getName())
+                            .append(" | Check-in: ").append(hotel.getCheckIn()).append("\n");
+                }
+            }
+
+            cuerpo.append("\n🧭 Excursiones:\n");
+            if (excursiones.isEmpty()) {
+                cuerpo.append("  - No hay excursiones reservadas.\n");
+            } else {
+                for (Excursion excursion : excursiones) {
+                    cuerpo.append(" | Nombre: ").append(excursion.getTitle())
+                            .append(" | Lugar: ").append(excursion.getLocation()).append("\n");
+                }
+
+            }
+
+            cuerpo.append("\n¡Gracias por elegir Pack&Fly!\n");
+
+            servicioEmail.enviarCorreo(usuario.getEmail(), "Confirmación de pago - Pack&Fly", cuerpo.toString());
+            redirectAttributes.addFlashAttribute("mensaje", "Mail enviado con exito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e){
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al enviar el mail.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
 
         // ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
        // usuario.setApagar(resumen.getTotal());
-
-
 
         return "redirect:/perfil-usuario";
     }

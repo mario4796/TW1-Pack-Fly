@@ -7,7 +7,6 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioReserva;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -28,7 +27,6 @@ public class ServicioReservaImpl implements ServicioReserva {
     @Override
     public void guardarReserva(Reserva reserva) {
         repositorioReserva.guardar(reserva);
-
 
         int cantidadAsientos = 1;
         int millas = 100;
@@ -93,6 +91,4 @@ public class ServicioReservaImpl implements ServicioReserva {
     public List<Reserva> obtenerReservasPorEmailPagados(String email) {
         return repositorioReserva.buscarPorEmailPagadas(email);
     }
-
-
 }
