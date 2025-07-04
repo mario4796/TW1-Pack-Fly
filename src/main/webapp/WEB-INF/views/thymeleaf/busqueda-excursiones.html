@@ -36,7 +36,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input id="loc" name="loc" th:value="${param.loc}" type="text"
+                                <input id="loc" name="loc" th:value="${ciudadHospedaje ?: ''}" type="text"
                                        class="form-control"
                                        placeholder="Ciudad"
                                        pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,}" required>

@@ -33,22 +33,21 @@
                             <label for="ciudad" class="form-label">Ciudad:</label>
                             <input type="text" id="ciudad" name="ciudad" class="form-control"
                                    pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,}" required
-                                   th:value="${datobusqueda != null and datobusqueda.ciudad != null ? datobusqueda.ciudad : ''}">
+                                   th:value="${datobusqueda != null && datobusqueda.ciudad != null ? datobusqueda.ciudad : (destinoDeVuelo != null ? destinoDeVuelo : '')}">
                             <div class="invalid-feedback">Ingresá una ciudad válida (solo letras).</div>
                         </div>
                         <div class="col-md-3">
                             <label for="checkIn" class="form-label">Fecha check-in:</label>
                             <input type="date" id="checkIn" name="checkIn" class="form-control"
-                                   min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-                                   required
-                                   th:value="${datobusqueda != null and datobusqueda.checkIn != null ? datobusqueda.checkIn : ''}">
-                            <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
+                                   th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                                   th:value="${datobusqueda != null && datobusqueda.checkIn != null ? datobusqueda.checkIn : (fechaIdaVuelo != null ? fechaIdaVuelo : '')}"
+                                   required>
                         </div>
                         <div class="col-md-3">
                             <label for="checkOut" class="form-label">Fecha check-out:</label>
                             <input type="date" id="checkOut" name="checkOut" class="form-control"
-                                   required
-                                   th:value="${datobusqueda != null and datobusqueda.checkOut != null ? datobusqueda.checkOut : ''}">
+                                   th:value="${datobusqueda != null && datobusqueda.checkOut != null ? datobusqueda.checkOut : (fechaVueltaVuelo != null ? fechaVueltaVuelo : '')}"
+                                   required>
                             <div class="invalid-feedback">Seleccioná una fecha de salida válida.</div>
                         </div>
                     </div>
