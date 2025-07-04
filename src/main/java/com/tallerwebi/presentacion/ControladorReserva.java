@@ -219,18 +219,6 @@ public class ControladorReserva {
     ) throws MessagingException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
-
-        try {
-            List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
-            hotelService.pagarHotelesDto(hoteles);
-            servicioReserva.pagarRerservasDeVuelo(usuario.getEmail());
-            servicioExcursiones.pagarExcursiones(usuario.getId());
-            redirectAttributes.addFlashAttribute("mensaje", "Pago realizado con éxito.");
-            redirectAttributes.addFlashAttribute("tipo", "success");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
-            redirectAttributes.addFlashAttribute("tipo", "warning");
-        }
         try {
             List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
             List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
@@ -282,6 +270,19 @@ public class ControladorReserva {
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al enviar el mail.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
+
+        try {
+            List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
+            hotelService.pagarHotelesDto(hoteles);
+            servicioReserva.pagarRerservasDeVuelo(usuario.getEmail());
+            servicioExcursiones.pagarExcursiones(usuario.getId());
+            redirectAttributes.addFlashAttribute("mensaje", "Pago realizado con éxito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
+
 
 
 
