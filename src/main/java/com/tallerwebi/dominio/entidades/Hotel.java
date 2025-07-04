@@ -22,14 +22,6 @@ public class Hotel {
     private String imagen;
     private Boolean pagado;
 
-    public Boolean getPagado() {
-        return pagado;
-    }
-
-    public void setPagado(Boolean pagado) {
-        this.pagado = pagado;
-    }
-
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
@@ -129,6 +121,14 @@ public class Hotel {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public Boolean getPagado() {
+        return pagado;
+    }
+
+    public void setPagado(Boolean pagado) {
+        this.pagado = pagado;
     }
 
 }
