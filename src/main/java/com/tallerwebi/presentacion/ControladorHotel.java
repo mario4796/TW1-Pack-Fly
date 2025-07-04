@@ -5,7 +5,6 @@ import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.dominio.implementaciones.ServicioHotelImpl;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.utils.IconHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,7 +162,7 @@ public class ControladorHotel {
             System.err.println("Error al enviar email de reserva de Hotel: " + ex.getMessage());
         }
 
-
+        redirectAttributes.addFlashAttribute("ciudadHospedaje", ciudad);
         return "redirect:/busqueda-excursiones";
     }
 

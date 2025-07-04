@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.mail.MessagingException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Controller
@@ -132,6 +133,7 @@ public class ControladorVuelos {
         return "redirect:/busqueda-hoteles?reservaExitosa=true";
     }*/
 
+
     @PostMapping("/guardar-reserva")
     public String guardarReserva(
             @RequestParam("nombre") String nombre,
@@ -142,10 +144,10 @@ public class ControladorVuelos {
             @RequestParam("fechaVuelta") String fechaVuelta,
             @RequestParam("precio") Double precio,
             HttpServletRequest request,
-            RedirectAttributes redirectAttributes,
-            Model model
+            RedirectAttributes redirectAttributes
     ) throws MessagingException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
 
         Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
         reserva.setUsuario(usuario); // Enlaza el usuario con la reserva
@@ -181,6 +183,18 @@ public class ControladorVuelos {
             System.err.println("Error al enviar email de reserva de vuelo: " + ex.getMessage());
         }
 
+
+        String fechaIdaSolo = fechaIda.contains(" ") ? fechaIda.split(" ")[0] : fechaIda;
+        String fechaVueltaSolo = fechaVuelta.contains(" ") ? fechaVuelta.split(" ")[0] : fechaVuelta;
+
+
+        LocalDate fechaIdaVuelo = LocalDate.parse(fechaIdaSolo);
+        LocalDate fechaVueltaVuelo = LocalDate.parse(fechaVueltaSolo);
+
+
+        redirectAttributes.addFlashAttribute("destinoDeVuelo", destino);
+        redirectAttributes.addFlashAttribute("fechaIdaVuelo", fechaIdaVuelo);
+        redirectAttributes.addFlashAttribute("fechaVueltaVuelo", fechaVueltaVuelo);
         return "redirect:/busqueda-hoteles";
     }
 
