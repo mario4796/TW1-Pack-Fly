@@ -35,8 +35,7 @@ public class ServicioHotelImpl implements ServicioHotel {
                 .collect(Collectors.toList());
     }
 
-
-
+    
     public List<HotelDto> buscarHoteles(String ciudad, String checkIn, String checkOut, Integer adults, Integer children) {
 
         String API_KEY = apiconfig.getApiKey();
