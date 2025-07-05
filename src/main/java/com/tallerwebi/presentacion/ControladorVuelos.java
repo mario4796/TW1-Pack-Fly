@@ -168,6 +168,17 @@ public class ControladorVuelos {
             System.err.println("Error al enviar email de reserva de vuelo: " + ex.getMessage());
         }
 
+        String fechaIdaSolo = fechaIda.contains(" ") ? fechaIda.split(" ")[0] : fechaIda;
+        String fechaVueltaSolo = fechaVuelta.contains(" ") ? fechaVuelta.split(" ")[0] : fechaVuelta;
+
+
+        LocalDate fechaIdaVuelo = LocalDate.parse(fechaIdaSolo);
+        LocalDate fechaVueltaVuelo = LocalDate.parse(fechaVueltaSolo);
+
+
+        redirectAttributes.addFlashAttribute("destinoDeVuelo", destino);
+        redirectAttributes.addFlashAttribute("fechaIdaVuelo", fechaIdaVuelo);
+        redirectAttributes.addFlashAttribute("fechaVueltaVuelo", fechaVueltaVuelo);
 
         return "redirect:/busqueda-hoteles";
     }
