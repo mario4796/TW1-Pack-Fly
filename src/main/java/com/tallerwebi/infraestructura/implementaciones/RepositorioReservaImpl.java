@@ -5,7 +5,6 @@ import com.tallerwebi.infraestructura.RepositorioReserva;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -32,7 +31,6 @@ public class RepositorioReservaImpl implements RepositorioReserva {
                 .setParameter("email", email)
                 .list();
     }
-
 
     @Override
     public void eliminarReserva(String email, String fechaIda, String fechaVuelta) {
