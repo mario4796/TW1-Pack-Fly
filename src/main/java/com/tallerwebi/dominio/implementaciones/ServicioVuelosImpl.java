@@ -7,7 +7,6 @@ import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.infraestructura.RepositorioVuelo;
 import com.tallerwebi.presentacion.response.VueloResponse;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.URI;
@@ -63,7 +62,6 @@ public class ServicioVuelosImpl implements ServicioVuelos {
         try {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-
             System.out.println("Respuesta cruda de SerpAPI:\n" + response.body());
 
             if (response.statusCode() == 200) {
@@ -71,17 +69,13 @@ public class ServicioVuelosImpl implements ServicioVuelos {
 
                 if (result.getMejoresVuelos() != null && !result.getMejoresVuelos().isEmpty()) {
                     Vuelo vuelo = result.getMejoresVuelos().get(0);
-
-
                     repositorioVuelo.guardar(vuelo);
-
                     return vuelo;
                 }
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
         return null;
     }
 }

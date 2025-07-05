@@ -88,10 +88,7 @@ public class ControladorReserva {
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
 
-
-
         return "redirect:/reservas";
-
     }
 
     @PostMapping("/eliminarReservaVuelo")
@@ -102,7 +99,6 @@ public class ControladorReserva {
                                        RedirectAttributes redirectAttributes) {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-
 
         try {
             servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
@@ -122,8 +118,7 @@ public class ControladorReserva {
         }
 
         return "redirect:/reservas";
-
-    }
+        }
 
     @PostMapping("/eliminarReservaExcursion")
     public String eliminarReservaExcursion(@RequestParam String title,

@@ -3,7 +3,6 @@ package com.tallerwebi.dominio.entidades;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class Vuelo {
     @JsonProperty("total_duration")
     private String duracionTotal;
 
-    @Transient // No lo persistimos en la base por ahora
+    @Transient
     private List<SegmentoVuelo> segmentos;
 
     private String origen;
@@ -81,7 +80,6 @@ public class Vuelo {
         return fechaVuelta;
     }
 
-    // Derivar datos desde segmentos
     private void derivarOrigenYDestino() {
         if (segmentos != null && !segmentos.isEmpty()) {
             this.origen = segmentos.get(0).getAeropuertoSalida().getNombre();
@@ -95,8 +93,8 @@ public class Vuelo {
             this.fechaVuelta = segmentos.get(0).getAeropuertoLlegada().getFecha();
         }
     }
-    // Clases internas para el JSON
 
+    // Clases internas para el JSON
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SegmentoVuelo {
