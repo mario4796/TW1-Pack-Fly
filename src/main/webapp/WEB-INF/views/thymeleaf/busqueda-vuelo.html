@@ -6,7 +6,6 @@
 
     <title>Búsqueda de Vuelo</title>
 
-    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
@@ -28,6 +27,7 @@
             <div class="card-body">
                 <form th:action="@{/busqueda-vuelo}" method="post" accept-charset="UTF-8" novalidate>
                     <div class="row mb-3">
+
                         <div class="col-md-3">
                             <label for="origen" class="form-label">Origen</label>
                             <select class="form-select" name="origen" id="origen" required>
@@ -118,8 +118,6 @@
 
 
     <div th:if="${vueloUrl}" class="overlay mt-5">
-
-
         <div class="card shadow-lg border-0 bg-body text-body">
         <div class="card-header d-flex align-items-center bg-primary text-white">
             <i class="bi bi-airplane-engines-fill me-2"></i>
@@ -152,8 +150,6 @@
                 <i class="bi bi-cash-stack me-2"></i>
                 <strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span>
             </p>
-
-
 
 
             <form th:if="${usuario != null}" th:action="@{/formulario-reserva}" method="post" accept-charset="UTF-8">

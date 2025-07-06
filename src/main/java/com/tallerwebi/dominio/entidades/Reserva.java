@@ -1,8 +1,6 @@
 package com.tallerwebi.dominio.entidades;
 
 import javax.persistence.ManyToOne;
-
-
 import javax.persistence.*;
 
 @Entity
@@ -11,11 +9,8 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nombre;
     private String email;
-
-    // Datos del vuelo
     private String origen;
     private String destino;
     private String fechaIda;
@@ -23,13 +18,8 @@ public class Reserva {
     private Double precio;
     private Boolean pagado;
 
-    public Boolean getPagado() {
-        return pagado;
-    }
-
     @ManyToOne
     private Usuario usuario;
-
 
     public Reserva() {
     }
@@ -44,8 +34,6 @@ public class Reserva {
         this.precio = precio;
         this.pagado= false;
     }
-
-
 
     public Long getId() {
         return id;
@@ -117,6 +105,10 @@ public class Reserva {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Boolean getPagado() {
+        return pagado;
     }
 
 }

@@ -1,6 +1,5 @@
 package com.tallerwebi.dominio;
 import com.tallerwebi.dominio.entidades.Reserva;
-
 import java.util.List;
 
 public interface ServicioReserva {
@@ -12,5 +11,4 @@ public interface ServicioReserva {
     Reserva buscarPorId(Long id);
     void pagarRerservasDeVuelo (String email);
     List<Reserva>  obtenerReservasPorEmailPagados(String email);
-
 }
