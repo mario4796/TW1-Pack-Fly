@@ -1,7 +1,7 @@
 package com.tallerwebi.dominio.implementaciones;
 
 import com.tallerwebi.dominio.ServicioPago;
-import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.entidades.ReservaPagada;
@@ -25,28 +25,28 @@ public class ServicioPagoImpl implements ServicioPago {
     }
 
     @Override
-    public void procesarPago(Reserva reserva, Hotel hotel, Excursion excursion) {
+    public void procesarPago(Vuelo vuelo, Hotel hotel, Excursion excursion) {
         LocalDateTime ahora = LocalDateTime.now();
         ReservaPagada pago;
 
-        boolean v = reserva != null;
+        boolean v = vuelo != null;
         boolean h = hotel != null;
         boolean e = excursion != null;
 
         if (v && !h && !e) {
-            pago = ReservaPagada.ofSoloVuelo(reserva, ahora);
+            pago = ReservaPagada.ofSoloVuelo(vuelo, ahora);
         } else if (!v && h && !e) {
-            pago = ReservaPagada.ofSoloHotel(reserva, hotel, ahora);
+            pago = ReservaPagada.ofSoloHotel(vuelo, hotel, ahora);
         } else if (!v && !h && e) {
-            pago = ReservaPagada.ofSoloExcursion(reserva, excursion, ahora);
+            pago = ReservaPagada.ofSoloExcursion(vuelo, excursion, ahora);
         } else if (v && h && !e) {
-            pago = ReservaPagada.ofVueloYHotel(reserva, hotel, ahora);
+            pago = ReservaPagada.ofVueloYHotel(vuelo, hotel, ahora);
         } else if (v && !h && e) {
-            pago = ReservaPagada.ofVueloYExcursion(reserva, excursion, ahora);
+            pago = ReservaPagada.ofVueloYExcursion(vuelo, excursion, ahora);
         } else if (!v && h && e) {
-            pago = ReservaPagada.ofHotelYExcursion(reserva, hotel, excursion, ahora);
+            pago = ReservaPagada.ofHotelYExcursion(vuelo, hotel, excursion, ahora);
         } else if (v && h && e) {
-            pago = ReservaPagada.ofHotelYExcursion(reserva, hotel, excursion, ahora);
+            pago = ReservaPagada.ofHotelYExcursion(vuelo, hotel, excursion, ahora);
         } else {
             throw new IllegalArgumentException(
                     "Debe especificar al menos una reserva, hotel o excursión para procesar el pago.");

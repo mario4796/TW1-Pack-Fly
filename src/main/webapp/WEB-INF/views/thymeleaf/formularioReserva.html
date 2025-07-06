@@ -11,12 +11,15 @@
 </head>
 
 <body data-bs-theme="dark">
+
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <main class="container mt-5 pt-5">
   <h2 class="text-light text-center mb-4">Formulario de Reserva</h2>
 
-  <form th:action="@{/guardar-reserva}" method="post" accept-charset="UTF-8" class="bg-dark p-4 rounded shadow-lg text-light">
+
+
+  <form th:action="@{/guardar-vuelo}" method="post" accept-charset="UTF-8" class="bg-dark p-4 rounded shadow-lg text-light">
     <div class="mb-3">
       <label class="form-label">Origen</label>
       <input type="text" class="form-control" name="origen" th:value="${origen}" readonly>
@@ -53,6 +56,7 @@
       <button type="submit" class="btn btn-success btn-lg">Confirmar Reserva</button>
     </div>
   </form>
+
 </main>
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>

@@ -2,7 +2,7 @@ package com.tallerwebi.dominio.implementaciones;
 
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.entidades.Excursion;
-import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
@@ -45,7 +45,7 @@ public class ServicioLoginImpl implements ServicioLogin {
     }
 
     @Override
-    public ResumenPagoDto obtenerDeudaDelUsuario(Long idUsuario, List<HotelDto> hoteles, List<Reserva> vuelos, List<Excursion> excursiones) {
+    public ResumenPagoDto obtenerDeudaDelUsuario(Long idUsuario, List<HotelDto> hoteles, List<Vuelo> vuelos, List<Excursion> excursiones) {
         double subtotal = 0.0;
         double impuestos = 0.0;
         double descuentos = 0.0;
@@ -53,7 +53,7 @@ public class ServicioLoginImpl implements ServicioLogin {
 
         // Suma precios de vuelos
         if (vuelos != null) {
-            for (Reserva vuelo : vuelos) {
+            for (Vuelo vuelo : vuelos) {
                 if (vuelo.getPrecio() != null) {
                     subtotal += vuelo.getPrecio();
                 }

@@ -63,7 +63,7 @@
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <form th:action="@{/eliminarReservaVuelo}" method="post"
-                                                      accept-charset="UTF-8" class="form-eliminar-reserva m-0">
+                                                      accept-charset="UTF-8" class="form-eliminar-vuelo m-0">
                                                     <input type="hidden" name="email" th:value="${vuelo.email}"/>
                                                     <input type="hidden" name="fechaIda" th:value="${vuelo.fechaIda}"/>
                                                     <input type="hidden" name="fechaVuelta"
@@ -127,7 +127,7 @@
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <form th:action="@{/eliminarReservaHotel}" method="post"
-                                                      class="form-eliminar-reserva m-0"
+                                                      class="form-eliminar-vuelo m-0"
                                                       accept-charset="UTF-8">
                                                     <input type="hidden" name="name" th:value="${hotel.name}"/>
                                                     <button type="submit" class="btn btn-danger btn-sm"
@@ -177,7 +177,7 @@
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
                                                 <form th:action="@{/eliminarReservaExcursion}" method="post"
-                                                      accept-charset="UTF-8" class="form-eliminar-reserva m-0">
+                                                      accept-charset="UTF-8" class="form-eliminar-vuelo m-0">
                                                     <input type="hidden" name="title" th:value="${excursion.title}"/>
                                                     <button type="submit" class="btn btn-danger btn-sm"
                                                             title="Eliminar">
@@ -194,14 +194,13 @@
 
                     <div th:if="${(vuelos == null or vuelos.isEmpty()) and (hoteles == null or hoteles.isEmpty()) and (excursiones == null or excursiones.isEmpty())}">
                         <div class="alert alert-info text-center mt-4">
-                            No tienes reservas registradas.
+                            No tienes vuelos registradas.
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!--Resumen de pago -->
+        <!-- Tarjeta de resumen de pago -->
         <div class="col-lg-4">
             <div class="overlay p-4">
                 <div th:if="${usuario != null}" class="align-self-start">
@@ -237,7 +236,7 @@
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span data-bs-toggle="tooltip" data-bs-placement="top"
-                                          title="Descuentos automáticos por promociones o cantidad de reservas.">
+                                          title="Descuentos automáticos por promociones o cantidad de vuelos.">
                                         Descuentos
                                         <i class="bi bi-info-circle ms-1"></i>
                                         </span>
@@ -248,6 +247,16 @@
                                     <span class="fw-bold" th:text="'$' + ${total}">0.00</span>
                                 </li>
                             </ul>
+                            <!-- <form th:action="@{/pago-formulario}" method="post">
+                                <a th:href="@{/pago-formulario(
+                                                reservaId=${vuelo.id},
+                                                hotelId=${vuelo.hotel != null}?${vuelo.hotel.id}:null,
+                                                excursionId=${vuelo.excursion != null}?${vuelo.excursion.id}:null )}"
+                                   class="btn btn-primary">
+                                    Confirmar Reserva
+                                </a>
+                            </form>-->
+
                             <form th:action="@{/pago-formulario}" method="get"
                                   accept-charset="UTF-8" class="form-confirmarReserva m-0">
                                 <button type="submit" class="btn btn-primary"
@@ -265,12 +274,12 @@
             <i class="bi bi-exclamation-triangle-fill me-2"></i>
             <div>
                 Aunque no deberías estar aquí, <a th:href="@{/login}" class="alert-link">inicia sesión</a> para poder
-                ver tus reservas.
+                ver tus vuelos.
             </div>
         </div>
     </div>
 
-    <!-- Botones editar / borrar -->
+
     <div class="modal fade" id="editarVueloModal" tabindex="-1" aria-labelledby="editarVueloModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">

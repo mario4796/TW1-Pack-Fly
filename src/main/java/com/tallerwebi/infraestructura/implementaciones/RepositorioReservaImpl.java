@@ -1,10 +1,11 @@
 package com.tallerwebi.infraestructura.implementaciones;
 
-import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.infraestructura.RepositorioReserva;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -20,22 +21,30 @@ public class RepositorioReservaImpl implements RepositorioReserva {
     }
 
     @Override
-    public void guardar(Reserva reserva) {
-        sessionFactory.getCurrentSession().save(reserva);
+    public void guardar(Vuelo vuelo) {
+        sessionFactory.getCurrentSession().save(vuelo);
     }
 
     @Override
-    public List<Reserva> buscarPorEmail(String email) {
+    public List<Vuelo> buscarPorEmail(String email) {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM Reserva WHERE email = :email AND pagado = false", Reserva.class)
+                .createQuery("FROM Vuelo WHERE email = :email AND pagado = false", Vuelo.class)
                 .setParameter("email", email)
                 .list();
     }
 
     @Override
+    public List<Vuelo> obtenerTodos() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Vuelo", Vuelo.class)
+                .getResultList();
+    }
+
+
+    @Override
     public void eliminarReserva(String email, String fechaIda, String fechaVuelta) {
         this.sessionFactory.getCurrentSession()
-                .createQuery("DELETE FROM Reserva r WHERE r.email = :email AND r.fechaIda = :fechaIda AND r.fechaVuelta = :fechaVuelta")
+                .createQuery("DELETE FROM Vuelo r WHERE r.email = :email AND r.fechaIda = :fechaIda AND r.fechaVuelta = :fechaVuelta")
                 .setParameter("email", email)
                 .setParameter("fechaIda", fechaIda)
                 .setParameter("fechaVuelta", fechaVuelta)
@@ -43,10 +52,10 @@ public class RepositorioReservaImpl implements RepositorioReserva {
     }
 
     @Override
-    public Reserva buscarPorIdyEmail(String email, Long idVuelo) {
-        String hql = "FROM Reserva r WHERE r.email = :email AND r.id = :idVuelo";
-        List<Reserva> resultados = sessionFactory.getCurrentSession()
-                .createQuery(hql, Reserva.class)
+    public Vuelo buscarPorIdyEmail(String email, Long idVuelo) {
+        String hql = "FROM Vuelo r WHERE r.email = :email AND r.id = :idVuelo";
+        List<Vuelo> resultados = sessionFactory.getCurrentSession()
+                .createQuery(hql, Vuelo.class)
                 .setParameter("email", email)
                 .setParameter("idVuelo", idVuelo)
                 .list();
@@ -54,27 +63,27 @@ public class RepositorioReservaImpl implements RepositorioReserva {
     }
 
     @Override
-    public void actualizar(Reserva reserva)  {
-        sessionFactory.getCurrentSession().update(reserva);
+    public void actualizar(Vuelo vuelo)  {
+        sessionFactory.getCurrentSession().update(vuelo);
     }
 
     @Override
-    public Reserva buscarPorId(Long id) {
-        return sessionFactory.getCurrentSession().get(Reserva.class, id);
+    public Vuelo buscarPorId(Long id) {
+        return sessionFactory.getCurrentSession().get(Vuelo.class, id);
     }
 
     @Override
     public void pagarReservasDeVuelo(String email) {
         sessionFactory.getCurrentSession()
-                .createQuery("UPDATE Reserva SET pagado = true WHERE email = :email")
+                .createQuery("UPDATE Vuelo SET pagado = true WHERE email = :email")
                 .setParameter("email", email)
                 .executeUpdate();
     }
 
     @Override
-    public List<Reserva> buscarPorEmailPagadas(String email) {
+    public List<Vuelo> buscarPorEmailPagadas(String email) {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM Reserva WHERE email = :email AND pagado = true", Reserva.class)
+                .createQuery("FROM Vuelo WHERE email = :email AND pagado = true", Vuelo.class)
                 .setParameter("email", email)
                 .list();
     }

@@ -6,7 +6,7 @@ import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.entidades.Hotel;
-import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
@@ -50,7 +50,7 @@ public class ControladorUsuario {
 
         List<Hotel> hotelesPagados = hotelService.buscarHotelesPagados(usuario.getId());
         List<HotelDto> hotelesDtoPagados = hotelService.obtenerHotelesDto(hotelesPagados);
-        List<Reserva> vuelosPagados = servicioReserva.obtenerReservasPorEmailPagados(usuario.getEmail());
+        List<Vuelo> vuelosPagados = servicioReserva.obtenerReservasPorEmailPagados(usuario.getEmail());
         List<Excursion> excursionesPagadas = servicioExcursiones.obtenerExcursionesDeUsuarioPagados(usuario.getId());
 
 
@@ -71,7 +71,7 @@ public class ControladorUsuario {
             System.out.println("Hotel pagado: " + h.getName() + " | Pagado: " + h.getPagado());
         }
 
-        List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
+        List<Vuelo> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
 
         List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 

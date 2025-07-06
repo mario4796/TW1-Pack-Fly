@@ -1,15 +1,19 @@
 package com.tallerwebi.infraestructura;
+import com.tallerwebi.dominio.entidades.Vuelo;
 
-import com.tallerwebi.dominio.entidades.Reserva;
 import java.util.List;
 
 public interface RepositorioReserva {
-    void guardar(Reserva reserva);
-    List<Reserva> buscarPorEmail(String email); // ← Agregado
+    void guardar(Vuelo vuelo);
+    List<Vuelo> buscarPorEmail(String email); // ← Agregado
+
+    List<Vuelo> obtenerTodos();
+
     void eliminarReserva(String email, String fechaIda, String fechaVuelta);
-    Reserva buscarPorIdyEmail(String email, Long idVuelo);
-    void actualizar(Reserva reserva);
-    Reserva buscarPorId(Long id);
+    Vuelo buscarPorIdyEmail(String email, Long idVuelo);
+    void actualizar(Vuelo vuelo);
+    Vuelo buscarPorId(Long id);
     void pagarReservasDeVuelo(String email);
-    List<Reserva> buscarPorEmailPagadas (String email);
+    List<Vuelo> buscarPorEmailPagadas (String email);
+
 }

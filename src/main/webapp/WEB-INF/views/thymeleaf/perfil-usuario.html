@@ -62,7 +62,7 @@
                     <a class="nav-link" id="wishlist-tab" data-bs-toggle="tab" href="#wishlist" role="tab">Wishlist</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="reservas-tab" data-bs-toggle="tab" href="#reservas" role="tab">Reservas</a>
+                    <a class="nav-link" id="vuelos-tab" data-bs-toggle="tab" href="#vuelos" role="tab">Reservas</a>
                 </li>
             </ul>
             <div class="tab-content p-3" id="profileTabsContent">
@@ -149,7 +149,7 @@
                     </ul>
                 </div>
                 <!-- Pestaña de Reservas -->
-                <div class="tab-pane fade" id="reservas" role="tabpanel">
+                <div class="tab-pane fade" id="vuelos" role="tabpanel">
                     <h5>Tus Reservas</h5>
                     <div class="accordion overflow-auto" id="accordionReservasPerfil" style="max-height: 300px;">
                         <!-- Vuelos -->
@@ -253,7 +253,7 @@
                         </div>
                         <div th:if="${(vuelos == null or vuelos.isEmpty()) and (hoteles == null or hoteles.isEmpty()) and (excursiones == null or excursiones.isEmpty())}">
                             <div class="alert alert-info text-center mt-4">
-                                No tienes reservas registradas.
+                                No tienes vuelos registradas.
                             </div>
                         </div>
                     </div>

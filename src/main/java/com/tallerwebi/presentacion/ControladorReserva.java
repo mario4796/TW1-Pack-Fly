@@ -1,11 +1,8 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.*;
-import com.tallerwebi.dominio.entidades.Excursion;
-import com.tallerwebi.dominio.entidades.Reserva;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.presentacion.dtos.HotelDto;
-import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +40,7 @@ public class ControladorReserva {
         if (usuario != null) {
             List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
             List<HotelDto> hotelesDto = hotelService.obtenerHotelesDto(hoteles);
-            List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
+            List<Vuelo> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
             List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
             ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
@@ -88,7 +85,10 @@ public class ControladorReserva {
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
 
+
+
         return "redirect:/reservas";
+
     }
 
     @PostMapping("/eliminarReservaVuelo")
@@ -99,6 +99,7 @@ public class ControladorReserva {
                                        RedirectAttributes redirectAttributes) {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
 
         try {
             servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
@@ -118,7 +119,8 @@ public class ControladorReserva {
         }
 
         return "redirect:/reservas";
-        }
+
+    }
 
     @PostMapping("/eliminarReservaExcursion")
     public String eliminarReservaExcursion(@RequestParam String title,
@@ -210,6 +212,86 @@ public class ControladorReserva {
         return "redirect:/reservas";
     }
 
+    @PostMapping("/pagar")
+    public String pagar(
+            HttpServletRequest request,
+            RedirectAttributes redirectAttributes
+    ) throws MessagingException {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
+        try {
+            List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
+            List<Vuelo> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
+            List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
+
+            StringBuilder cuerpo = new StringBuilder();
+            cuerpo.append("Hola ").append(usuario.getNombre()).append(",\n\n")
+                    .append("Te confirmamos que tu pago fue realizado con éxito.\n")
+                    .append("Aquí está el detalle de tus reservas:\n\n");
+
+            cuerpo.append("✈️ Vuelos:\n");
+            if (vuelos.isEmpty()) {
+                cuerpo.append("  - No hay vuelos reservados.\n");
+            } else {
+                for (Vuelo vuelo : vuelos) {
+                    cuerpo.append(" | Fecha ida: ").append(vuelo.getFechaIda())
+                            .append(" | Destino: ").append(vuelo.getDestino()).append("\n");
+                }
+            }
+
+            cuerpo.append("\n🏨 Hoteles:\n");
+            if (hoteles.isEmpty()) {
+                cuerpo.append("  - No hay hoteles reservados.\n");
+            } else {
+                for (Hotel hotel : hoteles) {
+                    cuerpo.append(" | Nombre: ").append(hotel.getName())
+                            .append(" | Check-in: ").append(hotel.getCheckIn()).append("\n");
+                }
+            }
+
+            cuerpo.append("\n🧭 Excursiones:\n");
+            if (excursiones.isEmpty()) {
+                cuerpo.append("  - No hay excursiones reservadas.\n");
+            } else {
+                for (Excursion excursion : excursiones) {
+                    cuerpo.append(" | Nombre: ").append(excursion.getTitle())
+                            .append(" | Lugar: ").append(excursion.getLocation()).append("\n");
+                }
+
+            }
+
+
+            cuerpo.append("\n¡Gracias por elegir Pack&Fly!\n");
+
+            servicioEmail.enviarCorreo(usuario.getEmail(), "Confirmación de pago - Pack&Fly", cuerpo.toString());
+            redirectAttributes.addFlashAttribute("mensaje", "Mail enviado con exito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e){
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al enviar el mail.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
+
+        try {
+            List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
+            hotelService.pagarHotelesDto(hoteles);
+            servicioReserva.pagarRerservasDeVuelo(usuario.getEmail());
+            servicioExcursiones.pagarExcursiones(usuario.getId());
+            redirectAttributes.addFlashAttribute("mensaje", "Pago realizado con éxito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
+
+
+
+
+        // ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
+       // usuario.setApagar(resumen.getTotal());
+
+
+
+        return "redirect:/perfil-usuario";
+    }
 
 }
