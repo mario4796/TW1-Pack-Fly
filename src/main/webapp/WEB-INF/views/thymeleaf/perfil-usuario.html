@@ -107,33 +107,36 @@
 
                     <!-- Hoteles pagados -->
                     <h6 class="mt-3">Hoteles</h6>
-                    <ul class="list-group mb-3" th:if="${hotelesPagados != null and !hotelesPagados.isEmpty()}">
+                    <ul id="ul-hoteles" class="list-group mb-3" th:if="${hotelesPagados != null and !hotelesPagados.isEmpty()}">
                         <li class="list-group-item" th:each="hotel : ${hotelesPagados}">
                             <b th:text="${hotel.name}">Hotel</b> - <span th:text="${hotel.ciudad}">Ciudad</span>
                             <span class="badge bg-success ms-2" th:text="'Check-in: ' + ${hotel.checkIn}"></span>
                             <span class="badge bg-info ms-2" th:text="'Check-out: ' + ${hotel.checkOut}"></span>
                         </li>
                     </ul>
+                    <div id="paginador-hoteles" class="mb-3"></div>
                     <p th:if="${hotelesPagados == null or hotelesPagados.isEmpty()}">- No hay hoteles pagados.</p>
 
                     <!-- Vuelos pagados -->
                     <h6 class="mt-3">Vuelos</h6>
-                    <ul class="list-group mb-3" th:if="${vuelosPagados != null and !vuelosPagados.isEmpty()}">
+                    <ul id="ul-vuelos" class="list-group mb-3" th:if="${vuelosPagados != null and !vuelosPagados.isEmpty()}">
                         <li class="list-group-item" th:each="vuelo : ${vuelosPagados}">
                             <b th:text="${vuelo.origen}">Origen</b> &rarr; <span th:text="${vuelo.destino}">Destino</span>
                             <span class="badge bg-primary ms-2" th:text="${vuelo.fechaIda}"></span>
                         </li>
                     </ul>
+                    <div id="paginador-vuelos" class="mb-3"></div>
                     <p th:if="${vuelosPagados == null or vuelosPagados.isEmpty()}">- No hay vuelos pagados.</p>
 
                     <!-- Excursiones pagadas -->
                     <h6 class="mt-3">Excursiones</h6>
-                    <ul class="list-group mb-3" th:if="${excursionesPagadas != null and !excursionesPagadas.isEmpty()}">
+                    <ul id="ul-excursiones" class="list-group mb-3" th:if="${excursionesPagadas != null and !excursionesPagadas.isEmpty()}">
                         <li class="list-group-item" th:each="exc : ${excursionesPagadas}">
                             <b th:text="${exc.title}">Excursión</b>
                             <span class="badge bg-warning ms-2" th:text="${exc.startDate}"></span>
                         </li>
                     </ul>
+                    <div id="paginador-excursiones" class="mb-3"></div>
                     <p th:if="${excursionesPagadas == null or excursionesPagadas.isEmpty()}">- No hay excursiones pagadas.</p>
                 </div>
                 <!-- Whitelist -->
@@ -516,6 +519,10 @@
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
 <script type="text/javascript" th:src="@{js/validaciones.js}"></script>
 <script type="text/javascript" th:src="@{js/alerts.js}"></script>
+<script type="text/javascript" th:src="@{/js/paginador.js}"></script>
+
+
+
 
 </body>
 </html>
