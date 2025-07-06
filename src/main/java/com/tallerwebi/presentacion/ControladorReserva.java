@@ -40,7 +40,7 @@ public class ControladorReserva {
         if (usuario != null) {
             List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
             List<HotelDto> hotelesDto = hotelService.obtenerHotelesDto(hoteles);
-            List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
+            List<Vuelo> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
             List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
             ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
@@ -221,7 +221,7 @@ public class ControladorReserva {
 
         try {
             List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
-            List<Reserva> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
+            List<Vuelo> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
             List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
 
             StringBuilder cuerpo = new StringBuilder();
@@ -233,7 +233,7 @@ public class ControladorReserva {
             if (vuelos.isEmpty()) {
                 cuerpo.append("  - No hay vuelos reservados.\n");
             } else {
-                for (Reserva vuelo : vuelos) {
+                for (Vuelo vuelo : vuelos) {
                     cuerpo.append(" | Fecha ida: ").append(vuelo.getFechaIda())
                             .append(" | Destino: ").append(vuelo.getDestino()).append("\n");
                 }

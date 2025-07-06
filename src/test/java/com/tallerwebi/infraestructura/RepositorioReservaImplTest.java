@@ -1,6 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.infraestructura.implementaciones.RepositorioReservaImpl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,24 +29,24 @@ public class RepositorioReservaImplTest {
 
     @Test
     public void queSeGuardeReservaConSessionFactory() {
-        Reserva reserva = new Reserva();
-        repositorio.guardar(reserva);
-        verify(session).save(reserva);
+        Vuelo vuelo = new Vuelo();
+        repositorio.guardar(vuelo);
+        verify(session).save(vuelo);
     }
 
     @Test
     public void queSeObtenganReservasPorEmail() {
         String email = "test@email.com";
-        List<Reserva> reservasMock = mock(List.class);
+        List<Vuelo> reservasMock = mock(List.class);
 
-        Query<Reserva> query = mock(Query.class);
-        when(session.createQuery("FROM Reserva WHERE email = :email", Reserva.class)).thenReturn(query);
+        Query<Vuelo> query = mock(Query.class);
+        when(session.createQuery("FROM Reserva WHERE email = :email", Vuelo.class)).thenReturn(query);
         when(query.setParameter("email", email)).thenReturn(query);
         when(query.list()).thenReturn(reservasMock);
 
         repositorio.buscarPorEmail(email);
 
-        verify(session).createQuery("FROM Reserva WHERE email = :email", Reserva.class);
+        verify(session).createQuery("FROM Reserva WHERE email = :email", Vuelo.class);
         verify(query).setParameter("email", email);
         verify(query).list();
     }

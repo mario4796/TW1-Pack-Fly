@@ -1,11 +1,10 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioEmail;
-import com.tallerwebi.dominio.entidades.Reserva;
-import com.tallerwebi.dominio.ServicioReserva;
-import com.tallerwebi.dominio.ServicioVuelos;
 import com.tallerwebi.dominio.entidades.Vuelo;
+import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.presentacion.dtos.VueloDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +15,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.mail.MessagingException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ControladorVuelos {
-    @Autowired
-    private ServicioVuelos servicioVuelos;
+
 
     @Autowired
     private ServicioEmail servicioEmail;
@@ -30,11 +31,8 @@ public class ControladorVuelos {
     @Autowired
     private ServicioReserva servicioReserva;
 
-    @Autowired
-    public ControladorVuelos(ServicioVuelos servicioVuelos) {
-        this.servicioVuelos = servicioVuelos;
-    }
 
+   @Autowired
     public ControladorVuelos(ServicioReserva servicioReservas) {
         this.servicioReserva = servicioReservas;
     }
@@ -61,24 +59,20 @@ public class ControladorVuelos {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         model.addAttribute("usuario", usuario);
 
-        Vuelo vuelo = servicioVuelos.getVuelo(origen, destino, fechaIda, fechaVuelta);
+        List<VueloDTO> vuelos = servicioReserva.getVuelo(origen, destino, fechaIda, fechaVuelta);
 
-        if (vuelo != null) {
-            boolean dentroRango = true;
-
+        if (vuelos != null && !vuelos.isEmpty()) {
             if (precioMin != null && precioMax != null) {
-                double precioVuelo = vuelo.getPrecio();
-                dentroRango = (precioVuelo >= precioMin && precioVuelo <= precioMax);
+                vuelos = vuelos.stream()
+                        .filter(v -> v.getPrecio() >= precioMin && v.getPrecio() <= precioMax)
+                        .collect(Collectors.toList());  // ✅ compatible con Java 11
+
+                if (vuelos.isEmpty()) {
+                    model.addAttribute("error", "No hay vuelos en el rango de precio indicado.");
+                }
             }
 
-            if (dentroRango) {
-                model.addAttribute("vuelo", vuelo);
-                model.addAttribute("vueloUrl", true);
-                model.addAttribute("valorIda", vuelo.getPrecio());
-                model.addAttribute("valorVuelta", vuelo.getPrecio());
-            } else {
-                model.addAttribute("error", "No hay vuelos en el rango de precio indicado.");
-            }
+            model.addAttribute("vuelos", vuelos); // <- Se usa en el HTML con th:each
         } else {
             model.addAttribute("error", "Vuelo no encontrado");
         }
@@ -132,7 +126,7 @@ public class ControladorVuelos {
         return "redirect:/busqueda-hoteles?reservaExitosa=true";
     }*/
 
-    @PostMapping("/guardar-reserva")
+    @PostMapping("/guardar-vuelo")
     public String guardarReserva(
             @RequestParam("nombre") String nombre,
             @RequestParam("email") String email,
@@ -147,12 +141,16 @@ public class ControladorVuelos {
     ) throws MessagingException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
-        Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
-        reserva.setUsuario(usuario); // Enlaza el usuario con la reserva
+        VueloDTO dto = new VueloDTO();
+        dto.setOrigen(origen);
+        dto.setDestino(destino);
+        dto.setFechaIda(fechaIda);
+        dto.setFechaVuelta(fechaVuelta);
+        dto.setPrecio(precio);
 
-
+        Vuelo vuelo = dto.toEntidad(nombre, email, usuario);
         try {
-            servicioReserva.guardarReserva(reserva);
+            servicioReserva.guardarReserva(vuelo);
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo creada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {

@@ -1,22 +1,26 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioVuelos;
-import com.tallerwebi.dominio.entidades.Vuelo;
+import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.Vuelo;
+import com.tallerwebi.presentacion.dtos.VueloDTO;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class ControladorVuelosTest {
 
-    private ServicioVuelos servicioVuelos;
+    private ServicioReserva servicioVuelos;
     private ControladorVuelos controlador;
     private Model model;
     private HttpServletRequest request;
@@ -24,7 +28,7 @@ public class ControladorVuelosTest {
 
     @Before
     public void setUp() {
-        servicioVuelos = mock(ServicioVuelos.class);
+        servicioVuelos = mock(ServicioReserva.class);
         controlador = new ControladorVuelos(servicioVuelos);
         model = mock(Model.class);
         request = mock(HttpServletRequest.class);
@@ -33,20 +37,19 @@ public class ControladorVuelosTest {
     }
 
     @Test
-    public void queAlBuscarUnVueloExistenteSeAgregueAlModeloYDevuelvaVistaCorrecta() {
-        Vuelo vuelo = new Vuelo();
-        vuelo.setPrecio(1500);
+    public void queAlBuscarVuelosExistentesSeAgreguenAlModeloYDevuelvaVistaCorrecta() {
+        VueloDTO vuelo1 = new VueloDTO("EZE", "MAD", "2025-07-10", "2025-07-20", 1500.0);
+        VueloDTO vuelo2 = new VueloDTO("EZE", "MAD", "2025-07-10", "2025-07-20", 1700.0);
+        List<VueloDTO> vuelos = Arrays.asList(vuelo1, vuelo2);
 
         when(servicioVuelos.getVuelo(anyString(), anyString(), any(Date.class), any(Date.class)))
-                .thenReturn(vuelo);
+                .thenReturn(vuelos);
 
         String vista = controlador.buscarVuelo(
                 "EZE", "MAD", new Date(), new Date(), 1000.0, 2000.0, request, model
         );
 
-        verify(model).addAttribute("vuelo", vuelo);
-        verify(model).addAttribute("valorIda", vuelo.getPrecio());
-        verify(model).addAttribute("valorVuelta", vuelo.getPrecio());
+        verify(model).addAttribute("vuelos", vuelos);
         assertEquals("busqueda-vuelo", vista);
     }
 
@@ -55,10 +58,9 @@ public class ControladorVuelosTest {
         Usuario usuario = new Usuario();
         when(session.getAttribute("USUARIO")).thenReturn(usuario);
 
-        Vuelo vuelo = new Vuelo();
-        vuelo.setPrecio(2000);
+        VueloDTO vuelo = new VueloDTO("EZE", "MAD", "2025-07-10", "2025-07-20", 2000.0);
         when(servicioVuelos.getVuelo(anyString(), anyString(), any(Date.class), any(Date.class)))
-                .thenReturn(vuelo);
+                .thenReturn(Collections.singletonList(vuelo));
 
         controlador.buscarVuelo(
                 "EZE", "MAD", new Date(), new Date(), 1000.0, 2000.0, request, model
@@ -71,10 +73,9 @@ public class ControladorVuelosTest {
     public void queAgregueUsuarioNullSiNoHaySesion() {
         when(session.getAttribute("USUARIO")).thenReturn(null);
 
-        Vuelo vuelo = new Vuelo();
-        vuelo.setPrecio(1800);
+        VueloDTO vuelo = new VueloDTO("EZE", "MAD", "2025-07-10", "2025-07-20", 1800.0);
         when(servicioVuelos.getVuelo(anyString(), anyString(), any(Date.class), any(Date.class)))
-                .thenReturn(vuelo);
+                .thenReturn(Collections.singletonList(vuelo));
 
         controlador.buscarVuelo(
                 "EZE", "MAD", new Date(), new Date(), 1000.0, 2000.0, request, model
@@ -84,14 +85,27 @@ public class ControladorVuelosTest {
     }
 
     @Test
-    public void queAgregueErrorSiVueloNoExiste() {
+    public void queAgregueErrorSiNoSeEncuentraNingunVuelo() {
         when(servicioVuelos.getVuelo(anyString(), anyString(), any(Date.class), any(Date.class)))
-                .thenReturn(null);
+                .thenReturn(Collections.emptyList());
 
         controlador.buscarVuelo(
                 "EZE", "MAD", new Date(), new Date(), 1000.0, 2000.0, request, model
         );
 
         verify(model).addAttribute("error", "Vuelo no encontrado");
+    }
+
+    @Test
+    public void queAgregueErrorSiNingunVueloEstaDentroDelRango() {
+        VueloDTO vuelo = new VueloDTO("EZE", "MAD", "2025-07-10", "2025-07-20", 5000.0); // fuera de rango
+        when(servicioVuelos.getVuelo(anyString(), anyString(), any(Date.class), any(Date.class)))
+                .thenReturn(Collections.singletonList(vuelo));
+
+        controlador.buscarVuelo(
+                "EZE", "MAD", new Date(), new Date(), 1000.0, 2000.0, request, model
+        );
+
+        verify(model).addAttribute("error", "No hay vuelos en el rango de precio indicado.");
     }
 }

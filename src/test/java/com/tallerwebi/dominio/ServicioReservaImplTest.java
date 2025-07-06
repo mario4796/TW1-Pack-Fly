@@ -1,6 +1,6 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.implementaciones.ServicioReservaImpl;
 import com.tallerwebi.infraestructura.RepositorioReserva;
 import org.junit.Before;
@@ -29,22 +29,22 @@ public class ServicioReservaImplTest {
 
     @Test
     public void queSePuedaGuardarUnaReserva() {
-        Reserva reserva = new Reserva();
-        servicioReserva.guardarReserva(reserva);
+        Vuelo vuelo = new Vuelo();
+        servicioReserva.guardarReserva(vuelo);
 
-        verify(repositorioReserva, times(1)).guardar(reserva);
+        verify(repositorioReserva, times(1)).guardar(vuelo);
     }
 
     @Test
     public void queSePuedaObtenerReservasPorEmail() {
         String email = "usuario@ejemplo.com";
-        Reserva r1 = new Reserva();
-        Reserva r2 = new Reserva();
-        List<Reserva> reservas = Arrays.asList(r1, r2);
+        Vuelo r1 = new Vuelo();
+        Vuelo r2 = new Vuelo();
+        List<Vuelo> vuelos = Arrays.asList(r1, r2);
 
-        when(repositorioReserva.buscarPorEmail(email)).thenReturn(reservas);
+        when(repositorioReserva.buscarPorEmail(email)).thenReturn(vuelos);
 
-        List<Reserva> resultado = servicioReserva.obtenerReservasPorEmail(email);
+        List<Vuelo> resultado = servicioReserva.obtenerReservasPorEmail(email);
 
         assertEquals(2, resultado.size());
         assertTrue(resultado.contains(r1));

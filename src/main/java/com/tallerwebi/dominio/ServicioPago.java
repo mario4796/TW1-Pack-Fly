@@ -1,10 +1,10 @@
 package com.tallerwebi.dominio;
 
-import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.entidades.Excursion;
 
 public interface ServicioPago {
 
-    void procesarPago(Reserva reserva, Hotel hotel, Excursion excursion);
+    void procesarPago(Vuelo vuelo, Hotel hotel, Excursion excursion);
 }

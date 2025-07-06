@@ -5,7 +5,7 @@ import com.tallerwebi.dominio.ServicioExcursiones;
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.entidades.Excursion;
-import com.tallerwebi.dominio.entidades.Reserva;
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
@@ -48,7 +48,7 @@ public class ControladorReservaTest {
         usuario.setId(1L);
         usuario.setEmail("test@correo.com");
 
-        List<Reserva> reservas = Arrays.asList(new Reserva(), new Reserva());
+        List<Vuelo> vuelos = Arrays.asList(new Vuelo(), new Vuelo());
         List<HotelDto> hoteles = Arrays.asList(new HotelDto(), new HotelDto());
         List<Excursion> excursiones = Arrays.asList();
 
@@ -59,13 +59,13 @@ public class ControladorReservaTest {
         when(session.getAttribute("USUARIO")).thenReturn(usuario);
         when(servicioHotel.buscarReservas(1L)).thenReturn(Arrays.asList());
         when(servicioHotel.obtenerHotelesDto(anyList())).thenReturn(hoteles);
-        when(servicioReserva.obtenerReservasPorEmail(usuario.getEmail())).thenReturn(reservas);
+        when(servicioReserva.obtenerReservasPorEmail(usuario.getEmail())).thenReturn(vuelos);
         when(servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId())).thenReturn(excursiones);
-        when(servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hoteles, reservas, excursiones)).thenReturn(resumenMock);
+        when(servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hoteles, vuelos, excursiones)).thenReturn(resumenMock);
 
         String vista = controladorReserva.vistaReservas(request, model);
 
-        verify(model).addAttribute("vuelos", reservas);
+        verify(model).addAttribute("vuelos", vuelos);
         verify(model).addAttribute("hoteles", hoteles);
         verify(model).addAttribute("excursiones", excursiones);
         verify(model).addAttribute("usuario", usuario);
@@ -74,7 +74,7 @@ public class ControladorReservaTest {
         verify(model).addAttribute("descuentos", String.format("%.2f", resumenMock.getDescuentos()));
         verify(model).addAttribute("cargosServicio", String.format("%.2f", resumenMock.getCargosServicio()));
         verify(model).addAttribute("total", String.format("%.2f", resumenMock.getTotal()));
-        verify(servicioLogin).obtenerDeudaDelUsuario(usuario.getId(), hoteles, reservas, excursiones);
+        verify(servicioLogin).obtenerDeudaDelUsuario(usuario.getId(), hoteles, vuelos, excursiones);
 
         assert vista.equals("reservas");
     }
