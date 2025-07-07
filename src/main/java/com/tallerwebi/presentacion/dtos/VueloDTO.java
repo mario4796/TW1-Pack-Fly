@@ -1,14 +1,19 @@
 package com.tallerwebi.presentacion.dtos;
 
-import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.dominio.entidades.Vuelo;
+import com.tallerwebi.dominio.entidades.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class VueloDTO {
+    private List<SegmentoVueloDTO> flights;
+    private List<EscalaDTO> layovers;
     private String origen;
     private String destino;
     private String fechaIda;
     private String fechaVuelta;
     private double precio;
+    private Integer duracionTotal;
 
     public VueloDTO() {}
 
@@ -18,6 +23,8 @@ public class VueloDTO {
         this.fechaIda = fechaIda;
         this.fechaVuelta = fechaVuelta;
         this.precio = precio;
+        this.flights = new ArrayList<>();
+        this.layovers = new ArrayList<>();
     }
 
     public String getOrigen() { return origen; }
@@ -35,7 +42,31 @@ public class VueloDTO {
     public double getPrecio() { return precio; }
     public void setPrecio(double precio) { this.precio = precio; }
 
-    public Vuelo toEntidad(String nombre,  String emailUsuario, Usuario usuario) {
+    public List<SegmentoVueloDTO> getFlights() {
+        return flights;
+    }
+
+    public void setFlights(List<SegmentoVueloDTO> flights) {
+        this.flights = flights;
+    }
+
+    public List<EscalaDTO> getLayovers() {
+        return layovers;
+    }
+
+    public void setLayovers(List<EscalaDTO> layovers) {
+        this.layovers = layovers;
+    }
+
+    public Integer getDuracionTotal() {
+        return duracionTotal;
+    }
+
+    public void setDuracionTotal(Integer duracionTotal) {
+        this.duracionTotal = duracionTotal;
+    }
+
+    public Vuelo toEntidad(String nombre, String emailUsuario, Usuario usuario) {
         Vuelo vuelo = new Vuelo();
         vuelo.setOrigen(this.origen);
         vuelo.setDestino(this.destino);
@@ -46,6 +77,58 @@ public class VueloDTO {
         vuelo.setEmail(emailUsuario);
         vuelo.setUsuario(usuario);
         vuelo.setPagado(false);
+
+        // MAPEAR SEGMENTOS DE VUELO
+        List<SegmentoVuelo> segmentos = new ArrayList<>();
+        if (this.flights != null) {
+            for (SegmentoVueloDTO segDto : this.flights) {
+                SegmentoVuelo seg = new SegmentoVuelo();
+                seg.setVuelo(vuelo); // relación inversa
+
+                Aeropuerto dep = new Aeropuerto();
+                dep.setId(segDto.getDepartureAirport().getId());
+                dep.setName(segDto.getDepartureAirport().getName());
+                dep.setTime(segDto.getDepartureAirport().getTime());
+
+                Aeropuerto arr = new Aeropuerto();
+                arr.setId(segDto.getArrivalAirport().getId());
+                arr.setName(segDto.getArrivalAirport().getName());
+                arr.setTime(segDto.getArrivalAirport().getTime());
+
+                seg.setDepartureAirport(dep);
+                seg.setArrivalAirport(arr);
+                seg.setDuration(segDto.getDuration());
+                seg.setAirplane(segDto.getAirplane());
+                seg.setAirline(segDto.getAirline());
+                seg.setTravelClass(segDto.getTravelClass());
+                seg.setFlightNumber(segDto.getFlightNumber());
+                seg.setLegroom(segDto.getLegroom());
+                seg.setOvernight(segDto.getOvernight());
+                seg.setOftenDelayedByOver30Min(segDto.getOftenDelayedByOver30Min());
+                seg.setPlaneAndCrewBy(segDto.getPlaneAndCrewBy());
+                seg.setExtensions(segDto.getExtensions());
+                seg.setTicketAlsoSoldBy(segDto.getTicketAlsoSoldBy());
+
+                segmentos.add(seg);
+            }
+        }
+        vuelo.setFlights(segmentos);
+
+// MAPEAR ESCALAS
+        List<Escala> escalas = new ArrayList<>();
+        if (this.layovers != null) {
+            for (EscalaDTO escDto : this.layovers) {
+                Escala escala = new Escala();
+                escala.setVuelo(vuelo);
+                escala.setDuration(escDto.getDuration());
+                escala.setName(escDto.getName());
+                escala.setOvernight(escDto.getOvernight());
+                escalas.add(escala);
+            }
+        }
+        vuelo.setLayovers(escalas);
+
         return vuelo;
     }
+
 }

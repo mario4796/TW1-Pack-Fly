@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,12 @@ public class Vuelo {
     private String nombre;
     private String email;
 
+    @OneToMany(mappedBy = "vuelo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SegmentoVuelo> flights = new ArrayList<>();
+
+    @OneToMany(mappedBy = "vuelo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Escala> layovers = new ArrayList<>();
+
     // Datos del vuelo
     private String origen;
     private String destino;
@@ -32,8 +39,6 @@ public class Vuelo {
     @JsonProperty("total_duration")
     private String duracionTotal;
 
-    @Transient
-    private List<SegmentoVuelo> segmentos;
 
     @ManyToOne
     private Usuario usuario;
@@ -149,99 +154,19 @@ public class Vuelo {
         this.duracionTotal = duracionTotal;
     }
 
-    public List<SegmentoVuelo> getSegmentos() {
-        return segmentos;
+    public List<SegmentoVuelo> getFlights() {
+        return flights;
     }
 
-    @JsonSetter("flights")
-    public void setSegmentos(List<SegmentoVuelo> segmentos) {
-        this.segmentos = segmentos;
-        derivarOrigenYDestino();
-        derivarFechas();
+    public void setFlights(List<SegmentoVuelo> flights) {
+        this.flights = flights;
     }
 
-    // =========================
-    // Lógica derivada desde segmentos
-    // =========================
-
-    private void derivarOrigenYDestino() {
-        if (segmentos != null && !segmentos.isEmpty()) {
-            this.origen = segmentos.get(0).getAeropuertoSalida().getNombre();
-            this.destino = segmentos.get(0).getAeropuertoLlegada().getNombre();
-        }
+    public List<Escala> getLayovers() {
+        return layovers;
     }
 
-    private void derivarFechas() {
-        if (segmentos != null && !segmentos.isEmpty()) {
-            this.fechaIda = segmentos.get(0).getAeropuertoSalida().getFecha();
-            this.fechaVuelta = segmentos.get(0).getAeropuertoLlegada().getFecha();
-        }
-    }
-
-    // =========================
-    // Clases internas: SegmentoVuelo y Aeropuerto
-    // =========================
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class SegmentoVuelo {
-
-        @JsonProperty("departure_airport")
-        private Aeropuerto aeropuertoSalida;
-
-        @JsonProperty("arrival_airport")
-        private Aeropuerto aeropuertoLlegada;
-
-        public Aeropuerto getAeropuertoSalida() {
-            return aeropuertoSalida;
-        }
-
-        public void setAeropuertoSalida(Aeropuerto aeropuertoSalida) {
-            this.aeropuertoSalida = aeropuertoSalida;
-        }
-
-        public Aeropuerto getAeropuertoLlegada() {
-            return aeropuertoLlegada;
-        }
-
-        public void setAeropuertoLlegada(Aeropuerto aeropuertoLlegada) {
-            this.aeropuertoLlegada = aeropuertoLlegada;
-        }
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Aeropuerto {
-
-        @JsonProperty("name")
-        private String nombre;
-
-        @JsonProperty("id")
-        private String codigoIATA;
-
-        @JsonProperty("time")
-        private String fecha;
-
-        public String getNombre() {
-            return nombre;
-        }
-
-        public void setNombre(String nombre) {
-            this.nombre = nombre;
-        }
-
-        public String getCodigoIATA() {
-            return codigoIATA;
-        }
-
-        public void setCodigoIATA(String codigoIATA) {
-            this.codigoIATA = codigoIATA;
-        }
-
-        public String getFecha() {
-            return fecha;
-        }
-
-        public void setFecha(String fecha) {
-            this.fecha = fecha;
-        }
+    public void setLayovers(List<Escala> layovers) {
+        this.layovers = layovers;
     }
 }

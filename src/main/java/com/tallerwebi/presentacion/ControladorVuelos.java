@@ -83,6 +83,8 @@ public class ControladorVuelos {
         model.addAttribute("destino", destino);
         model.addAttribute("fechaIda", fechaIda);
         model.addAttribute("fechaVuelta", fechaVuelta);
+        request.getSession().setAttribute("VUELOS_ENCONTRADOS", vuelos);
+
 
         return "busqueda-vuelo";
     }
@@ -92,21 +94,29 @@ public class ControladorVuelos {
     public String mostrarFormularioVacio() {return "formularioReserva";}
 
     @PostMapping("/formulario-reserva")
-    public String mostrarFormularioReserva(@RequestParam String origen,
-                                           @RequestParam String destino,
-                                           @RequestParam String fechaIda,
-                                           @RequestParam String fechaVuelta,
-                                           @RequestParam Double precio,
+    public String mostrarFormularioReserva(@RequestParam int idVuelo,
                                            HttpServletRequest request,
                                            Model model) {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         model.addAttribute("usuario", usuario);
 
-        model.addAttribute("origen", origen);
-        model.addAttribute("destino", destino);
-        model.addAttribute("fechaIda", fechaIda);
-        model.addAttribute("fechaVuelta", fechaVuelta);
-        model.addAttribute("precio", precio);
+        List<VueloDTO> vuelos = (List<VueloDTO>) request.getSession().getAttribute("VUELOS_ENCONTRADOS");
+        if (vuelos == null || idVuelo >= vuelos.size()) {
+            model.addAttribute("error", "No se pudo encontrar el vuelo seleccionado.");
+            return "busqueda-vuelo";
+        }
+
+        VueloDTO vueloSeleccionado = vuelos.get(idVuelo);
+        request.getSession().setAttribute("VUELO_SELECCIONADO", vueloSeleccionado); // para luego guardar
+
+        // Para completar los datos del formulario:
+        model.addAttribute("origen", vueloSeleccionado.getOrigen());
+        model.addAttribute("destino", vueloSeleccionado.getDestino());
+        model.addAttribute("fechaIda", vueloSeleccionado.getFechaIda());
+        model.addAttribute("fechaVuelta", vueloSeleccionado.getFechaVuelta());
+        model.addAttribute("precio", vueloSeleccionado.getPrecio());
+        model.addAttribute("idVuelo", idVuelo);
+
         return "formularioReserva";
     }
 /*
@@ -130,25 +140,18 @@ public class ControladorVuelos {
     public String guardarReserva(
             @RequestParam("nombre") String nombre,
             @RequestParam("email") String email,
-            @RequestParam("origen") String origen,
-            @RequestParam("destino") String destino,
-            @RequestParam("fechaIda") String fechaIda,
-            @RequestParam("fechaVuelta") String fechaVuelta,
-            @RequestParam("precio") Double precio,
+            @RequestParam("idVuelo") int idVuelo,  // <- NUEVO: para recuperar el vuelo
             HttpServletRequest request,
             RedirectAttributes redirectAttributes,
             Model model
     ) throws MessagingException {
+
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+        List<VueloDTO> vuelos = (List<VueloDTO>) request.getSession().getAttribute("VUELOS_ENCONTRADOS");
+        VueloDTO vueloDTO = vuelos.get(idVuelo);
 
-        VueloDTO dto = new VueloDTO();
-        dto.setOrigen(origen);
-        dto.setDestino(destino);
-        dto.setFechaIda(fechaIda);
-        dto.setFechaVuelta(fechaVuelta);
-        dto.setPrecio(precio);
+        Vuelo vuelo = vueloDTO.toEntidad(nombre, email, usuario);
 
-        Vuelo vuelo = dto.toEntidad(nombre, email, usuario);
         try {
             servicioReserva.guardarReserva(vuelo);
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo creada con éxito.");
@@ -158,23 +161,23 @@ public class ControladorVuelos {
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
 
-       try {
+        // ✅ Correos
+        try {
             servicioEmail.enviarCorreo(
                     email,
                     "Confirmación de Reserva - Pack&Fly",
-                    "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
-                            + "Vuelo: " + origen + " → " + destino + "\n"
-                            + "Fecha ida: " + fechaIda + "\n"
-                            + "Fecha vuelta:" + fechaVuelta + "\n"
-                            + "Precio: $" + precio + "\n"
-                            + "Recorda que tenes hasta 7 dias antes de la reservacion para pagar, si no su reservacion sera ELIMINADA"
-
+                    "¡Gracias por tu reserva, " + usuario.getNombre() + "!\n"
+                            + "Vuelo: " + vuelo.getOrigen() + " → " + vuelo.getDestino() + "\n"
+                            + "Fecha ida: " + vuelo.getFechaIda() + "\n"
+                            + "Fecha vuelta: " + vuelo.getFechaVuelta() + "\n"
+                            + "Precio: $" + vuelo.getPrecio() + "\n"
+                            + "Recordá que tenés hasta 7 días antes del vuelo para pagar. Si no, será eliminado."
             );
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de vuelo",
-                    "El usuario "+email+" ha reservado un vuelo de " + origen+ " a "+ destino+"\n"
-                    + "Fecha ida: " + fechaIda + "\n"
-                    + "Fecha vuelta:" + fechaVuelta + "\n"
-                    + "Precio: $" + precio + "\n");
+                    "El usuario " + email + " ha reservado un vuelo de " + vuelo.getOrigen() + " a " + vuelo.getDestino() + "\n"
+                            + "Fecha ida: " + vuelo.getFechaIda() + "\n"
+                            + "Fecha vuelta: " + vuelo.getFechaVuelta() + "\n"
+                            + "Precio: $" + vuelo.getPrecio() + "\n");
         } catch (Exception ex) {
             System.err.println("Error al enviar email de reserva de vuelo: " + ex.getMessage());
         }
