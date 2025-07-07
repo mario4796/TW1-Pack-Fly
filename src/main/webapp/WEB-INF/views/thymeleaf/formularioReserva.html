@@ -41,6 +41,8 @@
       <input type="text" class="form-control" name="precio" th:value="${precio}" readonly>
     </div>
 
+
+
     <hr class="text-secondary"/>
     <h5 class="text-light mt-4">Datos del Pasajero</h5>
     <div class="mb-3">
@@ -51,6 +53,9 @@
       <label class="form-label">Correo electrónico</label>
       <input type="email" class="form-control" name="email" required>
     </div>
+
+    <input type="hidden" name="idVuelo" th:value="${idVuelo}" />
+
 
     <div class="text-center mt-4">
       <button type="submit" class="btn btn-success btn-lg">Confirmar Reserva</button>

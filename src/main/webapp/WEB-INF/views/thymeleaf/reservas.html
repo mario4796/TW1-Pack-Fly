@@ -43,12 +43,23 @@
                                                         th:text="${vuelo.origen}">test</span></p>
                                                 <p class="card-text mb-1"><strong>Destino:</strong> <span
                                                         th:text="${vuelo.destino}">test</span></p>
-                                                <p class="card-text mb-1"><strong>Fecha:</strong> <span
+                                                <p class="card-text mb-1"><strong>FechaIda:</strong> <span
                                                         th:text="${vuelo.fechaIda}">test</span></p>
-                                                <p class="card-text mb-1"><strong>Pasajero:</strong> <span
+                                                <p class="card-text mb-1"><strong>FechaVuelta:</strong> <span
                                                         th:text="${vuelo.fechaVuelta}">test</span></p>
                                                 <p class="card-text mb-1"><strong>Precio:</strong> <span
                                                         th:text="${vuelo.precio}">test</span></p>
+                                                <div th:if="${vuelo.layovers != null and !vuelo.layovers.isEmpty()}" class="mt-2">
+                                                    <strong>Escalas:</strong>
+                                                    <ul class="mb-0 ps-3">
+                                                        <li th:each="escala : ${vuelo.layovers}">
+                                                            <span th:text="${escala.name}">Nombre</span>
+                                                            (<span th:text="${escala.id}">ID</span>),
+                                                            duración: <span th:text="${escala.duration}">0</span> min
+                                                            <span th:if="${escala.overnight}"> - con pernocte</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                             <div class="position-absolute bottom-0 end-0 p-2 d-flex gap-2">
                                                 <button type="button" class="btn btn-warning btn-sm btn-editar-vuelo"

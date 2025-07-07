@@ -28,7 +28,7 @@ public class RepositorioReservaImpl implements RepositorioReserva {
     @Override
     public List<Vuelo> buscarPorEmail(String email) {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM Vuelo WHERE email = :email AND pagado = false", Vuelo.class)
+                .createQuery("SELECT DISTINCT v FROM Vuelo v LEFT JOIN FETCH v.layovers WHERE v.email = :email AND v.pagado = false", Vuelo.class)
                 .setParameter("email", email)
                 .list();
     }
@@ -83,7 +83,7 @@ public class RepositorioReservaImpl implements RepositorioReserva {
     @Override
     public List<Vuelo> buscarPorEmailPagadas(String email) {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM Vuelo WHERE email = :email AND pagado = true", Vuelo.class)
+                .createQuery("SELECT DISTINCT v FROM Vuelo v LEFT JOIN FETCH v.layovers WHERE v.email = :email AND v.pagado = true", Vuelo.class)
                 .setParameter("email", email)
                 .list();
     }

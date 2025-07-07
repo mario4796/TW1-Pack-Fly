@@ -9,6 +9,9 @@ import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioReserva;
+import com.tallerwebi.presentacion.dtos.AeropuertoDTO;
+import com.tallerwebi.presentacion.dtos.EscalaDTO;
+import com.tallerwebi.presentacion.dtos.SegmentoVueloDTO;
 import com.tallerwebi.presentacion.dtos.VueloDTO;
 import com.tallerwebi.presentacion.response.VueloResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,21 +98,89 @@ public class ServicioReservaImpl implements ServicioReserva {
                     List<VueloDTO> vuelos = new ArrayList<>();
 
                     for (JsonNode vueloNode : bestFlights) {
+                        VueloDTO dto = new VueloDTO();
+
+
+                        dto.setOrigen(origen);
+                        dto.setDestino(destino);
+                        dto.setFechaIda(fechaIdaStr);
+                        dto.setFechaVuelta(fechaVueltaStr);
+                        // Parsear segmentos
                         JsonNode flightsArray = vueloNode.get("flights");
-                        if (flightsArray != null && flightsArray.isArray() && flightsArray.size() > 0) {
-                            JsonNode primerSegmento = flightsArray.get(0);
-                            JsonNode ultimoSegmento = flightsArray.get(flightsArray.size() - 1);
+                        if (flightsArray != null && flightsArray.isArray()) {
+                            List<SegmentoVueloDTO> segmentos = new ArrayList<>();
+                            for (JsonNode seg : flightsArray) {
+                                SegmentoVueloDTO segmento = new SegmentoVueloDTO();
 
+                                // departure_airport
+                                JsonNode dep = seg.get("departure_airport");
+                                AeropuertoDTO depAeropuerto = new AeropuertoDTO();
+                                depAeropuerto.setId(dep.get("id").asText());
+                                depAeropuerto.setName(dep.get("name").asText());
+                                depAeropuerto.setTime(dep.get("time").asText());
+                                segmento.setDepartureAirport(depAeropuerto);
 
-                            VueloDTO dto = new VueloDTO();
-                            dto.setOrigen(primerSegmento.get("departure_airport").get("id").asText());
-                            dto.setDestino(primerSegmento.get("arrival_airport").get("id").asText());
-                            dto.setFechaIda(primerSegmento.get("departure_airport").get("time").asText());
-                            dto.setFechaVuelta(ultimoSegmento.get("arrival_airport").get("time").asText());
-                            dto.setPrecio(vueloNode.get("price").asInt());
+                                // arrival_airport
+                                JsonNode arr = seg.get("arrival_airport");
+                                AeropuertoDTO arrAeropuerto = new AeropuertoDTO();
+                                arrAeropuerto.setId(arr.get("id").asText());
+                                arrAeropuerto.setName(arr.get("name").asText());
+                                arrAeropuerto.setTime(arr.get("time").asText());
+                                segmento.setArrivalAirport(arrAeropuerto);
 
-                            vuelos.add(dto);
+                                segmento.setDuration(seg.get("duration").asInt());
+                                segmento.setAirplane(seg.get("airplane").asText());
+                                segmento.setAirline(seg.get("airline").asText());
+                                segmento.setAirlineLogo(seg.get("airline_logo").asText());
+                                segmento.setTravelClass(seg.get("travel_class").asText());
+                                segmento.setFlightNumber(seg.get("flight_number").asText());
+
+                                // extensions y ticket_also_sold_by (arrays de strings)
+                                List<String> extensions = new ArrayList<>();
+                                if (seg.has("extensions") && seg.get("extensions").isArray()) {
+                                    for (JsonNode ext : seg.get("extensions")) {
+                                        extensions.add(ext.asText());
+                                    }
+                                }
+                                segmento.setExtensions(extensions);
+
+                                List<String> sellers = new ArrayList<>();
+                                if (seg.has("ticket_also_sold_by") && seg.get("ticket_also_sold_by").isArray()) {
+                                    for (JsonNode seller : seg.get("ticket_also_sold_by")) {
+                                        sellers.add(seller.asText());
+                                    }
+                                }
+                                segmento.setTicketAlsoSoldBy(sellers);
+
+                                segmento.setLegroom(seg.has("legroom") ? seg.get("legroom").asText() : null);
+                                segmento.setOvernight(seg.has("overnight") ? seg.get("overnight").asBoolean() : false);
+                                segmento.setOftenDelayedByOver30Min(seg.has("often_delayed_by_over_30_min") ? seg.get("often_delayed_by_over_30_min").asBoolean() : false);
+                                segmento.setPlaneAndCrewBy(seg.has("plane_and_crew_by") ? seg.get("plane_and_crew_by").asText() : null);
+
+                                segmentos.add(segmento);
+                            }
+                            dto.setFlights(segmentos);
                         }
+
+                        // Parsear escalas (layovers)
+                        JsonNode layoversArray = vueloNode.get("layovers");
+                        if (layoversArray != null && layoversArray.isArray()) {
+                            List<EscalaDTO> escalas = new ArrayList<>();
+                            for (JsonNode layover : layoversArray) {
+                                EscalaDTO escala = new EscalaDTO();
+                                escala.setDuration(layover.get("duration").asInt());
+                                escala.setName(layover.get("name").asText());
+                                escala.setId(layover.get("id").asText());
+                                escala.setOvernight(layover.has("overnight") ? layover.get("overnight").asBoolean() : false);
+                                escalas.add(escala);
+                            }
+                            dto.setLayovers(escalas);
+                        }
+
+                        dto.setDuracionTotal(vueloNode.get("total_duration").asInt());
+                        dto.setPrecio(vueloNode.get("price").asInt());
+
+                        vuelos.add(dto);
                     }
 
                     return Collections.unmodifiableList(vuelos);
