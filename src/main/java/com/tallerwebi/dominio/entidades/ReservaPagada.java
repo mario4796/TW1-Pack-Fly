@@ -96,4 +96,6 @@ public class ReservaPagada {
     public void setFechaPago(LocalDateTime fechaPago) {
         this.fechaPago = fechaPago;
     }
+
+
 }
