@@ -182,6 +182,19 @@ public class ControladorVuelos {
             System.err.println("Error al enviar email de reserva de vuelo: " + ex.getMessage());
         }
 
+
+        String fechaIdaSolo = vuelo.getFechaIda().contains(" ") ? vuelo.getFechaIda().split(" ")[0] : vuelo.getFechaIda();
+        String fechaVueltaSolo = vuelo.getFechaVuelta().contains(" ") ? vuelo.getFechaVuelta().split(" ")[0] : vuelo.getFechaVuelta();
+
+
+        LocalDate fechaIdaVuelo = LocalDate.parse(fechaIdaSolo);
+        LocalDate fechaVueltaVuelo = LocalDate.parse(fechaVueltaSolo);
+
+
+        redirectAttributes.addFlashAttribute("destinoDeVuelo", vuelo.getDestino());
+        redirectAttributes.addFlashAttribute("fechaIdaVuelo", fechaIdaVuelo);
+        redirectAttributes.addFlashAttribute("fechaVueltaVuelo", fechaVueltaVuelo);
+
         return "redirect:/busqueda-hoteles";
     }
 
