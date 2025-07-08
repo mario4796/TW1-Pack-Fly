@@ -1,4 +1,5 @@
 package com.tallerwebi.dominio.implementaciones;
+
 import com.tallerwebi.config.ConfiguracionDelMail;
 import com.tallerwebi.dominio.ServicioEmail;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -6,7 +7,6 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import jakarta.mail.*;
 
 
@@ -24,9 +24,6 @@ public class ServicioEmailImpl implements ServicioEmail {
 
     @Override
     public void enviarCorreo(String destinatario, String asunto, String cuerpo) throws MessagingException{
-
-
-
         try {
             Message mensaje = new MimeMessage(config.getSession());
             mensaje.setFrom(new InternetAddress(config.getRemitente()));

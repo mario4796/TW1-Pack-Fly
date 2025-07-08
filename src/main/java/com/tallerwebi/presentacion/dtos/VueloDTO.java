@@ -1,7 +1,6 @@
 package com.tallerwebi.presentacion.dtos;
 
 import com.tallerwebi.dominio.entidades.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,39 +28,29 @@ public class VueloDTO {
 
     public String getOrigen() { return origen; }
     public void setOrigen(String origen) { this.origen = origen; }
-
     public String getDestino() { return destino; }
     public void setDestino(String destino) { this.destino = destino; }
-
     public String getFechaIda() { return fechaIda; }
     public void setFechaIda(String fechaIda) { this.fechaIda = fechaIda; }
-
     public String getFechaVuelta() { return fechaVuelta; }
     public void setFechaVuelta(String fechaVuelta) { this.fechaVuelta = fechaVuelta; }
-
     public double getPrecio() { return precio; }
     public void setPrecio(double precio) { this.precio = precio; }
-
     public List<SegmentoVueloDTO> getFlights() {
         return flights;
     }
-
     public void setFlights(List<SegmentoVueloDTO> flights) {
         this.flights = flights;
     }
-
     public List<EscalaDTO> getLayovers() {
         return layovers;
     }
-
     public void setLayovers(List<EscalaDTO> layovers) {
         this.layovers = layovers;
     }
-
     public Integer getDuracionTotal() {
         return duracionTotal;
     }
-
     public void setDuracionTotal(Integer duracionTotal) {
         this.duracionTotal = duracionTotal;
     }
@@ -70,8 +59,8 @@ public class VueloDTO {
         Vuelo vuelo = new Vuelo();
         vuelo.setOrigen(this.origen);
         vuelo.setDestino(this.destino);
-        vuelo.setFechaIda(this.fechaIda);         // ya es String
-        vuelo.setFechaVuelta(this.fechaVuelta);   // ya es String
+        vuelo.setFechaIda(this.fechaIda);
+        vuelo.setFechaVuelta(this.fechaVuelta);
         vuelo.setPrecio(this.precio);
         vuelo.setNombre(nombre);
         vuelo.setEmail(emailUsuario);
@@ -114,7 +103,7 @@ public class VueloDTO {
         }
         vuelo.setFlights(segmentos);
 
-// MAPEAR ESCALAS
+    // MAPEAR ESCALAS
         List<Escala> escalas = new ArrayList<>();
         if (this.layovers != null) {
             for (EscalaDTO escDto : this.layovers) {
@@ -130,5 +119,4 @@ public class VueloDTO {
 
         return vuelo;
     }
-
 }

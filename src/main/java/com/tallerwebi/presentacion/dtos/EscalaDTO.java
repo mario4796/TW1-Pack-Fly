@@ -6,7 +6,6 @@ public class EscalaDTO {
     private String id;
     private Boolean overnight;
 
-    // getters y setters
     public int getDuration() { return duration; }
     public void setDuration(int duration) { this.duration = duration; }
     public String getName() { return name; }

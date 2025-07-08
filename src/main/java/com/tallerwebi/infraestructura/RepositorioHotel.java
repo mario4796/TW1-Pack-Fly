@@ -1,8 +1,6 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Hotel;
-import com.tallerwebi.presentacion.dtos.HotelDto;
-
 import java.util.List;
 
 public interface RepositorioHotel {
@@ -13,8 +11,6 @@ public interface RepositorioHotel {
     void actualizar(Hotel hotel);
     List<Hotel> obtenerTodos();
     Hotel buscarPorId(Long id);
-
     void pagarHoteles(List<Hotel> hoteles);
-
     List<Hotel> buscarHotelesPagados(Long id);
 }

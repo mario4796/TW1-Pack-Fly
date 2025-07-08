@@ -9,7 +9,6 @@ import com.tallerwebi.infraestructura.RepositorioReserva;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.dtos.RecomendacionDTO;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +38,8 @@ public class ServicioRecomendacionImpl implements ServicioRecomendacion {
     public List<RecomendacionDTO> obtenerRecomendacionesPara(Usuario usuario) {
         List<RecomendacionDTO> recomendaciones = new ArrayList<>();
 
-
         repositorioExcursionImpl.obtenerTodas().stream().limit(3).forEach(e ->
                 recomendaciones.add(new RecomendacionDTO("Excursión", e.getTitle(), e.getUrl())));
-
 
         List<HotelDto> hotelesApi = servicioHotel.buscarHoteles("Buenos Aires", "2025-10-01", "2025-10-03", 2, 0);
         hotelesApi.stream().limit(3).forEach(h ->

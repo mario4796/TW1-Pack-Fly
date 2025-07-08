@@ -2,13 +2,11 @@ package com.tallerwebi.infraestructura.implementaciones;
 
 import com.tallerwebi.infraestructura.RepositorioHotel;
 import com.tallerwebi.dominio.entidades.Hotel;
-import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.util.List;
 
 @Repository
@@ -22,14 +20,12 @@ public class RepositorioHotelImp implements RepositorioHotel {
         this.sessionFactory = sessionFactory;
     }
 
-
     @Override
     public Boolean reservar(Hotel hotel) {
         try {
             this.sessionFactory.getCurrentSession().save(hotel);
             return true;
         } catch (Exception e) {
-            // Loguear el error si es necesario
             return false;
         }
     }
@@ -44,7 +40,6 @@ public class RepositorioHotelImp implements RepositorioHotel {
                 .getResultList();
     }
 
-
     @Override
     public void eliminarReserva(Long idUsuario, String nameHotel) {
         this.sessionFactory.getCurrentSession()
@@ -53,7 +48,6 @@ public class RepositorioHotelImp implements RepositorioHotel {
                 .setParameter("nameHotel", nameHotel)
                 .executeUpdate();
     }
-
 
     @Override
     public Hotel buscarPorUsuarioYNombre(Long idUsuario, Long idHotel) {
@@ -109,5 +103,4 @@ public class RepositorioHotelImp implements RepositorioHotel {
                 .setParameter("idUsuario", idUsuario)
                 .getResultList();
     }
-
 }

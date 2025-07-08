@@ -4,7 +4,6 @@ import com.tallerwebi.dominio.entidades.PreferenciaUsuario;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioPreferenciaUsuario;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;

@@ -17,7 +17,6 @@ public class ServicioPreferenciaUsuarioImpl implements ServicioPreferenciaUsuari
     @Autowired
     private ServicioReserva servicioReserva;
 
-
     @Override
     public void registrarReservaVuelo(Usuario usuario, int cantidadAsientos, int millas) {
         PreferenciaUsuario p = getOcrear(usuario);
@@ -53,7 +52,5 @@ public class ServicioPreferenciaUsuarioImpl implements ServicioPreferenciaUsuari
             repositorio.guardar(p);
         }
         return p;
-
     }
-
 }
