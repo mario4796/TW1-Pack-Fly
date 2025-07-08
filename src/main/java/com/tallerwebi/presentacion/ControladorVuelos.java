@@ -1,11 +1,10 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioEmail;
-import com.tallerwebi.dominio.entidades.Reserva;
-import com.tallerwebi.dominio.ServicioReserva;
-import com.tallerwebi.dominio.ServicioVuelos;
 import com.tallerwebi.dominio.entidades.Vuelo;
+import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.presentacion.dtos.VueloDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,23 +17,22 @@ import jakarta.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ControladorVuelos {
-    @Autowired
-    private ServicioVuelos servicioVuelos;
+
 
     @Autowired
     private ServicioEmail servicioEmail;
 
+
     @Autowired
     private ServicioReserva servicioReserva;
 
-    @Autowired
-    public ControladorVuelos(ServicioVuelos servicioVuelos) {
-        this.servicioVuelos = servicioVuelos;
-    }
 
+   @Autowired
     public ControladorVuelos(ServicioReserva servicioReservas) {
         this.servicioReserva = servicioReservas;
     }
@@ -61,24 +59,20 @@ public class ControladorVuelos {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         model.addAttribute("usuario", usuario);
 
-        Vuelo vuelo = servicioVuelos.getVuelo(origen, destino, fechaIda, fechaVuelta);
+        List<VueloDTO> vuelos = servicioReserva.getVuelo(origen, destino, fechaIda, fechaVuelta);
 
-        if (vuelo != null) {
-            boolean dentroRango = true;
-
+        if (vuelos != null && !vuelos.isEmpty()) {
             if (precioMin != null && precioMax != null) {
-                double precioVuelo = vuelo.getPrecio();
-                dentroRango = (precioVuelo >= precioMin && precioVuelo <= precioMax);
+                vuelos = vuelos.stream()
+                        .filter(v -> v.getPrecio() >= precioMin && v.getPrecio() <= precioMax)
+                        .collect(Collectors.toList());  // ✅ compatible con Java 11
+
+                if (vuelos.isEmpty()) {
+                    model.addAttribute("error", "No hay vuelos en el rango de precio indicado.");
+                }
             }
 
-            if (dentroRango) {
-                model.addAttribute("vuelo", vuelo);
-                model.addAttribute("vueloUrl", true);
-                model.addAttribute("valorIda", vuelo.getPrecio());
-                model.addAttribute("valorVuelta", vuelo.getPrecio());
-            } else {
-                model.addAttribute("error", "No hay vuelos en el rango de precio indicado.");
-            }
+            model.addAttribute("vuelos", vuelos); // <- Se usa en el HTML con th:each
         } else {
             model.addAttribute("error", "Vuelo no encontrado");
         }
@@ -89,36 +83,43 @@ public class ControladorVuelos {
         model.addAttribute("destino", destino);
         model.addAttribute("fechaIda", fechaIda);
         model.addAttribute("fechaVuelta", fechaVuelta);
+        request.getSession().setAttribute("VUELOS_ENCONTRADOS", vuelos);
+
 
         return "busqueda-vuelo";
     }
 
-    @GetMapping("/formulario-reserva")
 
+    @GetMapping("/formulario-reserva")
     public String mostrarFormularioVacio() {return "formularioReserva";}
 
     @PostMapping("/formulario-reserva")
-    public String mostrarFormularioReserva(@RequestParam String origen,
-                                           @RequestParam String destino,
-                                           @RequestParam String fechaIda,
-                                           @RequestParam String fechaVuelta,
-                                           @RequestParam Double precio,
+    public String mostrarFormularioReserva(@RequestParam int idVuelo,
                                            HttpServletRequest request,
                                            Model model) {
-
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-
         model.addAttribute("usuario", usuario);
-        model.addAttribute("origen", origen);
-        model.addAttribute("destino", destino);
-        model.addAttribute("fechaIda", fechaIda);
-        model.addAttribute("fechaVuelta", fechaVuelta);
-        model.addAttribute("precio", precio);
+
+        List<VueloDTO> vuelos = (List<VueloDTO>) request.getSession().getAttribute("VUELOS_ENCONTRADOS");
+        if (vuelos == null || idVuelo >= vuelos.size()) {
+            model.addAttribute("error", "No se pudo encontrar el vuelo seleccionado.");
+            return "busqueda-vuelo";
+        }
+
+        VueloDTO vueloSeleccionado = vuelos.get(idVuelo);
+        request.getSession().setAttribute("VUELO_SELECCIONADO", vueloSeleccionado); // para luego guardar
+
+        // Para completar los datos del formulario:
+        model.addAttribute("origen", vueloSeleccionado.getOrigen());
+        model.addAttribute("destino", vueloSeleccionado.getDestino());
+        model.addAttribute("fechaIda", vueloSeleccionado.getFechaIda());
+        model.addAttribute("fechaVuelta", vueloSeleccionado.getFechaVuelta());
+        model.addAttribute("precio", vueloSeleccionado.getPrecio());
+        model.addAttribute("idVuelo", idVuelo);
 
         return "formularioReserva";
     }
-
-
+/*
     @PostMapping("/guardar-reserva")
     public String guardarReserva(
             @RequestParam("nombre") String nombre,
@@ -128,18 +129,31 @@ public class ControladorVuelos {
             @RequestParam("fechaIda") String fechaIda,
             @RequestParam("fechaVuelta") String fechaVuelta,
             @RequestParam("precio") Double precio,
+            Model model
+    ) {
+        Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
+        servicioReserva.guardarReserva(reserva);
+        return "redirect:/busqueda-hoteles?reservaExitosa=true";
+    }*/
+
+    @PostMapping("/guardar-vuelo")
+    public String guardarReserva(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("email") String email,
+            @RequestParam("idVuelo") int idVuelo,  // <- NUEVO: para recuperar el vuelo
             HttpServletRequest request,
             RedirectAttributes redirectAttributes,
-            Model model)
-
-            throws MessagingException {
+            Model model
+    ) throws MessagingException {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-        Reserva reserva = new Reserva(nombre, email, origen, destino, fechaIda, fechaVuelta, precio);
-        reserva.setUsuario(usuario); // Enlaza el usuario con la reserva
+        List<VueloDTO> vuelos = (List<VueloDTO>) request.getSession().getAttribute("VUELOS_ENCONTRADOS");
+        VueloDTO vueloDTO = vuelos.get(idVuelo);
+
+        Vuelo vuelo = vueloDTO.toEntidad(nombre, email, usuario);
 
         try {
-            servicioReserva.guardarReserva(reserva);
+            servicioReserva.guardarReserva(vuelo);
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo creada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
@@ -147,40 +161,39 @@ public class ControladorVuelos {
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
 
-       try {
+        // ✅ Correos
+        try {
             servicioEmail.enviarCorreo(
                     email,
                     "Confirmación de Reserva - Pack&Fly",
-                    "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
-                            + "Vuelo: " + origen + " → " + destino + "\n"
-                            + "Fecha ida: " + fechaIda + "\n"
-                            + "Fecha vuelta:" + fechaVuelta + "\n"
-                            + "Precio: $" + precio + "\n"
-                            + "Recorda que tenes hasta 7 dias antes de la reservacion para pagar, si no su reservacion sera ELIMINADA"
-
+                    "¡Gracias por tu reserva, " + usuario.getNombre() + "!\n"
+                            + "Vuelo: " + vuelo.getOrigen() + " → " + vuelo.getDestino() + "\n"
+                            + "Fecha ida: " + vuelo.getFechaIda() + "\n"
+                            + "Fecha vuelta: " + vuelo.getFechaVuelta() + "\n"
+                            + "Precio: $" + vuelo.getPrecio() + "\n"
+                            + "Recordá que tenés hasta 7 días antes del vuelo para pagar. Si no, será eliminado."
             );
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de vuelo",
-                    "El usuario "+email+" ha reservado un vuelo de " + origen+ " a "+ destino+"\n"
-                    + "Fecha ida: " + fechaIda + "\n"
-                    + "Fecha vuelta:" + fechaVuelta + "\n"
-                    + "Precio: $" + precio + "\n");
+                    "El usuario " + email + " ha reservado un vuelo de " + vuelo.getOrigen() + " a " + vuelo.getDestino() + "\n"
+                            + "Fecha ida: " + vuelo.getFechaIda() + "\n"
+                            + "Fecha vuelta: " + vuelo.getFechaVuelta() + "\n"
+                            + "Precio: $" + vuelo.getPrecio() + "\n");
         } catch (Exception ex) {
             System.err.println("Error al enviar email de reserva de vuelo: " + ex.getMessage());
         }
 
-        String fechaIdaSolo = fechaIda.contains(" ") ? fechaIda.split(" ")[0] : fechaIda;
-        String fechaVueltaSolo = fechaVuelta.contains(" ") ? fechaVuelta.split(" ")[0] : fechaVuelta;
-
-
-        LocalDate fechaIdaVuelo = LocalDate.parse(fechaIdaSolo);
-        LocalDate fechaVueltaVuelo = LocalDate.parse(fechaVueltaSolo);
-
-
-        redirectAttributes.addFlashAttribute("destinoDeVuelo", destino);
-        redirectAttributes.addFlashAttribute("fechaIdaVuelo", fechaIdaVuelo);
-        redirectAttributes.addFlashAttribute("fechaVueltaVuelo", fechaVueltaVuelo);
-
         return "redirect:/busqueda-hoteles";
     }
+
+
+
+    /*@GetMapping("/ver-reservas")
+    public String verReservas(@RequestParam("email") String email, Model model) {
+        List<Reserva> reservas = servicioReserva.obtenerReservasPorEmail(email);
+        model.addAttribute("reservas", reservas);
+        model.addAttribute("email", email);
+        return "verReservas";
+    }*/
+
 
 }

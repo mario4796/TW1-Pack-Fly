@@ -117,61 +117,105 @@
     </div>
 
 
-    <div th:if="${vueloUrl}" class="overlay mt-5">
+    <div th:each="vuelo, iterStat : ${vuelos}" class="overlay mt-5">
         <div class="card shadow-lg border-0 bg-body text-body">
-        <div class="card-header d-flex align-items-center bg-primary text-white">
-            <i class="bi bi-airplane-engines-fill me-2"></i>
-            <h5 class="mb-0">Resultado de Búsqueda</h5>
-        </div>
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <p class="mb-1">
-                        <i class="bi bi-geo-alt-fill text-primary me-2"></i>
-                        <strong>Origen:</strong> <span th:text="${vuelo.origen}"></span>
-                    </p>
-                    <p class="mb-1">
-                        <i class="bi bi-signpost-split-fill text-primary me-2"></i>
-                        <strong>Destino:</strong> <span th:text="${vuelo.destino}"></span>
-                    </p>
+            <div class="card-header d-flex align-items-center bg-primary text-white">
+                <i class="bi bi-airplane-engines-fill me-2"></i>
+                <h5 class="mb-0">Resultado de Búsqueda</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p class="mb-1">
+                            <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                            <strong>Origen:</strong> <span th:text="${vuelo.origen}"></span>
+                        </p>
+                        <p class="mb-1">
+                            <i class="bi bi-signpost-split-fill text-primary me-2"></i>
+                            <strong>Destino:</strong> <span th:text="${vuelo.destino}"></span>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1">
+                            <i class="bi bi-calendar-check text-primary me-2"></i>
+                            <strong>Fecha Ida:</strong> <span th:text="${vuelo.fechaIda}"></span>
+                        </p>
+                        <p class="mb-1">
+                            <i class="bi bi-calendar2-week text-primary me-2"></i>
+                            <strong>Fecha Vuelta:</strong> <span th:text="${vuelo.fechaVuelta}"></span>
+                        </p>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <p class="mb-1">
-                        <i class="bi bi-calendar-check text-primary me-2"></i>
-                        <strong>Fecha Ida:</strong> <span th:text="${vuelo.fechaIda}"></span>
-                    </p>
-                    <p class="mb-1">
-                        <i class="bi bi-calendar2-week text-primary me-2"></i>
-                        <strong>Fecha Vuelta:</strong> <span th:text="${vuelo.fechaVuelta}"></span>
-                    </p>
+                <p class="h5 text-success mb-4">
+                    <i class="bi bi-cash-stack me-2"></i>
+                    <strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span>
+                </p>
+
+                <!-- 🔽 Nueva sección: Escalas -->
+                <div class="mt-3" th:if="${vuelo.layovers != null}">
+                    <h6>Escalas:</h6>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="escala : ${vuelo.layovers}">
+                            <i class="bi bi-clock-history text-primary me-2"></i>
+                            Escala en <strong th:text="${escala.name}"></strong>
+                            (<span th:text="${escala.id}"></span>),
+                            duración: <span th:text="${escala.duration}"></span> min
+                            <span th:if="${escala.overnight}">- con pernocte</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div th:if="${vuelo.flights != null}">
+                    <h6 class="mt-4 mb-2 text-primary">Tramos del vuelo:</h6>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item" th:each="segmento : ${vuelo.flights}">
+                            <div>
+                                <strong th:text="'Vuelo: ' + ${segmento.flightNumber}"></strong>
+                                <span th:text="' | ' + ${segmento.airline}"></span>
+                            </div>
+                            <div>
+                                <i class="bi bi-airplane"></i>
+                                <span th:text="'Salida: ' + ${segmento.departureAirport.name} + ' (' + ${segmento.departureAirport.id} + ')'"></span>
+                                <span th:text="' a las ' + ${segmento.departureAirport.time}"></span>
+                            </div>
+                            <div>
+                                <i class="bi bi-geo"></i>
+                                <span th:text="'Llegada: ' + ${segmento.arrivalAirport.name} + ' (' + ${segmento.arrivalAirport.id} + ')'"></span>
+                                <span th:text="' a las ' + ${segmento.arrivalAirport.time}"></span>
+                            </div>
+                            <div>
+                                <small th:text="'Duración: ' + ${segmento.duration} + ' min'"></small>
+                                <span th:if="${segmento.overnight}" class="badge bg-warning text-dark ms-2">Vuelo nocturno</span>
+                                <span th:if="${segmento.oftenDelayedByOver30Min}" class="badge bg-danger ms-2">Demoras frecuentes</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+
+                <form th:if="${usuario != null}" th:action="@{/formulario-reserva}" method="post" accept-charset="UTF-8">
+                    <input type="hidden" th:name="idVuelo" th:value="${iterStat.index}"/>
+                    <input type="hidden" name="origen" th:value="${vuelo.origen}"/>
+                    <input type="hidden" name="destino" th:value="${vuelo.destino}"/>
+                    <input type="hidden" name="fechaIda" th:value="${vuelo.fechaIda}"/>
+                    <input type="hidden" name="fechaVuelta" th:value="${vuelo.fechaVuelta}"/>
+                    <input type="hidden" name="precio" th:value="${vuelo.precio}"/>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-cart-check-fill me-1"></i> Reservar vuelo
+                    </button>
+                </form>
+                <div th:if="${error != null}" class="alert alert-warning mt-3" th:text="${error}"></div>
+
+                <div th:if="${usuario == null}" class="alert alert-secondary mt-3 d-flex align-items-center justify-content-center" role="alert">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    <div>
+                        Debes <a th:href="@{/login}" class="alert-link">iniciar sesión</a> para poder reservar.
+                    </div>
                 </div>
             </div>
-            <p class="h5 text-success mb-4">
-                <i class="bi bi-cash-stack me-2"></i>
-                <strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span>
-            </p>
-
-
-            <form th:if="${usuario != null}" th:action="@{/formulario-reserva}" method="post" accept-charset="UTF-8">
-                <input type="hidden" name="origen" th:value="${vuelo.origen}"/>
-                <input type="hidden" name="destino" th:value="${vuelo.destino}"/>
-                <input type="hidden" name="fechaIda" th:value="${vuelo.fechaIda}"/>
-                <input type="hidden" name="fechaVuelta" th:value="${vuelo.fechaVuelta}"/>
-                <input type="hidden" name="precio" th:value="${vuelo.precio}"/>
-                <button type="submit" class="btn btn-success">
-                    <i class="bi bi-cart-check-fill me-1"></i> Reservar vuelo
-                </button>
-            </form>
-            <div th:if="${error != null}" class="alert alert-warning mt-3" th:text="${error}"></div>
-
-            <div th:if="${usuario == null}" class="alert alert-secondary mt-3 d-flex align-items-center justify-content-center" role="alert">
-                <i class="bi bi-info-circle-fill me-2"></i>
-                <div>
-                    Debes <a th:href="@{/login}" class="alert-link">iniciar sesión</a> para poder reservar.
-                </div>
-            </div>
         </div>
-    </div>
     </div>
 </main>
 <div th:replace="fragments/login-modal :: loginModal"></div>
