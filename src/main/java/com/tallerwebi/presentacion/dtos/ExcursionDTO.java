@@ -1,12 +1,9 @@
-
 package com.tallerwebi.presentacion.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.entidades.Usuario;
-import org.hibernate.query.criteria.internal.predicate.BooleanExpressionPredicate;
-
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -27,7 +24,6 @@ public class ExcursionDTO {
     private String url;
 
     private Double precio;
-
 
     @JsonProperty("date")
     private void unpackDate(Map<String, Object> date) {
@@ -58,7 +54,6 @@ public class ExcursionDTO {
         this.url = url;
     }
 
-
     public Excursion toEntity(){
         Excursion entidad = new Excursion();
         entidad.setTitle(this.title);
@@ -70,10 +65,8 @@ public class ExcursionDTO {
         entidad.setPagado(false);
         entidad.setUsuario(usuario);
 
-
         return entidad;
     }
-
 
     public String getTitle()       { return title; }
     public String getStartDate()   { return startDate; }
@@ -81,7 +74,6 @@ public class ExcursionDTO {
     public String getDescription() { return description; }
     public String getUrl()         { return url; }
     public Double getPrecio() {return precio; }
-
     public void setTitle(String t)           { this.title = t; }
     public void setStartDate(String d)       { this.startDate = d; }
     public void setLocation(String l)        { this.location = l; }

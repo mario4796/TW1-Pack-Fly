@@ -10,7 +10,6 @@ import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -138,7 +137,5 @@ public class ServicioLoginImpl implements ServicioLogin {
     public Usuario buscarUsuarioPorId(Long idUsuario) {
         return repositorioUsuario.buscarUsuarioPorId(idUsuario);
     }
-
-
 }
 

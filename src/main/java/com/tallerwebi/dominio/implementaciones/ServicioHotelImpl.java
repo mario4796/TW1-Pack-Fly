@@ -8,7 +8,6 @@ import com.tallerwebi.infraestructura.implementaciones.RepositorioHotelImp;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +33,6 @@ public class ServicioHotelImpl implements ServicioHotel {
                         hotel.getCheckOut(), hotel.getAdult(), hotel.getChildren(), hotel.getPrecio(), hotel.getPagado()))
                 .collect(Collectors.toList());
     }
-
     
     public List<HotelDto> buscarHoteles(String ciudad, String checkIn, String checkOut, Integer adults, Integer children) {
 
@@ -47,7 +45,6 @@ public class ServicioHotelImpl implements ServicioHotel {
                 ciudad, checkIn, checkOut, adults, children, children_ages, currency, gl, hl, API_KEY
         );
         System.out.println("URL de consulta: " + url);
-
 
         HotelResponse response = restTemplate.getForObject(url, HotelResponse.class);
         return response != null ? response.getProperties() : List.of();
@@ -99,12 +96,9 @@ public class ServicioHotelImpl implements ServicioHotel {
         return repositorioHotelImp.buscarHotelesPagados(id);
     }
 
-
-
     @Override
     public void pagarHotelesDto(List<Hotel> hoteles) {
         repositorioHotelImp.pagarHoteles(hoteles);
     }
-
 
 }

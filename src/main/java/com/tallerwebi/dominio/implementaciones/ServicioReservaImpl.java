@@ -1,6 +1,5 @@
 package com.tallerwebi.dominio.implementaciones;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tallerwebi.config.ConfiguracionDeApiKey;
@@ -13,11 +12,9 @@ import com.tallerwebi.presentacion.dtos.AeropuertoDTO;
 import com.tallerwebi.presentacion.dtos.EscalaDTO;
 import com.tallerwebi.presentacion.dtos.SegmentoVueloDTO;
 import com.tallerwebi.presentacion.dtos.VueloDTO;
-import com.tallerwebi.presentacion.response.VueloResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -36,7 +33,6 @@ public class ServicioReservaImpl implements ServicioReserva {
 
     private final RepositorioReserva repositorioReserva;
 
-
     @Autowired
     private ConfiguracionDeApiKey apiKeyConfig;
 
@@ -53,7 +49,6 @@ public class ServicioReservaImpl implements ServicioReserva {
     public ServicioReservaImpl(RepositorioReserva repositorioReserva) {
         this.repositorioReserva = repositorioReserva;
     }
-
 
     @Override
     public List<VueloDTO> getVuelo(String origen, String destino, Date fechaIda, Date fechaVuelta) {
@@ -98,7 +93,6 @@ public class ServicioReservaImpl implements ServicioReserva {
 
                     for (JsonNode vueloNode : bestFlights) {
                         VueloDTO dto = new VueloDTO();
-
 
                         dto.setOrigen(origen);
                         dto.setDestino(destino);
@@ -195,7 +189,6 @@ public class ServicioReservaImpl implements ServicioReserva {
 
         return Collections.emptyList();
     }
-
 
     @Override
     public void guardarReserva(Vuelo vuelo) {

@@ -1,14 +1,12 @@
 package com.tallerwebi.presentacion.dtos;
 
 public class RecomendacionDTO {
+
     private String tipo;
     private String titulo;
     private String imagenUrl;
 
-
-
     public RecomendacionDTO(){
-
     }
 
     public RecomendacionDTO(String tipo, String titulo, String imagenUrl) {

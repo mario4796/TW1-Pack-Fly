@@ -2,10 +2,7 @@ package com.tallerwebi.presentacion.dtos;
 
 import com.tallerwebi.dominio.entidades.Hotel;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-
 
 public class HotelDto{
 
@@ -53,31 +50,6 @@ public class HotelDto{
         this.precio = precio;
         this.pagado=false;
     }
-
-    public String getLink() {
-        return link;
-    }
-
-    public Double getOverall_rating() {
-        return overall_rating;
-    }
-
-    public Integer getReviews() {
-        return reviews;
-    }
-
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public RatePerNight getRate_per_night() {
-        return rate_per_night;
-    }
-
-    public List<String> getAmenities() {
-        return amenities;
-    }
-
 
     public static class Image {
         private String thumbnail;
@@ -138,10 +110,34 @@ public class HotelDto{
     }
 
 
+
+    public String getLink() {
+        return link;
+    }
+
+    public Double getOverall_rating() {
+        return overall_rating;
+    }
+
+    public Integer getReviews() {
+        return reviews;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public RatePerNight getRate_per_night() {
+        return rate_per_night;
+    }
+
+    public List<String> getAmenities() {
+        return amenities;
+    }
     public void setPrecio(Double preciobdd) { this.precio = preciobdd; }
 
     public HotelDto() {
-        // Constructor por defecto requerido por Jackson
+
     }
 
     public HotelDto(com.tallerwebi.dominio.entidades.Hotel hotel){
@@ -262,7 +258,6 @@ public class HotelDto{
             return 0.0;
         }
     }
-
     public String getImagen() {
         return imagen;
     }
@@ -270,6 +265,4 @@ public class HotelDto{
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
-
-
 }
