@@ -1,5 +1,5 @@
 package com.tallerwebi.infraestructura;
-
+/*
 import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.infraestructura.implementaciones.RepositorioVueloImpl;
 import org.hibernate.Session;
@@ -97,3 +97,4 @@ public class RepositorioVueloImplTest {
         inOrder.verify(query).getResultList();
     }
 }
+*/

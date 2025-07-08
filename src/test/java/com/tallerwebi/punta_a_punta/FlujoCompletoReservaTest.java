@@ -48,7 +48,7 @@ public class FlujoCompletoReservaTest {
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("USUARIO")).thenReturn(usuario);
 
-        List<Reserva> reservasVuelo = Arrays.asList(new Reserva());
+        List<Vuelo> reservasVuelo = Arrays.asList(new Vuelo());
         when(servicioReserva.obtenerReservasPorEmail(usuario.getEmail())).thenReturn(reservasVuelo);
 
         List<Hotel> hoteles = Arrays.asList(new Hotel());

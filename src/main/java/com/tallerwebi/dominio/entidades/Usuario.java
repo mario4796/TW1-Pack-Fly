@@ -59,11 +59,9 @@ public class Usuario {
     public void setApagar(Double aPagar) {
         this.apagar = aPagar;
     }
-
     public boolean activo() {
         return activo;
     }
-
     public void activar() {
         activo = true;
     }

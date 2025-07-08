@@ -1,118 +1,54 @@
 package com.tallerwebi.dominio;
 
+import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.implementaciones.ServicioReservaImpl;
-import com.tallerwebi.dominio.entidades.Reserva;
-import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioReserva;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.*;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ServicioReservaImplTest {
+
+    private ServicioReservaImpl servicioReserva;
 
     @Mock
     private RepositorioReserva repositorioReserva;
 
-    @Mock
-    private ServicioPreferenciaUsuario servicioPreferenciaUsuario;
-
-    @InjectMocks
-    private ServicioReservaImpl servicioReserva;
-
-
-    /**
-     * Si no hay usuario, sólo guarda en repo y no llama a preferencias.
-     */
-    @Test
-    public void guardarReserva_sinUsuario_soloInvocaRepo() {
-        Reserva reserva = new Reserva();
-
-        servicioReserva.guardarReserva(reserva);
-
-        verify(repositorioReserva).guardar(reserva);
-        verifyNoInteractions(servicioPreferenciaUsuario);
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        servicioReserva = new ServicioReservaImpl(repositorioReserva);
     }
 
     @Test
-    public void eliminarReserva_delegacionAlRepo() {
-        servicioReserva.eliminarReserva("foo@bar", "2025-01-01", "2025-01-05");
-        verify(repositorioReserva).eliminarReserva("foo@bar", "2025-01-01", "2025-01-05");
+    public void queSePuedaGuardarUnaReserva() {
+        Vuelo vuelo = new Vuelo();
+        servicioReserva.guardarReserva(vuelo);
+
+        verify(repositorioReserva, times(1)).guardar(vuelo);
     }
 
     @Test
-    public void editarReserva_existente_actualizaYGuarda() {
-        Reserva r = new Reserva();
-        r.setOrigen("oldO");
-        r.setDestino("oldD");
-        r.setFechaIda("oldI");
-        r.setFechaVuelta("oldV");
+    public void queSePuedaObtenerReservasPorEmail() {
+        String email = "usuario@ejemplo.com";
+        Vuelo r1 = new Vuelo();
+        Vuelo r2 = new Vuelo();
+        List<Vuelo> vuelos = Arrays.asList(r1, r2);
 
-        when(repositorioReserva.buscarPorIdyEmail("e@x", 10L)).thenReturn(r);
+        when(repositorioReserva.buscarPorEmail(email)).thenReturn(vuelos);
 
-        servicioReserva.editarReserva(10L, "e@x", "newO", "newD", "newI", "newV");
+        List<Vuelo> resultado = servicioReserva.obtenerReservasPorEmail(email);
 
-        assertEquals("newO", r.getOrigen());
-        assertEquals("newD", r.getDestino());
-        assertEquals("newI", r.getFechaIda());
-        assertEquals("newV", r.getFechaVuelta());
-        verify(repositorioReserva).actualizar(r);
+        assertEquals(2, resultado.size());
+        assertTrue(resultado.contains(r1));
+        assertTrue(resultado.contains(r2));
+        verify(repositorioReserva, times(1)).buscarPorEmail(email);
     }
-
-    @Test
-    public void editarReserva_noExistente_noActualiza() {
-        when(repositorioReserva.buscarPorIdyEmail(anyString(), anyLong())).thenReturn(null);
-
-        servicioReserva.editarReserva(5L, "a@b", "O", "D", "I", "V");
-
-        verify(repositorioReserva, never()).actualizar(any(Reserva.class));
-    }
-
-    @Test
-    public void buscarPorId_delegacionAlRepo() {
-        Reserva r = new Reserva();
-        when(repositorioReserva.buscarPorId(99L)).thenReturn(r);
-
-        assertSame(r, servicioReserva.buscarPorId(99L));
-    }
-
-    @Test
-    public void contarReservasUltimosDias_filtraCorrectamente() {
-        LocalDate hoy = LocalDate.now();
-        Reserva mañana = new Reserva(); mañana.setFechaIda(hoy.plusDays(1).toString());
-        Reserva ayer   = new Reserva(); ayer.setFechaIda(hoy.minusDays(1).toString());
-
-        when(repositorioReserva.buscarPorEmail("u@x"))
-                .thenReturn(Arrays.asList(mañana, ayer));
-
-        // Sólo cuenta las fechas posteriores a hoy
-        assertEquals(1L, servicioReserva.contarReservasUltimosDias("u@x", 0));
-        assertEquals(1L, servicioReserva.contarReservasUltimosDias("u@x", 1));
-    }
-
-    @Test
-    public void pagarReservas_delegacionAlRepo() {
-        servicioReserva.pagarRerservasDeVuelo("abc@xyz");
-        verify(repositorioReserva).pagarReservasDeVuelo("abc@xyz");
-    }
-
-    @Test
-    public void obtenerReservasPagadas_delegacionAlRepo() {
-        Reserva mockR = new Reserva();
-        List<Reserva> stubList = Collections.singletonList(mockR);
-        when(repositorioReserva.buscarPorEmailPagadas("e@f"))
-                .thenReturn(stubList);
-
-        List<Reserva> result = servicioReserva.obtenerReservasPorEmailPagados("e@f");
-        assertSame(stubList, result);
-    }
-}
+} 

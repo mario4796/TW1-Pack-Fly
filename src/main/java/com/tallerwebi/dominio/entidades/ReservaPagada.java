@@ -13,7 +13,7 @@ public class ReservaPagada {
 
     @OneToOne(optional = false)
     @JoinColumn(name = "reserva_id", nullable = false)
-    private Reserva reserva;
+    private Vuelo vuelo;
 
     @OneToOne(optional = true)
     @JoinColumn(name = "hotel_id", nullable = true)
@@ -28,49 +28,47 @@ public class ReservaPagada {
 
     public ReservaPagada() { }
 
-
-    public ReservaPagada(Reserva reserva, Hotel hotel, Excursion excursion, LocalDateTime fechaPago) {
-        this.reserva = reserva;
+    public ReservaPagada(Vuelo vuelo, Hotel hotel, Excursion excursion, LocalDateTime fechaPago) {
+        this.vuelo = vuelo;
         this.hotel = hotel;
         this.excursion = excursion;
         this.fechaPago = fechaPago;
     }
 
-    public static ReservaPagada ofSoloVuelo(Reserva reserva, LocalDateTime fechaPago) {
-        return new ReservaPagada(reserva, null, null, fechaPago);
+    public static ReservaPagada ofSoloVuelo(Vuelo vuelo, LocalDateTime fechaPago) {
+        return new ReservaPagada(vuelo, null, null, fechaPago);
     }
 
-    public static ReservaPagada ofSoloHotel(Reserva reserva, Hotel hotel, LocalDateTime fechaPago) {
-        return new ReservaPagada(reserva, hotel, null, fechaPago);
+    public static ReservaPagada ofSoloHotel(Vuelo vuelo, Hotel hotel, LocalDateTime fechaPago) {
+        return new ReservaPagada(vuelo, hotel, null, fechaPago);
     }
 
-    public static ReservaPagada ofSoloExcursion(Reserva reserva, Excursion excursion, LocalDateTime fechaPago) {
-        return new ReservaPagada(reserva, null, excursion, fechaPago);
+    public static ReservaPagada ofSoloExcursion(Vuelo vuelo, Excursion excursion, LocalDateTime fechaPago) {
+        return new ReservaPagada(vuelo, null, excursion, fechaPago);
     }
 
-    public static ReservaPagada ofVueloYHotel(Reserva reserva, Hotel hotel, LocalDateTime fechaPago) {
-        return new ReservaPagada(reserva, hotel, null, fechaPago);
+    public static ReservaPagada ofVueloYHotel(Vuelo vuelo, Hotel hotel, LocalDateTime fechaPago) {
+        return new ReservaPagada(vuelo, hotel, null, fechaPago);
     }
 
-    public static ReservaPagada ofVueloYExcursion(Reserva reserva, Excursion excursion, LocalDateTime fechaPago) {
-        return new ReservaPagada(reserva, null, excursion, fechaPago);
+    public static ReservaPagada ofVueloYExcursion(Vuelo vuelo, Excursion excursion, LocalDateTime fechaPago) {
+        return new ReservaPagada(vuelo, null, excursion, fechaPago);
     }
 
-    public static ReservaPagada ofHotelYExcursion(Reserva reserva, Hotel hotel, Excursion excursion, LocalDateTime fechaPago) {
-        return new ReservaPagada(reserva, hotel, excursion, fechaPago);
+    public static ReservaPagada ofHotelYExcursion(Vuelo vuelo, Hotel hotel, Excursion excursion, LocalDateTime fechaPago) {
+        return new ReservaPagada(vuelo, hotel, excursion, fechaPago);
     }
-
 
     public Long getId() {
         return id;
     }
 
-    public Reserva getReserva() {
-        return reserva;
+    public Vuelo getReserva() {
+        return vuelo;
     }
 
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
+    public void setReserva(Vuelo vuelo) {
+        this.vuelo = vuelo;
     }
 
     public Hotel getHotel() {

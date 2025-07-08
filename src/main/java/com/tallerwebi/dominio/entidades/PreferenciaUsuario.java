@@ -11,14 +11,11 @@ public class PreferenciaUsuario {
 
     @OneToOne
     private Usuario usuario;
-
     private String tipoViajeVuelo;
     private Boolean viajeroFrecuente;
     private Integer millasAcumuladas;
-
     private String tipoHospedaje;
     private String tipoExcursionPreferida;
-
 
     public Long getId() {
         return id;

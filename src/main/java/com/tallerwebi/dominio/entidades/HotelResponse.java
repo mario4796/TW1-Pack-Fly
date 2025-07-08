@@ -1,7 +1,6 @@
 package com.tallerwebi.dominio.entidades;
 
 import com.tallerwebi.presentacion.dtos.HotelDto;
-
 import java.util.List;
 
 public class HotelResponse {

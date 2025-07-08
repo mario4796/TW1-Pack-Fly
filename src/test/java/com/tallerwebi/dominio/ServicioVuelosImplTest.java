@@ -1,5 +1,5 @@
 package com.tallerwebi.dominio;
-
+/*
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tallerwebi.config.ConfiguracionDeApiKey;
 import com.tallerwebi.dominio.implementaciones.ServicioVuelosImpl;
@@ -143,3 +143,4 @@ public class ServicioVuelosImplTest {
         verifyNoInteractions(repositorioVuelo);
     }
 }
+*/

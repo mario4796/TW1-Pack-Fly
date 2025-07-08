@@ -6,7 +6,6 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.implementaciones.RepositorioExcursionImpl;
 import com.tallerwebi.infraestructura.RepositorioHotel;
 import com.tallerwebi.infraestructura.RepositorioReserva;
-import com.tallerwebi.infraestructura.RepositorioVuelo;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.dtos.RecomendacionDTO;
 import org.springframework.stereotype.Service;
@@ -20,20 +19,17 @@ import java.util.List;
 public class ServicioRecomendacionImpl implements ServicioRecomendacion {
 
     private final RepositorioReserva repositorioReserva;
-    private final RepositorioVuelo repositorioVuelo;
     private final RepositorioHotel repositorioHotel;
     private final RepositorioExcursionImpl repositorioExcursionImpl;
     private final ServicioHotel servicioHotel;
 
     public ServicioRecomendacionImpl(
             RepositorioReserva reservaRepo,
-            RepositorioVuelo vueloRepo,
             RepositorioHotel hotelRepo,
             RepositorioExcursionImpl excursionRepo,
             ServicioHotel servicioHotel
     ) {
         this.repositorioReserva = reservaRepo;
-        this.repositorioVuelo = vueloRepo;
         this.repositorioHotel = hotelRepo;
         this.repositorioExcursionImpl = excursionRepo;
         this.servicioHotel = servicioHotel;
@@ -52,7 +48,7 @@ public class ServicioRecomendacionImpl implements ServicioRecomendacion {
         hotelesApi.stream().limit(3).forEach(h ->
                 recomendaciones.add(new RecomendacionDTO("Hotel", h.getName(), h.getImagen())));
 
-        repositorioVuelo.obtenerTodos().stream().limit(3).forEach(v ->
+        repositorioReserva.obtenerTodos().stream().limit(3).forEach(v ->
                 recomendaciones.add(new RecomendacionDTO("Vuelo", v.getDestino(), "https://via.placeholder.com/300x180.png?text=Vuelo")));
 
         return recomendaciones;
