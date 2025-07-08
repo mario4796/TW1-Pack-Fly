@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.config.PdfGenerator;
 import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.presentacion.dtos.HotelDto;
@@ -31,6 +32,10 @@ public class ControladorReserva {
 
     @Autowired
     private ServicioEmail servicioEmail;
+
+    @Autowired
+    private PdfGenerator pdfGenerator;
+
 
     @GetMapping("/reservas")
     public String vistaReservas(HttpServletRequest request, Model model) {
@@ -218,11 +223,34 @@ public class ControladorReserva {
             RedirectAttributes redirectAttributes
     ) throws MessagingException {
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
-
         try {
             List<Hotel> hoteles = hotelService.buscarReservas(usuario.getId());
             List<Vuelo> vuelos = servicioReserva.obtenerReservasPorEmail(usuario.getEmail());
             List<Excursion> excursiones = servicioExcursiones.obtenerExcursionesDeUsuario(usuario.getId());
+
+            List<HotelDto> hotelesDto = hotelService.obtenerHotelesDto(hoteles);
+            ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
+
+            try {
+                String detalle = generarDetalleParaPDF(vuelos, hoteles, excursiones);
+                double total = resumen.getTotal();
+
+                byte[] pdf = pdfGenerator.generarComprobante(usuario.getNombre(), detalle, total);
+
+                servicioEmail.enviarCorreoConAdjunto(
+                        usuario.getEmail(),
+                        "Comprobante de pago - Pack&Fly",
+                        "Gracias por tu compra. Adjuntamos el comprobante en PDF.",
+                        pdf,
+                        "comprobante-packandfly.pdf"
+                );
+            } catch (Exception e) {
+                e.printStackTrace(); // o logger si usás
+                redirectAttributes.addFlashAttribute("mensaje", "El pago fue exitoso pero hubo un error al generar o enviar el comprobante.");
+                redirectAttributes.addFlashAttribute("tipo", "warning");
+            }
+
+
 
             StringBuilder cuerpo = new StringBuilder();
             cuerpo.append("Hola ").append(usuario.getNombre()).append(",\n\n")
@@ -263,6 +291,8 @@ public class ControladorReserva {
 
             cuerpo.append("\n¡Gracias por elegir Pack&Fly!\n");
 
+
+
             servicioEmail.enviarCorreo(usuario.getEmail(), "Confirmación de pago - Pack&Fly", cuerpo.toString());
             redirectAttributes.addFlashAttribute("mensaje", "Mail enviado con exito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
@@ -285,7 +315,6 @@ public class ControladorReserva {
 
 
 
-
         // ResumenPagoDto resumen = servicioLogin.obtenerDeudaDelUsuario(usuario.getId(), hotelesDto, vuelos, excursiones);
        // usuario.setApagar(resumen.getTotal());
 
@@ -293,5 +322,41 @@ public class ControladorReserva {
 
         return "redirect:/perfil-usuario";
     }
+
+    private String generarDetalleParaPDF(List<Vuelo> vuelos, List<Hotel> hoteles, List<Excursion> excursiones) {
+        StringBuilder detalle = new StringBuilder();
+
+        if (vuelos != null && !vuelos.isEmpty()) {
+            detalle.append("Vuelos:\n");
+            for (Vuelo vuelo : vuelos) {
+                detalle.append(" - ").append(vuelo.getOrigen())
+                        .append(" a ").append(vuelo.getDestino())
+                        .append(" del ").append(vuelo.getFechaIda())
+                        .append(" al ").append(vuelo.getFechaVuelta()).append("\n");
+            }
+        }
+
+        if (hoteles != null && !hoteles.isEmpty()) {
+            detalle.append("\nHoteles:\n");
+            for (Hotel hotel : hoteles) {
+                detalle.append(" - ").append(hotel.getName())
+                        .append(" en ").append(hotel.getCiudad())
+                        .append(", Check-in: ").append(hotel.getCheckIn())
+                        .append(", Check-out: ").append(hotel.getCheckOut()).append("\n");
+            }
+        }
+
+        if (excursiones != null && !excursiones.isEmpty()) {
+            detalle.append("\nExcursiones:\n");
+            for (Excursion excursion : excursiones) {
+                detalle.append(" - ").append(excursion.getTitle())
+                        .append(" en ").append(excursion.getLocation())
+                        .append(", Fecha: ").append(excursion.getStartDate()).append("\n");
+            }
+        }
+
+        return detalle.toString();
+    }
+
 
 }
