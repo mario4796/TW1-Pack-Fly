@@ -5,7 +5,6 @@ import com.tallerwebi.infraestructura.RepositorioExcursion;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -93,9 +92,4 @@ public class RepositorioExcursionImpl implements RepositorioExcursion {
                 .setParameter("idUsuario", id)
                 .getResultList();
     }
-
-
 }
-
-
-

@@ -49,8 +49,6 @@ public class Escala {
         this.name = name;
     }
 
-
-
     public Boolean getOvernight() {
         return overnight;
     }

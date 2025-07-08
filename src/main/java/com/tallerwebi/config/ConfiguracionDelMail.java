@@ -2,7 +2,6 @@ package com.tallerwebi.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Component;
-
 import java.util.Properties;
 import jakarta.mail.PasswordAuthentication;
 import jakarta.mail.Session;

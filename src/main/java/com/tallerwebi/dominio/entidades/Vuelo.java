@@ -2,11 +2,7 @@ package com.tallerwebi.dominio.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-
 import javax.persistence.ManyToOne;
-
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +14,6 @@ public class Vuelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nombre;
     private String email;
 
@@ -43,10 +38,6 @@ public class Vuelo {
     @ManyToOne
     private Usuario usuario;
 
-    // =========================
-    // Constructores
-    // =========================
-
     public Vuelo() {
         this.pagado = false;
     }
@@ -61,10 +52,6 @@ public class Vuelo {
         this.precio = precio;
         this.pagado = false;
     }
-
-    // =========================
-    // Getters y Setters
-    // =========================
 
     public Long getId() {
         return id;

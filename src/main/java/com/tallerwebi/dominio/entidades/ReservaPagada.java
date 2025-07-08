@@ -28,7 +28,6 @@ public class ReservaPagada {
 
     public ReservaPagada() { }
 
-
     public ReservaPagada(Vuelo vuelo, Hotel hotel, Excursion excursion, LocalDateTime fechaPago) {
         this.vuelo = vuelo;
         this.hotel = hotel;
@@ -59,7 +58,6 @@ public class ReservaPagada {
     public static ReservaPagada ofHotelYExcursion(Vuelo vuelo, Hotel hotel, Excursion excursion, LocalDateTime fechaPago) {
         return new ReservaPagada(vuelo, hotel, excursion, fechaPago);
     }
-
 
     public Long getId() {
         return id;

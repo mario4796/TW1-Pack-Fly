@@ -11,7 +11,6 @@ import com.tallerwebi.infraestructura.RepositorioReservaPagada;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
@@ -58,7 +57,6 @@ public class ServicioPagoImpl implements ServicioPago {
             throw new IllegalArgumentException(
                     "Debe especificar al menos una reserva, hotel o excursión para procesar el pago.");
         }
-
         repositorioReservaPagada.guardar(pago);
 
     }

@@ -1,7 +1,6 @@
 package com.tallerwebi.dominio.entidades;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 
@@ -27,6 +26,18 @@ public class Hotel {
     private Usuario usuario;
 
     public Hotel() {
+    }
+
+    public Hotel(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio, Boolean pagado) {
+        this.id = id;
+        this.name = name;
+        this.ciudad = ciudad;
+        this.checkIn=checkIn;
+        this.checkOut=checkOut;
+        this.adult=adult;
+        this.children=children;
+        this.precio= precio;
+        this.pagado = pagado;
     }
 
     public Long getId() {
@@ -85,23 +96,9 @@ public class Hotel {
         this.precio = precio;
     }
 
-    public Hotel(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio, Boolean pagado) {
-        this.id = id;
-        this.name = name;
-        this.ciudad = ciudad;
-        this.checkIn=checkIn;
-        this.checkOut=checkOut;
-        this.adult=adult;
-        this.children=children;
-        this.precio= precio;
-        this.pagado = pagado;
-    }
-
-
     public String getName() {
         return this.name;
     }
-
 
     public void setName(String name) {
         this.name = name;
@@ -130,5 +127,4 @@ public class Hotel {
     public void setPagado(Boolean pagado) {
         this.pagado = pagado;
     }
-
 }

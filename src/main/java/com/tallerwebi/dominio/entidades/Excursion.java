@@ -20,6 +20,10 @@ public class Excursion {
     private Double precio;
     private Boolean pagado;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
     public Boolean getPagado() {
         return pagado;
     }
@@ -27,10 +31,6 @@ public class Excursion {
     public void setPagado(Boolean pagado) {
         this.pagado = pagado;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
 
     public Long getId() { return id; }
 

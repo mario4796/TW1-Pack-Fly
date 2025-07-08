@@ -1,4 +1,3 @@
-
 package com.tallerwebi.dominio.implementaciones;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -11,9 +10,7 @@ import com.tallerwebi.infraestructura.implementaciones.RepositorioExcursionImpl;
 import com.tallerwebi.presentacion.dtos.ExcursionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
-
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -37,7 +34,6 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
     private final HttpClient httpClient = HttpClient.newHttpClient();
     private final ObjectMapper mapper   = new ObjectMapper();
 
-
     private RepositorioExcursionImpl repositorioExcursionImpl;
 
 
@@ -46,7 +42,6 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
         this.apiConfig = apiConfig;
         this.repositorioExcursionImpl = repositorioExcursionImpl;
     }
-
 
     @Override
     public List<ExcursionDTO> getExcursiones(String location, String query) {
@@ -95,13 +90,12 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
         return Collections.emptyList();
     }
 
-
     @Override
-
     @Transactional
     public void guardarExcursion(Excursion excursion) {
         repositorioExcursionImpl.guardar(excursion);
     }
+
     @Override
     public List<Excursion> obtenerExcursionesDeUsuario(Long idUsuario) {
         return repositorioExcursionImpl.obtenerPorUsuario(idUsuario);
@@ -136,6 +130,4 @@ public class ServicioExcursionesImpl implements ServicioExcursiones {
     public List<Excursion> obtenerExcursionesDeUsuarioPagados(Long id) {
         return repositorioExcursionImpl.obtenerPorUsuarioPagado(id);
     }
-
-
 }

@@ -1,7 +1,6 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Excursion;
-
 import java.util.List;
 
 public interface RepositorioExcursion {
@@ -14,6 +13,5 @@ public interface RepositorioExcursion {
     void actualizar(Excursion excursion);
     Excursion buscarPorId(Long id);
     void pagarExcursiones(Long id);
-
     List<Excursion> obtenerPorUsuarioPagado(Long id);
 }
