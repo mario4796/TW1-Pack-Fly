@@ -1,11 +1,14 @@
 package com.tallerwebi.dominio.implementaciones;
 
+import com.tallerwebi.config.PdfGenerator;
+import com.tallerwebi.dominio.ServicioEmail;
 import com.tallerwebi.dominio.ServicioPago;
 import com.tallerwebi.dominio.entidades.Reserva;
 import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.entidades.ReservaPagada;
 import com.tallerwebi.infraestructura.RepositorioReservaPagada;
+import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +26,13 @@ public class ServicioPagoImpl implements ServicioPago {
     public ServicioPagoImpl(RepositorioReservaPagada repositorioReservaPagada) {
         this.repositorioReservaPagada = repositorioReservaPagada;
     }
+    @Autowired
+    private ServicioEmail servicioEmail;
+
+
 
     @Override
-    public void procesarPago(Reserva reserva, Hotel hotel, Excursion excursion) {
+    public void procesarPago(Reserva reserva, Hotel hotel, Excursion excursion, ResumenPagoDto resumen) {
         LocalDateTime ahora = LocalDateTime.now();
         ReservaPagada pago;
 
@@ -53,5 +60,8 @@ public class ServicioPagoImpl implements ServicioPago {
         }
 
         repositorioReservaPagada.guardar(pago);
+        // 👉 Generar y enviar comprobante por correo
+
     }
+
 }
