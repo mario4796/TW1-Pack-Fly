@@ -32,7 +32,7 @@ public class ServicioPagoImpl implements ServicioPago {
 
 
     @Override
-    public void procesarPago(Vuelo vuelo, Hotel hotel, Excursion excursion) {
+    public void procesarPago(Vuelo vuelo, Hotel hotel, Excursion excursion, ResumenPagoDto resumen) {
         LocalDateTime ahora = LocalDateTime.now();
         ReservaPagada pago;
 
@@ -60,8 +60,6 @@ public class ServicioPagoImpl implements ServicioPago {
         }
 
         repositorioReservaPagada.guardar(pago);
-        // 👉 Generar y enviar comprobante por correo
 
     }
-
 }
