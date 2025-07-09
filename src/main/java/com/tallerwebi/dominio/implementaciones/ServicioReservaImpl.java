@@ -22,6 +22,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -51,8 +52,13 @@ public class ServicioReservaImpl implements ServicioReserva {
     }
 
     @Override
-    public List<VueloDTO> getVuelo(String origen, String destino, Date fechaIda, Date fechaVuelta, String moneda) {
+    public List<VueloDTO> getVuelo(String origen, String destino, Date fechaIda, Date fechaVuelta, String moneda, String tipoViaje) {
         String apiKey = apiKeyConfig.getApiKey();
+
+        int tipo = "IDA".equalsIgnoreCase(tipoViaje) ? 2 : 1;
+
+
+
 
         if (apiKey == null || apiKey.isBlank()) {
             throw new IllegalStateException("API Key de SerpAPI no definida");
@@ -61,9 +67,11 @@ public class ServicioReservaImpl implements ServicioReserva {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String fechaIdaStr = dateFormat.format(fechaIda);
-            String fechaVueltaStr = dateFormat.format(fechaVuelta);
 
-            String baseUrl = String.format(
+           // String fechaIdaStr = fechaIda != null ? dateFormat.format(fechaIda) : "";
+            //String fechaVueltaStr = fechaVuelta != null ? dateFormat.format(fechaVuelta) : "";
+
+           /* String baseUrl = String.format(
                     "https://serpapi.com/search.json?engine=google_flights&departure_id=%s&arrival_id=%s&outbound_date=%s&return_date=%s&currency=%s&gl=ar&hl=es&api_key=%s",
                     URLEncoder.encode(origen, StandardCharsets.UTF_8),
                     URLEncoder.encode(destino, StandardCharsets.UTF_8),
@@ -71,7 +79,24 @@ public class ServicioReservaImpl implements ServicioReserva {
                     fechaVueltaStr,
                     URLEncoder.encode(moneda, StandardCharsets.UTF_8),
                     URLEncoder.encode(apiKey, StandardCharsets.UTF_8)
-            );
+            );*/
+
+            StringBuilder sb = new StringBuilder(
+                                                "https://serpapi.com/search.json?engine=google_flights"
+                                                        + "&departure_id=" + URLEncoder.encode(origen, StandardCharsets.UTF_8)
+                                                        + "&arrival_id="   + URLEncoder.encode(destino, StandardCharsets.UTF_8)
+                                                        + "&outbound_date=" + fechaIdaStr
+                                                        + "&type=" + tipo
+                                                        + "&currency="      + URLEncoder.encode(moneda, StandardCharsets.UTF_8)
+                                                        + "&gl=ar&hl=es"
+                                                        + "&api_key="       + URLEncoder.encode(apiKey, StandardCharsets.UTF_8)
+                                       );
+
+            if (tipo == 1 && fechaVuelta != null) {
+                String fechaVueltaStr = dateFormat.format(fechaVuelta);
+                sb.append("&return_date=").append(fechaVueltaStr);
+            }
+                    String baseUrl = sb.toString();
 
             System.out.println("Llamando a SerpApi: " + baseUrl);
 
@@ -98,7 +123,18 @@ public class ServicioReservaImpl implements ServicioReserva {
                         dto.setOrigen(origen);
                         dto.setDestino(destino);
                         dto.setFechaIda(fechaIdaStr);
-                        dto.setFechaVuelta(fechaVueltaStr);
+                        //String fechaVueltaStr = dateFormat.format(fechaVuelta);
+                       // dto.setFechaVuelta(fechaVueltaStr);
+
+                        // Sólo seteo fechaVuelta si me la pasaron
+                            if (fechaVuelta != null) {
+                                    String fechaVueltaStr = dateFormat.format(fechaVuelta);
+                                    dto.setFechaVuelta(fechaVueltaStr);
+                                } else {
+                                    dto.setFechaVuelta(null); // o "" si prefieres
+                                }
+
+
                         // Parsear segmentos
                         JsonNode flightsArray = vueloNode.get("flights");
                         if (flightsArray != null && flightsArray.isArray()) {
@@ -235,8 +271,8 @@ public class ServicioReservaImpl implements ServicioReserva {
         return vuelos.stream()
                 .filter(r -> {
                     try {
-                        java.time.LocalDate fechaIda = java.time.LocalDate.parse(r.getFechaIda());
-                        return fechaIda.isAfter(java.time.LocalDate.now().minusDays(dias));
+                        LocalDate fechaIda = LocalDate.parse(r.getFechaIda());
+                        return fechaIda.isAfter(LocalDate.now().minusDays(dias));
                     } catch (Exception e) {
                         return false;
                     }
