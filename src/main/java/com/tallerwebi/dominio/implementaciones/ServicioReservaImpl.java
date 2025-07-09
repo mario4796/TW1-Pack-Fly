@@ -51,7 +51,7 @@ public class ServicioReservaImpl implements ServicioReserva {
     }
 
     @Override
-    public List<VueloDTO> getVuelo(String origen, String destino, Date fechaIda, Date fechaVuelta) {
+    public List<VueloDTO> getVuelo(String origen, String destino, Date fechaIda, Date fechaVuelta, String moneda) {
         String apiKey = apiKeyConfig.getApiKey();
 
         if (apiKey == null || apiKey.isBlank()) {
@@ -64,11 +64,12 @@ public class ServicioReservaImpl implements ServicioReserva {
             String fechaVueltaStr = dateFormat.format(fechaVuelta);
 
             String baseUrl = String.format(
-                    "https://serpapi.com/search.json?engine=google_flights&departure_id=%s&arrival_id=%s&outbound_date=%s&return_date=%s&currency=ARS&gl=ar&hl=es&api_key=%s",
+                    "https://serpapi.com/search.json?engine=google_flights&departure_id=%s&arrival_id=%s&outbound_date=%s&return_date=%s&currency=%s&gl=ar&hl=es&api_key=%s",
                     URLEncoder.encode(origen, StandardCharsets.UTF_8),
                     URLEncoder.encode(destino, StandardCharsets.UTF_8),
                     fechaIdaStr,
                     fechaVueltaStr,
+                    URLEncoder.encode(moneda, StandardCharsets.UTF_8),
                     URLEncoder.encode(apiKey, StandardCharsets.UTF_8)
             );
 
