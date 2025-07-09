@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioLogin;
+import com.tallerwebi.dominio.ServicioMensajes;
 import com.tallerwebi.dominio.ServicioRecomendacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ControladorLogin {
 
     private ServicioLogin servicioLogin;
+
+    private ServicioMensajes servicioMensajes;
 
     @Autowired
     public ControladorLogin(ServicioLogin servicioLogin){
@@ -57,6 +60,7 @@ public class ControladorLogin {
         ModelMap model = new ModelMap();
         try{
             servicioLogin.registrar(usuario);
+
         } catch (UsuarioExistente e){
             model.put("error", "El usuario ya existe");
             return new ModelAndView("nuevo-usuario", model);

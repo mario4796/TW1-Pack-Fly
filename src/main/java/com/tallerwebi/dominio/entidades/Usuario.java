@@ -67,5 +67,32 @@ public class Usuario {
         activo = true;
     }
     public String getTelefono() {return telefono;}
-    public void setTelefono(String telefono) {this.telefono = telefono;}
+    public void setTelefono(String telefono) {
+        this.telefono = normalizarTelefono(telefono);}
+
+
+    public String normalizarTelefono(String telefono){
+        if (telefono == null || telefono.isBlank()) return "";
+
+        // Eliminar todos los caracteres que no sean dígitos
+        String soloNumeros = telefono.replaceAll("\\D", "");
+
+        // Validar longitud mínima
+        if (soloNumeros.length() < 8) {
+            throw new IllegalArgumentException("Número de teléfono demasiado corto");
+        }
+
+        // Si empieza con "15", lo reemplazamos por "11"
+        if (soloNumeros.startsWith("15")) {
+            soloNumeros = "11" + soloNumeros.substring(2);
+        }
+
+        // Si empieza con "0", lo quitamos
+        if (soloNumeros.startsWith("0")) {
+            soloNumeros = soloNumeros.substring(1);
+        }
+
+        // Devolver en formato internacional
+        return "+549" + soloNumeros;
+    }
 }

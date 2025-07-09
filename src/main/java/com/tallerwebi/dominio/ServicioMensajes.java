@@ -2,5 +2,5 @@ package com.tallerwebi.dominio;
 
 public interface ServicioMensajes {
 
-    void enviarSms(String numeroDestino, String mensaje);
+    void enviarMensaje(String telefonoDestino, String mensaje);
 }

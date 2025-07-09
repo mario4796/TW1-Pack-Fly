@@ -35,12 +35,12 @@ public class ServicioLoginImpl implements ServicioLogin {
         if(usuarioEncontrado != null){
             throw new UsuarioExistente();
         }
+
         repositorioUsuario.guardar(usuario);
     }
 
     @Override
-    public void modificarUsuario(Usuario usuario) {
-        repositorioUsuario.modificar(usuario);
+    public void modificarUsuario(Usuario usuario) {repositorioUsuario.modificar(usuario);
     }
 
     @Override
@@ -137,5 +137,7 @@ public class ServicioLoginImpl implements ServicioLogin {
     public Usuario buscarUsuarioPorId(Long idUsuario) {
         return repositorioUsuario.buscarUsuarioPorId(idUsuario);
     }
+
+
 }
 

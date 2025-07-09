@@ -3,31 +3,41 @@ package com.tallerwebi.dominio.implementaciones;
 import com.tallerwebi.dominio.ServicioMensajes;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import io.github.cdimascio.dotenv.Dotenv;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ServicioMensajesImpl implements ServicioMensajes {
 
-    private final Dotenv dotenv = Dotenv.load();
 
-    @Value("${twilio.account.sid}")
-    private String ACCOUNT_SID = dotenv.get("ACCOUNT_SID");
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String ACCOUNT_SID = dotenv.get("TWILIO_ACCOUNT_SID");
+    private static final String AUTH_TOKEN = dotenv.get("TWILIO_AUTH_TOKEN");
+    private static final String FROM_WHATSAPP_NUMBER = dotenv.get("TWILIO_FROM_NUMBER");
 
-    @Value("${twilio.auth.token}")
-    private String AUTH_TOKEN = dotenv.get("AUTH_TOKEN");
-
-    @Value("${twilio.phone.number}")
-    private String FROM_PHONE = dotenv.get("PHONE_NUMBER");
-
-    @Autowired
-    public void enviarSms(String numeroDestino, String mensaje) {
+    static {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+    }
 
+    @Override
+    public void enviarMensaje(String telefonoDestino, String mensaje) {
+        String telefonoFormateado = normalizarTelefono(telefonoDestino);
         Message.creator(
-                new com.twilio.type.PhoneNumber("whatsapp:" + numeroDestino),
-                new com.twilio.type.PhoneNumber(FROM_PHONE),
+                new PhoneNumber(telefonoFormateado),
+                new PhoneNumber(FROM_WHATSAPP_NUMBER),
                 mensaje
         ).create();
+    }
+
+    private String normalizarTelefono(String telefono) {
+        telefono = telefono.replaceAll("[^\\d]", "");
+        if (telefono.startsWith("54")) {
+            return "whatsapp:+" + telefono;
+        } else if (telefono.startsWith("0")) {
+            return "whatsapp:+54" + telefono.substring(1);
+        } else {
+            return "whatsapp:+549" + telefono; // fallback
+        }
     }
 }

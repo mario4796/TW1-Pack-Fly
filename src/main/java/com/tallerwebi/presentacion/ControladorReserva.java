@@ -36,6 +36,9 @@ public class ControladorReserva {
     @Autowired
     private PdfGenerator pdfGenerator;
 
+    @Autowired
+    private ServicioMensajes servicioMensajes;
+
 
     @GetMapping("/reservas")
     public String vistaReservas(HttpServletRequest request, Model model) {
@@ -251,6 +254,7 @@ public class ControladorReserva {
             }
 
 
+            String numeroTelefono = usuario.getTelefono();
 
             StringBuilder cuerpo = new StringBuilder();
             cuerpo.append("Hola ").append(usuario.getNombre()).append(",\n\n")
@@ -294,6 +298,10 @@ public class ControladorReserva {
 
 
             servicioEmail.enviarCorreo(usuario.getEmail(), "Confirmación de pago - Pack&Fly", cuerpo.toString());
+            servicioMensajes.enviarMensaje(
+                    usuario.getTelefono(),
+                    cuerpo.toString()
+            );
             redirectAttributes.addFlashAttribute("mensaje", "Mail enviado con exito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e){
@@ -311,6 +319,8 @@ public class ControladorReserva {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
+            System.out.println("Error al enviar mensaje de WhatsApp: " + e.getMessage());
+
         }
 
 
