@@ -393,7 +393,7 @@
 <!-- Modal de Preferencias de Viaje -->
 <div class="modal fade" id="modalPreferenciasViaje" tabindex="-1" aria-labelledby="modalPreferenciasViajeLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <form method="post" th:action="@{/preferencias}" class="modal-content needs-validation" novalidate>
+        <form method="post" th:action="@{/preferencias-viaje}" class="modal-content needs-validation" th:object="${preferencias}" novalidate>
             <div class="modal-header">
                 <h5 class="modal-title" id="modalPreferenciasViajeLabel">
                     <i class="bi bi-gear-fill me-2"></i>Preferencias de viaje
@@ -412,7 +412,7 @@
                         <label for="origen" class="form-label">Aeropuerto de origen preferido</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-airplane"></i></span>
-                            <select class="form-select" name="departure_id" id="origen" required>
+                            <select class="form-select" th:field="*{departure_id}" id="origen" required>
                                 <option value="">Selecciona un destino</option>
                                 <option value="EZE" th:selected="${origen=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
                                 <option value="JFK" th:selected="${origen=='JFK'}">New York, USA (JFK)</option>
@@ -449,7 +449,7 @@
                     <label for="claseCabina" class="form-label">Clase preferida</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
-                        <select class="form-select" id="claseCabina" name="travel_class">
+                        <select class="form-select" th:field="*{travel_class}" id="claseCabina">
                             <option value="1">Económica</option>
                             <option value="2">Premium Económica</option>
                             <option value="3">Ejecutiva / Business</option>
@@ -464,22 +464,26 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="manana" id="horaManana" name="horarioVuelo">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="6,12" id="horaManana">
                                 <label class="form-check-label" for="horaManana">Mañana (6-12 hs)</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="tarde" id="horaTarde" name="horarioVuelo">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="12,18" id="horaTarde">
                                 <label class="form-check-label" for="horaTarde">Tarde (12-18 hs)</label>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="noche" id="horaNoche" name="horarioVuelo">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="18,0" id="horaNoche">
                                 <label class="form-check-label" for="horaNoche">Noche (18-24 hs)</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="madrugada" id="horaMadrugada" name="horarioVuelo">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="0,6" id="horaMadrugada">
                                 <label class="form-check-label" for="horaMadrugada">Madrugada (0-6 hs)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="" id="sinHorario">
+                                <label class="form-check-label" for="sinHorario">Sin Horario</label>
                             </div>
                         </div>
                     </div>
@@ -489,7 +493,7 @@
                 <div class="mb-3">
                     <label class="form-label">Escalas</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="escalas" name="permitir_escalas">
+                        <input class="form-check-input" th:field="*{permitir_escalas}" type="checkbox" id="escalas">
                         <label class="form-check-label" for="escalas">Permitir vuelos con escalas</label>
                     </div>
                 </div>
@@ -497,11 +501,12 @@
                 <!-- Ordenar vuelos -->
                 <div class="mb-3">
                     <label for="sortVuelos" class="form-label">Ordenar resultados de vuelos por</label>
-                    <select class="form-select" id="sortVuelos" name="sort_vuelos">
-                        <option value="price">Precio</option>
-                        <option value="duration">Duración</option>
-                        <option value="departure_time">Hora de salida</option>
-                        <option value="arrival_time">Hora de llegada</option>
+                    <select class="form-select" th:field="*{sort_vuelos} "id="sortVuelos">
+                        <option value="1">Mejor vuelo</option>
+                        <option value="2">Precio</option>
+                        <option value="3">Hora de salida</option>
+                        <option value="4">Hora de llegada</option>
+                        <option value="5">Duración</option>
                     </select>
                 </div>
 
@@ -509,7 +514,7 @@
                     <label for="presupuestoVuelos" class="form-label">Presupuesto máximo (vuelos)</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                        <input type="number" class="form-control" id="presupuestoVuelos" name="vuelo_budget" min="0" step="50" placeholder="Ej: 1000">
+                        <input type="number" th:field="*{vuelo_budget}" class="form-control" id="presupuestoVuelos" min="0" step="50" placeholder="Ej: 1000">
                     </div>
                 </div>
                 <hr>
@@ -522,16 +527,15 @@
                     <label for="presupuestoHotel" class="form-label">Presupuesto máximo por noche</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                        <input type="number" class="form-control" id="presupuestoHotel" name="hotel_budget" min="0" step="10" placeholder="Ej: 200">
+                        <input type="number" th:field="*{hotel_budget}" class="form-control" id="presupuestoHotel" min="0" step="10" placeholder="Ej: 200">
                     </div>
                 </div>
 
                 <!-- Estrellas -->
                 <div class="mb-3">
                     <label for="estrellasHotel" class="form-label">Cantidad de estrellas</label>
-                    <select class="form-select" id="estrellasHotel" name="hotel_stars">
+                    <select class="form-select" th:field="*{hotel_stars}" id="estrellasHotel">
                         <option value="">Cualquiera</option>
-                        <option value="1">1 estrella</option>
                         <option value="2">2 estrellas</option>
                         <option value="3">3 estrellas</option>
                         <option value="4">4 estrellas</option>
@@ -542,24 +546,22 @@
                 <!-- Rating -->
                 <div class="mb-3">
                     <label for="ratingHotel" class="form-label">Puntuación mínima (rating)</label>
-                    <select class="form-select" id="ratingHotel" name="hotel_rating">
+                    <select class="form-select" th:field="*{hotel_rating}" id="ratingHotel">
                         <option value="">Cualquiera</option>
-                        <option value="1">1+</option>
-                        <option value="2">2+</option>
-                        <option value="3">3+</option>
-                        <option value="4">4+</option>
-                        <option value="5">5</option>
+                        <option value="7">3.5+</option>
+                        <option value="8">4.0+</option>
+                        <option value="9">4.5+</option>
                     </select>
                 </div>
 
                 <!-- Ordenar hoteles -->
                 <div class="mb-4">
                     <label for="sortHoteles" class="form-label">Ordenar resultados de hoteles por</label>
-                    <select class="form-select" id="sortHoteles" name="sort_hoteles">
-                        <option value="price">Precio</option>
-                        <option value="rating">Puntuación</option>
-                        <option value="stars">Estrellas</option>
-                        <option value="distance">Distancia al centro</option>
+                    <select class="form-select" th:field="*{sort_hoteles}" id="sortHoteles">
+                        <option value="">Relevancia</option>
+                        <option value="3">Menor precio</option>
+                        <option value="8">Mayor rating</option>
+                        <option value="13">Mejores reseñas</option>
                     </select>
                 </div>
                 <hr>
@@ -570,7 +572,7 @@
                     <label for="presupuestoExcursiones" class="form-label">Presupuesto máximo (excursiones)</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                        <input type="number" class="form-control" id="presupuestoExcursiones" name="excursion_budget" min="0" step="50" placeholder="Ej: 300">
+                        <input type="number" th:field="*{excursion_budget}" class="form-control" id="presupuestoExcursiones" min="0" step="50" placeholder="Ej: 300">
                     </div>
                 </div>
                 <hr>
@@ -581,7 +583,7 @@
                     <label for="currency" class="form-label">Moneda</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
-                        <select class="form-select" id="currency" name="currency">
+                        <select class="form-select" th:field="*{currency}" id="currency">
                             <option value="USD" selected>Dólar (USD)</option>
                             <option value="ARS">Peso Argentino (ARS)</option>
                             <option value="EUR">Euro (EUR)</option>
