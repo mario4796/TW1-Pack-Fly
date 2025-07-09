@@ -8,14 +8,14 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container mt-5 pt-5">
     <div class="d-flex flex-column flex-md-row gap-4">
         <div class="d-flex flex-column align-self-start" style="width: 300px;">
-            <div class="card mb-3">
+            <div class="card mb-3 shadow">
                 <img th:src="@{'https://ui-avatars.com/api/?name=' + ${usuario.nombre} + '+' + ${usuario.apellido}}"
                      class="card-img-top rounded-circle mx-auto mt-4" style="width: 120px; height: 120px;"
                      alt="Foto de perfil">
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="list-group">
+            <div class="list-group shadow">
                 <div class="dropdown">
                     <a href="#" class="list-group-item list-group-item-action dropdown-toggle" data-bs-toggle="dropdown"
                        aria-expanded="false">
@@ -70,7 +70,7 @@
                     <!-- Estadísticas -->
                     <div class="row text-center">
                         <div class="col-6 col-md-4 mb-3">
-                            <div class="card">
+                            <div class="card shadow">
                                 <div class="card-body">
                                     <h6 class="card-title">Viajes realizados</h6>
                                     <p class="display-6" th:text="${usuariop.viajes}">8</p>
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="col-6 col-md-4 mb-3">
-                            <div class="card">
+                            <div class="card shadow">
                                 <div class="card-body">
                                     <h6 class="card-title">Destinos visitados</h6>
                                     <p class="display-6" th:text="${usuariop.destinos}">5</p>
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 mb-3">
-                            <div class="card">
+                            <div class="card shadow">
                                 <div class="card-body">
                                     <h6 class="card-title">Ranking</h6>
                                     <p class="display-6" th:text="${usuariop.ranking}">#2</p>
@@ -406,32 +406,49 @@
                 <!-- ================== SECCIÓN: VUELOS ================== -->
                 <h5 class="mb-3"><i class="bi bi-airplane-fill me-1"></i>Vuelos</h5>
 
-                <div class="row mb-3">
+                <!--<div class="row mb-3">-->
                     <!-- Aeropuerto origen -->
-                    <div class="col-md-6">
+                    <div class="mb-3">
                         <label for="origen" class="form-label">Aeropuerto de origen preferido</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-airplane-engines-fill"></i></span>
-                            <input type="text" class="form-control" id="origen" name="departure_id" placeholder="Ej: EZE, BUE, MIA" required>
+                            <span class="input-group-text"><i class="bi bi-airplane"></i></span>
+                            <select class="form-select" name="departure_id" id="origen" required>
+                                <option value="">Selecciona un destino</option>
+                                <option value="EZE" th:selected="${origen=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
+                                <option value="JFK" th:selected="${origen=='JFK'}">New York, USA (JFK)</option>
+                                <option value="GRU" th:selected="${origen=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
+                                <option value="CDG" th:selected="${origen=='CDG'}">París, Francia (Charles de Gaulle)</option>
+                                <option value="MAD" th:selected="${origen=='MAD'}">Madrid, España (Barajas)</option>
+                                <option value="MEX" th:selected="${origen=='MEX'}">Ciudad de México, México (Benito Juárez)</option>
+                                <option value="BOG" th:selected="${origen=='BOG'}">Bogotá, Colombia (El Dorado)</option>
+                                <option value="SCL" th:selected="${origen=='SCL'}">Santiago, Chile (Arturo Merino Benítez)</option>
+                                <option value="LIM" th:selected="${origen=='LIM'}">Lima, Perú (Jorge Chávez)</option>
+                                <option value="LHR" th:selected="${origen=='LHR'}">Londres, Reino Unido (Heathrow)</option>
+                                <option value="FRA" th:selected="${origen=='FRA'}">Frankfurt, Alemania (Frankfurt Main)</option>
+                                <option value="MIA" th:selected="${origen=='MIA'}">Miami, USA (Miami Intl.)</option>
+                                <option value="BCN" th:selected="${origen=='BCN'}">Barcelona, España (El Prat)</option>
+                                <option value="AMS" th:selected="${origen=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
+                                <option value="PTY" th:selected="${origen=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
+                            </select>
                         </div>
                         <div class="invalid-feedback">Ingresá un aeropuerto válido.</div>
                     </div>
 
                     <!-- Destinos favoritos -->
-                    <div class="col-md-6">
+                    <!--<div class="col-md-6">
                         <label for="destinos" class="form-label">Destinos favoritos</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
                             <input type="text" class="form-control" id="destinos" name="arrival_id" placeholder="Ej: NYC, LON, PAR (separados por coma)">
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <!-- Clase de cabina -->
                 <div class="mb-3">
                     <label for="claseCabina" class="form-label">Clase preferida</label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-briefcase-fill"></i></span>
+                        <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
                         <select class="form-select" id="claseCabina" name="travel_class">
                             <option value="1">Económica</option>
                             <option value="2">Premium Económica</option>
@@ -469,9 +486,12 @@
                 </div>
 
                 <!-- Escalas -->
-                <div class="mb-3 form-check">
-                    <input class="form-check-input" type="checkbox" id="escalas" name="permitir_escalas">
-                    <label class="form-check-label" for="escalas">Permitir vuelos con escalas</label>
+                <div class="mb-3">
+                    <label class="form-label">Escalas</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="escalas" name="permitir_escalas">
+                        <label class="form-check-label" for="escalas">Permitir vuelos con escalas</label>
+                    </div>
                 </div>
 
                 <!-- Ordenar vuelos -->
@@ -581,6 +601,7 @@
     </div>
 </div>
 
+<div th:replace="fragments/footer :: footer"></div>
 <div th:replace="fragments/toast :: toastFragment(${mensaje}, ${tipo})"></div>
 
 <script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
