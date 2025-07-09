@@ -108,6 +108,8 @@
         <div class="row g-4">
             <div th:each="e : ${excursiones}" class="col-sm-6 col-lg-4">
                 <div class="card h-100 shadow-sm">
+                    <img th:src="${e.thumbnail}" class="card-img-top" alt="Imagen del evento"
+                         th:if="${e.thumbnail != null}" />
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title" th:text="${e.title}">Título de la excursión</h5>
                         <h6 class="card-subtitle mb-2 text-muted"

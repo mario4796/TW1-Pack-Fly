@@ -402,39 +402,27 @@
             </div>
 
             <div class="modal-body">
-                <!-- Origen favorito -->
-                <div class="mb-3">
-                    <label for="origen" class="form-label">Aeropuerto de origen preferido</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-airplane-engines-fill"></i></span>
-                        <input type="text" class="form-control" id="origen" name="departure_id" placeholder="Ej: EZE, BUE, MIA" required>
-                    </div>
-                    <div class="invalid-feedback">Ingresá un aeropuerto válido.</div>
-                </div>
 
-                <!-- Destinos favoritos -->
-                <div class="mb-3">
-                    <label for="destinos" class="form-label">Destinos favoritos</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                        <input type="text" class="form-control" id="destinos" name="arrival_id" placeholder="Ej: NYC, LON, PAR (separados por coma)">
-                    </div>
-                </div>
+                <!-- ================== SECCIÓN: VUELOS ================== -->
+                <h5 class="mb-3"><i class="bi bi-airplane-fill me-1"></i>Vuelos</h5>
 
-                <!-- Rango de fechas -->
                 <div class="row mb-3">
+                    <!-- Aeropuerto origen -->
                     <div class="col-md-6">
-                        <label for="fechaDesde" class="form-label">Fecha desde</label>
+                        <label for="origen" class="form-label">Aeropuerto de origen preferido</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-calendar-event-fill"></i></span>
-                            <input type="date" class="form-control" id="fechaDesde" name="outbound_date_start">
+                            <span class="input-group-text"><i class="bi bi-airplane-engines-fill"></i></span>
+                            <input type="text" class="form-control" id="origen" name="departure_id" placeholder="Ej: EZE, BUE, MIA" required>
                         </div>
+                        <div class="invalid-feedback">Ingresá un aeropuerto válido.</div>
                     </div>
+
+                    <!-- Destinos favoritos -->
                     <div class="col-md-6">
-                        <label for="fechaHasta" class="form-label">Fecha hasta</label>
+                        <label for="destinos" class="form-label">Destinos favoritos</label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-calendar-event-fill"></i></span>
-                            <input type="date" class="form-control" id="fechaHasta" name="outbound_date_end">
+                            <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
+                            <input type="text" class="form-control" id="destinos" name="arrival_id" placeholder="Ej: NYC, LON, PAR (separados por coma)">
                         </div>
                     </div>
                 </div>
@@ -480,31 +468,111 @@
                     </div>
                 </div>
 
-                <!-- Moneda y presupuesto máximo en la misma fila -->
-                <div class="row mb-3 align-items-end">
-                    <div class="col-md-4">
-                        <label for="currency" class="form-label">Moneda</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
-                            <select class="form-select" id="currency" name="currency">
-                                <option value="USD" selected>Dólar (USD)</option>
-                                <option value="ARS">Peso Argentino (ARS)</option>
-                                <option value="EUR">Euro (EUR)</option>
-                                <option value="BRL">Real (BRL)</option>
-                                <option value="GBP">Libra Esterlina (GBP)</option>
-                            </select>
-                        </div>
+                <!-- Escalas -->
+                <div class="mb-3 form-check">
+                    <input class="form-check-input" type="checkbox" id="escalas" name="permitir_escalas">
+                    <label class="form-check-label" for="escalas">Permitir vuelos con escalas</label>
+                </div>
+
+                <!-- Ordenar vuelos -->
+                <div class="mb-3">
+                    <label for="sortVuelos" class="form-label">Ordenar resultados de vuelos por</label>
+                    <select class="form-select" id="sortVuelos" name="sort_vuelos">
+                        <option value="price">Precio</option>
+                        <option value="duration">Duración</option>
+                        <option value="departure_time">Hora de salida</option>
+                        <option value="arrival_time">Hora de llegada</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="presupuestoVuelos" class="form-label">Presupuesto máximo (vuelos)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
+                        <input type="number" class="form-control" id="presupuestoVuelos" name="vuelo_budget" min="0" step="50" placeholder="Ej: 1000">
                     </div>
-                    <div class="col-md-8">
-                        <label for="presupuestoMax" class="form-label">Presupuesto máximo</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                            <input type="number" class="form-control" id="presupuestoMax" name="presupuestoMax" min="0" step="50" placeholder="Ej: 1500">
-                        </div>
+                </div>
+                <hr>
+
+                <!-- ================== SECCIÓN: HOTELES ================== -->
+                <h5 class="mb-3 mt-4"><i class="bi bi-building me-1"></i>Hoteles</h5>
+
+                <!-- Presupuesto máximo -->
+                <div class="mb-3">
+                    <label for="presupuestoHotel" class="form-label">Presupuesto máximo por noche</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
+                        <input type="number" class="form-control" id="presupuestoHotel" name="hotel_budget" min="0" step="10" placeholder="Ej: 200">
+                    </div>
+                </div>
+
+                <!-- Estrellas -->
+                <div class="mb-3">
+                    <label for="estrellasHotel" class="form-label">Cantidad de estrellas</label>
+                    <select class="form-select" id="estrellasHotel" name="hotel_stars">
+                        <option value="">Cualquiera</option>
+                        <option value="1">1 estrella</option>
+                        <option value="2">2 estrellas</option>
+                        <option value="3">3 estrellas</option>
+                        <option value="4">4 estrellas</option>
+                        <option value="5">5 estrellas</option>
+                    </select>
+                </div>
+
+                <!-- Rating -->
+                <div class="mb-3">
+                    <label for="ratingHotel" class="form-label">Puntuación mínima (rating)</label>
+                    <select class="form-select" id="ratingHotel" name="hotel_rating">
+                        <option value="">Cualquiera</option>
+                        <option value="1">1+</option>
+                        <option value="2">2+</option>
+                        <option value="3">3+</option>
+                        <option value="4">4+</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+
+                <!-- Ordenar hoteles -->
+                <div class="mb-4">
+                    <label for="sortHoteles" class="form-label">Ordenar resultados de hoteles por</label>
+                    <select class="form-select" id="sortHoteles" name="sort_hoteles">
+                        <option value="price">Precio</option>
+                        <option value="rating">Puntuación</option>
+                        <option value="stars">Estrellas</option>
+                        <option value="distance">Distancia al centro</option>
+                    </select>
+                </div>
+                <hr>
+
+                <!-- ================== SECCIÓN: EXCURSIONES ================== -->
+                <h5 class="mb-3 mt-4"><i class="bi bi-map-fill me-1"></i>Excursiones</h5>
+                <div class="mb-4">
+                    <label for="presupuestoExcursiones" class="form-label">Presupuesto máximo (excursiones)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
+                        <input type="number" class="form-control" id="presupuestoExcursiones" name="excursion_budget" min="0" step="50" placeholder="Ej: 300">
+                    </div>
+                </div>
+                <hr>
+
+                <!-- ================== SECCIÓN: GENERAL ================== -->
+                <h5 class="mb-3 mt-4"><i class="bi bi-globe2 me-1"></i>General</h5>
+                <div class="mb-3">
+                    <label for="currency" class="form-label">Moneda</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+                        <select class="form-select" id="currency" name="currency">
+                            <option value="USD" selected>Dólar (USD)</option>
+                            <option value="ARS">Peso Argentino (ARS)</option>
+                            <option value="EUR">Euro (EUR)</option>
+                            <option value="BRL">Real (BRL)</option>
+                            <option value="GBP">Libra Esterlina (GBP)</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
+            <!-- Footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Guardar preferencias</button>
