@@ -50,16 +50,33 @@ public class ControladorVuelos {
             @RequestParam String origen,
             @RequestParam String destino,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaIda,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaVuelta,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaVuelta,
+            @RequestParam(defaultValue = "IDAVUELTA") String tipoViaje,
             @RequestParam(required = false) Double precioMin,
             @RequestParam(required = false) Double precioMax,
+            @RequestParam(defaultValue="ARS") String moneda,
             HttpServletRequest request,
             Model model) {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         model.addAttribute("usuario", usuario);
 
-        List<VueloDTO> vuelos = servicioReserva.getVuelo(origen, destino, fechaIda, fechaVuelta);
+        if ("IDAVUELTA".equalsIgnoreCase(tipoViaje) && fechaVuelta == null) {
+                    model.addAttribute("error", "Debe ingresar fecha de vuelta para Ida y vuelta");
+                    model.addAttribute("tipoViaje", tipoViaje);
+                    model.addAttribute("origen", origen);
+                    model.addAttribute("destino", destino);
+                    model.addAttribute("fechaIda", fechaIda);
+                    model.addAttribute("moneda", moneda);
+                    model.addAttribute("precioMin", precioMin);
+                    model.addAttribute("precioMax", precioMax);
+                    return "busqueda-vuelo";
+                }
+
+
+
+        List<VueloDTO> vuelos = servicioReserva.getVuelo(origen, destino, fechaIda, fechaVuelta, moneda, tipoViaje);
+
 
         if (vuelos != null && !vuelos.isEmpty()) {
             if (precioMin != null && precioMax != null) {
@@ -77,12 +94,14 @@ public class ControladorVuelos {
             model.addAttribute("error", "Vuelo no encontrado");
         }
 
+        model.addAttribute("tipoViaje", tipoViaje);
         model.addAttribute("precioMin", precioMin);
         model.addAttribute("precioMax", precioMax);
         model.addAttribute("origen", origen);
         model.addAttribute("destino", destino);
         model.addAttribute("fechaIda", fechaIda);
         model.addAttribute("fechaVuelta", fechaVuelta);
+        model.addAttribute("moneda", moneda);
         request.getSession().setAttribute("VUELOS_ENCONTRADOS", vuelos);
 
 
