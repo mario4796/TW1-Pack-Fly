@@ -22,8 +22,23 @@
                      alt="Foto de perfil">
                 <div class="card-body text-center">
                     <h5 class="card-title" th:text="${usuario.nombre + ' ' + usuario.apellido}"></h5>
-                    <p class="card-text">Nivel: <span class="fw-bold" th:text="${usuariop.nivel}">Oro</span></p>
-                    <p class="card-text">Millas acumuladas: <strong th:text="${usuariop.millas}">12.500</strong></p>
+
+                    <p class="card-text">
+                        Nivel:
+                        <span class="fw-bold"
+                                     th:text="${preferencia.millasAcumuladas >= 100000 ? 'Oro'
+                                             : (preferencia.millasAcumuladas >= 10000 ? 'Plata'
+                                              : (preferencia.millasAcumuladas >= 1000  ? 'Bronce'
+                                                : 'Sin nivel'))}">
+                                                         Nivel
+                        </span>
+                    </p>
+
+                    <p class="card-text">
+                        Millas acumuladas:
+                        <strong th:text="${preferencia.millasAcumuladas}">0</strong>
+                    </p>
+
                 </div>
             </div>
 
@@ -68,13 +83,16 @@
             </ul>
             <div class="tab-content p-3" id="profileTabsContent">
                 <div class="tab-pane fade" id="stats" role="tabpanel">
+
+
+
                     <!-- Estadísticas -->
                     <div class="row text-center">
                         <div class="col-6 col-md-4 mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Viajes realizados</h6>
-                                    <p class="display-6" th:text="${usuariop.viajes}">8</p>
+                                    <p class="display-6">8</p>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +100,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Destinos visitados</h6>
-                                    <p class="display-6" th:text="${usuariop.destinos}">5</p>
+                                    <p class="display-6">5</p>
                                 </div>
                             </div>
                         </div>
@@ -90,25 +108,57 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Ranking</h6>
-                                    <p class="display-6" th:text="${usuariop.ranking}">#2</p>
+                                    <p class="display-6" >#2</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <hr>
-                    <h5>Progreso a siguiente nivel</h5>
-                    <div class="progress mb-3">
-                        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70"
-                             aria-valuemin="0" aria-valuemax="100">Oro
+                    <h5>Progreso por niveles</h5>
+
+                    <!-- Bronce (1 000 millas) -->
+                    <div class="progress-bar"
+                         role="progressbar"
+                         th:style="'width:' +
+                            (preferencia.millasAcumuladas >= 1000
+         ? 100
+         : (preferencia.millasAcumuladas / 1000.0 * 100)
+       ) + '%'"
+                         th:text="'Bronce (1 000)'">
+                    </div>
+
+                    <!-- Plata (10 000 millas) -->
+                    <div class="progress mb-2">
+                        <div class="progress-bar"
+                             role="progressbar"
+                             th:style="'width:' + (preferencia.millasAcumuladas >= 1000
+                          ? 100
+                          : (preferencia.millasAcumuladas / 1000.0 * 100)
+                        ) + '%'"
+                             th:text="'Plata (10 000)'">
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade active show" id="history" role="tabpanel">
+
+                    <!-- Oro (100 000 millas) -->
+                    <div class="progress">
+                        <div class="progress-bar"
+                             role="progressbar"
+                             th:style="'width:' + (preferencia.millasAcumuladas >= 10000
+                         ? 100
+                          : (preferencia.millasAcumuladas / 10000.0 * 100)
+                        ) + '%'"
+                             th:text="'Oro (100 000)'">
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade active show" id="history" role="tabpanel">
                     <h5>Historial de viajes pagados</h5>
 
                     <!-- Hoteles pagados -->
                     <h6 class="mt-3">Hoteles</h6>
-                    <ul id="ul-hoteles" class="list-group mb-3" th:if="${hotelesPagados != null and !hotelesPagados.isEmpty()}">
+                    <ul id="ul-hoteles" class="list-group mb-3"
+                        th:if="${hotelesPagados != null and !hotelesPagados.isEmpty()}">
                         <li class="list-group-item" th:each="hotel : ${hotelesPagados}">
                             <b th:text="${hotel.name}">Hotel</b> - <span th:text="${hotel.ciudad}">Ciudad</span>
                             <span class="badge bg-success ms-2" th:text="'Check-in: ' + ${hotel.checkIn}"></span>
@@ -120,14 +170,16 @@
 
                     <!-- Excursiones pagadas -->
                     <h6 class="mt-3">Excursiones</h6>
-                    <ul id="ul-excursiones" class="list-group mb-3" th:if="${excursionesPagadas != null and !excursionesPagadas.isEmpty()}">
+                    <ul id="ul-excursiones" class="list-group mb-3"
+                        th:if="${excursionesPagadas != null and !excursionesPagadas.isEmpty()}">
                         <li class="list-group-item" th:each="exc : ${excursionesPagadas}">
                             <b th:text="${exc.title}">Excursión</b>
                             <span class="badge bg-warning ms-2" th:text="${exc.startDate}"></span>
                         </li>
                     </ul>
                     <div id="paginador-excursiones" class="mb-3"></div>
-                    <p th:if="${excursionesPagadas == null or excursionesPagadas.isEmpty()}">- No hay excursiones pagadas.</p>
+                    <p th:if="${excursionesPagadas == null or excursionesPagadas.isEmpty()}">- No hay excursiones
+                        pagadas.</p>
 
                     <!-- Vuelos pagados
                     <h6 class="mt-3">Vuelos</h6>
@@ -154,24 +206,24 @@
                                 </div>
                                 <!-- Botón que abre/oculta el mapa -->
                                 <button
-                                          class="btn btn-outline-secondary btn-sm"
-                                            type="button"
-                                           data-bs-toggle="collapse"
-                                            th:data-bs-target="'#mapa_' + ${vuelo.id}"
-                                           th:aria-controls="'mapa_' + ${vuelo.id}"
-                                            th:data-airport="${vuelo.origen}"
-                                            aria-expanded="false">
-                                       Ver mapa
-                                     </button>
+                                        class="btn btn-outline-secondary btn-sm"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        th:data-bs-target="'#mapa_' + ${vuelo.id}"
+                                        th:aria-controls="'mapa_' + ${vuelo.id}"
+                                        th:data-airport="${vuelo.origen}"
+                                        aria-expanded="false">
+                                    Ver mapa
+                                </button>
 
                             </div>
                             <!-- Contenedor colapsable donde irá el mapa -->
                             <div class="collapse mt-2" th:id="'mapa_' + ${vuelo.id}">
-                                   <div
-                                          th:id="'mapa_container_' + ${vuelo.id}"
-                                           style="width: 100%; height: 300px;"
-                                           data-loaded="false">
-                                   </div>
+                                <div
+                                        th:id="'mapa_container_' + ${vuelo.id}"
+                                        style="width: 100%; height: 300px;"
+                                        data-loaded="false">
+                                </div>
 
                             </div>
                         </li>
@@ -185,7 +237,7 @@
                 <div class="tab-pane fade" id="wishlist" role="tabpanel">
                     <h5>Wishlist de destinos</h5>
                     <ul class="list-group">
-                        <li class="list-group-item" th:each="destino: ${usuariop.wishlist}" th:text="${destino}">Tokio
+                        <li class="list-group-item" th:each="destino: ${null}" th:text="${destino}">Tokio
                         </li>
                         <form th:action="@{/agregar-destino-wishlist}" method="post" class="input-group mb-3">
                             <input type="text" class="form-control" placeholder="Agregar destino" name="destino"/>
@@ -314,7 +366,8 @@
     <div class="modal-dialog">
         <form th:action="@{/cambiar-password}" method="post" class="modal-content" id="formCambiarPassword" novalidate>
             <div class="modal-header">
-                <h5 class="modal-title" id="labelCambiarPassword"><i class="bi bi-pencil-square me-2"></i>Cambiar Contraseña</h5>
+                <h5 class="modal-title" id="labelCambiarPassword"><i class="bi bi-pencil-square me-2"></i>Cambiar
+                    Contraseña</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -346,7 +399,8 @@
     <div class="modal-dialog">
         <form th:action="@{/cambiar-email}" method="post" class="modal-content" id="formCambiarEmail" novalidate>
             <div class="modal-header">
-                <h5 class="modal-title" id="labelCambiarEmail"><i class="bi bi-pencil-square me-2"></i>Cambiar Email</h5>
+                <h5 class="modal-title" id="labelCambiarEmail"><i class="bi bi-pencil-square me-2"></i>Cambiar Email
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -381,9 +435,11 @@
 <!-- Modal: Cambiar Nombre y Apellido -->
 <div class="modal fade" id="modalCambiarNombre" tabindex="-1" aria-labelledby="labelCambiarNombre" aria-hidden="true">
     <div class="modal-dialog">
-        <form th:action="@{/cambiar-nombreYApellido}" method="post" class="modal-content" id="formCambiarNombreApellido" novalidate>
+        <form th:action="@{/cambiar-nombreYApellido}" method="post" class="modal-content" id="formCambiarNombreApellido"
+              novalidate>
             <div class="modal-header">
-                <h5 class="modal-title" id="labelCambiarNombre"><i class="bi bi-pencil-square me-2"></i>Cambiar Nombre y Apellido</h5>
+                <h5 class="modal-title" id="labelCambiarNombre"><i class="bi bi-pencil-square me-2"></i>Cambiar Nombre y
+                    Apellido</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -410,14 +466,14 @@
 
                         <div class="form-floating">
                             <input id="nombre" class="form-control" placeholder="Nombre" name="nombre"
-                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required />
+                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required/>
                             <label for="nombre">Nombre</label>
                             <div class="invalid-feedback">Ingresá un nombre válido (solo letras).</div>
                         </div>
 
                         <div class="form-floating">
                             <input id="apellido" class="form-control" placeholder="Apellido" name="apellido"
-                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required />
+                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required/>
                             <label for="apellido">Apellido</label>
                             <div class="invalid-feedback">Ingresá un apellido válido (solo letras).</div>
                         </div>
@@ -433,7 +489,8 @@
 </div>
 
 <!-- Modal de Preferencias de Viaje -->
-<div class="modal fade" id="modalPreferenciasViaje" tabindex="-1" aria-labelledby="modalPreferenciasViajeLabel" aria-hidden="true">
+<div class="modal fade" id="modalPreferenciasViaje" tabindex="-1" aria-labelledby="modalPreferenciasViajeLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <form method="post" th:action="@{/preferencias}" class="modal-content needs-validation" novalidate>
             <div class="modal-header">
@@ -449,7 +506,8 @@
                     <label for="origen" class="form-label">Aeropuerto de origen preferido</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-airplane-engines-fill"></i></span>
-                        <input type="text" class="form-control" id="origen" name="departure_id" placeholder="Ej: EZE, BUE, MIA" required>
+                        <input type="text" class="form-control" id="origen" name="departure_id"
+                               placeholder="Ej: EZE, BUE, MIA" required>
                     </div>
                     <div class="invalid-feedback">Ingresá un aeropuerto válido.</div>
                 </div>
@@ -459,7 +517,8 @@
                     <label for="destinos" class="form-label">Destinos favoritos</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-geo-alt-fill"></i></span>
-                        <input type="text" class="form-control" id="destinos" name="arrival_id" placeholder="Ej: NYC, LON, PAR (separados por coma)">
+                        <input type="text" class="form-control" id="destinos" name="arrival_id"
+                               placeholder="Ej: NYC, LON, PAR (separados por coma)">
                     </div>
                 </div>
 
@@ -501,21 +560,25 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="manana" id="horaManana" name="horarioVuelo">
+                                <input class="form-check-input" type="checkbox" value="manana" id="horaManana"
+                                       name="horarioVuelo">
                                 <label class="form-check-label" for="horaManana">Mañana (6-12 hs)</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="tarde" id="horaTarde" name="horarioVuelo">
+                                <input class="form-check-input" type="checkbox" value="tarde" id="horaTarde"
+                                       name="horarioVuelo">
                                 <label class="form-check-label" for="horaTarde">Tarde (12-18 hs)</label>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="noche" id="horaNoche" name="horarioVuelo">
+                                <input class="form-check-input" type="checkbox" value="noche" id="horaNoche"
+                                       name="horarioVuelo">
                                 <label class="form-check-label" for="horaNoche">Noche (18-24 hs)</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="madrugada" id="horaMadrugada" name="horarioVuelo">
+                                <input class="form-check-input" type="checkbox" value="madrugada" id="horaMadrugada"
+                                       name="horarioVuelo">
                                 <label class="form-check-label" for="horaMadrugada">Madrugada (0-6 hs)</label>
                             </div>
                         </div>
@@ -541,7 +604,8 @@
                         <label for="presupuestoMax" class="form-label">Presupuesto máximo</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                            <input type="number" class="form-control" id="presupuestoMax" name="presupuestoMax" min="0" step="50" placeholder="Ej: 1500">
+                            <input type="number" class="form-control" id="presupuestoMax" name="presupuestoMax" min="0"
+                                   step="50" placeholder="Ej: 1500">
                         </div>
                     </div>
                 </div>
@@ -582,7 +646,7 @@
                     .then(data => {
                         if (!data.length) return container.innerText = 'Ubicación no encontrada';
 
-                        const { lat, lon } = data[0];
+                        const {lat, lon} = data[0];
                         const map = L.map(container).setView([+lat, +lon], 13);
                         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                             attribution: '&copy; OpenStreetMap contributors'
@@ -596,9 +660,6 @@
     });
     /*]]>*/
 </script>
-
-
-
 
 
 </body>

@@ -4,10 +4,7 @@ import com.tallerwebi.dominio.ServicioExcursiones;
 import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.ServicioReserva;
-import com.tallerwebi.dominio.entidades.Excursion;
-import com.tallerwebi.dominio.entidades.Hotel;
-import com.tallerwebi.dominio.entidades.Vuelo;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.presentacion.dtos.HotelDto;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 @Controller
 public class ControladorUsuario {
@@ -35,10 +34,12 @@ public class ControladorUsuario {
     private ServicioExcursiones  servicioExcursiones;
     @Autowired
     private ServicioLogin servicioLogin;
+    @Autowired
+    private ServicioPreferenciaUsuario servicioPreferenciaUsuario;
 
     @GetMapping("/perfil-usuario")
     public String perfil(HttpServletRequest request, Model model) {
-        // Usuario de prueba
+        /*
         Map<String, Object> usuariop = new HashMap<>();
         usuariop.put("nombre", "Juan Pérez");
         usuariop.put("nivel", "Oro");
@@ -46,7 +47,15 @@ public class ControladorUsuario {
         usuariop.put("viajes", 8);
         usuariop.put("destinos", 5);
         usuariop.put("ranking", 2);
+        */
+
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+        PreferenciaUsuario preferencia =
+                           servicioPreferenciaUsuario.obtenerPorUsuario(usuario);
+               model.addAttribute("preferencia", preferencia);
+
+     //   Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
         List<Hotel> hotelesPagados = hotelService.buscarHotelesPagados(usuario.getId());
         List<HotelDto> hotelesDtoPagados = hotelService.obtenerHotelesDto(hotelesPagados);
@@ -58,7 +67,7 @@ public class ControladorUsuario {
 
         // Wishlist de destinos de prueba
         List<String> wishlist = Arrays.asList("Tokio", "Sydney", "Toronto");
-        usuariop.put("wishlist", wishlist);
+        //usuariop.put("wishlist", wishlist);
 
         //reserva
 
@@ -82,7 +91,7 @@ public class ControladorUsuario {
         model.addAttribute("hoteles", hotelesDto);
         model.addAttribute("excursiones", excursiones);
         model.addAttribute("usuario", usuario);
-        model.addAttribute("usuariop", usuariop);
+        //model.addAttribute("usuariop", usuariop);
 
         model.addAttribute("hotelesPagados", hotelesDtoPagados);
         model.addAttribute("vuelosPagados", vuelosPagados);
