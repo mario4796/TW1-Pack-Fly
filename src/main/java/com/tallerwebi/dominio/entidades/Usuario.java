@@ -18,6 +18,7 @@ public class Usuario {
     private String rol;
     private Boolean activo = false;
     private Double apagar;
+    private String telefono;
 
     public Long getId() {
         return id;
@@ -65,4 +66,6 @@ public class Usuario {
     public void activar() {
         activo = true;
     }
+    public String getTelefono() {return telefono;}
+    public void setTelefono(String telefono) {this.telefono = telefono;}
 }
