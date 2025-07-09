@@ -25,8 +25,37 @@
         <h1 class="mb-4 text-center text-light">Buscar Vuelos</h1>
         <div class="card shadow">
             <div class="card-body">
+
+
                 <form th:action="@{/busqueda-vuelo}" method="post" accept-charset="UTF-8" novalidate>
                     <div class="row mb-3">
+
+                        <!-- Tipo de viaje -->
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de viaje</label>
+                            <div class="btn-group" role="group" aria-label="Tipo de viaje">
+                                <input
+                                        type="radio"
+                                        class="btn-check"
+                                        name="tipoViaje"
+                                        id="optIda"
+                                        autocomplete="off"
+                                        th:value="'IDA'"
+                                        th:checked="${tipoViaje=='IDA'}"/>
+                                <label class="btn btn-outline-secondary" for="optIda">Ida</label>
+
+                                <input
+                                        type="radio"
+                                        class="btn-check"
+                                        name="tipoViaje"
+                                        id="optIdaVuelta"
+                                        autocomplete="off"
+                                        th:value="'IDAVUELTA'"
+                                        th:checked="${tipoViaje!='IDA'}"/>
+                                <label class="btn btn-outline-secondary" for="optIdaVuelta">Ida y vuelta</label>
+                            </div>
+                        </div>
+
 
                         <div class="col-md-3">
                             <label for="origen" class="form-label">Origen</label>
@@ -76,17 +105,24 @@
 
                         <div class="col-md-3">
                             <label for="fechaIda" class="form-label">Fecha de Ida</label>
-                            <input type="date" class="form-control" id="fechaIda" name="fechaIda" th:value="${fechaIda}" required>
+                            <input type="date" class="form-control" id="fechaIda" name="fechaIda" th:value="${fechaIda != null ? #dates.format(fechaIda,'yyyy-MM-dd') : ''}" required>
                             <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
                         </div>
-                        <div class="col-md-3">
-                            <label for="fechaVuelta" class="form-label">Fecha de Vuelta</label>
-                            <input type="date" class="form-control" id="fechaVuelta" name="fechaVuelta" th:value="${fechaVuelta}" required>
-                            <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
-                        </div>
-                    </div>
 
-                    <div class="row mb-3">
+
+                        <div class="col-md-3" id="divFechaVuelta">
+                            <label for="fechaVuelta" class="form-label">Fecha de Vuelta</label>
+                            <input type="date"
+                                   class="form-control"
+                                   id="fechaVuelta"
+                                   name="fechaVuelta"
+                                   th:value="${fechaVuelta != null ? #dates.format(fechaVuelta,'yyyy-MM-dd') : ''}">
+                            <!-- ✔️ quitar required -->
+                            <div class="invalid-feedback">Seleccioná una fecha válida …</div>
+                        </div>
+
+
+                        <div class="row mb-3">
 
                         <!-- Precio mínimo -->
                         <div class="col-md-4">
@@ -129,6 +165,7 @@
            </div>
        </div>
    </div>
+
 
    <div th:if="${error}" class="alert alert-warning text-center mt-3" role="alert">
        <i class="bi bi-exclamation-triangle-fill me-2"></i>
@@ -243,6 +280,31 @@
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
 <script type="text/javascript" th:src="@{js/dark-mode.js}"></script>
 <script type="text/javascript" th:src="@{js/validaciones.js}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const optIda       = document.getElementById('optIda');
+        const optIdaVuelta = document.getElementById('optIdaVuelta');
+        const divRegreso   = document.getElementById('divFechaVuelta');
+
+        const toggleRegreso = () => {
+            if (optIda.checked) {
+                divRegreso.style.display = 'none';
+                document.getElementById('fechaVuelta').value = '';
+            } else {
+                divRegreso.style.display = '';
+            }
+        };
+
+        // Asocia evento a ambos radios
+        [optIda, optIdaVuelta].forEach(radio =>
+            radio.addEventListener('change', toggleRegreso)
+        );
+
+        // Estado inicial al cargar
+        toggleRegreso();
+    });
+</script>
 
 </body>
 </html>
