@@ -6,6 +6,7 @@
     <title>Perfil de Usuario | Pack&Fly</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css}"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 <body>
@@ -117,17 +118,6 @@
                     <div id="paginador-hoteles" class="mb-3"></div>
                     <p th:if="${hotelesPagados == null or hotelesPagados.isEmpty()}">- No hay hoteles pagados.</p>
 
-                    <!-- Vuelos pagados -->
-                    <h6 class="mt-3">Vuelos</h6>
-                    <ul id="ul-vuelos" class="list-group mb-3" th:if="${vuelosPagados != null and !vuelosPagados.isEmpty()}">
-                        <li class="list-group-item" th:each="vuelo : ${vuelosPagados}">
-                            <b th:text="${vuelo.origen}">Origen</b> &rarr; <span th:text="${vuelo.destino}">Destino</span>
-                            <span class="badge bg-primary ms-2" th:text="${vuelo.fechaIda}"></span>
-                        </li>
-                    </ul>
-                    <div id="paginador-vuelos" class="mb-3"></div>
-                    <p th:if="${vuelosPagados == null or vuelosPagados.isEmpty()}">- No hay vuelos pagados.</p>
-
                     <!-- Excursiones pagadas -->
                     <h6 class="mt-3">Excursiones</h6>
                     <ul id="ul-excursiones" class="list-group mb-3" th:if="${excursionesPagadas != null and !excursionesPagadas.isEmpty()}">
@@ -138,6 +128,58 @@
                     </ul>
                     <div id="paginador-excursiones" class="mb-3"></div>
                     <p th:if="${excursionesPagadas == null or excursionesPagadas.isEmpty()}">- No hay excursiones pagadas.</p>
+
+                    <!-- Vuelos pagados
+                    <h6 class="mt-3">Vuelos</h6>
+                    <ul id="ul-vuelos" class="list-group mb-3" th:if="${vuelosPagados != null and !vuelosPagados.isEmpty()}">
+                        <li class="list-group-item" th:each="vuelo : ${vuelosPagados}">
+                            <b th:text="${vuelo.origen}">Origen</b> &rarr; <span th:text="${vuelo.destino}">Destino</span>
+                            <span class="badge bg-primary ms-2" th:text="${vuelo.fechaIda}"></span>
+                        </li>
+                    </ul>
+                    <div id="paginador-vuelos" class="mb-3"></div>
+                    <p th:if="${vuelosPagados == null or vuelosPagados.isEmpty()}">- No hay vuelos pagados.</p>-->
+
+
+                    <h6 class="mt-3">Vuelos</h6>
+                    <ul id="ul-vuelos" class="list-group mb-3"
+                        th:if="${vuelosPagados != null and !vuelosPagados.isEmpty()}">
+                        <li class="list-group-item" th:each="vuelo : ${vuelosPagados}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <b th:text="${vuelo.origen}">Origen</b>
+                                    &rarr;
+                                    <span th:text="${vuelo.destino}">Destino</span>
+                                    <span class="badge bg-primary ms-2" th:text="${vuelo.fechaIda}"></span>
+                                </div>
+                                <!-- Botón que abre/oculta el mapa -->
+                                <button
+                                          class="btn btn-outline-secondary btn-sm"
+                                            type="button"
+                                           data-bs-toggle="collapse"
+                                            th:data-bs-target="'#mapa_' + ${vuelo.id}"
+                                           th:aria-controls="'mapa_' + ${vuelo.id}"
+                                            th:data-airport="${vuelo.origen}"
+                                            aria-expanded="false">
+                                       Ver mapa
+                                     </button>
+
+                            </div>
+                            <!-- Contenedor colapsable donde irá el mapa -->
+                            <div class="collapse mt-2" th:id="'mapa_' + ${vuelo.id}">
+                                   <div
+                                          th:id="'mapa_container_' + ${vuelo.id}"
+                                           style="width: 100%; height: 300px;"
+                                           data-loaded="false">
+                                   </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                    <p th:if="${vuelosPagados == null or vuelosPagados.isEmpty()}">
+                        - No hay vuelos pagados.
+                    </p>
+
                 </div>
                 <!-- Whitelist -->
                 <div class="tab-pane fade" id="wishlist" role="tabpanel">
@@ -520,6 +562,41 @@
 <script type="text/javascript" th:src="@{js/validaciones.js}"></script>
 <script type="text/javascript" th:src="@{js/alerts.js}"></script>
 <script type="text/javascript" th:src="@{/js/paginador.js}"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    // Para cada div.collapse de mapas
+    document.querySelectorAll('[id^="mapa_"]').forEach(collapseEl => {
+        collapseEl.addEventListener('show.bs.collapse', () => {
+            const idNum = collapseEl.id.split('_')[1];               // "mapa_42" → "42"
+            const container = document.getElementById('mapa_container_' + idNum);
+
+            if (container.dataset.loaded === 'false') {
+                const airport = document
+                    .querySelector('[data-bs-target="#' + collapseEl.id + '"]')
+                    .getAttribute('data-airport');
+
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=airport ${airport}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!data.length) return container.innerText = 'Ubicación no encontrada';
+
+                        const { lat, lon } = data[0];
+                        const map = L.map(container).setView([+lat, +lon], 13);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; OpenStreetMap contributors'
+                        }).addTo(map);
+                        L.marker([+lat, +lon]).addTo(map);
+                        container.dataset.loaded = 'true';
+                    })
+                    .catch(() => container.innerText = 'Error al cargar el mapa.');
+            }
+        });
+    });
+    /*]]>*/
+</script>
+
 
 
 
