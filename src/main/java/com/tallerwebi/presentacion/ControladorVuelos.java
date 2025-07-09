@@ -53,13 +53,14 @@ public class ControladorVuelos {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaVuelta,
             @RequestParam(required = false) Double precioMin,
             @RequestParam(required = false) Double precioMax,
+            @RequestParam(defaultValue="ARS") String moneda,
             HttpServletRequest request,
             Model model) {
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         model.addAttribute("usuario", usuario);
 
-        List<VueloDTO> vuelos = servicioReserva.getVuelo(origen, destino, fechaIda, fechaVuelta);
+        List<VueloDTO> vuelos = servicioReserva.getVuelo(origen, destino, fechaIda, fechaVuelta, moneda);
 
         if (vuelos != null && !vuelos.isEmpty()) {
             if (precioMin != null && precioMax != null) {
@@ -83,6 +84,7 @@ public class ControladorVuelos {
         model.addAttribute("destino", destino);
         model.addAttribute("fechaIda", fechaIda);
         model.addAttribute("fechaVuelta", fechaVuelta);
+        model.addAttribute("moneda", moneda);
         request.getSession().setAttribute("VUELOS_ENCONTRADOS", vuelos);
 
 

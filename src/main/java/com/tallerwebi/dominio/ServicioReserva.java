@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ServicioReserva {
-    List<VueloDTO> getVuelo(String origen, String destino, Date fechaIda, Date fechaVuelta);
+    List<VueloDTO> getVuelo(String origen, String destino, Date fechaIda, Date fechaVuelta, String moneda);
     void guardarReserva(Vuelo vuelo);
     List<Vuelo> obtenerReservasPorEmail(String email); // ← Agregado
     void eliminarReserva (String email, String fechaIda, String fechaVuelta);
