@@ -13,7 +13,7 @@ public class PreferenciaUsuario {
     private Usuario usuario;
     private String tipoViajeVuelo;
     private Boolean viajeroFrecuente;
-    private Integer millasAcumuladas;
+    private Integer millasAcumuladas=0;
     private String tipoHospedaje;
     private String tipoExcursionPreferida;
 

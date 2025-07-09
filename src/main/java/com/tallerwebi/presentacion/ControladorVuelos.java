@@ -114,8 +114,10 @@ public class ControladorVuelos {
 
     @PostMapping("/formulario-reserva")
     public String mostrarFormularioReserva(@RequestParam int idVuelo,
+                                           @RequestParam(defaultValue="ARS") String moneda,
                                            HttpServletRequest request,
                                            Model model) {
+
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
         model.addAttribute("usuario", usuario);
 
@@ -135,6 +137,7 @@ public class ControladorVuelos {
         model.addAttribute("fechaVuelta", vueloSeleccionado.getFechaVuelta());
         model.addAttribute("precio", vueloSeleccionado.getPrecio());
         model.addAttribute("idVuelo", idVuelo);
+        model.addAttribute("moneda", moneda);
 
         return "formularioReserva";
     }
@@ -159,7 +162,8 @@ public class ControladorVuelos {
     public String guardarReserva(
             @RequestParam("nombre") String nombre,
             @RequestParam("email") String email,
-            @RequestParam("idVuelo") int idVuelo,  // <- NUEVO: para recuperar el vuelo
+            @RequestParam("idVuelo") int idVuelo,
+            @RequestParam("moneda") String moneda,
             HttpServletRequest request,
             RedirectAttributes redirectAttributes,
             Model model
@@ -172,7 +176,8 @@ public class ControladorVuelos {
         Vuelo vuelo = vueloDTO.toEntidad(nombre, email, usuario);
 
         try {
-            servicioReserva.guardarReserva(vuelo);
+            //servicioReserva.guardarReserva(vuelo);
+            servicioReserva.guardarReserva(vuelo, moneda);
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo creada con éxito.");
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
