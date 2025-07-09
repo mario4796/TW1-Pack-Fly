@@ -39,7 +39,7 @@ public class ControladorUsuario {
 
     @GetMapping("/perfil-usuario")
     public String perfil(HttpServletRequest request, Model model) {
-        /*
+
         Map<String, Object> usuariop = new HashMap<>();
         usuariop.put("nombre", "Juan Pérez");
         usuariop.put("nivel", "Oro");
@@ -47,7 +47,7 @@ public class ControladorUsuario {
         usuariop.put("viajes", 8);
         usuariop.put("destinos", 5);
         usuariop.put("ranking", 2);
-        */
+
 
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
 
@@ -67,7 +67,7 @@ public class ControladorUsuario {
 
         // Wishlist de destinos de prueba
         List<String> wishlist = Arrays.asList("Tokio", "Sydney", "Toronto");
-        //usuariop.put("wishlist", wishlist);
+        usuariop.put("wishlist", wishlist);
 
         //reserva
 
@@ -91,7 +91,7 @@ public class ControladorUsuario {
         model.addAttribute("hoteles", hotelesDto);
         model.addAttribute("excursiones", excursiones);
         model.addAttribute("usuario", usuario);
-        //model.addAttribute("usuariop", usuariop);
+        model.addAttribute("usuariop", usuariop);
 
         model.addAttribute("hotelesPagados", hotelesDtoPagados);
         model.addAttribute("vuelosPagados", vuelosPagados);

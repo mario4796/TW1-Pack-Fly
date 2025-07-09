@@ -114,43 +114,8 @@
                         </div>
                     </div>
 
-                    <hr>
-                    <h5>Progreso por niveles</h5>
 
-                    <!-- Bronce (1 000 millas) -->
-                    <div class="progress-bar"
-                         role="progressbar"
-                         th:style="'width:' +
-                            (preferencia.millasAcumuladas >= 1000
-         ? 100
-         : (preferencia.millasAcumuladas / 1000.0 * 100)
-       ) + '%'"
-                         th:text="'Bronce (1 000)'">
-                    </div>
 
-                    <!-- Plata (10 000 millas) -->
-                    <div class="progress mb-2">
-                        <div class="progress-bar"
-                             role="progressbar"
-                             th:style="'width:' + (preferencia.millasAcumuladas >= 1000
-                          ? 100
-                          : (preferencia.millasAcumuladas / 1000.0 * 100)
-                        ) + '%'"
-                             th:text="'Plata (10 000)'">
-                        </div>
-                    </div>
-
-                    <!-- Oro (100 000 millas) -->
-                    <div class="progress">
-                        <div class="progress-bar"
-                             role="progressbar"
-                             th:style="'width:' + (preferencia.millasAcumuladas >= 10000
-                         ? 100
-                          : (preferencia.millasAcumuladas / 10000.0 * 100)
-                        ) + '%'"
-                             th:text="'Oro (100 000)'">
-                        </div>
-                    </div>
 
                     <div class="tab-pane fade active show" id="history" role="tabpanel">
                     <h5>Historial de viajes pagados</h5>
@@ -204,6 +169,8 @@
                                     <span th:text="${vuelo.destino}">Destino</span>
                                     <span class="badge bg-primary ms-2" th:text="${vuelo.fechaIda}"></span>
                                 </div>
+
+
                                 <!-- Botón que abre/oculta el mapa -->
                                 <button
                                         class="btn btn-outline-secondary btn-sm"
