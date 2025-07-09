@@ -147,6 +147,19 @@ public class Vuelo {
 
     public void setFlights(List<SegmentoVuelo> flights) {
         this.flights = flights;
+
+        if(flights != null && !flights.isEmpty()){
+            SegmentoVuelo primero = flights.get(0);
+            SegmentoVuelo ultimo = flights.get(flights.size() - 1);
+
+            if(primero.getDepartureAirport() != null){
+                this.origen = primero.getDepartureAirport().getName();
+            }
+
+            if(ultimo.getDepartureAirport() != null){
+                this.origen = primero.getArrivalAirport().getName();
+            }
+        }
     }
 
     public List<Escala> getLayovers() {

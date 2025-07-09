@@ -1,9 +1,11 @@
 package com.tallerwebi.dominio;
-/*
+
 import com.tallerwebi.dominio.entidades.Vuelo;
-import com.tallerwebi.dominio.entidades.Vuelo.Aeropuerto;
-import com.tallerwebi.dominio.entidades.Vuelo.SegmentoVuelo;
+import com.tallerwebi.dominio.entidades.SegmentoVuelo;
+import com.tallerwebi.dominio.entidades.Escala;
+import com.tallerwebi.dominio.entidades.Aeropuerto;
 import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,54 +14,54 @@ import static org.junit.Assert.*;
 public class VueloTest {
 
     @Test
-    public void queDefaultConstructorDejeCamposEnNull() {
+    public void queElConstructorPorDefectoDejeCamposEnNull() {
         Vuelo vuelo = new Vuelo();
 
         assertNull(vuelo.getId());
         assertNull(vuelo.getPrecio());
         assertNull(vuelo.getDuracionTotal());
-        assertNull(vuelo.getSegmentos());
+        assertNull(vuelo.getLayovers());
         assertNull(vuelo.getOrigen());
         assertNull(vuelo.getDestino());
         assertNull(vuelo.getFechaIda());
         assertNull(vuelo.getFechaVuelta());
+        assertNull(vuelo.getFlights());
     }
 
     @Test
-    public void queSePuedaModificarYObtenerCamposBasicos() {
+    public void queSePuedanSetearYObtenerCamposBasicos() {
         Vuelo vuelo = new Vuelo();
         vuelo.setId(1L);
-        vuelo.setPrecio(150);
-        vuelo.setDuracionTotal("3h45m");
+        vuelo.setPrecio(200.0);
+        vuelo.setDuracionTotal("5h20m");
 
         assertEquals(Long.valueOf(1L), vuelo.getId());
-        assertEquals(Integer.valueOf(150), vuelo.getPrecio());
-        assertEquals("3h45m", vuelo.getDuracionTotal());
+        assertEquals(Integer.valueOf(200), vuelo.getPrecio());
+        assertEquals("5h20m", vuelo.getDuracionTotal());
     }
 
     @Test
-    public void queDeriveOrigenDestinoYFechasAlSetearSegmentos() {
-        // preparar un segmento con aeropuertos de salida y llegada
+    public void queSetearSegmentosActualiceOrigenDestinoYFechas() {
+        // Aeropuerto de salida
         Aeropuerto salida = new Aeropuerto();
-        salida.setNombre("Aeropuerto Ezeiza");
-        salida.setFecha("2025-07-10");
+        salida.setName("Aeroparque");
+        salida.setTime("2025-08-01");
 
+        // Aeropuerto de llegada
         Aeropuerto llegada = new Aeropuerto();
-        llegada.setNombre("Aeropuerto Madrid-Barajas");
-        llegada.setFecha("2025-07-25");
+        llegada.setName("El Prat");
+        llegada.setTime("2025-08-15");
 
         SegmentoVuelo segmento = new SegmentoVuelo();
-        segmento.setAeropuertoSalida(salida);
-        segmento.setAeropuertoLlegada(llegada);
+        segmento.setDepartureAirport(salida);
+        segmento.setArrivalAirport(llegada);
 
         Vuelo vuelo = new Vuelo();
-        List<SegmentoVuelo> segmentos = Arrays.asList(segmento);
-        vuelo.setSegmentos(segmentos);
+        vuelo.setFlights(Arrays.asList(segmento));
 
-        assertEquals("Aeropuerto Ezeiza", vuelo.getOrigen());
-        assertEquals("Aeropuerto Madrid-Barajas", vuelo.getDestino());
-        assertEquals("2025-07-10", vuelo.getFechaIda());
-        assertEquals("2025-07-25", vuelo.getFechaVuelta());
+        assertEquals("Aeroparque", vuelo.getOrigen());
+        assertEquals("El Prat", vuelo.getDestino());
+        assertEquals("2025-08-01", vuelo.getFechaIda());
+        assertEquals("2025-08-15", vuelo.getFechaVuelta());
     }
 }
-*/
