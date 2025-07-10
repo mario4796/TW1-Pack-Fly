@@ -202,16 +202,23 @@ public class ControladorVuelos {
         }
 
         String fechaIdaSolo = vuelo.getFechaIda().contains(" ") ? vuelo.getFechaIda().split(" ")[0] : vuelo.getFechaIda();
-        String fechaVueltaSolo = vuelo.getFechaVuelta().contains(" ") ? vuelo.getFechaVuelta().split(" ")[0] : vuelo.getFechaVuelta();
+        String fechaVueltaSolo = (vuelo.getFechaVuelta() != null && vuelo.getFechaVuelta().contains(" "))
+                ? vuelo.getFechaVuelta().split(" ")[0]
+                : (vuelo.getFechaVuelta() == null ? "" : vuelo.getFechaVuelta());
 
 
         LocalDate fechaIdaVuelo = LocalDate.parse(fechaIdaSolo);
-        LocalDate fechaVueltaVuelo = LocalDate.parse(fechaVueltaSolo);
+        LocalDate fechaVueltaVuelo = null;
+        if (!fechaVueltaSolo.isEmpty()){
+            fechaVueltaVuelo = LocalDate.parse(fechaVueltaSolo);
+        }
 
 
         redirectAttributes.addFlashAttribute("destinoDeVuelo", vuelo.getDestino());
         redirectAttributes.addFlashAttribute("fechaIdaVuelo", fechaIdaVuelo);
-        redirectAttributes.addFlashAttribute("fechaVueltaVuelo", fechaVueltaVuelo);
+        if (fechaVueltaVuelo != null) {
+            redirectAttributes.addFlashAttribute("fechaVueltaVuelo", fechaVueltaVuelo);
+        }
 
         return "redirect:/busqueda-hoteles";
     }
