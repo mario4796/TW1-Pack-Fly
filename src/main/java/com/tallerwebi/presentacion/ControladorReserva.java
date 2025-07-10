@@ -110,6 +110,11 @@ public class ControladorReserva {
 
 
         try {
+
+            if ("null".equals(fechaVuelta) || "undefined".equals(fechaVuelta)) {
+                fechaVuelta = null;
+            }
+
             servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
 
             servicioEmail.enviarCorreo(
