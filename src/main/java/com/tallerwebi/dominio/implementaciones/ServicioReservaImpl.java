@@ -249,7 +249,15 @@ public class ServicioReservaImpl implements ServicioReserva {
 
     @Override
     public void eliminarReserva(String email, String fechaIda, String fechaVuelta) {
-        repositorioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
+        if (fechaVuelta == null || fechaVuelta.isBlank()) {
+            repositorioReserva.eliminarReservaSinFechaVuelta(email, fechaIda);
+            System.out.println("👉 Eliminando vuelo SIN fecha de vuelta");
+
+        } else {
+            repositorioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
+            System.out.println("👉 Eliminando vuelo CON fecha de vuelta");
+
+        }
     }
 
     @Override

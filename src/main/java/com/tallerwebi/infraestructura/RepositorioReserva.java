@@ -13,4 +13,6 @@ public interface RepositorioReserva {
     Vuelo buscarPorId(Long id);
     void pagarReservasDeVuelo(String email);
     List<Vuelo> buscarPorEmailPagadas (String email);
+
+    void eliminarReservaSinFechaVuelta(String email, String fechaIda);
 }

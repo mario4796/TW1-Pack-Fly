@@ -41,12 +41,29 @@ public class RepositorioReservaImpl implements RepositorioReserva {
 
     @Override
     public void eliminarReserva(String email, String fechaIda, String fechaVuelta) {
-        this.sessionFactory.getCurrentSession()
-                .createQuery("DELETE FROM Vuelo r WHERE r.email = :email AND r.fechaIda = :fechaIda AND r.fechaVuelta = :fechaVuelta")
+        List<Vuelo> vuelos = sessionFactory.getCurrentSession()
+                .createQuery("FROM Vuelo v WHERE v.email = :email AND v.fechaIda = :fechaIda AND v.fechaVuelta = :fechaVuelta", Vuelo.class)
                 .setParameter("email", email)
                 .setParameter("fechaIda", fechaIda)
                 .setParameter("fechaVuelta", fechaVuelta)
-                .executeUpdate();
+                .getResultList();
+
+        for (Vuelo vuelo : vuelos) {
+            sessionFactory.getCurrentSession().remove(vuelo);
+        }
+    }
+
+    @Override
+    public void eliminarReservaSinFechaVuelta(String email, String fechaIda) {
+        List<Vuelo> vuelos = sessionFactory.getCurrentSession()
+                .createQuery("FROM Vuelo v WHERE v.email = :email AND v.fechaIda = :fechaIda AND (v.fechaVuelta IS NULL OR v.fechaVuelta = '')", Vuelo.class)
+                .setParameter("email", email)
+                .setParameter("fechaIda", fechaIda)
+                .getResultList();
+
+        for (Vuelo vuelo : vuelos) {
+            sessionFactory.getCurrentSession().remove(vuelo);
+        }
     }
 
     @Override
