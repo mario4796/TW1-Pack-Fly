@@ -1,11 +1,10 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.ServicioEmail;
-import com.tallerwebi.dominio.ServicioPreferenciaUsuario;
+import com.tallerwebi.dominio.*;
 import com.tallerwebi.dominio.entidades.Hotel;
-import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
+import com.tallerwebi.presentacion.dtos.PreferenciaViajeDTO;
 import com.tallerwebi.presentacion.utils.IconHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,9 +25,10 @@ public class ControladorHotel {
     private ServicioHotel hotelService;
     @Autowired
     private ServicioEmail servicioEmail;
-
     @Autowired
     private ServicioPreferenciaUsuario servicioPreferenciaUsuario;
+    @Autowired
+    private ServicioLogin servicioLogin;
 
 
     @Autowired private IconHelper iconHelper;

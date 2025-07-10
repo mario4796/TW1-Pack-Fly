@@ -2,11 +2,13 @@ package com.tallerwebi.dominio.implementaciones;
 
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.entidades.Excursion;
+import com.tallerwebi.dominio.entidades.PreferenciaViaje;
 import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import com.tallerwebi.presentacion.dtos.HotelDto;
+import com.tallerwebi.presentacion.dtos.PreferenciaViajeDTO;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,12 +37,12 @@ public class ServicioLoginImpl implements ServicioLogin {
         if(usuarioEncontrado != null){
             throw new UsuarioExistente();
         }
-
         repositorioUsuario.guardar(usuario);
     }
 
     @Override
-    public void modificarUsuario(Usuario usuario) {repositorioUsuario.modificar(usuario);
+    public void modificarUsuario(Usuario usuario) {
+        repositorioUsuario.modificar(usuario);
     }
 
     @Override
@@ -138,6 +140,20 @@ public class ServicioLoginImpl implements ServicioLogin {
         return repositorioUsuario.buscarUsuarioPorId(idUsuario);
     }
 
+    @Override
+    public PreferenciaViajeDTO obtenerPreferenciaViaje(Long usuarioId) {
+        PreferenciaViaje entidad = repositorioUsuario.obtenerPreferenciaViaje(usuarioId);
 
+        if (entidad == null) {
+            return null;
+        }
+
+        return new PreferenciaViajeDTO(entidad);
+    }
+
+    @Override
+    public void guardarPreferenciaViaje(PreferenciaViajeDTO preferencias) {
+        repositorioUsuario.guardarPreferenciaViaje(new PreferenciaViaje(preferencias));
+    }
 }
 
