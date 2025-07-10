@@ -153,7 +153,7 @@ public class ServicioLoginImpl implements ServicioLogin {
 
     @Override
     public void guardarPreferenciaViaje(PreferenciaViajeDTO preferencias) {
-        repositorioUsuario.guardarPreferenciaViaje(preferencias);
+        repositorioUsuario.guardarPreferenciaViaje(new PreferenciaViaje(preferencias));
     }
 }
 

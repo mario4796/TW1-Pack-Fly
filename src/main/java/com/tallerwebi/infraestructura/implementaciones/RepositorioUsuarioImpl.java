@@ -63,7 +63,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
-    public void guardarPreferenciaViaje(PreferenciaViajeDTO preferencias) {
+    public void guardarPreferenciaViaje(PreferenciaViaje preferencias) {
         sessionFactory.getCurrentSession().saveOrUpdate(preferencias);
     }
 }

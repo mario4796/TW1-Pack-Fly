@@ -107,7 +107,8 @@
 
                     <!-- Hoteles pagados -->
                     <h6 class="mt-3">Hoteles</h6>
-                    <ul id="ul-hoteles" class="list-group mb-3" th:if="${hotelesPagados != null and !hotelesPagados.isEmpty()}">
+                    <ul id="ul-hoteles" class="list-group mb-3"
+                        th:if="${hotelesPagados != null and !hotelesPagados.isEmpty()}">
                         <li class="list-group-item" th:each="hotel : ${hotelesPagados}">
                             <b th:text="${hotel.name}">Hotel</b> - <span th:text="${hotel.ciudad}">Ciudad</span>
                             <span class="badge bg-success ms-2" th:text="'Check-in: ' + ${hotel.checkIn}"></span>
@@ -119,9 +120,11 @@
 
                     <!-- Vuelos pagados -->
                     <h6 class="mt-3">Vuelos</h6>
-                    <ul id="ul-vuelos" class="list-group mb-3" th:if="${vuelosPagados != null and !vuelosPagados.isEmpty()}">
+                    <ul id="ul-vuelos" class="list-group mb-3"
+                        th:if="${vuelosPagados != null and !vuelosPagados.isEmpty()}">
                         <li class="list-group-item" th:each="vuelo : ${vuelosPagados}">
-                            <b th:text="${vuelo.origen}">Origen</b> &rarr; <span th:text="${vuelo.destino}">Destino</span>
+                            <b th:text="${vuelo.origen}">Origen</b> &rarr; <span
+                                th:text="${vuelo.destino}">Destino</span>
                             <span class="badge bg-primary ms-2" th:text="${vuelo.fechaIda}"></span>
                         </li>
                     </ul>
@@ -130,14 +133,16 @@
 
                     <!-- Excursiones pagadas -->
                     <h6 class="mt-3">Excursiones</h6>
-                    <ul id="ul-excursiones" class="list-group mb-3" th:if="${excursionesPagadas != null and !excursionesPagadas.isEmpty()}">
+                    <ul id="ul-excursiones" class="list-group mb-3"
+                        th:if="${excursionesPagadas != null and !excursionesPagadas.isEmpty()}">
                         <li class="list-group-item" th:each="exc : ${excursionesPagadas}">
                             <b th:text="${exc.title}">Excursión</b>
                             <span class="badge bg-warning ms-2" th:text="${exc.startDate}"></span>
                         </li>
                     </ul>
                     <div id="paginador-excursiones" class="mb-3"></div>
-                    <p th:if="${excursionesPagadas == null or excursionesPagadas.isEmpty()}">- No hay excursiones pagadas.</p>
+                    <p th:if="${excursionesPagadas == null or excursionesPagadas.isEmpty()}">- No hay excursiones
+                        pagadas.</p>
                 </div>
                 <!-- Whitelist -->
                 <div class="tab-pane fade" id="wishlist" role="tabpanel">
@@ -272,7 +277,8 @@
     <div class="modal-dialog">
         <form th:action="@{/cambiar-password}" method="post" class="modal-content" id="formCambiarPassword" novalidate>
             <div class="modal-header">
-                <h5 class="modal-title" id="labelCambiarPassword"><i class="bi bi-pencil-square me-2"></i>Cambiar Contraseña</h5>
+                <h5 class="modal-title" id="labelCambiarPassword"><i class="bi bi-pencil-square me-2"></i>Cambiar
+                    Contraseña</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -304,7 +310,8 @@
     <div class="modal-dialog">
         <form th:action="@{/cambiar-email}" method="post" class="modal-content" id="formCambiarEmail" novalidate>
             <div class="modal-header">
-                <h5 class="modal-title" id="labelCambiarEmail"><i class="bi bi-pencil-square me-2"></i>Cambiar Email</h5>
+                <h5 class="modal-title" id="labelCambiarEmail"><i class="bi bi-pencil-square me-2"></i>Cambiar Email
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -339,9 +346,11 @@
 <!-- Modal: Cambiar Nombre y Apellido -->
 <div class="modal fade" id="modalCambiarNombre" tabindex="-1" aria-labelledby="labelCambiarNombre" aria-hidden="true">
     <div class="modal-dialog">
-        <form th:action="@{/cambiar-nombreYApellido}" method="post" class="modal-content" id="formCambiarNombreApellido" novalidate>
+        <form th:action="@{/cambiar-nombreYApellido}" method="post" class="modal-content" id="formCambiarNombreApellido"
+              novalidate>
             <div class="modal-header">
-                <h5 class="modal-title" id="labelCambiarNombre"><i class="bi bi-pencil-square me-2"></i>Cambiar Nombre y Apellido</h5>
+                <h5 class="modal-title" id="labelCambiarNombre"><i class="bi bi-pencil-square me-2"></i>Cambiar Nombre y
+                    Apellido</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -368,14 +377,14 @@
 
                         <div class="form-floating">
                             <input id="nombre" class="form-control" placeholder="Nombre" name="nombre"
-                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required />
+                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required/>
                             <label for="nombre">Nombre</label>
                             <div class="invalid-feedback">Ingresá un nombre válido (solo letras).</div>
                         </div>
 
                         <div class="form-floating">
                             <input id="apellido" class="form-control" placeholder="Apellido" name="apellido"
-                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required />
+                                   pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" required/>
                             <label for="apellido">Apellido</label>
                             <div class="invalid-feedback">Ingresá un apellido válido (solo letras).</div>
                         </div>
@@ -391,9 +400,11 @@
 </div>
 
 <!-- Modal de Preferencias de Viaje -->
-<div class="modal fade" id="modalPreferenciasViaje" tabindex="-1" aria-labelledby="modalPreferenciasViajeLabel" aria-hidden="true">
+<div class="modal fade" id="modalPreferenciasViaje" tabindex="-1" aria-labelledby="modalPreferenciasViajeLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <form method="post" th:action="@{/preferencias-viaje}" class="modal-content needs-validation" th:object="${preferencias}" novalidate>
+        <form method="post" th:action="@{/preferencias-viaje}" class="modal-content" th:object="${preferencias}"
+              accept-charset="UTF-8" novalidate>
             <div class="modal-header">
                 <h5 class="modal-title" id="modalPreferenciasViajeLabel">
                     <i class="bi bi-gear-fill me-2"></i>Preferencias de viaje
@@ -406,43 +417,32 @@
                 <!-- ================== SECCIÓN: VUELOS ================== -->
                 <h5 class="mb-3"><i class="bi bi-airplane-fill me-1"></i>Vuelos</h5>
 
-                <!--<div class="row mb-3">-->
-                    <!-- Aeropuerto origen -->
-                    <div class="mb-3">
-                        <label for="origen" class="form-label">Aeropuerto de origen preferido</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-airplane"></i></span>
-                            <select class="form-select" th:field="*{departure_id}" id="origen" required>
-                                <option value="">Selecciona un destino</option>
-                                <option value="EZE" th:selected="${origen=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
-                                <option value="JFK" th:selected="${origen=='JFK'}">New York, USA (JFK)</option>
-                                <option value="GRU" th:selected="${origen=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
-                                <option value="CDG" th:selected="${origen=='CDG'}">París, Francia (Charles de Gaulle)</option>
-                                <option value="MAD" th:selected="${origen=='MAD'}">Madrid, España (Barajas)</option>
-                                <option value="MEX" th:selected="${origen=='MEX'}">Ciudad de México, México (Benito Juárez)</option>
-                                <option value="BOG" th:selected="${origen=='BOG'}">Bogotá, Colombia (El Dorado)</option>
-                                <option value="SCL" th:selected="${origen=='SCL'}">Santiago, Chile (Arturo Merino Benítez)</option>
-                                <option value="LIM" th:selected="${origen=='LIM'}">Lima, Perú (Jorge Chávez)</option>
-                                <option value="LHR" th:selected="${origen=='LHR'}">Londres, Reino Unido (Heathrow)</option>
-                                <option value="FRA" th:selected="${origen=='FRA'}">Frankfurt, Alemania (Frankfurt Main)</option>
-                                <option value="MIA" th:selected="${origen=='MIA'}">Miami, USA (Miami Intl.)</option>
-                                <option value="BCN" th:selected="${origen=='BCN'}">Barcelona, España (El Prat)</option>
-                                <option value="AMS" th:selected="${origen=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
-                                <option value="PTY" th:selected="${origen=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
-                            </select>
-                        </div>
-                        <div class="invalid-feedback">Ingresá un aeropuerto válido.</div>
+                <!-- Aeropuerto origen -->
+                <div class="mb-3">
+                    <label for="origen" class="form-label">Aeropuerto de origen preferido</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-airplane"></i></span>
+                        <select class="form-select" th:field="*{departure_id}" id="origen" required>
+                            <option value="">Selecciona un destino</option>
+                            <option value="EZE">Buenos Aires, Argentina (Ezeiza)</option>
+                            <option value="JFK">New York, USA (JFK)</option>
+                            <option value="GRU">Sao Paulo, Brasil (Guarulhos)</option>
+                            <option value="CDG">París, Francia (Charles de Gaulle)</option>
+                            <option value="MAD">Madrid, España (Barajas)</option>
+                            <option value="MEX">Ciudad de México, México (Benito Juárez)</option>
+                            <option value="BOG">Bogotá, Colombia (El Dorado)</option>
+                            <option value="SCL">Santiago, Chile (Arturo Merino Benítez)</option>
+                            <option value="LIM">Lima, Perú (Jorge Chávez)</option>
+                            <option value="LHR">Londres, Reino Unido (Heathrow)</option>
+                            <option value="FRA">Frankfurt, Alemania (Frankfurt Main)</option>
+                            <option value="MIA">Miami, USA (Miami Intl.)</option>
+                            <option value="BCN">Barcelona, España (El Prat)</option>
+                            <option value="AMS">Ámsterdam, Países Bajos (Schiphol)</option>
+                            <option value="PTY">Ciudad de Panamá, Panamá (Tocumen)</option>
+                        </select>
                     </div>
-
-                    <!-- Destinos favoritos -->
-                    <!--<div class="col-md-6">
-                        <label for="destinos" class="form-label">Destinos favoritos</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-                            <input type="text" class="form-control" id="destinos" name="arrival_id" placeholder="Ej: NYC, LON, PAR (separados por coma)">
-                        </div>
-                    </div>
-                </div>-->
+                    <div class="invalid-feedback">Ingresá un aeropuerto válido.</div>
+                </div>
 
                 <!-- Clase de cabina -->
                 <div class="mb-3">
@@ -464,25 +464,30 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="6,12" id="horaManana">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="6,12"
+                                       id="horaManana">
                                 <label class="form-check-label" for="horaManana">Mañana (6-12 hs)</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="12,18" id="horaTarde">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="12,18"
+                                       id="horaTarde">
                                 <label class="form-check-label" for="horaTarde">Tarde (12-18 hs)</label>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="18,0" id="horaNoche">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="18,0"
+                                       id="horaNoche">
                                 <label class="form-check-label" for="horaNoche">Noche (18-24 hs)</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="0,6" id="horaMadrugada">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="0,6"
+                                       id="horaMadrugada">
                                 <label class="form-check-label" for="horaMadrugada">Madrugada (0-6 hs)</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="" id="sinHorario">
+                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value=""
+                                       id="sinHorario">
                                 <label class="form-check-label" for="sinHorario">Sin Horario</label>
                             </div>
                         </div>
@@ -501,7 +506,7 @@
                 <!-- Ordenar vuelos -->
                 <div class="mb-3">
                     <label for="sortVuelos" class="form-label">Ordenar resultados de vuelos por</label>
-                    <select class="form-select" th:field="*{sort_vuelos} "id="sortVuelos">
+                    <select class="form-select" th:field="*{sort_vuelos}" id="sortVuelos">
                         <option value="1">Mejor vuelo</option>
                         <option value="2">Precio</option>
                         <option value="3">Hora de salida</option>
@@ -514,7 +519,8 @@
                     <label for="presupuestoVuelos" class="form-label">Presupuesto máximo (vuelos)</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                        <input type="number" th:field="*{vuelo_budget}" class="form-control" id="presupuestoVuelos" min="0" step="50" placeholder="Ej: 1000">
+                        <input type="number" th:field="*{vuelo_budget}" class="form-control" id="presupuestoVuelos"
+                               min="0" step="50" placeholder="Ej: 1000">
                     </div>
                 </div>
                 <hr>
@@ -527,7 +533,8 @@
                     <label for="presupuestoHotel" class="form-label">Presupuesto máximo por noche</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                        <input type="number" th:field="*{hotel_budget}" class="form-control" id="presupuestoHotel" min="0" step="10" placeholder="Ej: 200">
+                        <input type="number" th:field="*{hotel_budget}" class="form-control" id="presupuestoHotel"
+                               min="0" step="10" placeholder="Ej: 200">
                     </div>
                 </div>
 
@@ -572,7 +579,8 @@
                     <label for="presupuestoExcursiones" class="form-label">Presupuesto máximo (excursiones)</label>
                     <div class="input-group">
                         <span class="input-group-text"><i class="bi bi-wallet2"></i></span>
-                        <input type="number" th:field="*{excursion_budget}" class="form-control" id="presupuestoExcursiones" min="0" step="50" placeholder="Ej: 300">
+                        <input type="number" th:field="*{excursion_budget}" class="form-control"
+                               id="presupuestoExcursiones" min="0" step="50" placeholder="Ej: 300">
                     </div>
                 </div>
                 <hr>
@@ -611,9 +619,6 @@
 <script type="text/javascript" th:src="@{js/validaciones.js}"></script>
 <script type="text/javascript" th:src="@{js/alerts.js}"></script>
 <script type="text/javascript" th:src="@{/js/paginador.js}"></script>
-
-
-
 
 </body>
 </html>

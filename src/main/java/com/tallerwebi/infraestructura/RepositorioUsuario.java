@@ -11,7 +11,7 @@ public interface RepositorioUsuario {
     Usuario buscar(String email);
     void modificar(Usuario usuario);
 
-    void guardarPreferenciaViaje(PreferenciaViajeDTO preferencias);
+    void guardarPreferenciaViaje(PreferenciaViaje preferencias);
 
     PreferenciaViaje obtenerPreferenciaViaje(Long usuarioId);
 }

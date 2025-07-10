@@ -118,23 +118,17 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- PARA FUTURO SPRINT, recomendaciones basadas en las reservas activas
-               <div class="container mt-5">
-                   <h3>Recomendaciones para vos</h3>
-                   <div class="row">
-                       <div th:each="rec : ${recomendaciones}" class="col-md-4 mb-3">
-                           <div class="card h-100">
-                               <img th:src="${rec.imagenUrl}" class="card-img-top" alt="Imagen recomendación">
-                               <div class="card-body">
-                                   <h5 th:text="${rec.tipo} + ': ' + ${rec.titulo}" class="card-title"></h5>
-                               </div>
+               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container">
+                   <div class="col">
+                       <div class="card h-100 shadow-sm">
+                           <img src="${card.imagen}" class="card-img-top" alt="${card.titulo}">
+                           <div class="card-body">
+                               <h5 class="card-title">${card.titulo}</h5>
+                               <p class="card-text">${card.texto}</p>
                            </div>
                        </div>
                    </div>
                </div>
-                -->
-               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container"></div>
             </div>
         </section>
     </div>
@@ -163,67 +157,6 @@
 </section>
 
 
-<!-- Arma tu Paquete (habilitar caundo se vaya a utilizar!)-->
-<!--<section id="paquete" class="bg-body py-5">
-  <div class="container">
-    <h2 class="text-center mb-4">Armá tu paquete</h2>
-    <form class="row g-3">
-      <div class="col-md-6">
-        <label class="form-label">Origen</label>
-        <input type="text" class="form-control" placeholder="Ej: Buenos Aires">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Destino</label>
-        <input type="text" class="form-control" placeholder="Ej: Mendoza">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Fecha de salida</label>
-        <input type="date" class="form-control">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Fecha de regreso</label>
-        <input type="date" class="form-control">
-      </div>
-      <div class="col-md-4">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="hotel">
-          <label class="form-check-label" for="hotel">Incluir hotel</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="auto">
-          <label class="form-check-label" for="auto">Incluir auto</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="actividades">
-          <label class="form-check-label" for="actividades">Incluir actividades</label>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Presupuesto máximo (ARS)</label>
-        <input type="number" class="form-control" placeholder="$300000">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Comentarios adicionales</label>
-        <textarea class="form-control" rows="3" placeholder="Contanos tus preferencias..."></textarea>
-      </div>
-      <div class="col-12 text-center">
-        <button class="btn btn-primary px-5">Buscar paquete</button>
-      </div>
-    </form>
-  </div>
-</section>-->
-
-<!--<form th:action="@{/busqueda-vuelo}" method="post">
-  <label for="origen">Origen:</label>
-  <input type="text" id="origen" name="origen" required>
-  <label for="destino">Destino:</label>
-  <input type="text" id="destino" name="destino" required>
-  <label for="fechaIda">Fecha de ida:</label>
-  <input type="date" id="fechaIda" name="fechaIda" required>
-  <label for="fechaVuelta">Fecha de vuelta:</label>
-  <input type="date" id="fechaVuelta" name="fechaVuelta" required>
-  <button type="submit">Buscar vuelo</button>
-</form>-->
 <div th:replace="fragments/footer :: footer"></div>
 <div th:replace="fragments/login-modal :: loginModal"></div>
 

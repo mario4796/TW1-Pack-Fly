@@ -56,9 +56,7 @@ public class ControladorUsuario {
         List<Excursion> excursionesPagadas = servicioExcursiones.obtenerExcursionesDeUsuarioPagados(usuario.getId());
         PreferenciaViajeDTO preferencias = servicioLogin.obtenerPreferenciaViaje(usuario.getId());
 
-        if (preferencias == null) {
-            preferencias = new PreferenciaViajeDTO();
-        }
+        if (preferencias == null) {preferencias = new PreferenciaViajeDTO();}
 
         model.addAttribute("preferencias", preferencias);
 

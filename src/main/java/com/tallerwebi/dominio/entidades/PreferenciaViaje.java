@@ -1,5 +1,7 @@
 package com.tallerwebi.dominio.entidades;
 
+import com.tallerwebi.presentacion.dtos.PreferenciaViajeDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -29,6 +31,25 @@ public class PreferenciaViaje {
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
+
+    public PreferenciaViaje() {}
+
+    public PreferenciaViaje(PreferenciaViajeDTO dto) {
+        this.id = dto.getId();
+        this.departure_id = dto.getDeparture_id();
+        this.travel_class = dto.getTravel_class();
+        this.outbound_times = dto.getOutbound_times();
+        this.permitir_escalas = dto.getPermitir_escalas();
+        this.sort_vuelos = dto.getSort_vuelos();
+        this.vuelo_budget = dto.getVuelo_budget();
+        this.hotel_budget = dto.getHotel_budget();
+        this.hotel_stars = dto.getHotel_stars();
+        this.hotel_rating = dto.getHotel_rating();
+        this.sort_hoteles = dto.getSort_hoteles();
+        this.excursion_budget = dto.getExcursion_budget();
+        this.currency = dto.getCurrency();
+        this.usuario = dto.getUsuario();
+    }
 
     public Long getId() {
         return id;
