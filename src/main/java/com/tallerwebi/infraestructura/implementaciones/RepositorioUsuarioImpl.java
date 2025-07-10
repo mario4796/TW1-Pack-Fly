@@ -64,6 +64,18 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
     @Override
     public void guardarPreferenciaViaje(PreferenciaViaje preferencias) {
-        sessionFactory.getCurrentSession().saveOrUpdate(preferencias);
+        Session session = sessionFactory.getCurrentSession();
+
+        PreferenciaViaje existente = (PreferenciaViaje) session
+                .createQuery("FROM PreferenciaViaje WHERE usuario.id = :usuarioId")
+                .setParameter("usuarioId", preferencias.getUsuario().getId())
+                .uniqueResult();
+
+        if (existente != null) {
+            preferencias.setId(existente.getId());
+            session.merge(preferencias);
+        } else {
+            session.save(preferencias);
+        }
     }
 }

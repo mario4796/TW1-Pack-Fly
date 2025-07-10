@@ -29,7 +29,7 @@ public class PreferenciaViaje {
     private String currency;
 
     @OneToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id", unique = true)
     private Usuario usuario;
 
     public PreferenciaViaje() {}
