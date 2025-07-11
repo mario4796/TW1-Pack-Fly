@@ -1,10 +1,14 @@
 package com.tallerwebi.presentacion.dtos;
 
 import com.tallerwebi.dominio.entidades.Hotel;
+
+import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class HotelDto{
+
+
 
     private Long id;
     private String name;
@@ -22,7 +26,6 @@ public class HotelDto{
     private Boolean pagado;
     private Price price;
     private Double precio;
-    @JsonProperty("thumbnail")
     private String imagen;
 
 
@@ -39,7 +42,7 @@ public class HotelDto{
     }
 
 
-    public HotelDto(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio,Boolean pagado) {
+    public HotelDto(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio,Boolean pagado, String imagen) {
         this.id = id;
         this.name = name;
         this.ciudad = ciudad;
@@ -49,7 +52,9 @@ public class HotelDto{
         this.children = children;
         this.precio = precio;
         this.pagado=false;
+        this.imagen=imagen;
     }
+
 
     public static class Image {
         private String thumbnail;
@@ -80,7 +85,7 @@ public class HotelDto{
         }
     }
 
-    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Boolean pagado, String images) {
+    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Boolean pagado, String imagen) {
         this.name = name;
         this.ciudad = ciudad;
         this.checkIn = checkIn;
@@ -99,7 +104,7 @@ public class HotelDto{
         this.children= children;
     }
 
-    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adults, Integer children, Double precio, Boolean pagado, String imagen) {
+    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adults, Integer children, Double precio, Boolean pagado) {
         this.name = name;
         this.ciudad = ciudad;
         this.checkIn = checkIn;
@@ -108,7 +113,6 @@ public class HotelDto{
         this.children = children;
         this.precio = precio;
         this.pagado=false;
-        this.imagen = imagen;
     }
 
 
@@ -143,8 +147,19 @@ public class HotelDto{
     }
 
     public HotelDto(com.tallerwebi.dominio.entidades.Hotel hotel){
-        //this.id = hotel.getId();
-        this.name=hotel.getName();
+
+
+        this.id = hotel.getId();
+        this.name = hotel.getName();
+        this.ciudad = hotel.getCiudad();
+        this.checkIn = hotel.getCheckIn();
+        this.checkOut = hotel.getCheckOut();
+        this.adult = hotel.getAdult();
+        this.children = hotel.getChildren();
+        this.precio = hotel.getPrecio();
+        this.pagado = hotel.getPagado();
+        this.imagen = hotel.getImagen();
+
     }
     public Long getId() {return id;}
 

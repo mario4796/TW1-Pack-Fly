@@ -183,7 +183,7 @@
                                         <input type="hidden" name="adult" th:value="${datobusqueda.adult}"/>
                                         <input type="hidden" name="children" th:value="${datobusqueda.children}"/>
                                         <input type="hidden" name="precio" th:value="${hotel.precio}"/>
-                                        <input type="hidden" name="imagen" th:value="${hotel.imagen}"/>
+                                        <input type="hidden" name="imagen" th:value="${hotel.images[0].thumbnail}"/>
                                         <!-- agregá más campos que necesites -->
                                         <button type="submit" class="btn btn-success">Seleccionar Hotel</button>
                                     </form>

@@ -20,7 +20,6 @@ public class ExcursionDTO {
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("thumbnail")
     private String thumbnail;
 
     @JsonProperty("link")
@@ -59,6 +58,10 @@ public class ExcursionDTO {
     }
 
     public Excursion toEntity(){
+
+        System.out.println("DTO URL: " + this.url);
+        System.out.println("DTO THUMBNAIL: " + this.thumbnail);
+
         Excursion entidad = new Excursion();
         entidad.setTitle(this.title);
         entidad.setStartDate(this.startDate);

@@ -19,10 +19,7 @@ public class Hotel {
     private Integer children;
     private Double precio;
     private Boolean pagado;
-
-    @Column(length = 500)
     private String imagen;
-
 
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
