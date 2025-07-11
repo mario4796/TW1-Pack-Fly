@@ -177,6 +177,12 @@
             <version>1.3.30</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>8.31.1</version>
+        </dependency>
+
 
 
         <!-- compile only, deployed container will provide this -->

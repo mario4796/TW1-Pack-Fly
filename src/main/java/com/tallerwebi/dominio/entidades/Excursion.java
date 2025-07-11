@@ -18,6 +18,7 @@ public class Excursion {
     private String description;
     private String url;
     private Double precio;
+    private String thumbnail;
     private Boolean pagado;
 
     @ManyToOne
@@ -87,4 +88,8 @@ public class Excursion {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
+
+    public String getThumbnail() { return thumbnail; }
+
+    public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
 }

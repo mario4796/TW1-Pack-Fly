@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.presentacion.dtos.HotelDto;
+import com.tallerwebi.presentacion.dtos.PreferenciaViajeDTO;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface ServicioLogin {
     void modificarEmail(Long id, String email);
     void modificarNombreYApellido(Long id, String nombre, String apellido);
     Usuario buscarUsuarioPorId(Long id);
+
+    void guardarPreferenciaViaje(PreferenciaViajeDTO preferencias);
+
+    PreferenciaViajeDTO obtenerPreferenciaViaje(Long id);
 }

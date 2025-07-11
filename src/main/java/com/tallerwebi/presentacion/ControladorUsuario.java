@@ -6,11 +6,13 @@ import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.presentacion.dtos.HotelDto;
+import com.tallerwebi.presentacion.dtos.PreferenciaViajeDTO;
 import com.tallerwebi.presentacion.dtos.ResumenPagoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -61,7 +63,11 @@ public class ControladorUsuario {
         List<HotelDto> hotelesDtoPagados = hotelService.obtenerHotelesDto(hotelesPagados);
         List<Vuelo> vuelosPagados = servicioReserva.obtenerReservasPorEmailPagados(usuario.getEmail());
         List<Excursion> excursionesPagadas = servicioExcursiones.obtenerExcursionesDeUsuarioPagados(usuario.getId());
+        PreferenciaViajeDTO preferencias = servicioLogin.obtenerPreferenciaViaje(usuario.getId());
 
+        if (preferencias == null) {preferencias = new PreferenciaViajeDTO();}
+
+        model.addAttribute("preferencias", preferencias);
 
         //usuariop.put("historialViajes", historialViajes);
 
@@ -157,6 +163,26 @@ public class ControladorUsuario {
             redirectAttributes.addFlashAttribute("tipo", "success");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al modificar el nombre y apellido");
+            redirectAttributes.addFlashAttribute("tipo", "warning");
+        }
+
+        return "redirect:/perfil-usuario";
+    }
+
+    @PostMapping("/preferencias-viaje")
+    public String guardarPreferenciasViaje(@ModelAttribute("preferencias") PreferenciaViajeDTO preferencias,
+                                           HttpServletRequest request,
+                                           RedirectAttributes redirectAttributes) {
+
+        Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
+        try {
+            preferencias.setUsuario(usuario);
+            servicioLogin.guardarPreferenciaViaje(preferencias);
+            redirectAttributes.addFlashAttribute("mensaje", "Configuracion guardada con exito.");
+            redirectAttributes.addFlashAttribute("tipo", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al guardar su configuracion.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
         }
 
