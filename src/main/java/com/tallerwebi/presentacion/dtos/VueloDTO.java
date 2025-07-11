@@ -60,6 +60,8 @@ public class VueloDTO {
         vuelo.setFechaIda(this.fechaIda);
         vuelo.setFechaVuelta(this.fechaVuelta);
         vuelo.setPrecio(this.precio);
+        vuelo.setDestino(this.destino);
+        vuelo.setOrigen(this.origen);
         vuelo.setNombre(nombre);
         vuelo.setEmail(emailUsuario);
         vuelo.setUsuario(usuario);
