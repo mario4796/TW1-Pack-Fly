@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioEmail;
+import com.tallerwebi.dominio.ServicioMensajes;
 import com.tallerwebi.dominio.entidades.Excursion;
 import com.tallerwebi.dominio.ServicioExcursiones;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -23,6 +24,9 @@ import java.util.stream.Collectors;
 public class ControladorExcursion {
 
     private final ServicioExcursiones servicioExcursiones;
+
+    @Autowired
+    private ServicioMensajes servicioMensajes;
 
     @Autowired
     private ServicioEmail servicioEmail;
@@ -91,7 +95,6 @@ public class ControladorExcursion {
             servicioExcursiones.guardarExcursion(excursion);
             String email = usuario.getEmail();
             String titulo = dto.getTitle();
-            String asunto = "¡Excursión reservada con éxito!";
             String cuerpo = "Hola " + usuario.getNombre() + ",\n\n"
                     + "Has reservado la siguiente excursión:\n"
                     + "Título: " + titulo + "\n"
@@ -99,8 +102,13 @@ public class ControladorExcursion {
                     + "Precio estimado: $" + dto.getPrecio() + "\n"
                     + "\nGracias por reservar con Pack&Fly.";
 
+            try{
+                servicioMensajes.enviarMensaje(usuario.getTelefono(), cuerpo);
+            }catch (Exception ex) {
+                System.err.println("Error al enviar mensaje de excursión: " + ex.getMessage());
+            }
+
             try {
-                servicioEmail.enviarCorreo(usuario.getEmail(), asunto, cuerpo);
 
                 servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de excursion",
                         "El usuario "+email+" ha realizado una reserva de la excursion "+titulo);

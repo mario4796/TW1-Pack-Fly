@@ -21,6 +21,9 @@ import java.util.stream.Collectors;
 
 @Controller
 public class ControladorHotel {
+
+    @Autowired
+    private ServicioMensajes servicioMensajes;
     @Autowired
     private ServicioHotel hotelService;
     @Autowired
@@ -142,18 +145,22 @@ public class ControladorHotel {
         }
         String email = usuario.getEmail();
 
-        try {
-            servicioEmail.enviarCorreo(
-                    email,
-                    "Confirmación de Reserva - Pack&Fly",
-                    "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
-                            + "Hotel: " + name + " " + ciudad + "\n"
-                            + "Fecha entrada: " + checkIn + "\n"
-                            + "Fecha salida:" + checkOut + "\n"
-                            + "Precio: $" + precio + "\n"
-                            + "Recorda que tenes hasta 7 dias antes de la reservacion para pagar, si no su reservacion sera ELIMINADA"
 
-            );
+        try {
+           servicioMensajes.enviarMensaje(usuario.getTelefono(),
+                   "¡Gracias por tu reserva, " + usuario.getNombre() + "\n"
+                   + "Hotel: " + name + " " + ciudad + "\n"
+                   + "Fecha entrada: " + checkIn + "\n"
+                   + "Fecha salida:" + checkOut + "\n"
+                   + "Precio: $" + precio + "\n"
+                   + "Recorda que tenes hasta 7 dias antes de la reservacion para pagar, si no su reservacion sera ELIMINADA"
+           );
+
+        }catch (Exception ex) {
+            System.err.println("Error al enviar mensaje de reserva de Hotel: " + ex.getMessage());
+        }
+
+        try {
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva Reserva de hotel","El usuario "+email+" ha realizado una reserva con \n"
                     + "Fecha entrada: " + checkIn + "\n"
                     + "Fecha salida:" + checkOut + "\n"

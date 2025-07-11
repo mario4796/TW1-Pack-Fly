@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioEmail;
+import com.tallerwebi.dominio.ServicioMensajes;
 import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -24,6 +25,9 @@ import java.util.stream.Collectors;
 @Controller
 public class ControladorVuelos {
 
+
+    @Autowired
+    private ServicioMensajes servicioMensajes;
 
     @Autowired
     private ServicioEmail servicioEmail;
@@ -191,17 +195,22 @@ public class ControladorVuelos {
         }
 
         // ✅ Correos
+
         try {
-            servicioEmail.enviarCorreo(
-                    email,
-                    "Confirmación de Reserva - Pack&Fly",
-                    "¡Gracias por tu reserva, " + usuario.getNombre() + "!\n"
-                            + "Vuelo: " + vuelo.getOrigen() + " → " + vuelo.getDestino() + "\n"
-                            + "Fecha ida: " + vuelo.getFechaIda() + "\n"
-                            + "Fecha vuelta: " + vuelo.getFechaVuelta() + "\n"
-                            + "Precio: $" + vuelo.getPrecio() + "\n"
-                            + "Recordá que tenés hasta 7 días antes del vuelo para pagar. Si no, será eliminado."
-            );
+            servicioMensajes.enviarMensaje(usuario.getTelefono(), "¡Gracias por tu reserva, " + usuario.getNombre() + "!\n"
+                    + "Vuelo: " + vuelo.getOrigen() + " → " + vuelo.getDestino() + "\n"
+                    + "Fecha ida: " + vuelo.getFechaIda() + "\n"
+                    + "Fecha vuelta: " + vuelo.getFechaVuelta() + "\n"
+                    + "Precio: $" + vuelo.getPrecio() + "\n"
+                    + "Recordá que tenés hasta 7 días antes del vuelo para pagar. Si no, será eliminado.");
+
+        }catch (Exception ex) {
+            System.err.println("Error al enviar el mensaje de vuelo: " + ex.getMessage());
+        }
+
+        try {
+
+
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de vuelo",
                     "El usuario " + email + " ha reservado un vuelo de " + vuelo.getOrigen() + " a " + vuelo.getDestino() + "\n"
                             + "Fecha ida: " + vuelo.getFechaIda() + "\n"
