@@ -7,4 +7,6 @@ public interface RepositorioPreferenciaUsuario {
     PreferenciaUsuario obtenerPorUsuario(Usuario usuario);
     void guardar(PreferenciaUsuario preferenciaUsuario);
     void actualizar(PreferenciaUsuario preferenciaUsuario);
+    void actualizarMillas(Usuario usuario, Integer millasAcumuladas);
+
 }

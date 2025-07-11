@@ -36,4 +36,16 @@ public class RepositorioPreferenciaUsuarioImpl implements RepositorioPreferencia
     public void actualizar(PreferenciaUsuario preferenciaUsuario) {
         entityManager.merge(preferenciaUsuario);
     }
+
+    @Override
+    public void actualizarMillas(Usuario usuario, Integer millasAcumuladas) {
+        entityManager.createQuery(
+                        "UPDATE PreferenciaUsuario p SET p.millasAcumuladas = :millas WHERE p.usuario = :usuario"
+                )
+                .setParameter("millas", millasAcumuladas)
+                .setParameter("usuario", usuario)
+                .executeUpdate();
+    }
+
+
 }

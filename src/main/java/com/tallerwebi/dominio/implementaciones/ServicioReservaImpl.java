@@ -238,7 +238,7 @@ public class ServicioReservaImpl implements ServicioReserva {
         return Collections.emptyList();
     }
 
-    @Override
+    /*@Override
     public void guardarReserva(Vuelo vuelo) {
         repositorioReserva.guardar(vuelo);
 
@@ -251,7 +251,28 @@ public class ServicioReservaImpl implements ServicioReserva {
         } else {
             System.out.println("No se pudo registrar preferencias: la reserva no tiene asociado un usuario");
         }
+    }*/
+
+    public void guardarReserva(Vuelo vuelo, String moneda) {
+        repositorioReserva.guardar(vuelo);
+
+        double precioUsd = "ARS".equalsIgnoreCase(moneda)
+                ? vuelo.getPrecio() / 1300.0
+                : vuelo.getPrecio();
+        int millas = (int) Math.floor(precioUsd / 100.0);
+        Usuario usuario = vuelo.getUsuario();
+        if (usuario != null) {
+            // asumimos siempre 1 asiento; si tienes cantidad dinámica, sustituir aquí
+            int cantidadAsientos = 1;
+            servicioPreferenciaUsuario
+                    .registrarReservaVuelo(usuario, cantidadAsientos, millas);
+        } else {
+            System.out.println(
+                    "No se pudo registrar preferencias: reserva sin usuario asociado");
+        }
     }
+
+
 
     @Override
     public List<Vuelo> obtenerReservasPorEmail(String email) {

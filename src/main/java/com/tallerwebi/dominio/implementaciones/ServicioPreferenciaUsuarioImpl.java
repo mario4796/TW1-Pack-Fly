@@ -53,4 +53,19 @@ public class ServicioPreferenciaUsuarioImpl implements ServicioPreferenciaUsuari
         }
         return p;
     }
+
+    @Override
+    public PreferenciaUsuario obtenerPorUsuario(Usuario usuario) {
+        // intenta cargarla
+        PreferenciaUsuario p = repositorio.obtenerPorUsuario(usuario);
+        if (p == null) {
+            // si no existe, creamos una nueva
+            p = new PreferenciaUsuario();
+            p.setUsuario(usuario);
+            p.setMillasAcumuladas(0);
+            repositorio.guardar(p);
+        }
+        return p;
+    }
+
 }

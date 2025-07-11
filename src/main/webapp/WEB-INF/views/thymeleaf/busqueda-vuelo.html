@@ -277,6 +277,7 @@
                 <form th:if="${usuario != null}" th:action="@{/formulario-reserva}" method="post"
                       accept-charset="UTF-8">
                     <input type="hidden" th:name="idVuelo" th:value="${iterStat.index}"/>
+                    <input type="hidden" name="moneda" th:value="${moneda}"/>
                     <input type="hidden" name="origen" th:value="${vuelo.origen}"/>
                     <input type="hidden" name="destino" th:value="${vuelo.destino}"/>
                     <input type="hidden" name="fechaIda" th:value="${vuelo.fechaIda}"/>
