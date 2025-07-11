@@ -28,6 +28,9 @@ public class ServicioMensajesImpl implements ServicioMensajes {
                 new PhoneNumber(FROM_WHATSAPP_NUMBER),
                 mensaje
         ).create();
+
+        System.out.println("✅ Mensaje enviado (o en proceso)");
+
     }
 
     private String normalizarTelefono(String telefono) {
@@ -35,7 +38,7 @@ public class ServicioMensajesImpl implements ServicioMensajes {
         if (telefono.startsWith("54")) {
             return "whatsapp:+" + telefono;
         } else if (telefono.startsWith("0")) {
-            return "whatsapp:+54" + telefono.substring(1);
+            return telefono.replaceFirst("0", "whatsapp:+549");
         } else {
             return "whatsapp:+549" + telefono; // fallback
         }

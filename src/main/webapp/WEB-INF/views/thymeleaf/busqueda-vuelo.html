@@ -61,21 +61,33 @@
                             <label for="origen" class="form-label">Origen</label>
                             <select class="form-select" name="origen" id="origen" required>
                                 <option value="">Selecciona un destino</option>
-                                <option value="EZE" th:selected="${origen=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
+                                <option value="EZE" th:selected="${origen=='EZE'}">Buenos Aires, Argentina (Ezeiza)
+                                </option>
                                 <option value="JFK" th:selected="${origen=='JFK'}">New York, USA (JFK)</option>
-                                <option value="GRU" th:selected="${origen=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
-                                <option value="CDG" th:selected="${origen=='CDG'}">París, Francia (Charles de Gaulle)</option>
+                                <option value="GRU" th:selected="${origen=='GRU'}">Sao Paulo, Brasil (Guarulhos)
+                                </option>
+                                <option value="CDG" th:selected="${origen=='CDG'}">París, Francia (Charles de Gaulle)
+                                </option>
                                 <option value="MAD" th:selected="${origen=='MAD'}">Madrid, España (Barajas)</option>
-                                <option value="MEX" th:selected="${origen=='MEX'}">Ciudad de México, México (Benito Juárez)</option>
+                                <option value="MEX" th:selected="${origen=='MEX'}">Ciudad de México, México (Benito
+                                    Juárez)
+                                </option>
                                 <option value="BOG" th:selected="${origen=='BOG'}">Bogotá, Colombia (El Dorado)</option>
-                                <option value="SCL" th:selected="${origen=='SCL'}">Santiago, Chile (Arturo Merino Benítez)</option>
+                                <option value="SCL" th:selected="${origen=='SCL'}">Santiago, Chile (Arturo Merino
+                                    Benítez)
+                                </option>
                                 <option value="LIM" th:selected="${origen=='LIM'}">Lima, Perú (Jorge Chávez)</option>
-                                <option value="LHR" th:selected="${origen=='LHR'}">Londres, Reino Unido (Heathrow)</option>
-                                <option value="FRA" th:selected="${origen=='FRA'}">Frankfurt, Alemania (Frankfurt Main)</option>
+                                <option value="LHR" th:selected="${origen=='LHR'}">Londres, Reino Unido (Heathrow)
+                                </option>
+                                <option value="FRA" th:selected="${origen=='FRA'}">Frankfurt, Alemania (Frankfurt
+                                    Main)
+                                </option>
                                 <option value="MIA" th:selected="${origen=='MIA'}">Miami, USA (Miami Intl.)</option>
                                 <option value="BCN" th:selected="${origen=='BCN'}">Barcelona, España (El Prat)</option>
-                                <option value="AMS" th:selected="${origen=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
-                                <option value="PTY" th:selected="${origen=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
+                                <option value="AMS" th:selected="${origen=='AMS'}">Ámsterdam, Países Bajos (Schiphol)
+                                </option>
+                                <option value="PTY" th:selected="${origen=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)
+                                </option>
                             </select>
                             <div class="invalid-feedback">Seleccioná un destino.</div>
                         </div>
@@ -84,28 +96,42 @@
                             <label for="destino" class="form-label">Destino</label>
                             <select class="form-select" name="destino" id="destino" required>
                                 <option value="">Selecciona un destino</option>
-                                <option value="EZE" th:selected="${destino=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
+                                <option value="EZE" th:selected="${destino=='EZE'}">Buenos Aires, Argentina (Ezeiza)
+                                </option>
                                 <option value="JFK" th:selected="${destino=='JFK'}">New York, USA (JFK)</option>
-                                <option value="GRU" th:selected="${destino=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
-                                <option value="CDG" th:selected="${destino=='CDG'}">París, Francia (Charles de Gaulle)</option>
+                                <option value="GRU" th:selected="${destino=='GRU'}">Sao Paulo, Brasil (Guarulhos)
+                                </option>
+                                <option value="CDG" th:selected="${destino=='CDG'}">París, Francia (Charles de Gaulle)
+                                </option>
                                 <option value="MAD" th:selected="${destino=='MAD'}">Madrid, España (Barajas)</option>
-                                <option value="MEX" th:selected="${destino=='MEX'}">Ciudad de México, México (Benito Juárez)</option>
-                                <option value="BOG" th:selected="${destino=='BOG'}">Bogotá, Colombia (El Dorado)</option>
-                                <option value="SCL" th:selected="${destino=='SCL'}">Santiago, Chile (Arturo Merino Benítez)</option>
+                                <option value="MEX" th:selected="${destino=='MEX'}">Ciudad de México, México (Benito
+                                    Juárez)
+                                </option>
+                                <option value="BOG" th:selected="${destino=='BOG'}">Bogotá, Colombia (El Dorado)
+                                </option>
+                                <option value="SCL" th:selected="${destino=='SCL'}">Santiago, Chile (Arturo Merino
+                                    Benítez)
+                                </option>
                                 <option value="LIM" th:selected="${destino=='LIM'}">Lima, Perú (Jorge Chávez)</option>
-                                <option value="LHR" th:selected="${destino=='LHR'}">Londres, Reino Unido (Heathrow)</option>
-                                <option value="FRA" th:selected="${destino=='FRA'}">Frankfurt, Alemania (Frankfurt Main)</option>
+                                <option value="LHR" th:selected="${destino=='LHR'}">Londres, Reino Unido (Heathrow)
+                                </option>
+                                <option value="FRA" th:selected="${destino=='FRA'}">Frankfurt, Alemania (Frankfurt
+                                    Main)
+                                </option>
                                 <option value="MIA" th:selected="${destino=='MIA'}">Miami, USA (Miami Intl.)</option>
                                 <option value="BCN" th:selected="${destino=='BCN'}">Barcelona, España (El Prat)</option>
-                                <option value="AMS" th:selected="${destino=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
-                                <option value="PTY" th:selected="${destino=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
+                                <option value="AMS" th:selected="${destino=='AMS'}">Ámsterdam, Países Bajos (Schiphol)
+                                </option>
+                                <option value="PTY" th:selected="${destino=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)
+                                </option>
                             </select>
                             <div class="invalid-feedback">Seleccioná un destino.</div>
                         </div>
 
                         <div class="col-md-3">
                             <label for="fechaIda" class="form-label">Fecha de Ida</label>
-                            <input type="date" class="form-control" id="fechaIda" name="fechaIda" th:value="${fechaIda != null ? #dates.format(fechaIda,'yyyy-MM-dd') : ''}" required>
+                            <input type="date" class="form-control" id="fechaIda" name="fechaIda"
+                                   th:value="${fechaIdaStr}" required>
                             <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
                         </div>
 
@@ -116,7 +142,7 @@
                                    class="form-control"
                                    id="fechaVuelta"
                                    name="fechaVuelta"
-                                   th:value="${fechaVuelta != null ? #dates.format(fechaVuelta,'yyyy-MM-dd') : ''}">
+                                   th:value="${fechaVueltaStr}">
                             <!-- ✔️ quitar required -->
                             <div class="invalid-feedback">Seleccioná una fecha válida …</div>
                         </div>
@@ -124,90 +150,89 @@
 
                         <div class="row mb-3">
 
-                        <!-- Precio mínimo -->
-                        <div class="col-md-4">
-                            <label for="precioMin" class="form-label">Precio mínimo</label>
-                            <input type="number" step="0.01" class="form-control"
-                                   id="precioMin" name="precioMin"
-                                   th:value="${precioMin}">
+                            <!-- Precio mínimo -->
+                            <div class="col-md-4">
+                                <label for="precioMin" class="form-label">Precio mínimo</label>
+                                <input type="number" step="0.01" class="form-control"
+                                       id="precioMin" name="precioMin"
+                                       th:value="${precioMin}">
+                            </div>
+
+                            <!-- Precio máximo -->
+                            <div class="col-md-4">
+                                <label for="precioMax" class="form-label">Precio máximo</label>
+                                <input type="number" step="0.01" class="form-control"
+                                       id="precioMax" name="precioMax"
+                                       th:value="${precioMax}">
+                            </div>
+
+                            <!-- Moneda dropdown -->
+                            <div class="col-md-4">
+                                <label for="moneda" class="form-label">Moneda</label>
+                                <select class="form-select" id="moneda" name="moneda">
+                                    <option th:value="'ARS'" th:selected="${moneda=='ARS'}">ARS</option>
+                                    <option th:value="'USD'" th:selected="${moneda=='USD'}">USD</option>
+                                </select>
+                            </div>
+
                         </div>
 
-                        <!-- Precio máximo -->
-                        <div class="col-md-4">
-                            <label for="precioMax" class="form-label">Precio máximo</label>
-                            <input type="number" step="0.01" class="form-control"
-                                   id="precioMax" name="precioMax"
-                                   th:value="${precioMax}">
-                        </div>
 
-                        <!-- Moneda dropdown -->
-                        <div class="col-md-4">
-                            <label for="moneda" class="form-label">Moneda</label>
-                            <select class="form-select" id="moneda" name="moneda">
-                                <option th:value="'ARS'" th:selected="${moneda=='ARS'}">ARS</option>
-                                <option th:value="'USD'" th:selected="${moneda=='USD'}">USD</option>
-                            </select>
+                        <div class="d-flex justify-content-between">
+                            <a class="btn btn-secondary col-md-3" href="./home">Volver</a>
+                            <button type="submit" class="btn btn-primary btn-con-spinner">
+                                <span class="spinner-border spinner-border-sm me-2 d-none spinner-btn" role="status"
+                                      aria-hidden="true"></span>
+                                <i class="bi bi-search me-1"></i> Buscar
+                            </button>
                         </div>
+                 </form>
+            </div>
+        </div>
+    </div>
 
+
+    <div th:if="${error}" class="alert alert-warning text-center mt-3" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <span th:text="${error}">Error desconocido</span>
+    </div>
+
+
+    <div th:each="vuelo, iterStat : ${vuelos}" class="overlay mt-5">
+        <div class="card shadow-lg border-0 bg-body text-body">
+            <div class="card-header d-flex align-items-center bg-primary text-white">
+                <i class="bi bi-airplane-engines-fill me-2"></i>
+                <h5 class="mb-0">Resultado de Búsqueda</h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p class="mb-1">
+                            <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                            <strong>Origen:</strong> <span th:text="${vuelo.origen}"></span>
+                        </p>
+                        <p class="mb-1">
+                            <i class="bi bi-signpost-split-fill text-primary me-2"></i>
+                            <strong>Destino:</strong> <span th:text="${vuelo.destino}"></span>
+                        </p>
                     </div>
+                    <div class="col-md-6">
+                        <p class="mb-1">
+                            <i class="bi bi-calendar-check text-primary me-2"></i>
+                            <strong>Fecha Ida:</strong> <span th:text="${vuelo.fechaIda}"></span>
+                        </p>
+                        <p class="mb-1">
+                            <i class="bi bi-calendar2-week text-primary me-2"></i>
+                            <strong>Fecha Vuelta:</strong> <span th:text="${vuelo.fechaVuelta}"></span>
+                        </p>
+                    </div>
+                </div>
+                <p class="h5 text-success mb-4">
+                    <i class="bi bi-cash-stack me-2"></i>
+                    <strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span>
+                </p>
 
-
-
-
-                    <div class="d-flex justify-content-between">
-                       <a class="btn btn-secondary col-md-3" href="./home">Volver</a>
-                       <button type="submit" class="btn btn-primary btn-con-spinner">
-                           <span class="spinner-border spinner-border-sm me-2 d-none spinner-btn" role="status" aria-hidden="true"></span>
-                           <i class="bi bi-search me-1"></i> Buscar
-                       </button>
-                   </div>
-               </form>
-           </div>
-       </div>
-   </div>
-
-
-   <div th:if="${error}" class="alert alert-warning text-center mt-3" role="alert">
-       <i class="bi bi-exclamation-triangle-fill me-2"></i>
-       <span th:text="${error}">Error desconocido</span>
-   </div>
-
-
-   <div th:each="vuelo, iterStat : ${vuelos}" class="overlay mt-5">
-       <div class="card shadow-lg border-0 bg-body text-body">
-           <div class="card-header d-flex align-items-center bg-primary text-white">
-               <i class="bi bi-airplane-engines-fill me-2"></i>
-               <h5 class="mb-0">Resultado de Búsqueda</h5>
-           </div>
-           <div class="card-body">
-               <div class="row mb-3">
-                   <div class="col-md-6">
-                       <p class="mb-1">
-                           <i class="bi bi-geo-alt-fill text-primary me-2"></i>
-                           <strong>Origen:</strong> <span th:text="${vuelo.origen}"></span>
-                       </p>
-                       <p class="mb-1">
-                           <i class="bi bi-signpost-split-fill text-primary me-2"></i>
-                           <strong>Destino:</strong> <span th:text="${vuelo.destino}"></span>
-                       </p>
-                   </div>
-                   <div class="col-md-6">
-                       <p class="mb-1">
-                           <i class="bi bi-calendar-check text-primary me-2"></i>
-                           <strong>Fecha Ida:</strong> <span th:text="${vuelo.fechaIda}"></span>
-                       </p>
-                       <p class="mb-1">
-                           <i class="bi bi-calendar2-week text-primary me-2"></i>
-                           <strong>Fecha Vuelta:</strong> <span th:text="${vuelo.fechaVuelta}"></span>
-                       </p>
-                   </div>
-               </div>
-               <p class="h5 text-success mb-4">
-                   <i class="bi bi-cash-stack me-2"></i>
-                   <strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span>
-               </p>
-
-               <!-- 🔽 Nueva sección: Escalas -->
+                <!-- 🔽 Nueva sección: Escalas -->
                 <div class="mt-3" th:if="${vuelo.layovers != null}">
                     <h6>Escalas:</h6>
                     <ul class="list-group list-group-flush">
@@ -249,9 +274,8 @@
                 </div>
 
 
-
-
-                <form th:if="${usuario != null}" th:action="@{/formulario-reserva}" method="post" accept-charset="UTF-8">
+                <form th:if="${usuario != null}" th:action="@{/formulario-reserva}" method="post"
+                      accept-charset="UTF-8">
                     <input type="hidden" th:name="idVuelo" th:value="${iterStat.index}"/>
                     <input type="hidden" name="origen" th:value="${vuelo.origen}"/>
                     <input type="hidden" name="destino" th:value="${vuelo.destino}"/>
@@ -264,7 +288,8 @@
                 </form>
                 <div th:if="${error != null}" class="alert alert-warning mt-3" th:text="${error}"></div>
 
-                <div th:if="${usuario == null}" class="alert alert-secondary mt-3 d-flex align-items-center justify-content-center" role="alert">
+                <div th:if="${usuario == null}"
+                     class="alert alert-secondary mt-3 d-flex align-items-center justify-content-center" role="alert">
                     <i class="bi bi-info-circle-fill me-2"></i>
                     <div>
                         Debes <a th:href="@{/login}" class="alert-link">iniciar sesión</a> para poder reservar.

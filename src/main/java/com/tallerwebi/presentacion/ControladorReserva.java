@@ -312,6 +312,7 @@ public class ControladorReserva {
         } catch (Exception e){
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al enviar el mail.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
+            System.out.println("Error al enviar mensaje de WhatsApp: " + e.getMessage());
         }
 
         try {
@@ -324,7 +325,7 @@ public class ControladorReserva {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
-            System.out.println("Error al enviar mensaje de WhatsApp: " + e.getMessage());
+
 
         }
 

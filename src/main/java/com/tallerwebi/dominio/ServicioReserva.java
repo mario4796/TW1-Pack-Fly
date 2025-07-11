@@ -2,11 +2,13 @@ package com.tallerwebi.dominio;
 
 import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.presentacion.dtos.VueloDTO;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 public interface ServicioReserva {
-      List<VueloDTO> getVuelo(String origen, String destino, Date fechaIda, Date fechaVuelta, String moneda, String tipoViaje);
+      List<VueloDTO> getVuelo(String origen, String destino, LocalDate fechaIda, LocalDate fechaVuelta, String moneda, String tipoViaje);
 
       void guardarReserva(Vuelo vuelo);
     List<Vuelo> obtenerReservasPorEmail(String email); // ← Agregado

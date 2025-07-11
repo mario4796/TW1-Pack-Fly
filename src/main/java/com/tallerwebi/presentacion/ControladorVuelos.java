@@ -16,6 +16,7 @@ import jakarta.mail.MessagingException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,8 +50,8 @@ public class ControladorVuelos {
     public String buscarVuelo(
             @RequestParam String origen,
             @RequestParam String destino,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaIda,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaVuelta,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  fechaIda,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  fechaVuelta,
             @RequestParam(defaultValue = "IDAVUELTA") String tipoViaje,
             @RequestParam(required = false) Double precioMin,
             @RequestParam(required = false) Double precioMax,
@@ -103,6 +104,10 @@ public class ControladorVuelos {
         model.addAttribute("fechaVuelta", fechaVuelta);
         model.addAttribute("moneda", moneda);
         request.getSession().setAttribute("VUELOS_ENCONTRADOS", vuelos);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        model.addAttribute("fechaIdaStr", fechaIda != null ? fechaIda.format(formatter) : "");
+        model.addAttribute("fechaVueltaStr", fechaVuelta != null ? fechaVuelta.format(formatter) : "");
 
 
         return "busqueda-vuelo";
