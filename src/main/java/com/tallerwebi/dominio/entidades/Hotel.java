@@ -18,8 +18,11 @@ public class Hotel {
     private Integer adult;
     private Integer children;
     private Double precio;
-    private String imagen;
     private Boolean pagado;
+
+    @Column(length = 500)
+    private String imagen;
+
 
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
@@ -28,7 +31,7 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio, Boolean pagado) {
+    public Hotel(Long id, String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Double precio, Boolean pagado, String imagen) {
         this.id = id;
         this.name = name;
         this.ciudad = ciudad;
@@ -38,6 +41,7 @@ public class Hotel {
         this.children=children;
         this.precio= precio;
         this.pagado = pagado;
+        this.imagen =imagen;
     }
 
     public Long getId() {
@@ -116,10 +120,6 @@ public class Hotel {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
     public Boolean getPagado() {
         return pagado;
     }
@@ -127,4 +127,10 @@ public class Hotel {
     public void setPagado(Boolean pagado) {
         this.pagado = pagado;
     }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+
 }

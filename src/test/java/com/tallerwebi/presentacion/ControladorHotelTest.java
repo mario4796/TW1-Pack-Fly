@@ -80,6 +80,7 @@ public class ControladorHotelTest {
                 1,
                 0,
                 12000.0,
+                "",
                 redirectAttributes,
                 request);
 

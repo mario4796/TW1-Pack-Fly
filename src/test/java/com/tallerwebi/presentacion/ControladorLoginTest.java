@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,6 +23,7 @@ public class ControladorLoginTest {
 	private HttpServletRequest requestMock;
 	private HttpSession sessionMock;
 	private ServicioLogin servicioLoginMock;
+	private RedirectAttributes redirectMock;
 
 
 	@BeforeEach
@@ -33,6 +35,8 @@ public class ControladorLoginTest {
 		sessionMock = mock(HttpSession.class);
 		servicioLoginMock = mock(ServicioLogin.class);
 		controladorLogin = new ControladorLogin(servicioLoginMock);
+		redirectMock = mock(RedirectAttributes.class);
+
 	}
 
 	@Test
@@ -41,7 +45,7 @@ public class ControladorLoginTest {
 		when(servicioLoginMock.consultarUsuario(anyString(), anyString())).thenReturn(null);
 
 		// ejecucion
-		ModelAndView modelAndView = controladorLogin.validarLogin(datosLoginMock, requestMock);
+		ModelAndView modelAndView = controladorLogin.validarLogin(datosLoginMock, requestMock, redirectMock);
 
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("login"));
@@ -59,7 +63,7 @@ public class ControladorLoginTest {
 		when(servicioLoginMock.consultarUsuario(anyString(), anyString())).thenReturn(usuarioEncontradoMock);
 		
 		// ejecucion
-		ModelAndView modelAndView = controladorLogin.validarLogin(datosLoginMock, requestMock);
+		ModelAndView modelAndView = controladorLogin.validarLogin(datosLoginMock, requestMock, redirectMock);
 		
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));

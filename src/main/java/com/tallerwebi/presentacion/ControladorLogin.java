@@ -1,17 +1,26 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.ServicioExcursiones;
+import com.tallerwebi.dominio.ServicioHotel;
 import com.tallerwebi.dominio.ServicioLogin;
 import com.tallerwebi.dominio.ServicioMensajes;
 import com.tallerwebi.dominio.ServicioRecomendacion;
+import com.tallerwebi.dominio.entidades.Excursion;
+import com.tallerwebi.dominio.entidades.Hotel;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
+import com.tallerwebi.presentacion.dtos.HotelDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+
 
 @Controller
 public class ControladorLogin {
@@ -19,6 +28,12 @@ public class ControladorLogin {
     private ServicioLogin servicioLogin;
 
     private ServicioMensajes servicioMensajes;
+
+    @Autowired
+    private ServicioHotel hotelService;
+
+    @Autowired
+    private ServicioExcursiones servicioExcursiones;
 
     @Autowired
     public ControladorLogin(ServicioLogin servicioLogin){
@@ -36,7 +51,7 @@ public class ControladorLogin {
     // ... inside ControladorLogin.java
 
     @RequestMapping(path = "/validar-login", method = RequestMethod.POST)
-    public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request) {
+    public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         ModelMap model = new ModelMap();
 
         Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
@@ -48,6 +63,7 @@ public class ControladorLogin {
             }
             request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
             request.getSession().setAttribute("USUARIO", usuarioBuscado);
+
             return new ModelAndView("redirect:/home");
         } else {
             model.put("error", "Usuario o clave incorrecta");
@@ -77,6 +93,7 @@ public class ControladorLogin {
         model.put("usuario", new Usuario());
         return new ModelAndView("nuevo-usuario", model);
     }
+
      /*
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public ModelAndView irAHome(HttpServletRequest request) {
@@ -94,14 +111,20 @@ public class ControladorLogin {
     public ModelAndView irAHome(HttpServletRequest request) {
         ModelMap model = new ModelMap();
         Usuario usuario = (Usuario) request.getSession().getAttribute("USUARIO");
+
         model.put("usuario", usuario);
 
-        // NUEVO: recomendaciones
-         //model.put("recomendaciones", servicioRecomendacion.obtenerRecomendacionesPara(usuario));
+        if (usuario != null) {
+            List<Hotel> hotelesPagados = hotelService.buscarHotelesPagados(usuario.getId());
+            List<HotelDto> hotelesDtoPagados = hotelService.obtenerHotelesDto(hotelesPagados);
+            List<Excursion> excursionesPagadas = servicioExcursiones.obtenerExcursionesDeUsuarioPagados(usuario.getId());
+
+            model.put("hotelesPagados", hotelesDtoPagados);
+            model.put("excursionesPagadas", excursionesPagadas);
+        }
 
         return new ModelAndView("home", model);
     }
-
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)

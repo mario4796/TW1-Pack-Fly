@@ -105,6 +105,7 @@ public class ControladorHotel {
                            @RequestParam Integer adult,
                            @RequestParam Integer children,
                            @RequestParam Double precio,
+                           @RequestParam String imagen,
                            RedirectAttributes redirectAttributes,
                            HttpServletRequest request) throws MessagingException {
 
@@ -123,6 +124,7 @@ public class ControladorHotel {
         hotel.setChildren(children);
         hotel.setUsuario(usuario);
         hotel.setPrecio(precio);
+        hotel.setImagen(imagen);
         hotel.setPagado(false);
 
 

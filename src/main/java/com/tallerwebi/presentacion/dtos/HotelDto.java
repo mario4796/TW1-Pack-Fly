@@ -80,7 +80,7 @@ public class HotelDto{
         }
     }
 
-    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Boolean pagado) {
+    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adult, Integer children, Boolean pagado, String images) {
         this.name = name;
         this.ciudad = ciudad;
         this.checkIn = checkIn;
@@ -88,6 +88,7 @@ public class HotelDto{
         this.adult = adult;
         this.children = children;
         this.pagado=false;
+        this.imagen = imagen;
     }
 
     private HotelDto(String ciudad, String checkIn, String checkOut, Integer adult, Integer children){
@@ -98,7 +99,7 @@ public class HotelDto{
         this.children= children;
     }
 
-    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adults, Integer children, Double precio, Boolean pagado) {
+    public HotelDto(String name, String ciudad, String checkIn, String checkOut, Integer adults, Integer children, Double precio, Boolean pagado, String imagen) {
         this.name = name;
         this.ciudad = ciudad;
         this.checkIn = checkIn;
@@ -107,6 +108,7 @@ public class HotelDto{
         this.children = children;
         this.precio = precio;
         this.pagado=false;
+        this.imagen = imagen;
     }
 
 
