@@ -514,37 +514,18 @@
 
                 <!-- Horarios -->
                 <div class="mb-3">
-                    <label class="form-label">Horarios preferidos</label>
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="6,12"
-                                       id="horaManana">
-                                <label class="form-check-label" for="horaManana">Mañana (6-12 hs)</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="12,18"
-                                       id="horaTarde">
-                                <label class="form-check-label" for="horaTarde">Tarde (12-18 hs)</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="18,0"
-                                       id="horaNoche">
-                                <label class="form-check-label" for="horaNoche">Noche (18-24 hs)</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value="0,6"
-                                       id="horaMadrugada">
-                                <label class="form-check-label" for="horaMadrugada">Madrugada (0-6 hs)</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" th:field="*{outbound_times}" value=""
-                                       id="sinHorario">
-                                <label class="form-check-label" for="sinHorario">Sin Horario</label>
-                            </div>
-                        </div>
+                    <label for="horarioSelect" class="form-label">Horarios preferidos</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-clock"></i>
+                        </span>
+                        <select class="form-select" id="horarioSelect" name="outbound_times" th:field="*{outbound_times}">
+                            <option value="">Sin Horario</option>
+                            <option value="6,12">Mañana (6-12 hs)</option>
+                            <option value="12,18">Tarde (12-18 hs)</option>
+                            <option value="18,0">Noche (18-24 hs)</option>
+                            <option value="0,6">Madrugada (0-6 hs)</option>
+                        </select>
                     </div>
                 </div>
 

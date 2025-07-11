@@ -163,7 +163,14 @@ body {
     margin-right: 6px;
 }
 
-/*#children_ages[readonly] {
-    cursor: not-allowed;
-    user-select: none;
-}*/
+#divFechaVuelta {
+    transition: opacity 0.2s ease;
+}
+
+.fade-in {
+    opacity: 1 !important;
+}
+
+.fade-out {
+    opacity: 0 !important;
+}
