@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 <div th:replace="fragments/navbar :: navbar"></div>
 
@@ -20,90 +20,96 @@
     <div class="overlay mt-5">
         <h1 class="display-4 fw-bold">Tu viaje, a tu manera</h1>
         <p class="lead">Armá tu paquete ideal: vuelo, hotel, actividades y más.</p>
-
-
         <form class="row g-2 mt-4 bg-body p-3 rounded text-center" th:action="@{/busqueda-vuelo}" method="post">
 
             <div class="row mb-3">
 
-            <div class="col mb-3">
-                <!-- Tipo de viaje -->
-                <div class="mb-3">
-                    <label class="form-label">Tipo de viaje</label>
-                    <div class="btn-group" role="group" aria-label="Tipo de viaje">
-                        <input
-                                type="radio"
-                                class="btn-check"
-                                name="tipoViaje"
-                                id="optIda"
-                                autocomplete="off"
-                                th:value="'IDA'"
-                                th:checked="${tipoViaje=='IDA'}"/>
-                        <label class="btn btn-outline-secondary" for="optIda">Ida</label>
+                <div class="col mb-3">
+                    <!-- Tipo de viaje -->
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de viaje</label>
+                        <div class="btn-group" role="group" aria-label="Tipo de viaje">
+                            <input
+                                    type="radio"
+                                    class="btn-check"
+                                    name="tipoViaje"
+                                    id="optIda"
+                                    autocomplete="off"
+                                    th:value="'IDA'"
+                                    th:checked="${tipoViaje=='IDA'}"/>
+                            <label class="btn btn-outline-secondary" for="optIda">Ida</label>
 
-                        <input
-                                type="radio"
-                                class="btn-check"
-                                name="tipoViaje"
-                                id="optIdaVuelta"
-                                autocomplete="off"
-                                th:value="'IDAVUELTA'"
-                                th:checked="${tipoViaje!='IDA'}"/>
-                        <label class="btn btn-outline-secondary" for="optIdaVuelta">Ida y vuelta</label>
+                            <input
+                                    type="radio"
+                                    class="btn-check"
+                                    name="tipoViaje"
+                                    id="optIdaVuelta"
+                                    autocomplete="off"
+                                    th:value="'IDAVUELTA'"
+                                    th:checked="${tipoViaje!='IDA'}"/>
+                            <label class="btn btn-outline-secondary" for="optIdaVuelta">Ida y vuelta</label>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="origen" class="form-label visually-hidden">Origen</label>
+                    <select class="form-select" name="origen" id="origen" required>
+                        <option value="">Selecciona un Origen</option>
+                        <option value="EZE" th:selected="${origen=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
+                        <option value="JFK" th:selected="${origen=='JFK'}">New York, USA (JFK)</option>
+                        <option value="GRU" th:selected="${origen=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
+                        <option value="CDG" th:selected="${origen=='CDG'}">París, Francia (Charles de Gaulle)</option>
+                        <option value="MAD" th:selected="${origen=='MAD'}">Madrid, España (Barajas)</option>
+                        <option value="MEX" th:selected="${origen=='MEX'}">Ciudad de México, México (Benito Juárez)
+                        </option>
+                        <option value="BOG" th:selected="${origen=='BOG'}">Bogotá, Colombia (El Dorado)</option>
+                        <option value="SCL" th:selected="${origen=='SCL'}">Santiago, Chile (Arturo Merino Benítez)
+                        </option>
+                        <option value="LIM" th:selected="${origen=='LIM'}">Lima, Perú (Jorge Chávez)</option>
+                        <option value="LHR" th:selected="${origen=='LHR'}">Londres, Reino Unido (Heathrow)</option>
+                        <option value="FRA" th:selected="${origen=='FRA'}">Frankfurt, Alemania (Frankfurt Main)</option>
+                        <option value="MIA" th:selected="${origen=='MIA'}">Miami, USA (Miami Intl.)</option>
+                        <option value="BCN" th:selected="${origen=='BCN'}">Barcelona, España (El Prat)</option>
+                        <option value="AMS" th:selected="${origen=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
+                        <option value="PTY" th:selected="${origen=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="destino" class="form-label visually-hidden">Destino</label>
+                    <select class="form-select" name="destino" id="destino" required>
+                        <option value="">Selecciona un destino</option>
+                        <option value="EZE" th:selected="${destino=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
+                        <option value="JFK" th:selected="${destino=='JFK'}">New York, USA (JFK)</option>
+                        <option value="GRU" th:selected="${destino=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
+                        <option value="CDG" th:selected="${destino=='CDG'}">París, Francia (Charles de Gaulle)</option>
+                        <option value="MAD" th:selected="${destino=='MAD'}">Madrid, España (Barajas)</option>
+                        <option value="MEX" th:selected="${destino=='MEX'}">Ciudad de México, México (Benito Juárez)
+                        </option>
+                        <option value="BOG" th:selected="${destino=='BOG'}">Bogotá, Colombia (El Dorado)</option>
+                        <option value="SCL" th:selected="${destino=='SCL'}">Santiago, Chile (Arturo Merino Benítez)
+                        </option>
+                        <option value="LIM" th:selected="${destino=='LIM'}">Lima, Perú (Jorge Chávez)</option>
+                        <option value="LHR" th:selected="${destino=='LHR'}">Londres, Reino Unido (Heathrow)</option>
+                        <option value="FRA" th:selected="${destino=='FRA'}">Frankfurt, Alemania (Frankfurt Main)
+                        </option>
+                        <option value="MIA" th:selected="${destino=='MIA'}">Miami, USA (Miami Intl.)</option>
+                        <option value="BCN" th:selected="${destino=='BCN'}">Barcelona, España (El Prat)</option>
+                        <option value="AMS" th:selected="${destino=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
+                        <option value="PTY" th:selected="${destino=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
+                    </select>
                 </div>
 
 
-
-                <label for="origen" class="form-label visually-hidden">Origen</label>
-                <select class="form-select" name="origen" id="origen" required>
-                    <option value="">Selecciona un Origen</option>
-                    <option value="EZE" th:selected="${origen=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
-                    <option value="JFK" th:selected="${origen=='JFK'}">New York, USA (JFK)</option>
-                    <option value="GRU" th:selected="${origen=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
-                    <option value="CDG" th:selected="${origen=='CDG'}">París, Francia (Charles de Gaulle)</option>
-                    <option value="MAD" th:selected="${origen=='MAD'}">Madrid, España (Barajas)</option>
-                    <option value="MEX" th:selected="${origen=='MEX'}">Ciudad de México, México (Benito Juárez)</option>
-                    <option value="BOG" th:selected="${origen=='BOG'}">Bogotá, Colombia (El Dorado)</option>
-                    <option value="SCL" th:selected="${origen=='SCL'}">Santiago, Chile (Arturo Merino Benítez)</option>
-                    <option value="LIM" th:selected="${origen=='LIM'}">Lima, Perú (Jorge Chávez)</option>
-                    <option value="LHR" th:selected="${origen=='LHR'}">Londres, Reino Unido (Heathrow)</option>
-                    <option value="FRA" th:selected="${origen=='FRA'}">Frankfurt, Alemania (Frankfurt Main)</option>
-                    <option value="MIA" th:selected="${origen=='MIA'}">Miami, USA (Miami Intl.)</option>
-                    <option value="BCN" th:selected="${origen=='BCN'}">Barcelona, España (El Prat)</option>
-                    <option value="AMS" th:selected="${origen=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
-                    <option value="PTY" th:selected="${origen=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
-                </select>
-            </div>
-
-            <div class="col-md-3">
-                <label for="destino" class="form-label visually-hidden">Destino</label>
-                <select class="form-select" name="destino" id="destino" required>
-                    <option value="">Selecciona un destino</option>
-                    <option value="EZE" th:selected="${destino=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
-                    <option value="JFK" th:selected="${destino=='JFK'}">New York, USA (JFK)</option>
-                    <option value="GRU" th:selected="${destino=='GRU'}">Sao Paulo, Brasil (Guarulhos)</option>
-                    <option value="CDG" th:selected="${destino=='CDG'}">París, Francia (Charles de Gaulle)</option>
-                    <option value="MAD" th:selected="${destino=='MAD'}">Madrid, España (Barajas)</option>
-                    <option value="MEX" th:selected="${destino=='MEX'}">Ciudad de México, México (Benito Juárez)</option>
-                    <option value="BOG" th:selected="${destino=='BOG'}">Bogotá, Colombia (El Dorado)</option>
-                    <option value="SCL" th:selected="${destino=='SCL'}">Santiago, Chile (Arturo Merino Benítez)</option>
-                    <option value="LIM" th:selected="${destino=='LIM'}">Lima, Perú (Jorge Chávez)</option>
-                    <option value="LHR" th:selected="${destino=='LHR'}">Londres, Reino Unido (Heathrow)</option>
-                    <option value="FRA" th:selected="${destino=='FRA'}">Frankfurt, Alemania (Frankfurt Main)</option>
-                    <option value="MIA" th:selected="${destino=='MIA'}">Miami, USA (Miami Intl.)</option>
-                    <option value="BCN" th:selected="${destino=='BCN'}">Barcelona, España (El Prat)</option>
-                    <option value="AMS" th:selected="${destino=='AMS'}">Ámsterdam, Países Bajos (Schiphol)</option>
-                    <option value="PTY" th:selected="${destino=='PTY'}">Ciudad de Panamá, Panamá (Tocumen)</option>
-                </select>
-            </div>
-
-
-
-            <div class="col-md-3">
-                <input type="date" class="form-control" id="fechaIda" placeholder="F. de Vuelta" name="fechaIda" th:value="${fechaIda != null ? #dates.format(fechaIda,'yyyy-MM-dd') : ''}" required>
-                <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
-            </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control" id="fechaIda" placeholder="F. de Vuelta" name="fechaIda"
+                           th:value="${fechaIda != null ? #dates.format(fechaIda,'yyyy-MM-dd') : ''}" required>
+                    <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
+                </div>
 
                 <!--
                 <input type="text" class="form-control" id="fechaVuelta" placeholder="F. de vuelta" name="fechaVuelta"
@@ -122,48 +128,49 @@
                     <!-- ✔️ quitar required -->
                     <div class="invalid-feedback">Seleccioná una fecha válida …</div>
                 </div>
-
-                <!--<select class="form-select">
-                  <option selected>Vuelos</option>
-                  <option>Servicios</option>
-                  <option>Hotel</option>
-                  <option>Auto</option>
-                  <option>Actividades</option>
-                </select>-->
             </div>
 
-            <div class="row mb-3">
+    <!--<select class="form-select">
+      <option selected>Vuelos</option>
+      <option>Servicios</option>
+      <option>Hotel</option>
+      <option>Auto</option>
+      <option>Actividades</option>
+    </select>-->
 
-                <!-- Precio mínimo -->
-                <div class="col-md-4">
-                    <label for="precioMin" class="form-label">Precio mínimo</label>
-                    <input type="number" step="0.01" class="form-control"
-                           id="precioMin" name="precioMin"
-                           th:value="${precioMin}">
-                </div>
 
-                <!-- Precio máximo -->
-                <div class="col-md-4">
-                    <label for="precioMax" class="form-label">Precio máximo</label>
-                    <input type="number" step="0.01" class="form-control"
-                           id="precioMax" name="precioMax"
-                           th:value="${precioMax}">
-                </div>
+    <div class="row mb-3">
 
-                <!-- Moneda dropdown -->
-                <div class="col-md-4">
-                    <label for="moneda" class="form-label">Moneda</label>
-                    <select class="form-select" id="moneda" name="moneda">
-                        <option th:value="'ARS'" th:selected="${moneda=='ARS'}">ARS</option>
-                        <option th:value="'USD'" th:selected="${moneda=='USD'}">USD</option>
-                    </select>
-                </div>
+        <!-- Precio mínimo -->
+        <div class="col-md-4">
+            <label for="precioMin" class="form-label">Precio mínimo</label>
+            <input type="number" step="0.01" class="form-control"
+                   id="precioMin" name="precioMin"
+                   th:value="${precioMin}">
+        </div>
 
-            </div>
-            <div class="col-md-12">
-                <button class="btn btn-primary w-100">Buscar Vuelo</button>
-            </div>
-        </form>
+        <!-- Precio máximo -->
+        <div class="col-md-4">
+            <label for="precioMax" class="form-label">Precio máximo</label>
+            <input type="number" step="0.01" class="form-control"
+                   id="precioMax" name="precioMax"
+                   th:value="${precioMax}">
+        </div>
+
+        <!-- Moneda dropdown -->
+        <div class="col-md-4">
+            <label for="moneda" class="form-label">Moneda</label>
+            <select class="form-select" id="moneda" name="moneda">
+                <option th:value="'ARS'" th:selected="${moneda=='ARS'}">ARS</option>
+                <option th:value="'USD'" th:selected="${moneda=='USD'}">USD</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="col-md-12">
+        <button class="btn btn-primary w-100">Buscar Vuelo</button>
+    </div>
+    </form>
     </div>
     <!-- Resultados -->
     <div class="overlay mt-3">
@@ -188,23 +195,18 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- PARA FUTURO SPRINT, recomendaciones basadas en las reservas activas
-               <div class="container mt-5">
-                   <h3>Recomendaciones para vos</h3>
-                   <div class="row">
-                       <div th:each="rec : ${recomendaciones}" class="col-md-4 mb-3">
-                           <div class="card h-100">
-                               <img th:src="${rec.imagenUrl}" class="card-img-top" alt="Imagen recomendación">
-                               <div class="card-body">
-                                   <h5 th:text="${rec.tipo} + ': ' + ${rec.titulo}" class="card-title"></h5>
-                               </div>
+               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container">
+                   <div class="col">
+                       <div class="card h-100 shadow-sm">
+                           <img src="${card.imagen}" class="card-img-top" alt="${card.titulo}">
+                           <div class="card-body">
+                               <h5 class="card-title">${card.titulo}</h5>
+                               <p class="card-text">${card.texto}</p>
                            </div>
                        </div>
                    </div>
                </div>
-                -->
-               <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container"></div>
+               <!--<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="card-container"></div>-->
             </div>
         </section>
     </div>
@@ -224,76 +226,16 @@
             <i class="bi bi-arrow-repeat"></i>
             <h5>Flexibilidad</h5>
         </div>
-        <!--
         <div class="col-md-3 icon-box">
           <i class="bi bi-shield-lock"></i>
           <h5>Pagos seguros</h5>
         </div>
-        -->
+
     </div>
 </section>
 
-<!-- Arma tu Paquete (habilitar caundo se vaya a utilizar!)-->
-<!--<section id="paquete" class="bg-body py-5">
-  <div class="container">
-    <h2 class="text-center mb-4">Armá tu paquete</h2>
-    <form class="row g-3">
-      <div class="col-md-6">
-        <label class="form-label">Origen</label>
-        <input type="text" class="form-control" placeholder="Ej: Buenos Aires">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Destino</label>
-        <input type="text" class="form-control" placeholder="Ej: Mendoza">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Fecha de salida</label>
-        <input type="date" class="form-control">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Fecha de regreso</label>
-        <input type="date" class="form-control">
-      </div>
-      <div class="col-md-4">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="hotel">
-          <label class="form-check-label" for="hotel">Incluir hotel</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="auto">
-          <label class="form-check-label" for="auto">Incluir auto</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="actividades">
-          <label class="form-check-label" for="actividades">Incluir actividades</label>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Presupuesto máximo (ARS)</label>
-        <input type="number" class="form-control" placeholder="$300000">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Comentarios adicionales</label>
-        <textarea class="form-control" rows="3" placeholder="Contanos tus preferencias..."></textarea>
-      </div>
-      <div class="col-12 text-center">
-        <button class="btn btn-primary px-5">Buscar paquete</button>
-      </div>
-    </form>
-  </div>
-</section>-->
 
-<!--<form th:action="@{/busqueda-vuelo}" method="post">
-  <label for="origen">Origen:</label>
-  <input type="text" id="origen" name="origen" required>
-  <label for="destino">Destino:</label>
-  <input type="text" id="destino" name="destino" required>
-  <label for="fechaIda">Fecha de ida:</label>
-  <input type="date" id="fechaIda" name="fechaIda" required>
-  <label for="fechaVuelta">Fecha de vuelta:</label>
-  <input type="date" id="fechaVuelta" name="fechaVuelta" required>
-  <button type="submit">Buscar vuelo</button>
-</form>-->
+<div th:replace="fragments/footer :: footer"></div>
 <div th:replace="fragments/login-modal :: loginModal"></div>
 
 <script type="text/javascript" th:src="@{webjars/bootstrap/5.3.5/js/bootstrap.bundle.min.js}"></script>
@@ -303,9 +245,9 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const optIda       = document.getElementById('optIda');
+        const optIda = document.getElementById('optIda');
         const optIdaVuelta = document.getElementById('optIdaVuelta');
-        const divRegreso   = document.getElementById('divFechaVuelta');
+        const divRegreso = document.getElementById('divFechaVuelta');
 
         const toggleRegreso = () => {
             if (optIda.checked) {

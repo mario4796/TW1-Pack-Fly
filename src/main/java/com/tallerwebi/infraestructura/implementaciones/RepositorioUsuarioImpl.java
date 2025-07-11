@@ -1,7 +1,9 @@
 package com.tallerwebi.infraestructura.implementaciones;
 
+import com.tallerwebi.dominio.entidades.PreferenciaViaje;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.presentacion.dtos.PreferenciaViajeDTO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -48,5 +50,32 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public void modificar(Usuario usuario) {
         sessionFactory.getCurrentSession().update(usuario);
+    }
+
+    @Override
+    public PreferenciaViaje obtenerPreferenciaViaje(Long usuarioId) {
+        Session session = sessionFactory.getCurrentSession();
+
+        return (PreferenciaViaje) session
+                .createQuery("FROM PreferenciaViaje WHERE usuario.id = :usuarioId")
+                .setParameter("usuarioId", usuarioId)
+                .uniqueResult();
+    }
+
+    @Override
+    public void guardarPreferenciaViaje(PreferenciaViaje preferencias) {
+        Session session = sessionFactory.getCurrentSession();
+
+        PreferenciaViaje existente = (PreferenciaViaje) session
+                .createQuery("FROM PreferenciaViaje WHERE usuario.id = :usuarioId")
+                .setParameter("usuarioId", preferencias.getUsuario().getId())
+                .uniqueResult();
+
+        if (existente != null) {
+            preferencias.setId(existente.getId());
+            session.merge(preferencias);
+        } else {
+            session.save(preferencias);
+        }
     }
 }

@@ -13,7 +13,7 @@
   <link rel="stylesheet" th:href="@{/css/main.css}" />
 </head>
 
-<body class="body_reserva">
+<body class="body_reserva d-flex flex-column min-vh-100">
 
 <!-- Navbar común -->
 <div th:replace="fragments/navbar :: navbar"></div>
@@ -59,6 +59,7 @@
   </form>
 </main>
 
+<div th:replace="fragments/footer :: footer"></div>
 <!-- Modal de login si corresponde -->
 <div th:replace="fragments/login-modal :: loginModal"></div>
 

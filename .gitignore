@@ -20,5 +20,5 @@ hs_err_pid*
 /.settings/
 
 src/main/webapp/resources/core/js/node_modules
-
+# Ignorar variables de entorno
 .env

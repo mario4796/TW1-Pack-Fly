@@ -57,8 +57,6 @@ public class VueloDTO {
 
     public Vuelo toEntidad(String nombre, String emailUsuario, Usuario usuario) {
         Vuelo vuelo = new Vuelo();
-        vuelo.setOrigen(this.origen);
-        vuelo.setDestino(this.destino);
         vuelo.setFechaIda(this.fechaIda);
         vuelo.setFechaVuelta(this.fechaVuelta);
         vuelo.setPrecio(this.precio);

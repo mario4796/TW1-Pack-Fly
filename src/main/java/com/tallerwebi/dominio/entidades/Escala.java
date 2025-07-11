@@ -8,7 +8,7 @@ public class Escala {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vuelo_id")
     private Vuelo vuelo;
 

@@ -20,6 +20,9 @@ public class ExcursionDTO {
     @JsonProperty("description")
     private String description;
 
+    @JsonProperty("thumbnail")
+    private String thumbnail;
+
     @JsonProperty("link")
     private String url;
 
@@ -46,6 +49,7 @@ public class ExcursionDTO {
         this.location = excursion.getLocation();
         this.description = excursion.getDescription();
         this.url = excursion.getUrl();
+        this.thumbnail = excursion.getThumbnail();
         this.pagado= excursion.getPagado();
 
     }
@@ -63,6 +67,7 @@ public class ExcursionDTO {
         entidad.setUrl(this.url);
         entidad.setPrecio(this.precio);
         entidad.setPagado(false);
+        entidad.setThumbnail(this.thumbnail);
         entidad.setUsuario(usuario);
 
         return entidad;
@@ -74,10 +79,12 @@ public class ExcursionDTO {
     public String getDescription() { return description; }
     public String getUrl()         { return url; }
     public Double getPrecio() {return precio; }
+    public String getThumbnail()       { return thumbnail; } // ✅ getter
     public void setTitle(String t)           { this.title = t; }
     public void setStartDate(String d)       { this.startDate = d; }
     public void setLocation(String l)        { this.location = l; }
     public void setDescription(String d)     { this.description = d; }
     public void setUrl(String u)             { this.url = u; }
     public void setPrecio(Double p) {this.precio = p; }
+    public void setThumbnail(String t) { this.thumbnail = t; }
 }
