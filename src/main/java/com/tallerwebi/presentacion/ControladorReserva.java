@@ -79,11 +79,11 @@ public class ControladorReserva {
         try {
             hotelService.eliminarReserva(usuario.getId(), name);
             String email = usuario.getEmail();
-            servicioEmail.enviarCorreo(
-                    email,
-                    "Reserva de hotel eliminada - Pack&Fly",
-                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly."
-            );
+
+            servicioMensajes.enviarMensaje(usuario.getTelefono(),
+                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para el hotel '" + name + "' fue eliminada con éxito.\n\nGracias por usar Pack&Fly.");
+
+
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su reserva.");
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de hotel eliminada con éxito.");
@@ -117,11 +117,10 @@ public class ControladorReserva {
 
             servicioReserva.eliminarReserva(email, fechaIda, fechaVuelta);
 
-            servicioEmail.enviarCorreo(
-                    email,
-                    "Reserva de vuelo eliminada - Pack&Fly",
-                    "Hola " + usuario.getNombre() +",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros."
-            );
+            servicioMensajes.enviarMensaje(usuario.getTelefono(),
+                    "Hola " + usuario.getNombre() +",\n\nTu reserva de vuelo del " + fechaIda + " al " + fechaVuelta + " fue eliminada correctamente.\n\nGracias por confiar en nosotros.");
+
+
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su vuelo.");
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de vuelo eliminada con éxito.");
@@ -144,11 +143,10 @@ public class ControladorReserva {
         try {
             servicioExcursiones.eliminarReserva(usuario.getId(), title);
             String email = usuario.getEmail();
-            servicioEmail.enviarCorreo(
-                    email,
-                    "Reserva de excursión eliminada - Pack&Fly",
-                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto."
-            );
+
+            servicioMensajes.enviarMensaje(usuario.getTelefono(),
+                    "Hola " + usuario.getNombre() + ",\n\nTu reserva para la excursión '" + title + "' fue eliminada.\n\nEsperamos verte en otro viaje pronto.");
+
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Cancelacion de reserva", "El usuario" + email + "cancelo su excursion" + title);
 
             redirectAttributes.addFlashAttribute("mensaje", "Reserva de excursion eliminada con éxito.");
@@ -312,6 +310,7 @@ public class ControladorReserva {
         } catch (Exception e){
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al enviar el mail.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
+            System.out.println("Error al enviar mensaje de WhatsApp: " + e.getMessage());
         }
 
         try {
@@ -324,7 +323,7 @@ public class ControladorReserva {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("mensaje", "Hubo un error al realizar el pago.");
             redirectAttributes.addFlashAttribute("tipo", "warning");
-            System.out.println("Error al enviar mensaje de WhatsApp: " + e.getMessage());
+
 
         }
 

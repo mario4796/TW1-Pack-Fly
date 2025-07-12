@@ -23,6 +23,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -52,7 +53,7 @@ public class ServicioReservaImpl implements ServicioReserva {
     }
 
     @Override
-    public List<VueloDTO> getVuelo(String origen, String destino, Date fechaIda, Date fechaVuelta, String moneda, String tipoViaje) {
+    public List<VueloDTO> getVuelo(String origen, String destino, LocalDate fechaIda, LocalDate fechaVuelta, String moneda, String tipoViaje) {
         String apiKey = apiKeyConfig.getApiKey();
 
         int tipo = "IDA".equalsIgnoreCase(tipoViaje) ? 2 : 1;
@@ -65,8 +66,8 @@ public class ServicioReservaImpl implements ServicioReserva {
         }
 
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String fechaIdaStr = dateFormat.format(fechaIda);
+            DateTimeFormatter  formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String fechaIdaStr = fechaIda.format(formatter);
 
            // String fechaIdaStr = fechaIda != null ? dateFormat.format(fechaIda) : "";
             //String fechaVueltaStr = fechaVuelta != null ? dateFormat.format(fechaVuelta) : "";
@@ -93,7 +94,7 @@ public class ServicioReservaImpl implements ServicioReserva {
                                        );
 
             if (tipo == 1 && fechaVuelta != null) {
-                String fechaVueltaStr = dateFormat.format(fechaVuelta);
+                String fechaVueltaStr = fechaVuelta.format(formatter);
                 sb.append("&return_date=").append(fechaVueltaStr);
             }
                     String baseUrl = sb.toString();
@@ -128,7 +129,7 @@ public class ServicioReservaImpl implements ServicioReserva {
 
                         // Sólo seteo fechaVuelta si me la pasaron
                             if (fechaVuelta != null) {
-                                    String fechaVueltaStr = dateFormat.format(fechaVuelta);
+                                    String fechaVueltaStr = fechaVuelta.format(formatter);
                                     dto.setFechaVuelta(fechaVueltaStr);
                                 } else {
                                     dto.setFechaVuelta(null); // o "" si prefieres
@@ -138,6 +139,16 @@ public class ServicioReservaImpl implements ServicioReserva {
                         // Parsear segmentos
                         JsonNode flightsArray = vueloNode.get("flights");
                         if (flightsArray != null && flightsArray.isArray()) {
+
+                            JsonNode primerSegmento = flightsArray.get(0);
+                            JsonNode ultimoSegmento = flightsArray.get(flightsArray.size() - 1);
+
+                            String nombreOrigen = primerSegmento.get("departure_airport").get("name").asText();
+                            String nombreDestino = ultimoSegmento.get("arrival_airport").get("name").asText();
+
+                            dto.setOrigen(nombreOrigen);
+                            dto.setDestino(nombreDestino);
+
                             List<SegmentoVueloDTO> segmentos = new ArrayList<>();
                             for (JsonNode seg : flightsArray) {
                                 SegmentoVueloDTO segmento = new SegmentoVueloDTO();

@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioEmail;
+import com.tallerwebi.dominio.ServicioMensajes;
 import com.tallerwebi.dominio.entidades.Vuelo;
 import com.tallerwebi.dominio.ServicioReserva;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -16,6 +17,7 @@ import jakarta.mail.MessagingException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +25,9 @@ import java.util.stream.Collectors;
 @Controller
 public class ControladorVuelos {
 
+
+    @Autowired
+    private ServicioMensajes servicioMensajes;
 
     @Autowired
     private ServicioEmail servicioEmail;
@@ -49,8 +54,8 @@ public class ControladorVuelos {
     public String buscarVuelo(
             @RequestParam String origen,
             @RequestParam String destino,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaIda,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaVuelta,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  fechaIda,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate  fechaVuelta,
             @RequestParam(defaultValue = "IDAVUELTA") String tipoViaje,
             @RequestParam(required = false) Double precioMin,
             @RequestParam(required = false) Double precioMax,
@@ -103,6 +108,10 @@ public class ControladorVuelos {
         model.addAttribute("fechaVuelta", fechaVuelta);
         model.addAttribute("moneda", moneda);
         request.getSession().setAttribute("VUELOS_ENCONTRADOS", vuelos);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        model.addAttribute("fechaIdaStr", fechaIda != null ? fechaIda.format(formatter) : "");
+        model.addAttribute("fechaVueltaStr", fechaVuelta != null ? fechaVuelta.format(formatter) : "");
 
 
         return "busqueda-vuelo";
@@ -186,17 +195,22 @@ public class ControladorVuelos {
         }
 
         // ✅ Correos
+
         try {
-            servicioEmail.enviarCorreo(
-                    email,
-                    "Confirmación de Reserva - Pack&Fly",
-                    "¡Gracias por tu reserva, " + usuario.getNombre() + "!\n"
-                            + "Vuelo: " + vuelo.getOrigen() + " → " + vuelo.getDestino() + "\n"
-                            + "Fecha ida: " + vuelo.getFechaIda() + "\n"
-                            + "Fecha vuelta: " + vuelo.getFechaVuelta() + "\n"
-                            + "Precio: $" + vuelo.getPrecio() + "\n"
-                            + "Recordá que tenés hasta 7 días antes del vuelo para pagar. Si no, será eliminado."
-            );
+            servicioMensajes.enviarMensaje(usuario.getTelefono(), "¡Gracias por tu reserva, " + usuario.getNombre() + "!\n"
+                    + "Vuelo: " + vuelo.getOrigen() + " → " + vuelo.getDestino() + "\n"
+                    + "Fecha ida: " + vuelo.getFechaIda() + "\n"
+                    + "Fecha vuelta: " + vuelo.getFechaVuelta() + "\n"
+                    + "Precio: $" + vuelo.getPrecio() + "\n"
+                    + "Recordá que tenés hasta 7 días antes del vuelo para pagar. Si no, será eliminado.");
+
+        }catch (Exception ex) {
+            System.err.println("Error al enviar el mensaje de vuelo: " + ex.getMessage());
+        }
+
+        try {
+
+
             servicioEmail.enviarCorreo("ordnaelx13@gmail.com", "Nueva reserva de vuelo",
                     "El usuario " + email + " ha reservado un vuelo de " + vuelo.getOrigen() + " a " + vuelo.getDestino() + "\n"
                             + "Fecha ida: " + vuelo.getFechaIda() + "\n"

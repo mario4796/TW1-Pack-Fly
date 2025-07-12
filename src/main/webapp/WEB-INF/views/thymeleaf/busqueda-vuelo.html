@@ -158,7 +158,7 @@
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 <div class="form-floating">
                                     <input type="date" class="form-control" id="fechaIda" name="fechaIda"
-                                           th:value="${fechaIda != null ? #dates.format(fechaIda,'yyyy-MM-dd') : ''}" required>
+                                           th:value="${fechaIdaStr}" required>
                                     <label for="fechaIda">Fecha de Ida</label>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@
                                 <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
                                 <div class="form-floating">
                                     <input type="date" class="form-control" id="fechaVuelta" name="fechaVuelta"
-                                           th:value="${fechaVuelta != null ? #dates.format(fechaVuelta,'yyyy-MM-dd') : ''}">
+                                           th:value="${fechaVueltaStr}">
                                     <label for="fechaVuelta">Fecha de Vuelta</label>
                                 </div>
                             </div>
