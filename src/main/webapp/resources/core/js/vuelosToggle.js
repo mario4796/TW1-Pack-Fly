@@ -7,43 +7,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const destinoCol = document.querySelector('#destino').closest('.col-md-3');
     const fechaIdaCol = document.querySelector('#fechaIda').closest('.col-md-3');
 
-    const fadeDuration = 200;
+    const fadeDuration = 300;
 
     const toggleRegreso = () => {
         const selected = tipoViajeSelect.value;
 
         if (selected === 'IDA') {
+            divRegreso.classList.remove('fade-in');
             divRegreso.classList.add('fade-out');
 
             setTimeout(() => {
                 divRegreso.style.display = 'none';
+                divRegreso.classList.remove('fade-out');
                 fechaVueltaInput.value = '';
 
                 [origenCol, destinoCol, fechaIdaCol].forEach(col => {
                     col.classList.remove('col-md-3');
                     col.classList.add('col-md-4');
                 });
-
-                divRegreso.classList.remove('fade-out');
             }, fadeDuration);
         } else {
-            [origenCol, destinoCol, fechaIdaCol].forEach(col => {
-                col.classList.remove('col-md-4');
-                col.classList.add('col-md-3');
-            });
+            divRegreso.style.opacity = '0';
+            divRegreso.style.display = 'block';
 
-            //Revisar fade-in que no funciona bien
-            divRegreso.style.display = '';
             void divRegreso.offsetWidth;
+
             divRegreso.classList.add('fade-in');
 
             setTimeout(() => {
                 divRegreso.classList.remove('fade-in');
+                divRegreso.style.opacity = '';
             }, fadeDuration);
+
+            [origenCol, destinoCol, fechaIdaCol].forEach(col => {
+                col.classList.remove('col-md-4');
+                col.classList.add('col-md-3');
+            });
         }
     };
 
     tipoViajeSelect.addEventListener('change', toggleRegreso);
-
     toggleRegreso();
 });

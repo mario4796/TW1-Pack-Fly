@@ -25,11 +25,10 @@
         <h1 class="mb-4 text-center text-light">Buscar Vuelos</h1>
         <div class="card shadow">
             <div class="card-body">
-
                 <form th:action="@{/busqueda-vuelo}" method="post" accept-charset="UTF-8" novalidate>
-                    <div class="row mb-3 align-content-center">
-                        <!-- Tipo de viaje -->
-                        <div class="col-md-3">
+
+                    <div class="row mb-3">
+                        <div class="col-md-12">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-arrow-left-right"></i></span>
                                 <div class="form-floating">
@@ -41,65 +40,17 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Clase preferida -->
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
-                                <div class="form-floating">
-                                    <select class="form-select" id="claseCabina" name="claseCabina">
-                                        <option value="1">Económica</option>
-                                        <option value="2">Premium Económica</option>
-                                        <option value="3">Ejecutiva / Business</option>
-                                        <option value="4">Primera clase</option>
-                                    </select>
-                                    <label for="claseCabina">Clase preferida</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Horarios preferidos -->
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-clock"></i></span>
-                                <div class="form-floating">
-                                    <select class="form-select" id="horarioSelect" name="outbound_times">
-                                        <option value="">Sin Horario</option>
-                                        <option value="6,12">Mañana (6-12 hs)</option>
-                                        <option value="12,18">Tarde (12-18 hs)</option>
-                                        <option value="18,0">Noche (18-24 hs)</option>
-                                        <option value="0,6">Madrugada (0-6 hs)</option>
-                                    </select>
-                                    <label for="horarioSelect">Horarios preferidos</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Escalas -->
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <input class="form-check-input mt-0" type="checkbox" id="escalas" name="escalas"
-                                           aria-label="Permitir escalas">
-                                </span>
-                                <div class="form-floating">
-                                    <!-- Usamos un input invisible solo para que la altura funcione -->
-                                    <input type="text" class="form-control" placeholder="Permitir escalas" readonly style="pointer-events: none;">
-                                    <label for="escalas">Permitir escalas</label>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+                    <hr>
 
                     <div class="row mb-3">
-                        <!-- Origen -->
                         <div class="col-md-3">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
                                 <div class="form-floating">
-                                    <input list="origenes" class="form-control" id="origen" name="origen" placeholder="Origen"
-                                           th:value="${origen}" required>
+                                    <input list="origenes" class="form-control" id="origen" name="origen" placeholder="Origen" th:value="${origen}" required>
                                     <label for="origen">Origen</label>
+                                    <div class="invalid-tooltip">Seleccioná un origen válido.</div>
                                     <datalist id="origenes">
                                         <option value="EZE" th:selected="${origen=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
                                         <option value="JFK" th:selected="${origen=='JFK'}">New York, USA (JFK)</option>
@@ -119,17 +70,15 @@
                                     </datalist>
                                 </div>
                             </div>
-                            <div class="invalid-feedback">Seleccioná un destino.</div>
                         </div>
 
-                        <!-- Destino -->
                         <div class="col-md-3">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-flag"></i></span>
                                 <div class="form-floating">
-                                    <input list="destinos" class="form-control" id="destino" name="destino" placeholder="Destino"
-                                           th:value="${destino}" required>
+                                    <input list="destinos" class="form-control" id="destino" name="destino" placeholder="Destino" th:value="${destino}" required>
                                     <label for="destino">Destino</label>
+                                    <div class="invalid-tooltip">Seleccioná un destino válido.</div>
                                     <datalist id="destinos">
                                         <option value="EZE" th:selected="${destino=='EZE'}">Buenos Aires, Argentina (Ezeiza)</option>
                                         <option value="JFK" th:selected="${destino=='JFK'}">New York, USA (JFK)</option>
@@ -149,38 +98,64 @@
                                     </datalist>
                                 </div>
                             </div>
-                            <div class="invalid-feedback">Seleccioná un destino.</div>
                         </div>
 
-                    <!-- Fecha de Ida -->
                         <div class="col-md-3">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 <div class="form-floating">
-                                    <input type="date" class="form-control" id="fechaIda" name="fechaIda"
-                                           th:value="${fechaIdaStr}" required>
+                                    <input type="date" class="form-control" id="fechaIda" name="fechaIda" th:value="${fechaIdaStr}" required>
                                     <label for="fechaIda">Fecha de Ida</label>
+                                    <div class="invalid-tooltip">Seleccioná una fecha válida desde hoy en adelante.</div>
                                 </div>
                             </div>
-                            <div class="invalid-feedback">Seleccioná una fecha válida desde hoy en adelante.</div>
                         </div>
 
-                        <!-- Fecha de Vuelta -->
                         <div class="col-md-3" id="divFechaVuelta">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
                                 <div class="form-floating">
-                                    <input type="date" class="form-control" id="fechaVuelta" name="fechaVuelta"
-                                           th:value="${fechaVueltaStr}">
+                                    <input type="date" class="form-control" id="fechaVuelta" name="fechaVuelta" th:value="${fechaVueltaStr}">
                                     <label for="fechaVuelta">Fecha de Vuelta</label>
+                                    <div class="invalid-tooltip">Seleccioná una fecha válida</div>
                                 </div>
                             </div>
-                            <div class="invalid-feedback">Seleccioná una fecha válida…</div>
                         </div>
                     </div>
+                    <hr>
 
                     <div class="row mb-3">
-                        <!-- Ordenar resultados -->
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select" id="claseCabina" name="claseCabina">
+                                        <option value="1">Económica</option>
+                                        <option value="2">Premium Económica</option>
+                                        <option value="3">Ejecutiva / Business</option>
+                                        <option value="4">Primera clase</option>
+                                    </select>
+                                    <label for="claseCabina">Clase preferida</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select" id="horarioSelect" name="outbound_times">
+                                        <option value="">Sin Horario</option>
+                                        <option value="6,12">Mañana (6-12 hs)</option>
+                                        <option value="12,18">Tarde (12-18 hs)</option>
+                                        <option value="18,0">Noche (18-24 hs)</option>
+                                        <option value="0,6">Madrugada (0-6 hs)</option>
+                                    </select>
+                                    <label for="horarioSelect">Horarios preferidos</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-md-3">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
@@ -197,8 +172,21 @@
                             </div>
                         </div>
 
-                        <!-- Precio mínimo -->
                         <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" id="escalas" name="escalas">
+                                </span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" placeholder="Permitir escalas" readonly style="pointer-events: none;">
+                                    <label for="escalas">Permitir escalas</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-cash-coin"></i></span>
                                 <div class="form-floating">
@@ -208,8 +196,7 @@
                             </div>
                         </div>
 
-                        <!-- Precio máximo -->
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-cash-stack"></i></span>
                                 <div class="form-floating">
@@ -219,8 +206,7 @@
                             </div>
                         </div>
 
-                        <!-- Moneda -->
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-currency-exchange"></i></span>
                                 <div class="form-floating">
@@ -236,9 +222,9 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
 
-                    <!-- Botones -->
-                    <div class="row mb-3">
+                    <div class="row">
                         <div class="d-flex justify-content-between">
                             <a class="btn btn-secondary col-md-3" href="./home">
                                 <i class="bi bi-arrow-left-circle me-1"></i> Volver
@@ -250,17 +236,14 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
-
 
     <div th:if="${error}" class="alert alert-warning text-center mt-3" role="alert">
         <i class="bi bi-exclamation-triangle-fill me-2"></i>
         <span th:text="${error}">Error desconocido</span>
     </div>
-
 
     <div th:each="vuelo, iterStat : ${vuelos}" class="overlay mt-5">
         <div class="card shadow-lg border-0 bg-body text-body">
@@ -296,7 +279,6 @@
                     <strong>Precio:</strong> $<span th:text="${vuelo.precio}"></span>
                 </p>
 
-                <!-- 🔽 Nueva sección: Escalas -->
                 <div class="mt-3" th:if="${vuelo.layovers != null}">
                     <h6>Escalas:</h6>
                     <ul class="list-group list-group-flush">
@@ -336,7 +318,6 @@
                         </li>
                     </ul>
                 </div>
-
 
                 <form th:if="${usuario != null}" th:action="@{/formulario-reserva}" method="post"
                       accept-charset="UTF-8">

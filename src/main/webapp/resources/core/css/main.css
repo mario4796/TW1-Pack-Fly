@@ -164,7 +164,8 @@ body {
 }
 
 #divFechaVuelta {
-    transition: opacity 0.2s ease;
+    transition: opacity 0.3s ease;
+    opacity: 1;
 }
 
 .fade-in {
